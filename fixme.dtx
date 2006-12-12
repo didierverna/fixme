@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.60 Tue, 19 Oct 2004 11:16:38 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.61 Tue, 19 Oct 2004 15:47:07 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{708}
+% ^^A\CheckSum{708}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -161,6 +161,23 @@
 % Each layout option has a counterpart that deactivates it. The counterpart
 % option has the same name, prefixed with \texttt{no}. For instance, if you
 % don't want marginal notes, use the \texttt{nomargin} option.\par
+% \DescribeMacro{\fixme[]}
+% \DescribeMacro{\fxnote[]}
+% \DescribeMacro{\fxwarning[]}
+% \DescribeMacro{\fxerror[]}
+% As of version 2.3, \fixme{} provides a way to change the selected layout(s)
+% on a per-note basis: each note insertion command takes an optional first
+% argument that overrides the global layout. This argument consists of one or
+% more layout options (\texttt{inline}, \texttt{margin}, \texttt{footnote} and
+% \texttt{index}) separated by commas. Remember that local layouts
+% \emph{override} the global one; they don't add to it.\par
+% On what occasion would one want to modify the layout for a particular note~?
+% Here is an example situation encountered by a \fixme{} user: suppose you
+% have a document in which \fixme{} notes are typeset as margin paragraphs
+% (this is the default). You would not be able to put a note in a figure,
+% because floats can't be nested in \LaTeX{} (margin paragraphs are floats).
+% In such a case, you would rather inline the note, which can be done with
+% something like |\fixme[inline]{blah}|.\par
 % \DescribeMacro{\listoffixmes}
 % \fixme{} remembers where you put \fixme{} notes in a toc-like file whose
 % extension is \texttt{lox}. The |\listoffixmes| macro generates the list of
@@ -285,8 +302,10 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v2.3] Fix bug reported by Akim Demaille: marginal notes could mess up
-% the document's layout by flushing it right.
+% \item[v2.3] Added an optional first argument to the note insertion commands
+% to change the layout locally.\\
+% Fix bug reported by Akim Demaille: marginal notes could mess up the
+% document's layout by flushing it right.
 % \item[v2.2] New option \texttt{silent} to suppress notes logging\\
 % Support for Danish thanks to Kim Rud Bille |<krbi01@control.auc.dk>|
 % \item[v2.1] Use |\nobreakspace| instead of the tilda character. This avoids
@@ -312,10 +331,11 @@
 %   Here's the preamble:
 % \end{macro}
 %    \begin{macrocode}
-\NeedsTeXFormat{LaTeX2e}
-¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2004/10/19 v2.3
-                        Insert fixme notes in your documents]
+\NeedsTeXFormat{LaTeX2e} ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate: 2004/10/19 $
+v$Version: 2.3 $"$ \ProvidesPackage{fixme}[2004/10/19 v2.3 Insert fixme notes in
+your documents]
+
+\RequirePackage{ifthen}
 
 \newcommand*\fixmelogo{\textsf{FiXme}}
 
@@ -747,15 +767,38 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\def\@fixme#1#2{%
+\def\@@fixme#1#2{%
   \stepcounter{fixmecount}%
   \stepcounter{fixme#1count}%
   \csname fixme@#1\endcsname{#2}}
-
-\newcommand\fxnote[1]{\@fixme{note}{#1}}
-\newcommand\fxwarning[1]{\@fixme{warning}{#1}}
-\newcommand\fxerror[1]{\@fixme{error}{#1}}
-\newcommand\fixme[1]{\@fixme{fatal}{#1}}
+\def\@fixme#1[#2]#3{%
+  \bgroup%
+  \fixme@inlinefalse%
+  \fixme@marginfalse%
+  \fixme@footnotefalse%
+  \fixme@userfalse%
+  \fixme@indexfalse%
+  \@for\fixme@option:=#2\do{%
+    \expandafter\ifx\csname fixme@\fixme@option true\endcsname\relax
+      \PackageError{FiXme}{Unknown layout option `\fixme@option'}{%
+        You have given an invalid option to \string\fixme, %
+        or an \string\fx command.\MessageBreak
+        Valid options are `inline', `margin', `footnote' and `index'.%
+        \MessageBreak
+        Type X to quit, fix your document, and rerun LaTeX.}%
+    \else%
+      \csname fixme@\fixme@option true\endcsname%
+    \fi}%
+  \@@fixme{#1}{#3}%
+  \egroup}
+\newcommand\fxnote{\@ifnextchar[%]
+  {\@fixme{note}}{\@@fixme{note}}}
+\newcommand\fxwarning{\@ifnextchar[%]
+  {\@fixme{warning}}{\@@fixme{warning}}}
+\newcommand\fxerror{\@ifnextchar[%]
+  {\@fixme{error}}{\@@fixme{error}}}
+\newcommand\fixme{\@ifnextchar[%]
+  {\@fixme{fatal}}{\@@fixme{fatal}}}
 
 %    \end{macrocode}
 % \subsection{Language processing}
