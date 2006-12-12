@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.7 Wed, 06 Jan 1999 17:08:34 +0100 verna $
+% PRCS: $Id: fixme.dtx 1.8 Thu, 07 Jan 1999 16:31:18 +0100 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -49,12 +49,14 @@
 %
 % \fi
 %
-% \CheckSum{63}
+% ^^A Donald Arseneau gave me this hint to put REAL comments in .dtx files
+% \catcode`\¡=14
+% \CheckSum{61}
 %
 % ^^A $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$
-% \newcommand{\packageversion}{1.1-b2}
+% \newcommand{\packageversion}{1.1-b3}
 % ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
-% \newcommand{\packagedate}{1999/01/06}
+% \newcommand{\packagedate}{1999/01/07}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\textsf{FiXme} -- a \LaTeXe{} package fort inserting fixme notes
@@ -152,10 +154,9 @@
 % identifies itself: 
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-% ^^A Don't worry about this: my personal prcs crap.
-% ^^A $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
-\ProvidesPackage{fixme}[1999/01/06]
-
+¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
+\ProvidesPackage{fixme}[1999/01/07]
+¡
 %    \end{macrocode}
 % Here, we define some booleans that will control the behavior of the 
 % |\fixme{}| macro. By default, only the margin note is enabled:
@@ -164,7 +165,7 @@
 \newif\iffixmeindex\fixmeindexfalse
 \newif\iffixmewarning\fixmewarningfalse
 \newif\iffixmeinfo\fixmeinfofalse
-
+¡
 %    \end{macrocode}
 %
 % There, we define our internal commands. The user will be able to redefine
@@ -176,13 +177,13 @@
 \newcommand{\FiXmeIndex}[1]{\index{***@FIXME:!#1}}
 \newcommand{\FiXmeWarning}[1]{\PackageWarning{fixme}{`FIXME: #1'}}
 \newcommand{\FiXmeInfo}[1]{\PackageInfo{fixme}{`FIXME: #1'}}
-
+¡
 %    \end{macrocode}
 % Now, we define |\fixme{}| to nothing by default. The options will take care
 % of setting it properly.
 %    \begin{macrocode}
 \newcommand{\fixme}[1]{}
-
+¡
 %    \end{macrocode}
 % Time to deal with the options. First, the options controlling which actions
 % should be performed when a \verb!\fixme{}! command is issued,
@@ -191,7 +192,7 @@
 \DeclareOption{index}{\fixmeindextrue}
 \DeclareOption{warning}{\fixmewarningtrue}
 \DeclareOption{info}{\fixmeinfotrue}
-
+¡
 %    \end{macrocode}
 % and then the global behavior options:
 %    \begin{macrocode}
@@ -202,19 +203,19 @@
 \iffixmewarning\FiXmeWarning{#1}\fi%
 \iffixmeinfo\FiXmeInfo{#1}\fi%
 \iffixmeindex\FiXmeIndex{#1}\fi}}
-
+¡
 %    \end{macrocode}
 % The {\em final} mode is considered to be the default:
 %    \begin{macrocode}
 \ExecuteOptions{final}
-
+¡
 %    \end{macrocode}
 % Finally, we process the options. In order to be sure that global options are 
 % processed first (this allows overriding them by passing opposite ones to the 
 % package directly), I use the *-form.
 %    \begin{macrocode}
 \ProcessOptions*
-
+¡
 %    \end{macrocode}
 %
 % \Finale\PrintChanges
