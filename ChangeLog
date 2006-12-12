@@ -1,3 +1,8 @@
+2002-04-23  Didier Verna  <didier@lrde.epita.fr>
+
+	* fixme.dtx (): fix bug in index handling reported by Knut Lickert
+	<knut@lickert.net>: index entries were unconditionally built.
+
 2002-04-03  Didier Verna  <didier@lrde.epita.fr>
 
 	* version 2.0 released.

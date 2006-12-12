@@ -41,6 +41,12 @@ message. FiXme also comes with support for AUC-TeX.
 * Changes
 =========
 
+** Version 2.1
+--------------
+*** Fix bug in index handling
+reported by Knut Lickert <knut@lickert.net>: index entries were
+unconditionally built.
+
 ** Version 2.0
 --------------
 *** New feature: note levels
