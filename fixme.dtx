@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.42 Tue, 19 Feb 2002 18:35:13 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.43 Tue, 19 Feb 2002 18:43:57 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -212,8 +212,8 @@
 % do that. Just pass the \texttt{user} option to the package (it also has its
 % \texttt{nouser} counterpart), and define an |\FXUser| macro in the following
 % manner:\\
-% |\newcommand{\FXUser}[2]{|\meta{fancy layout job}|}|\\ The arguments are the
-% prefix, and the note itself, in that order.
+% |\newcommand{\FXUser}[2]{|\meta{fancy fruit salad layout job}|}|\\ The
+% arguments are the prefix, and the note itself, in that order.
 %
 % \subsection{Selecting a language}
 % \DescribeEnv{english}
@@ -743,9 +743,9 @@
 
 %    \end{macrocode}
 % Put us in \texttt{english} and \texttt{final} mode, and enable the marginal
-% notes:
+% notes. Also output error-level notes as warnings by default:
 %    \begin{macrocode}
-\ExecuteOptions{english,final,margin}
+\ExecuteOptions{english,final,margin,warning}
 \ProcessOptions*
 
 %    \end{macrocode}
