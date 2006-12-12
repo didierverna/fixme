@@ -78,6 +78,12 @@
       '("FiXmeWarning")
       '("FiXmeUser")
       )
+     (LaTeX-add-environments
+      '("anfxnote" "Note")
+      '("anfxwarning" "Warning")
+      '("anfxerror" "Error")
+      '("afixme" "FiXme")
+      )
      )))
 
 
