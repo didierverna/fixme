@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2000 Didier Verna.
 
-## PRCS: $Id: Makefile 1.14 Tue, 26 Dec 2000 13:48:38 +0100 didier $
+## PRCS: $Id: Makefile 1.15 Mon, 23 Apr 2001 12:07:55 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -37,6 +37,8 @@ STYDIR := $(TEXDIR)/sty
 AUCDIR := $(STYDIR)/.style
 DOCDIR := $(TEXDIR)/doc
 
+W3DIR  := ${HOME}/www/comp/development
+
 ## $Format: "VERSION := $Version$"$
 VERSION := 1.2
 
@@ -66,6 +68,9 @@ dist:
 	cp $(DISTFILES) $(ARCHIVE)
 	tar zcvf $(ARCHIVE).tar.gz $(ARCHIVE)
 	rm -fr $(ARCHIVE)
+
+install-www: dist
+	install -m 644 $(ARCHIVE).tar.gz $(W3DIR)/$(PROJECT).tar.gz
 
 checkin:
 	prcs checkin
