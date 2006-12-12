@@ -1,13 +1,13 @@
-### Makefile --- Personnal Makefile for FiXme
+### Makefile --- Makefile for FiXme
 
 ## Copyright (C) 1999-2000 Didier Verna.
 
-## PRCS: $Id: Makefile 1.11 Wed, 29 Mar 2000 11:48:53 +0200 didier $
+## PRCS: $Id: Makefile 1.12 Tue, 18 Apr 2000 15:02:52 +0200 didier $
 
-## Author:        Didier Verna <didier@epita.fr>
-## Maintainer:    Didier Verna <didier@epita.fr>
-## Created:       Tue Jan  5 16:46:40 1999
-## Last Revision: Wed Mar 29 10:18:02 2000
+## Author:        Didier Verna <didier@lrde.epita.fr>
+## Maintainer:    Didier Verna <didier@lrde.epita.fr>
+## Created:       Thu Sep 23 17:27:00 1999
+## Last Revision: Tue Mar 28 18:49:43 2000
 
 ## This file is part of FiXme.
 
@@ -29,49 +29,62 @@
 
 ### Code:
 
-STYDIR=${HOME}/share/tex/sty
-DOCDIR=${HOME}/share/tex/doc
+## $Format: "PROJECT := $Project$"$
+PROJECT := fixme
+
+TEXDIR := ${HOME}/share/tex
+STYDIR := $(TEXDIR)/sty
+AUCDIR := $(STYDIR)/.style
+DOCDIR := $(TEXDIR)/doc
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 1.1-b20
-ARCHIVE := fixme-$(VERSION)
-DISTFILES := README fixme.ins fixme.dtx
+VERSION := 1.1-b21
 
-all: fixme.sty fixme.dvi
+ARCHIVE := $(PROJECT)-$(VERSION)
+DISTFILES := README $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
 
-install: install-sty install-doc
-install-sty: fixme.sty
-	cp fixme.sty $(STYDIR)
-install-doc: fixme.dvi
-	cp fixme.dvi $(DOCDIR)
+all: $(PROJECT).sty $(PROJECT).dvi
+
+install: install-sty install-doc install-auc
+install-sty: $(PROJECT).sty
+	cp $< $(STYDIR)
+install-doc: $(PROJECT).dvi
+	cp $< $(DOCDIR)
+install-auc: $(PROJECT).el
+	cp $< $(AUCDIR)
 
 clean:
 	-rm *~ *.aux *.lo*
 distclean: clean
-	-rm fixme.sty fixme.dvi
+	-rm $(PROJECT).sty $(PROJECT).dvi
 
 dist:
-	-rm -fr fixme-*
+	-rm -fr $(PROJECT)-*
 	mkdir $(ARCHIVE)
 	cp $(DISTFILES) $(ARCHIVE)
 	tar zcvf $(ARCHIVE).tar.gz $(ARCHIVE)
-	rm -fr fixme-*
+	rm -fr $(PROJECT)-*
 
 checkin:
 	prcs checkin
 	prcs rekey
 
-fixme.sty: fixme.ins fixme.dtx
-fixme.dvi: fixme.dtx
+
+$(PROJECT).sty: $(PROJECT).ins $(PROJECT).dtx
+$(PROJECT).dvi: $(PROJECT).dtx
 
 %.sty: %.ins
-	@echo "\n ===== Building the sty file ..."
+	@echo "Building the sty file ..."
 	latex $<
 
 %.dvi: %.dtx
-	@echo "\n ===== Building the doc file ..."
+	@echo "Building the dvi file ..."
 	latex $<
 
-.PHONY: all install install-sty install-doc clean distclean dist checkin
+.PHONY: all                                         \
+        install install-sty install-doc install-auc \
+        clean distclean                             \
+        dist                                        \
+        checkin
 
 ### Makefile ends here
