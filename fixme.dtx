@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.14 Wed, 07 Apr 1999 11:23:14 +0200 verna $
+% PRCS: $Id: fixme.dtx 1.15 Thu, 08 Apr 1999 21:08:38 +0200 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -59,14 +59,14 @@
 % \catcode`\¡=14
 % \CheckSum{171}
 %
-% ^^A $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$
-% \newcommand{\packageversion}{1.1-b10}
+% ^^A $Format: "% \\newcommand{\\packageversion}{v$PackageVersion$}"$
+% \newcommand{\packageversion}{v1.1-b11}
 % ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
-% \newcommand{\packagedate}{1999/04/07}
+% \newcommand{\packagedate}{1999/04/08}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\textsf{FiXme} -- a \LaTeXe{} package fort inserting fixme notes
-% in draft documents \thanks{This document describes \textsf{FiXme} version
+% in draft documents \thanks{This document describes \textsf{FiXme}
 % \packageversion , last updated \packagedate .}}
 % \author{Didier Verna\\
 % |mailto:verna@inf.enst.fr|\\
@@ -192,8 +192,8 @@
 % |\ProcessOptions|.
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
-\ProvidesPackage{fixme}[1999/04/07]
+¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$ v$PackageVersion$ Fixme notes in your document]"$
+\ProvidesPackage{fixme}[1999/04/08 v1.1-b11 Fixme notes in your document]
 ¡
 %    \end{macrocode}
 % Booleans that will control the behavior of the |\fixme{}| macro. By default,
@@ -213,8 +213,8 @@
   \marginpar{\footnotesize\flushright\textbf{FIXME:} \emph{#1}}}
 \newcommand{\FiXmeFootnote}[1]{%
   \footnote{\textbf{FIXME:} \emph{#1}}}
-\newcommand{\FiXmeWarning}[1]{\PackageWarning{fixme}{`#1'}}
-\newcommand{\FiXmeInfo}[1]{\PackageInfo{fixme}{`#1'}}
+\newcommand{\FiXmeWarning}[1]{\PackageWarning{FiXme}{`#1'}}
+\newcommand{\FiXmeInfo}[1]{\PackageInfo{FiXme}{`#1'}}
 \newcommand{\FiXmeIndex}[1]{\index{***@FIXME's:!#1}}
 ¡
 %    \end{macrocode}
@@ -293,7 +293,7 @@
 %    \begin{macrocode}
 \DeclareOption{final}{%
   \renewcommand{\fixme}[1]{%
-    \PackageError{fixme}{`#1' fixme left in final version.}\@ehc}}
+    \PackageError{FiXme}{`#1' fixme left in final version.}\@ehc}}
 
 \DeclareOption{draft}{%
   \renewcommand{\fixme}[1]{%
