@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.52 Wed, 03 Apr 2002 13:23:10 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.53 Tue, 23 Apr 2002 17:58:20 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{630}
+% \CheckSum{636}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -625,7 +625,7 @@
 \newcommand*\fixmenoteindexname{}
 \def\fixme@note@draft#1{%
   \fixme@text{\fixmenoteprefix}{#1}%
-  \FXIndex{\fixmenoteindexname\thefixmenotecount: #1}%
+  \iffixme@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
   \FXNote{#1}%
   \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
 \def\fixme@note@final#1{%
@@ -647,7 +647,7 @@
 \newcommand*\fixmewarningindexname{}
 \def\fixme@warning@draft#1{%
   \fixme@text{\fixmewarningprefix}{#1}%
-  \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
+  \iffixme@index\FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}\fi%
   \FXWarning{#1}%
   \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
 \def\fixme@warning@final#1{%
@@ -669,7 +669,7 @@
 \newcommand*\fixmeerrorindexname{}
 \def\fixme@error@draft#1{%
   \fixme@text{\fixmeerrorprefix}{#1}%
-  \FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}%
+  \iffixme@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
   \FXError{#1}%
   \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
 \def\fixme@error@final#1{%
