@@ -2,12 +2,12 @@
 
 ## Copyright (C) 1999 Didier Verna.
 
-## PRCS: $Id: Makefile 1.5 Tue, 06 Apr 1999 16:54:37 +0200 verna $
+## PRCS: $Id: Makefile 1.6 Tue, 06 Apr 1999 17:50:15 +0200 verna $
 
 ## Author:        Didier Verna <verna@inf.enst.fr>
 ## Maintainer:    Didier Verna <verna@inf.enst.fr>
 ## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Tue Apr  6 16:54:24 1999
+## Last Revision: Tue Apr  6 17:06:53 1999
 
 ## This file is part of FiXme.
 
@@ -74,7 +74,7 @@ install-sty: fixme.sty
 distclean: clean clean-doc clean-sty
 
 clean:
-	-rm *~ *.aux *.log
+	-rm *~ *.aux *.log *.dvi *.sty *.lo*
 
 clean-doc:
 	-rm *.dvi
