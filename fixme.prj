@@ -2,18 +2,18 @@
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description
  "A LaTeX2e package for inserting fixme notes in draft documents")
-(Project-Version fixme branch-1-2 1)
-(Parent-Version fixme version-1-1 1)
-(Version-Log "Fork version 1.2")
+(Project-Version fixme branch-1-2 2)
+(Parent-Version fixme branch-1-2 1)
+(Version-Log "Doc fixes and improvements, german support")
 (New-Version-Log "")
-(Checkin-Time "Mon, 11 Dec 2000 12:15:40 +0100")
+(Checkin-Time "Tue, 19 Dec 2000 14:11:33 +0100")
 (Checkin-Login didier)
 (Populate-Ignore
  ("\\.aux$" "\\.dvi$" "\\.lo.*$" "\\.sty$"
   "\\.auto/" "\\.tar\\.gz$"))
 (Project-Keywords
  (Version 1.2) ;; Sucker. This should be done automatically.
- (ReleaseDate 2000/12/11)
+ (ReleaseDate 2000/12/19)
  (FirstYear 1998)
  (LastYear  2000)
  (TextCopyright "Copyright (C) $FirstYear$-$LastYear$ Didier Verna")
@@ -23,10 +23,10 @@
 (Files
  (README (fixme/0_README 1.7 640))
  (Makefile (fixme/3_Makefile 1.13 640))
- (fixme.dtx (fixme/1_fixme.dtx 1.25 640))
+ (fixme.dtx (fixme/1_fixme.dtx 1.26 640))
  (fixme.ins (fixme/2_fixme.ins 1.10 640))
  (fixme.el (fixme/5_fixme.el 1.1 640))
- (ChangeLog (fixme/6_ChangeLog 1.1 644))
+ (ChangeLog (fixme/6_ChangeLog 1.2 644))
 )
 
 (Merge-Parents)
