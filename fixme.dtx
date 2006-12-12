@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.11 Fri, 12 Mar 1999 15:26:07 +0100 verna $
+% PRCS: $Id: fixme.dtx 1.12 Tue, 06 Apr 1999 16:54:37 +0200 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -32,9 +32,16 @@
 % package or any derivative work as described above, other than for the
 % physical act of transferring copies.
 %
+%
 % Commentary:
 %
 % Contents management by FCM version 0.1.
+%
+%
+% Thanks to:
+% Donald Arseneau
+% David Carlisle, the guy who answers your questions before you ask them ;-)
+%
 %
 % Code:
 %
@@ -51,12 +58,12 @@
 %
 % ^^A Donald Arseneau gave me this hint to put REAL comments in .dtx files
 % \catcode`\¡=14
-% \CheckSum{150}
+% \CheckSum{151}
 %
 % ^^A $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$
 % \newcommand{\packageversion}{1.1-b5}
 % ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
-% \newcommand{\packagedate}{1999/03/12}
+% \newcommand{\packagedate}{1999/04/6}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\textsf{FiXme} -- a \LaTeXe{} package fort inserting fixme notes
@@ -168,7 +175,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 ¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
-\ProvidesPackage{fixme}[1999/03/12]
+\ProvidesPackage{fixme}[1999/04/6]
 ¡
 %    \end{macrocode}
 % Here, we define some booleans that will control the behavior of the
@@ -257,7 +264,7 @@
 %    \begin{macrocode}
 \DeclareOption{final}{%
   \renewcommand{\fixme}[1]{%
-    \PackageError{fixme}{`FIXME: #1' left in final version.}}}
+    \PackageError{fixme}{`#1' fixme left in final version.}\@ehc}}
 \DeclareOption{draft}{%
   \renewcommand{\fixme}[1]{%
     \iffixmemargin\FiXmeMargin{#1}\fi%

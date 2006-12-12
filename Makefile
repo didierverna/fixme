@@ -2,12 +2,12 @@
 
 ## Copyright (C) 1999 Didier Verna.
 
-## PRCS: $Id: Makefile 1.4 Wed, 06 Jan 1999 15:00:36 +0100 verna $
+## PRCS: $Id: Makefile 1.5 Tue, 06 Apr 1999 16:54:37 +0200 verna $
 
 ## Author:        Didier Verna <verna@inf.enst.fr>
 ## Maintainer:    Didier Verna <verna@inf.enst.fr>
 ## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Wed Jan  6 14:36:22 1999
+## Last Revision: Tue Apr  6 16:54:24 1999
 
 ## This file is part of FiXme.
 
@@ -28,7 +28,7 @@
 
 ## You are NOT ALLOWED to charge a fee for distribution or use of this
 ## package or any derivative work as described above, other than for the
-## physical act of transferring copies. 
+## physical act of transferring copies.
 
 
 ### Commentary:
@@ -59,6 +59,10 @@ dist:
 	rm -fr fixme
 
 test: test.dvi
+
+checkin:
+	prcs checkin
+	prcs rekey
 
 install: install-doc install-sty
 
