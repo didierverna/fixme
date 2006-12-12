@@ -1,26 +1,13 @@
-### Makefile --- Makefile for FiXme
+### Makefile --- Generic Makefile for LaTeX classes and styles
 
-## Copyright (C) 1999, 2000, 2001, 2002, 2004 Didier Verna.
+## Copyright (C) 2000, 2001, 2002, 2003, 2004 Didier Verna.
 
-## PRCS: $Id: Makefile 1.22 Tue, 19 Oct 2004 17:22:50 +0200 didier $
+## PRCS: $Id: Makefile 1.23 Wed, 22 Dec 2004 15:38:47 +0100 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ## Created:       Thu Sep 23 17:27:00 1999
-## Last Revision: Tue Oct 19 11:07:32 2004
-
-## This file is part of FiXme.
-
-## FiXme may be distributed and/or modified under the
-## conditions of the LaTeX Project Public License, either version 1.1
-## of this license or (at your option) any later version.
-## The latest version of this license is in
-## http://www.latex-project.org/lppl.txt
-## and version 1.1 or later is part of all distributions of LaTeX
-## version 1999/06/01 or later.
-
-## FiXme consists of the files listed in the file `README'.
-
+## Last Revision: Tue Nov  9 17:47:36 2004
 
 ### Commentary:
 
@@ -29,45 +16,75 @@
 
 ### Code:
 
-## $Format: "PROJECT := $Project$"$
-PROJECT := fixme
-
 TEXDIR := ${HOME}/share/tex
+CLSDIR := $(TEXDIR)/cls
 STYDIR := $(TEXDIR)/sty
-AUCDIR := $(STYDIR)/.style
 DOCDIR := $(TEXDIR)/docs
+AUCCLSDIR := $(CLSDIR)/.style
+AUCSTYDIR := $(STYDIR)/.style
 
 W3DIR  := ${HOME}/www/comp/development
 
-## $Format: "VERSION := $Version$"$
-VERSION := 3.0
+ARCHIVE        = $(PROJECT)-$(VERSION)
+DISTFILES      = README NEWS $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
+CTAN_DISTFILES = $(DISTFILES) $(PROJECT).pdf
 
-ARCHIVE        := $(PROJECT)-$(VERSION)
-DISTFILES      := README NEWS $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
-CTAN_DISTFILES := $(DISTFILES) $(PROJECT).pdf
+all:
 
-all: $(PROJECT).sty $(PROJECT).dvi
 
-install: install-sty install-doc install-auc
+-include Makefile.inc
+
+
+all: $(PROJECT).dvi
+
+ifdef CLASS
+all: $(PROJECT).cls
+endif
+ifdef STYLE
+all: $(PROJECT).sty
+endif
+
+install: install-doc install-auc
+ifdef CLASS
+install: install-cls
+endif
+ifdef STYLE
+install: install-sty
+endif
+
+install-cls: $(PROJECT).cls
+	install -m 644 $< $(CLSDIR)
 install-sty: $(PROJECT).sty
-	cp $< $(STYDIR)
+	install -m 644 $< $(STYDIR)
+
 install-doc: $(PROJECT).dvi
-	cp $< $(DOCDIR)
-install-auc: $(PROJECT).el
-	cp $< $(AUCDIR)
+	install -m 644 $< $(DOCDIR)
+
+install-auc:
+ifdef CLASS
+install-auc: install-auc-cls
+endif
+ifdef CLASS
+install-auc: install-auc-sty
+endif
+install-auc-cls: $(PROJECT).el
+	install -m 644 $< $(AUCCLSDIR)
+install-auc-sty: $(PROJECT).el
+	install -m 644 $< $(AUCSTYDIR)
 
 clean:
 	-rm *~ *.aux *.lo* *.gl* *.idx *.ind *.ilg
 	-rm -fr $(PROJECT)-*
 
 distclean: clean
-	-rm $(PROJECT).sty $(PROJECT).dvi $(PROJECT).pdf $(PROJECT).ps
+	-rm $(PROJECT).cls $(PROJECT).sty \
+            $(PROJECT).dvi $(PROJECT).pdf $(PROJECT).ps
 	-rm -fr .auto
 
 dist:
 	-rm -fr $(ARCHIVE)*
 	mkdir $(ARCHIVE)
-	cp $(DISTFILES) $(ARCHIVE)
+	install -m 644 $(DISTFILES) $(ARCHIVE)
 	tar cvf $(ARCHIVE).tar $(ARCHIVE)
 	gzip -c $(ARCHIVE).tar > $(ARCHIVE).tar.gz
 	bzip2 -c $(ARCHIVE).tar > $(ARCHIVE).tar.bz2
@@ -76,7 +93,7 @@ dist:
 ctan-dist: $(PROJECT).pdf
 	-rm -fr $(ARCHIVE)*
 	mkdir $(ARCHIVE)
-	cp $(CTAN_DISTFILES) $(ARCHIVE)
+	install -m 644 $(CTAN_DISTFILES) $(ARCHIVE)
 	tar cvf $(ARCHIVE).tar $(ARCHIVE)
 	gzip -c $(ARCHIVE).tar > $(ARCHIVE).tar.gz
 	bzip2 -c $(ARCHIVE).tar > $(ARCHIVE).tar.bz2
@@ -95,28 +112,28 @@ checkin:
 	prcs rekey
 
 
-$(PROJECT).sty: $(PROJECT).ins $(PROJECT).dtx
+$(PROJECT).cls $(PROJECT).sty: $(PROJECT).ins $(PROJECT).dtx
 $(PROJECT).dvi: $(PROJECT).dtx
 
 %.pdf: %.dvi
 	dvipdf $<
 
-%.sty: %.ins
-	@echo "Building the sty file ..."
+%.cls %.sty: %.ins
+	@echo "Building $@ ..."
 	echo y | latex $<
 
 %.dvi: %.dtx
-	@echo "Building the dvi file ..."
-	latex $< ; latex $<
+	@echo "Building $@ ..."
+	latex $<
 #	makeindex -s gglo -o $(PROJECT).gls $(PROJECT).glo
 #	makeindex -s gind $(PROJECT).idx
 #	latex $<
 
-.PHONY: all                                         \
-        install install-sty install-doc install-auc \
-        clean distclean                             \
-        dist ctan-dist                              \
-	install-www                                 \
+.PHONY: all                             		        \
+        install install-cls install-sty install-doc install-auc	\
+        clean distclean                             		\
+        dist ctan-dist                              		\
+	install-www                                 		\
         checkin
 
 ### Makefile ends here
