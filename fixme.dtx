@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.67 Wed, 22 Dec 2004 15:19:29 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.68 Mon, 31 Jan 2005 14:39:45 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{785}
+% \CheckSum{800}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -62,11 +62,11 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
-% \newcommand\version{v3.0}
+% \newcommand\version{v3.1}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
-% \newcommand\releasedate{2004/12/22}
+% \newcommand\releasedate{2005/01/31}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
-% \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna}
+% \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004, 2005 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
 % \newcommand\auctex{AUC-\TeX}
 % \MakeShortVerb{\|}
@@ -113,7 +113,10 @@
 %
 %
 % \section{Using \fixme}
-% To use the package, simply say |\usepackage[|\meta{options}|]{fixme}| in the
+% First of all, please note that the \texttt{ifthen} and \texttt{verbatim}
+% packages are required. You don't have to load them explicitly though. As
+% long as \LaTeXe{} can locate them, they will be used automatically.\par
+% To use \fixme, simply say |\usepackage[|\meta{options}|]{fixme}| in the
 % preamble of your document.
 %
 % \subsection{Inserting notes}
@@ -341,6 +344,8 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v3.1] Fix bug reported by Arnold Beckmann: the environments were
+% visible in final mode.
 % \item[v3.0] Added environments corresponding to the note insertion
 % commands.\\
 % Added an optional first argument to the note insertion commands
@@ -374,10 +379,11 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡$Format: "\\ProvidesPackage{fixme}[$ReleaseDate: 2004/10/19$ v$Version: 2.3$"$
-\ProvidesPackage{fixme}[2004/12/22 v3.0
+\ProvidesPackage{fixme}[2005/01/31 v3.1
                         Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
+\RequirePackage{verbatim}
 
 \newcommand*\fixmelogo{\textsf{FiXme}}
 
@@ -845,30 +851,38 @@
 %    \end{macrocode}
 %
 % \subsection{\fixme{} environments}
+% The \fixme{} environments use the corresponding macro version to handle
+% inline (and possibly index) layout, and to perform logging. In final mode,
+% verbatim's \texttt{comment} environment is used to suppress output.
 %    \begin{macrocode}
 \newcommand\FXEnvBegin{\begin{quotation}}
 \newcommand\FXEnvEnd{\end{quotation}}
 
+\def\@fxenvbegin@draft#1#2{%
+  \FXEnvBegin
+  \edef\fixme@args{inline\iffixme@index,index\fi}%
+  \csname#1\endcsname[\fixme@args]{#2}}
+\def\@fxenvbegin@final#1#2{
+  \edef\fixme@args{inline\iffixme@index,index\fi}%
+  \csname#1\endcsname[\fixme@args]{#2}
+  \comment
+}
+
+\def\@fxenvend@draft{\FXEnvEnd}
+\def\@fxenvend@final{\endcomment}
+
 \newenvironment{anfxnote}[1][]{%
-  \edef\fixme@args{inline\iffixme@index,index\fi}
-  \FXEnvBegin
-  \fxnote[\fixme@args]{#1}}{%
-  \FXEnvEnd}
+  \@fxenvbegin{fxnote}{#1}}{%
+  \@fxenvend}
 \newenvironment{anfxwarning}[1][]{%
-  \edef\fixme@args{inline\iffixme@index,index\fi}
-  \FXEnvBegin
-  \fxwarning[\fixme@args]{#1}}{%
-  \FXEnvEnd}
+  \@fxenvbegin{fxwarning}{#1}}{%
+  \@fxenvend}
 \newenvironment{anfxerror}[1][]{%
-  \edef\fixme@args{inline\iffixme@index,index\fi}
-  \FXEnvBegin
-  \fxerror[\fixme@args]{#1}}{%
-  \FXEnvEnd}
+  \@fxenvbegin{fxerror}{#1}}{%
+  \@fxenvend}
 \newenvironment{afixme}[1][]{%
-  \edef\fixme@args{inline\iffixme@index,index\fi}
-  \FXEnvBegin
-  \fixme[\fixme@args]{#1}}{%
-  \FXEnvEnd}
+  \@fxenvbegin{fixme}{#1}}{%
+  \@fxenvend}
 
 %    \end{macrocode}
 %
@@ -962,6 +976,8 @@
   \let\fixme@warning\fixme@warning@final
   \let\fixme@error\fixme@error@final
   \let\fixme@fatal\fixme@fatal@final
+  \let\@fxenvbegin\@fxenvbegin@final
+  \let\@fxenvend\@fxenvend@final
   \let\listoffixmes\listoffixmes@final
   }
 
@@ -970,6 +986,8 @@
   \let\fixme@warning\fixme@warning@draft
   \let\fixme@error\fixme@error@draft
   \let\fixme@fatal\fixme@fatal@draft
+  \let\@fxenvbegin\@fxenvbegin@draft
+  \let\@fxenvend\@fxenvend@draft
   \let\listoffixmes\listoffixmes@draft
   \@ifclassloaded{article}{
     \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article

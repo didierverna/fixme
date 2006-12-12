@@ -2,7 +2,7 @@
 PROJECT := fixme
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 3.0
+VERSION := 3.1
 
 ## CLASS := yes
 STYLE := yes
