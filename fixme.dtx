@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.23 Tue, 18 Apr 2000 15:02:52 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.24 Mon, 11 Dec 2000 10:30:29 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -45,12 +45,13 @@
 % \CheckSum{202}
 %
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
-% \newcommand{\version}{v1.1-b23}
+% \newcommand{\version}{v1.1}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2000/04/18}
+% \newcommand{\releasedate}{2000/12/11}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2000 Didier Verna}
 % \newcommand{\fixme}{\textsf{FiXme}}
+% \newcommand{\auctex}{AUC-\TeX}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
@@ -63,12 +64,12 @@
 %
 %
 % \begin{abstract}
-% In the process of writing a long document, it is common to let some parts
-% unwritten or uncomplete, and come back to them later. In such cases, you
-% probably want to stick clues about which parts need to be ``fixed'', where
-% they are located, and what needs to be done. This is what I call ``fixme
-% notes''. The purpose of this package is to provide you with convenient ways
-% to insert fixme notes in your documents.\par
+% In the process of writing a long document, it is a common practice to let
+% some parts unwritten or uncomplete, and come back to them later. In such
+% cases, you probably want to stick clues about which parts need to be
+% ``fixed'', where they are located, and what needs to be done. This is what I
+% call ``fixme notes''. The purpose of this package is to provide you with
+% convenient ways to insert fixme notes in your documents.\par
 % The \fixme{} package is \packagecopyright{}, and distributed under the terms
 % of the LPPL license.
 % \end{abstract}
@@ -78,7 +79,7 @@
 % pass to the package. These forms currently are: marginal notes, footnotes,
 % index entries, warnings on stdout and information in the log file. You can
 % use multiple forms (possibly all) at the same time. Additionally, you can
-% summarize all fixme notes in a list similar to the list of figures for
+% summarize all fixme notes in a list similar to the ``list of figures'' for
 % instance.\\
 % All these forms are available when you're working in \texttt{draft} mode.
 % The behavior of \fixme{} is different in \texttt{final} mode, as any
@@ -100,7 +101,7 @@
 % \DescribeMacro{listoffixmes}
 % \fixme{} remembers where you put fixme notes in a toc-like file which
 % extention is \texttt{lox}. The |\listoffixmes| macro generates the list of
-% all fixme notes in a manner similar to that of the list of figures for
+% all fixme notes in a manner similar to that of the ``list of figures'' for
 % instance. A standard layout is automatically used for the `article',
 % `report' and `book' classes. If another class is used, the
 % `article' layout is selected. Also, note that if no fixmes were introduced
@@ -115,13 +116,13 @@
 % In \texttt{final} mode (the default) any remaining fixme note in the
 % document generates an error. Well, if there are parts to be fixed, the
 % document is not final right? This mode has been choosen as the default
-% because \LaTeX itself is in this mode by default. On the contrary, the
+% because \LaTeX{} itself is in this mode by default. On the contrary, the
 % \texttt{draft} option tells \fixme{} to actually produce the fixme notes.\\
 % \DescribeEnv{english}
 % \DescribeEnv{french}
 % \DescribeEnv{francais}
 % \fixme{} currently supports both english and french languages. This actually
-% only has the effect of modifying the title of the list of fixmes if you
+% only has the effect of modifying the title of the ``list of fixmes'' if you
 % happen to use it. The \texttt{french} and \texttt{francais} options are
 % equivalent.
 %
@@ -133,7 +134,7 @@
 % name, prefixed with \texttt{no}. By default, only the \texttt{margin} layout
 % is enabled.\\
 % \DescribeEnv{margin}
-% By default or with this option \fixme{} inserts the fixme notes in the
+% By default or given this option, \fixme{} inserts the fixme notes in the
 % margin. The notes appear in small characters and flushed to the right. If
 % you want to disable margin notes, use the \texttt{nomargin} option.\\
 % \DescribeEnv{footnote} If you prefer to have footnotes, or if you want to
@@ -180,7 +181,7 @@
 % Each kind of layout that you can select with an option is handled by one of
 % these macros. The |\FiXmeUser| macro is the only one we've talked about
 % until now since it is empty by default. If you are not satisfied with the
-% way they format the fixme notes, you can redefine them using
+% way the other ones format the fixme notes, you can redefine them using
 % |\renewcommand{}|.
 %
 % \subsection{Fixme notes list}
@@ -188,6 +189,17 @@
 % This macro gives its title to the list of fixmes. It expands to ``List of
 % FIXME's'' by default. The language options modify this. You can also change
 % its value with |\renewcommand{}|.
+%
+% \section{\auctex{} support}
+% \auctex{} is a powerful major mode for editing \TeX{} documents in
+% \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
+% completion of macro names once they are known. \fixme{} supports \auctex{}
+% by providing a style file named \texttt{fixme.el} which contains \auctex{}
+% definitions for the relevant macros. This file should be installed to a
+% location where \auctex{} can find it (usually in a subdirectory of your
+% \LaTeX{} styles directory). Please refer to the \auctex{} documentation for
+% more information on this.
+%
 %
 % \StopEventually{\par Well, I think that's it. Enjoy using \fixme!
 %   \vfill\hfill\small \packagecopyright{}.}
@@ -197,7 +209,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2000/04/18 v1.1-b23
+\ProvidesPackage{fixme}[2000/12/11 v1.1
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
