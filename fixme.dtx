@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2001 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.34 Tue, 04 Sep 2001 15:03:56 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.35 Wed, 05 Sep 2001 15:24:54 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{242}
+% \CheckSum{326}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -64,7 +64,7 @@
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
 % \newcommand{\version}{v1.4}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2001/09/04}
+% \newcommand{\releasedate}{2001/09/05}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2001 Didier Verna}
 % \newcommand{\fixme}{\textsf{FiXme}}
@@ -120,10 +120,10 @@
 % extension is \texttt{lox}. The |\listoffixmes| macro generates the list of
 % all fixme notes in a manner similar to that of the ``list of figures'' for
 % instance. A standard layout is automatically used for the `article',
-% `report' and `book' classes. If another class is used, the
-% `article' layout is selected. Also, note that if no fixmes were introduced
-% in the document, this macro doesn't generate an empty list, but rather stays
-% silent.\par
+% `report', `book' classes and their koma-script replacements. If another
+% class is used, the `article' layout is selected. Also, note that if no
+% fixmes were introduced in the document, this macro doesn't generate an empty
+% list, but rather stays silent.\par
 % ^^A \changes{v1.4}{2001/09/04}{Fix bug reported by Ulf Jaenicke-Roessler}
 % \DescribeMacro{\listfixmename}
 % The list of fixmes has a title which defaults to ``List of FIXME's'' for
@@ -227,6 +227,7 @@
 % \item[v1.4] Fix bug reported by Ulf Jaenicke-Roessler
 %   |<ujr@physik.phy.tu-dresden.de>|: the |\listoffixmes| command didn't work
 %   when called before the first fixme note.
+% \item[] Support for the koma-script classes has been added.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri
 %   |<murri@phc.unipi.it>|.
 % \item[v1.2] Support for German thanks to Harald Harders
@@ -240,7 +241,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2001/09/04 v1.4
+\ProvidesPackage{fixme}[2001/09/05 v1.4
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
@@ -249,7 +250,9 @@
 %   \begin{macro}{\listoffixmes@final}
 %     \begin{macro}{\listoffixmes@draft}
 %       |\listoffixmes| is empty by default. The |final| or |draft| options
-%       will provide the proper definition.
+%       will provide the proper definition. Lists are output in a document
+%       class dependant fashion. Classes currently recognized are article,
+%       report, book and their koma-script replacements.
 %
 %       In order to prevent the List of Fixme's chapter heading from being
 %       generated when there are no fixmes, a test on the existence of the lox
@@ -281,12 +284,12 @@
 \newcommand*\listfixmename{}
 
 %    \end{macrocode}
+%
+% \subsubsection{Standard classes}
 % \begin{macro}{\listoffixmes@pretoc@article}
 %   \begin{macro}{\listoffixmes@posttoc@article}
 %     \begin{macro}{\l@fixme@article}
-%       The different versions of pre and post toc commands, depending on the
-%       current document class (currently, article, report, and book are
-%       recognized). Let's start with the article version:
+%       Let's start with the article version:
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -339,6 +342,66 @@
   }
 \newcommand\@listoffixmes@posttoc@book{\if@restonecol\twocolumn\fi}
 \newcommand*\l@fixme@book{\@dottedtocline{1}{1.5em}{2.3em}}
+
+%    \end{macrocode}
+%
+% \subsubsection{koma-script classes}
+% \begin{macro}{\listoffixmes@pretoc@scrartcl}
+%   \begin{macro}{\listoffixmes@posttoc@scrartcl}
+%     \begin{macro}{\l@fixme@scrartcl}
+%       Let's start with the scrartcl version:
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@listoffixmes@pretoc@scrartcl{%
+  \section*{\listfixmename%
+    \@mkboth{\listfixmename}{\listfixmename}}%
+  }
+\newcommand\@listoffixmes@posttoc@scrartcl{}
+\newcommand*\l@fixme@scrartcl{\@dottedtocline{1}{1.5em}{2.3em}}
+
+%    \end{macrocode}
+% \begin{macro}{\listoffixmes@pretoc@scrreprt}
+%   \begin{macro}{\listoffixmes@posttoc@scrreprt}
+%     \begin{macro}{\l@fixme@scrreprt}
+%       Here's the scrreprt version:
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@listoffixmes@pretoc@scrreprt{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+  \chapter*{\listfixmename%
+    \@mkboth{\listfixmename}{\listfixmename}}%
+  }
+\newcommand\@listoffixmes@posttoc@scrreprt{\if@restonecol\twocolumn\fi}
+\newcommand*\l@fixme@scrreprt{\@dottedtocline{1}{1.5em}{2.3em}}
+
+%    \end{macrocode}
+% \begin{macro}{\listoffixmes@pretoc@scrbook}
+%   \begin{macro}{\listoffixmes@posttoc@scrbook}
+%     \begin{macro}{\l@fixme@scrbook}
+%       And here's the scrbook version:
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@listoffixmes@pretoc@scrbook{%
+  \if@twocolumn
+    \@restonecoltrue\onecolumn
+  \else
+    \@restonecolfalse
+  \fi
+  \chapter*{\listfixmename%
+    \@mkboth{\listfixmename}{\listfixmename}}%
+  }
+\newcommand\@listoffixmes@posttoc@scrbook{\if@restonecol\twocolumn\fi}
+\newcommand*\l@fixme@scrbook{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 %
@@ -456,10 +519,25 @@
         \let\@listoffixmes@pretoc\@listoffixmes@pretoc@book
         \let\@listoffixmes@posttoc\@listoffixmes@posttoc@book
         \let\l@fixme\l@fixme@book}{
-        %% Use the article layout by default.
-        \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
-        \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article
-        \let\l@fixme\l@fixme@article}
+        \@ifclassloaded{scrartcl}{
+          \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrartcl
+          \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrartcl
+          \let\l@fixme\l@fixme@scrartcl}{
+          \@ifclassloaded{scrreprt}{
+            \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrreprt
+            \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrreprt
+            \let\l@fixme\l@fixme@scrreprt}{
+            \@ifclassloaded{scrbook}{
+              \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrbook
+              \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrbook
+              \let\l@fixme\l@fixme@scrbook}{
+              %% Use the article layout by default.
+              \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
+              \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article
+              \let\l@fixme\l@fixme@article}
+            }
+          }
+        }
       }
     }
   }
