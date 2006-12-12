@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.37 Mon, 18 Feb 2002 14:54:22 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.38 Tue, 19 Feb 2002 09:26:37 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{338}
+% \CheckSum{421}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -411,11 +411,81 @@
 %    \end{macrocode}
 %
 % \subsection{Layout macros}
+% The main entry points |\fxnote|, |\fxwarning| and |\fixme| are empty by
+% default. The |final| or |draft| options will provide the proper definitions.
+%
+% \begin{macro}{\FXText}
+%   \begin{macro}{\FXMargin}
+%     \begin{macro}{\FXFootnote}
+%       \begin{macro}{\FXIndex}
+%         \begin{macro}{\FXUser}
+%           \begin{macro}{\FXInfo}
+%             \begin{macro}{\FXWarning}
+%               \begin{macro}{\FXError}
+%               The macros to implement different layouts for the fixme notes.
+%               The definition for |\FXError|, which non fatal requires a
+%               special trickery inspired from the standard warning mechanism.
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\FXText[2]{(\textbf{#1}: \emph{#2})}
+\newcommand\FXMargin[2]{%
+  \marginpar{\footnotesize\flushright\textbf{#1}: \emph{#2}}}
+\newcommand\FXFootnote[2]{%
+  \footnote{\textbf{#1}: \emph{#2}}}
+\newcommand\FXIndex[1]{\index{***@FIXME's:!#1}}
+\newcommand\FXUser[2]{}
+
+\newcommand\FXInfo[1]{\PackageInfo{FiXme}{`#1'}}
+\newcommand\FXWarning[1]{\PackageWarning{FiXme}{`#1'}}
+\newcommand\FXError[1]{%
+  \GenericWarning{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces
+  }{%
+    Package FiXme Error: `#1'%
+  }%
+}
+
+%    \end{macrocode}
+%
+% \begin{macro}{\fxnote}
+%   \begin{macro}{\fxwarning}
+%     \begin{macro}{fxerror}
+%       The main entry points for non-fatal notes (proper definition will be
+%       given by the |draft| or |final| option):
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\fxnote[1]{}
+\newcommand\fxwarning[1]{}
+\newcommand\fxerror[1]{}
+
+%    \end{macrocode}
+%
+% \begin{macro}{\fx@text}
+%   This macro is a common part for all non-fatal notes (textual appearance):
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\fx@text[2]{%
+  \iffixme@text\FXText{#1}{#2}\fi%
+  \iffixme@margin\FXMargin{#1}{#2}\fi%
+  \iffixme@footnote\FXFootnote{#1}{#2}\fi%
+  \iffixme@user\FXUser{#1}{#2}\fi}
+
+%    \end{macrocode}
+%
 % \begin{macro}{\fixme}
 %   \begin{macro}{\fixme@final}
 %     \begin{macro}{\fixme@draft}
-%       |\fixme| is empty by default. The |final| or |draft| options will
-%       provide the proper definition.
+%       |\fixme| and its implementation. The proper definition will be given
+%       by the |draft| or |final| option):
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -436,6 +506,7 @@
   \addcontentsline{lox}{fixme}{#1}}
 
 %    \end{macrocode}
+%
 % \begin{macro}{\FiXmeText}
 %   \begin{macro}{\FiXmeMargin}
 %     \begin{macro}{\FiXmeFootnote}
@@ -443,7 +514,7 @@
 %         \begin{macro}{\FiXmeInfo}
 %           \begin{macro}{\FiXmeWarning}
 %             \begin{macro}{\FiXmeUser}
-%               The macros to implement different layouts for the fixme notes:
+%               These macros are kept only to preserve backward compatibility:
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
@@ -452,15 +523,13 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FiXmeText[1]{(#1)}
-\newcommand\FiXmeMargin[1]{%
-  \marginpar{\footnotesize\flushright\textbf{FIXME:} \emph{#1}}}
-\newcommand\FiXmeFootnote[1]{%
-  \footnote{\textbf{FIXME:} \emph{#1}}}
-\newcommand\FiXmeIndex[1]{\index{***@FIXME's:!#1}}
-\newcommand\FiXmeInfo[1]{\PackageInfo{FiXme}{`#1'}}
-\newcommand\FiXmeWarning[1]{\PackageWarning{FiXme}{`#1'}}
-\newcommand\FiXmeUser[1]{}
+\newcommand\FiXmeText[1]{\FXText{FIXME}{#1}}
+\newcommand\FiXmeMargin[1]{\FXMargin{FIXME}{#1}}
+\newcommand\FiXmeFootnote[1]{\FXFootnote{FIXME}{#1}}
+\newcommand\FiXmeIndex[1]{\FXIndex{#1}}
+\newcommand\FiXmeUser[1]{\FXUser{FIXME}{#1}}
+\newcommand\FiXmeInfo[1]{\FXInfo{#1}}
+\newcommand\FiXmeWarning[1]{\FXWarning{#1}}
 
 %    \end{macrocode}
 % Booleans that control which layouts are selected:
@@ -469,9 +538,9 @@
 \newif\iffixme@margin\fixme@marginfalse
 \newif\iffixme@footnote\fixme@footnotefalse
 \newif\iffixme@index\fixme@indexfalse
+\newif\iffixme@user\fixme@userfalse
 \newif\iffixme@info\fixme@infofalse
 \newif\iffixme@warning\fixme@warningfalse
-\newif\iffixme@user\fixme@userfalse
 
 %    \end{macrocode}
 % Options that control which layouts are selected:
@@ -484,12 +553,12 @@
 \DeclareOption{nofootnote}{\fixme@footnotefalse}
 \DeclareOption{index}{\fixme@indextrue}
 \DeclareOption{noindex}{\fixme@indexfalse}
+\DeclareOption{user}{\fixme@usertrue}
+\DeclareOption{nouser}{\fixme@userfalse}
 \DeclareOption{info}{\fixme@infotrue}
 \DeclareOption{noinfo}{\fixme@infofalse}
 \DeclareOption{warning}{\fixme@warningtrue}
 \DeclareOption{nowarning}{\fixme@warningfalse}
-\DeclareOption{user}{\fixme@usertrue}
-\DeclareOption{nouser}{\fixme@userfalse}
 
 %    \end{macrocode}
 % \subsection{Language macros}
@@ -512,11 +581,35 @@
 % information because warnings are also logged.
 %    \begin{macrocode}
 \DeclareOption{final}{
+  \renewcommand\fxnote[1]{%
+    \FXInfo{#1}%
+    \addcontentsline{lox}{fixme}{note: #1}}
+  \renewcommand\fxwarning[1]{%
+    \FXWarning{#1}%
+    \addcontentsline{lox}{fixme}{warning: #1}}
+  \renewcommand\fxerror[1]{%
+    \FXError{#1}%
+    \addcontentsline{lox}{fixme}{error: #1}}
   \let\fixme\fixme@final
   \let\listoffixmes\listoffixmes@final
   }
 
 \DeclareOption{draft}{
+  \renewcommand\fxnote[1]{%
+    \FXInfo{#1}%
+    \addcontentsline{lox}{fixme}{note: #1}%
+    \fx@text{\texttt{FiXme} note}{#1}%
+    \FXIndex{**a@notes:!#1}}
+  \renewcommand\fxwarning[1]{%
+    \FXWarning{#1}%
+    \addcontentsline{lox}{fixme}{warning: #1}%
+    \fx@text{\texttt{FiXme} warning}{#1}%
+    \FXIndex{**b@warnings:!#1}}
+  \renewcommand\fxerror[1]{%
+    \FXError{#1}%
+    \addcontentsline{lox}{fixme}{error: #1}%
+    \fx@text{\texttt{FiXme} error}{#1}%
+    \FXIndex{**c@errors:!#1}}
   \let\fixme\fixme@draft
   \let\listoffixmes\listoffixmes@draft
   \@ifclassloaded{article}{
