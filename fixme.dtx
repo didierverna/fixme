@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.56 Tue, 21 May 2002 12:22:24 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.57 Wed, 03 Jul 2002 16:20:30 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{680}
+% \CheckSum{708}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -64,7 +64,7 @@
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
 % \newcommand\version{v2.2}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
-% \newcommand\releasedate{2002/04/24}
+% \newcommand\releasedate{2002/07/3}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
 % \newcommand\packagecopyright{Copyright \copyright{} 1998--2002 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
@@ -147,7 +147,8 @@
 % The \texttt{final} mode has been chosen as the default because \LaTeXe{}
 % itself behaves this way.\par
 %
-% \subsection{Controlling the layout}
+% \subsection{Notes layout}
+% \subsubsection{Controlling the layout}
 % \DescribeEnv{inline}
 % \DescribeEnv{margin}
 % \DescribeEnv{footnote}
@@ -171,7 +172,7 @@
 % list, but rather stays silent. It also stays silent in \texttt{final} mode,
 % regardless of the presence of remaining notes.
 %
-% \subsection{Customizing the layout}
+% \subsubsection{Customizing the layout}
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
 % parts: a ``prefix'' which depends on the note level, and the note
 % itself. The prefix is one of ``\fixme{} note:'', ``\fixme{} warning:'',
@@ -190,13 +191,27 @@
 % By default, only the first 3 of them are used though (fatal errors do not
 % appear under a subkey, but directly under the \fixme{} key). The notes are
 % numbered in the index.\par
+%
+% \subsection{Notes logging}
+% \subsubsection{Controlling the logging}
+% \DescribeEnv{silent}
+% \DescribeEnv{nosilent}
+% As well as being displayed in the document itself, all \fixme{} notes are
+% ``logged'' in different ways: by default, simple notes are recorded in the
+% log file while the others are also displayed on the terminal output.\par
+% You have the ability to suppress all kind of logging by using the
+% \texttt{silent} option. By default, the behavior is that of
+% \texttt{nosilent}.
+%
+% \subsubsection{Customizing the logging}
 % \DescribeMacro{\FXNote}
 % \DescribeMacro{\FXWarning}
 % \DescribeMacro{\FXError}
 % \DescribeMacro{\FXFatal}
-% These commands are the ones used by |\fxnote|, |\fxwarning|, |\fxerror| and
-% |\fixme| to log (and optionally display on the terminal) the notes. They
-% take the note itself as mandatory argument.
+% If you want a finer control on logging, you can redefine the commands used
+% to implement it. These commands (on the left) are the ones used by
+% |\fxnote|, |\fxwarning|, |\fxerror| and |\fixme| respectively. They take the
+% note itself as mandatory argument.
 %
 % \subsection{Fancy fruit salad layout}
 % \DescribeEnv{user}
@@ -301,7 +316,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2002/04/24 v2.2
+\ProvidesPackage{fixme}[2002/07/3 v2.2
                         Insert fixme notes in your documents]
 
 \newcommand*\fixmelogo{\textsf{FiXme}}
@@ -495,33 +510,6 @@
   \index{***@\fixmeindexname:!#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\FXNote}
-%   \begin{macro}{\FXWarning}
-%     \begin{macro}{\FXerror}
-%       \begin{macro}{\FXFatal}
-%         And the ones for logging and terminal output:
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\newcommand\FXNote[1]{%
-  \GenericInfo{%
-    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    Package FiXme Note: `#1'}}
-\newcommand\FXWarning[1]{%
-  \PackageWarning{FiXme}{`#1'}}
-\newcommand\FXError[1]{%
-  \GenericWarning{%
-    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    Package FiXme Error: `#1'}}
-\newcommand\FXFatal[1]{%
-  \GenericWarning{%
-    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    Package FiXme: `#1'}}
-
-%    \end{macrocode}
-%
 % \begin{macro}{\fixmefatalprefix}
 % \begin{macro}{\FiXmeInline}
 %   \begin{macro}{\FiXmeMargin}
@@ -599,6 +587,45 @@
 
 %    \end{macrocode}
 %
+% \subsection{Logging macros}
+% \begin{macro}{\FXNote}
+%   \begin{macro}{\FXWarning}
+%     \begin{macro}{\FXerror}
+%       \begin{macro}{\FXFatal}
+%         The macros forcontrolling logging (log file and terminal output):
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\FXNote[1]{%
+  \GenericInfo{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    Package FiXme Note: `#1'}}
+\newcommand\FXWarning[1]{%
+  \PackageWarning{FiXme}{`#1'}}
+\newcommand\FXError[1]{%
+  \GenericWarning{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    Package FiXme Error: `#1'}}
+\newcommand\FXFatal[1]{%
+  \GenericWarning{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    Package FiXme: `#1'}}
+
+%    \end{macrocode}
+% Boolean that control wether to stay silent or not:
+%    \begin{macrocode}
+\newif\iffixme@silent\fixme@silentfalse
+
+%    \end{macrocode}
+%% Options that control whether to be silent or not:
+%    \begin{macrocode}
+\DeclareOption{silent}{\fixme@silenttrue}
+\DeclareOption{nosilent}{\fixme@silentfalse}
+
+%    \end{macrocode}
+%
 % \subsection{\fixme{} notes}
 % Here are the counters:
 % \DescribeMacro{\thefixmecount}
@@ -631,10 +658,10 @@
 \def\fixme@note@draft#1{%
   \fixme@text{\fixmenoteprefix}{#1}%
   \iffixme@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
-  \FXNote{#1}%
+  \iffixme@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
 \def\fixme@note@final#1{%
-  \FXNote{#1}%
+  \iffixme@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
 
 %    \end{macrocode}
@@ -653,10 +680,10 @@
 \def\fixme@warning@draft#1{%
   \fixme@text{\fixmewarningprefix}{#1}%
   \iffixme@index\FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}\fi%
-  \FXWarning{#1}%
+  \iffixme@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
 \def\fixme@warning@final#1{%
-  \FXWarning{#1}%
+  \iffixme@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
 
 %    \end{macrocode}
@@ -675,10 +702,10 @@
 \def\fixme@error@draft#1{%
   \fixme@text{\fixmeerrorprefix}{#1}%
   \iffixme@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
-  \FXError{#1}%
+  \iffixme@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
 \def\fixme@error@final#1{%
-  \FXError{#1}%
+  \iffixme@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
 
 %    \end{macrocode}
@@ -698,7 +725,7 @@
   \iffixme@user\FiXmeUser{#1}\fi%
   \iffixme@index\FiXmeIndex{%
     \fixmefatalindexname\thefixmefatalcount: #1}\fi%
-  \FXFatal{#1}%
+  \iffixme@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\fixmefatalprefix: #1}}
 \def\fixme@fatal@final#1{%
   \PackageError{FiXme}{`#1' fixme left in final version}{%
@@ -870,7 +897,7 @@
 % Put us in \texttt{english} and \texttt{final} mode, and enable the marginal
 % notes.
 %    \begin{macrocode}
-\ExecuteOptions{english,final,margin}
+\ExecuteOptions{english,final,margin,nosilent}
 \ProcessOptions*
 
 %    \end{macrocode}
