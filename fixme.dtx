@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.47 Tue, 26 Mar 2002 11:20:10 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.48 Tue, 26 Mar 2002 11:29:37 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -756,17 +756,6 @@
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Liste des Corrections}}
 \DeclareOption{francais}{\ExecuteOptions{french}}
-\DeclareOption{italian}{%
-  \renewcommand*\fixmenoteprefix{\fixmelogo~nota}
-  \renewcommand*\fixmewarningprefix{\fixmelogo~avviso}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo~errore}
-  \renewcommand*\fixmefatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@note:!}
-  \renewcommand*\fixmewarningindexname{**b@avvisi:!}
-  \renewcommand*\fixmeerrorprefix{**c@errori:!}
-  \renewcommand*\fixmefatalindexname{}
-  \renewcommand*{\listfixmename}{Corrigenda}}
 \DeclareOption{spanish}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo~nota}
   \renewcommand*\fixmewarningprefix{\fixmelogo~aviso}
@@ -778,6 +767,17 @@
   \renewcommand*\fixmeerrorprefix{**c@errores:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Lista de las correctiones}}
+\DeclareOption{italian}{%
+  \renewcommand*\fixmenoteprefix{\fixmelogo~nota}
+  \renewcommand*\fixmewarningprefix{\fixmelogo~avviso}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo~errore}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{\fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@note:!}
+  \renewcommand*\fixmewarningindexname{**b@avvisi:!}
+  \renewcommand*\fixmeerrorprefix{**c@errori:!}
+  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*{\listfixmename}{Corrigenda}}
 \DeclareOption{german}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo~anm}
   \renewcommand*\fixmewarningprefix{\fixmelogo~warnung}
