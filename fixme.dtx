@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.25 Mon, 11 Dec 2000 12:15:40 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.26 Tue, 19 Dec 2000 14:11:33 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,12 +44,12 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{202}
+% \CheckSum{207}
 %
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
 % \newcommand{\version}{v1.2}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2000/12/11}
+% \newcommand{\releasedate}{2000/12/19}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2000 Didier Verna}
 % \MakeShortVerb{\|}
@@ -80,7 +80,7 @@
 % index entries, warnings on stdout and information in the log file. You can
 % use multiple forms (possibly all) at the same time. Additionally, you can
 % summarize all fixme notes in a list similar to the ``list of figures'' for
-% instance.\\
+% instance.\par
 % All these forms are available when you're working in \texttt{draft} mode.
 % The behavior of \fixme{} is different in \texttt{final} mode, as any
 % remaining fixme note in the document will generate an error.
@@ -91,59 +91,67 @@
 % preamble of your document.
 %
 % \subsection{Main macros}
-% \DescribeMacro{fixme}
-% The main interface to the package is the |\fixme{}| macro which allows you
+% \DescribeMacro{\fixme}
+% The main interface to the package is the |\fixme| macro which allows you
 % to stick notes in your \textbf{draft} documents. This macro takes one
 % argument, the fixme note. But that, you guessed. In terms of formatting, the
 % fixme notes layout is controlled by a set of options that will be described
 % in the next section. In \texttt{final} mode (the default), this macro
-% produces an error.\\
-% \DescribeMacro{listoffixmes}
+% produces an error.\par
+% \DescribeMacro{\listoffixmes}
 % \fixme{} remembers where you put fixme notes in a toc-like file which
-% extention is \texttt{lox}. The |\listoffixmes| macro generates the list of
+% extension is \texttt{lox}. The |\listoffixmes| macro generates the list of
 % all fixme notes in a manner similar to that of the ``list of figures'' for
 % instance. A standard layout is automatically used for the `article',
 % `report' and `book' classes. If another class is used, the
 % `article' layout is selected. Also, note that if no fixmes were introduced
 % in the document, this macro doesn't generate an empty list, but rather stays
-% silent.
+% silent.\par
+% \DescribeMacro{\listfixmename}
+% The list of fixmes has a title which defaults to ``List of FIXME's'' for
+% English. The language options modify this title, but you can also directly
+% change its value by calling
+% |\renewcommand{\listfixmename}{|\meta{something}|}|.
 %
 % \subsection{Global options}
 % The following options are usually given to |\documentclass{}| which in turn
-% passes them to all packages.\\
+% passes them to all packages.\par
 % \DescribeEnv{final}
 % \DescribeEnv{draft}
 % In \texttt{final} mode (the default) any remaining fixme note in the
 % document generates an error. Well, if there are parts to be fixed, the
-% document is not final right? This mode has been choosen as the default
+% document is not final right? This mode has been chosen as the default
 % because \LaTeX{} itself is in this mode by default. On the contrary, the
-% \texttt{draft} option tells \fixme{} to actually produce the fixme notes.\\
+% \texttt{draft} option tells \fixme{} to actually produce the fixme notes.\par
 % \DescribeEnv{english}
 % \DescribeEnv{french}
 % \DescribeEnv{francais}
-% \fixme{} currently supports both english and french languages. This actually
+% \DescribeEnv{german}
+% \DescribeEnv{ngerman}
+% \fixme{} currently supports English, French and German. This actually
 % only has the effect of modifying the title of the ``list of fixmes'' if you
 % happen to use it. The \texttt{french} and \texttt{francais} options are
+% synonyms. The \texttt{german} and \texttt{ngerman} options are currently
 % equivalent.
 %
 % \subsection{Layout options}
 % These options are specific to \fixme{} and control the layout of the fixme
-% notes. They are \textbf{not} mutualy exclusive: you can have marginal notes,
-% footnotes, warnings, anything alltogether. Each described option has a
-% counterpart that supresses its behavior. The counterpart option has the same
+% notes. They are \textbf{not} mutually exclusive: you can have marginal notes,
+% footnotes, warnings, anything altogether. Each described option has a
+% counterpart that suppresses its behavior. The counterpart option has the same
 % name, prefixed with \texttt{no}. By default, only the \texttt{margin} layout
-% is enabled.\\
+% is enabled.\par
 % \DescribeEnv{margin}
 % By default or given this option, \fixme{} inserts the fixme notes in the
 % margin. The notes appear in small characters and flushed to the right. If
-% you want to disable margin notes, use the \texttt{nomargin} option.\\
+% you want to disable margin notes, use the \texttt{nomargin} option.\par
 % \DescribeEnv{footnote} If you prefer to have footnotes, or if you want to
 % have both (hey, don't forget to save some space for real text!), use this
-% option.\\
+% option.\par
 % \DescribeEnv{index}
 % With the \texttt{index} option, fixme notes can also be inserted in the
 % index of your document. All \fixme{} index entries appear under the
-% ``FIXME's'' key in the symbols section.\\
+% ``FIXME's'' key in the symbols section.\par
 % \DescribeEnv{info}
 % \DescribeEnv{warning}
 % Additionally, you might want to output warnings on the terminal and/or in
@@ -168,27 +176,20 @@
 %
 %
 % \section{Inner Macros}
-% The following macros belong to the inside of \fixme, but might be of some
-% interest for you anyway.
-%
-% \subsection{Fixme notes layout}
 % \DescribeMacro{\FiXmeMargin}
 % \DescribeMacro{\FiXmeFootnote}
 % \DescribeMacro{\FiXmeIndex}
 % \DescribeMacro{\FiXmeInfo}
 % \DescribeMacro{\FiXmeWarning}
 % \DescribeMacro{\FiXmeUser}
+% The following macros belong to the internals of \fixme, but might be of some
+% interest for you anyway.\par
 % Each kind of layout that you can select with an option is handled by one of
 % these macros. The |\FiXmeUser| macro is the only one we've talked about
 % until now since it is empty by default. If you are not satisfied with the
 % way the other ones format the fixme notes, you can redefine them using
 % |\renewcommand{}|.
 %
-% \subsection{Fixme notes list}
-% \DescribeMacro{\listfixmename}
-% This macro gives its title to the list of fixmes. It expands to ``List of
-% FIXME's'' by default. The language options modify this. You can also change
-% its value with |\renewcommand{}|.
 %
 % \section{\auctex{} support}
 % \auctex{} is a powerful major mode for editing \TeX{} documents in
@@ -201,7 +202,7 @@
 % more information on this.
 %
 %
-% \StopEventually{\par Well, I think that's it. Enjoy using \fixme!
+% \StopEventually{\par Well, I think that's it. Enjoy using \fixme{}!
 %   \vfill\hfill\small \packagecopyright{}.}
 %
 %
@@ -209,23 +210,28 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2000/12/11 v1.2
+\ProvidesPackage{fixme}[2000/12/19 v1.2
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
 % \subsection{List macros}
-% \DescribeMacro{listoffixmes}
-% \DescribeMacro{listfixmename}
+% \DescribeMacro{\listoffixmes}
+% \DescribeMacro{\listfixmename}
+% In order to redefine the list title, users have to call |\renewcommand|. I
+% don't like this much: it would be cleaner to provide a real command that
+% redefines the title internally. However, I'll stick with the current scheme
+% because it is consistent with the rest of \LaTeXe's lists.
 %    \begin{macrocode}
 \newif\if@fixmes\@fixmesfalse
 \newcommand\listoffixmes{\if@fixmes\@listoffixmes\fi}
 \newcommand*\listfixmename{}
 
 %    \end{macrocode}
+% \DescribeMacro{\listoffixmes@article}
+% \DescribeMacro{\l@fixme@article}
 % The different versions of |\listoffixmes|, depending on the current
-% document class (currently, article, report, and book are recognized):
-% \DescribeMacro{listoffixmes@article}
-% \DescribeMacro{l@fixme@article}
+% document class (currently, article, report, and book are recognized). Let's
+% start with the article version:
 %    \begin{macrocode}
 \newcommand\@listoffixmes@article{%
   \section*{\listfixmename
@@ -236,8 +242,9 @@
 \newcommand*\l@fixme@article{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
-% \DescribeMacro{listoffixmes@report}
-% \DescribeMacro{l@fixme@report}
+% \DescribeMacro{\listoffixmes@report}
+% \DescribeMacro{\l@fixme@report}
+% Here's the report version:
 %    \begin{macrocode}
 \newcommand\@listoffixmes@report{%
   \if@twocolumn
@@ -254,8 +261,9 @@
 \newcommand*\l@fixme@report{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
-% \DescribeMacro{listoffixmes@book}
-% \DescribeMacro{l@fixme@book}
+% \DescribeMacro{\listoffixmes@book}
+% \DescribeMacro{\l@fixme@book}
+% And here's the book version:
 %    \begin{macrocode}
 \newcommand\@listoffixmes@book{%
   \if@twocolumn
@@ -274,18 +282,20 @@
 %    \end{macrocode}
 %
 % \subsection{Layout macros}
-% \DescribeMacro{fixme}
+% \DescribeMacro{\fixme}
+% |\fixme| is empty by default. The |final| or |draft| options will provide
+% the proper definition.
 %    \begin{macrocode}
 \newcommand\fixme[1]{}
 
 %    \end{macrocode}
 % The macros to implement different layouts for the fixme notes:
-% \DescribeMacro{FiXmeMargin}
-% \DescribeMacro{FiXmeFootnote}
-% \DescribeMacro{FiXmeIndex}
-% \DescribeMacro{FiXmeInfo}
-% \DescribeMacro{FiXmeWarning}
-% \DescribeMacro{FiXmeUser}
+% \DescribeMacro{\FiXmeMargin}
+% \DescribeMacro{\FiXmeFootnote}
+% \DescribeMacro{\FiXmeIndex}
+% \DescribeMacro{\FiXmeInfo}
+% \DescribeMacro{\FiXmeWarning}
+% \DescribeMacro{\FiXmeUser}
 %    \begin{macrocode}
 \newcommand\FiXmeMargin[1]{%
   \marginpar{\footnotesize\flushright\textbf{FIXME:} \emph{#1}}}
@@ -329,6 +339,8 @@
 \DeclareOption{english}{\renewcommand*{\listfixmename}{List of FIXME's}}
 \DeclareOption{french}{\renewcommand*{\listfixmename}{Liste des FIXME's}}
 \DeclareOption{francais}{\ExecuteOptions{french}}
+\DeclareOption{german}{\renewcommand*{\listfixmename}{Liste der FIXME's}}
+\DeclareOption{ngerman}{\ExecuteOptions{german}}
 
 %    \end{macrocode}
 % \subsection{Options processing}
