@@ -43,6 +43,8 @@ message. FiXme also comes with support for AUC-TeX.
 
 ** Version 2.1
 --------------
+*** Use \nobreakspace instead of the tilda character.
+This avoids conflicts with Babel and Spanish environments.
 *** Fix bug in index handling
 reported by Knut Lickert <knut@lickert.net>: index entries were
 unconditionally built.
