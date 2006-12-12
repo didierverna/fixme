@@ -41,6 +41,11 @@ message. FiXme also comes with support for AUC-TeX.
 * Changes
 =========
 
+** Version 2.2
+--------------
+*** Support for Danish
+thanks to Kim Rud Bille <krbi01@control.auc.dk>
+
 ** Version 2.1
 --------------
 *** Use \nobreakspace instead of the tilda character.

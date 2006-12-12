@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.55 Tue, 23 Apr 2002 18:38:38 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.56 Tue, 21 May 2002 12:22:24 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{651}
+% \CheckSum{680}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -62,7 +62,7 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
-% \newcommand\version{v2.1}
+% \newcommand\version{v2.2}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
 % \newcommand\releasedate{2002/04/24}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
@@ -218,12 +218,13 @@
 % \DescribeEnv{italian}
 % \DescribeEnv{german}
 % \DescribeEnv{ngerman}
-% \fixme{} currently supports English, French, Spanish, Italian and German.
-% You can select the language you want to use by passing the corresponding
-% option (these options are usually given directly to |\documentclass{}| which
-% in turn passes them to all packages). The \texttt{french} and
-% \texttt{francais} options are synonyms. The \texttt{german} and
-% \texttt{ngerman} options are currently equivalent.\par
+% \DescribeEnv{danish}
+% \fixme{} currently supports English, French, Spanish, Italian, German and
+% Danish. You can select the language you want to use by passing the
+% corresponding option (these options are usually given directly to
+% |\documentclass{}| which in turn passes them to all packages). The
+% \texttt{french} and \texttt{francais} options are synonyms. The
+% \texttt{german} and \texttt{ngerman} options are currently equivalent.\par
 % If you want a finer grain on the language-dependent parts of \fixme{}, the
 % following macros are provided and can be redefined.\par
 % \DescribeMacro{\fixmenoteprefix}
@@ -271,6 +272,8 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v2.2] Support for Danish thanks to Kim Rud Bille
+% |<krbi01@control.auc.dk>|
 % \item[v2.1] Use |\nobreakspace| instead of the tilda character. This avoids
 % conflicts with Babel in Spanish environments.\\
 % Fix bug reported by Knut Lickert |<knut@lickert.net>|: index
@@ -298,7 +301,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2002/04/24 v2.1
+\ProvidesPackage{fixme}[2002/04/24 v2.2
                         Insert fixme notes in your documents]
 
 \newcommand*\fixmelogo{\textsf{FiXme}}
@@ -790,6 +793,17 @@
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
 \DeclareOption{ngerman}{%
   \ExecuteOptions{german}}
+\DeclareOption{danish}{%
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Advarsel}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Fejl}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{\fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@Noter:!}
+  \renewcommand*\fixmewarningindexname{**b@Advarsler:!}
+  \renewcommand*\fixmeerrorindexname{**c@Fejl:!}
+  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*{\listfixmename}{Rettelser}}
 
 %    \end{macrocode}
 %
