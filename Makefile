@@ -1,13 +1,13 @@
 ### Makefile --- Personnal Makefile for FiXme
 
-## Copyright (C) 1999 Didier Verna.
+## Copyright (C) 1999-2000 Didier Verna.
 
-## PRCS: $Id: Makefile 1.9 Fri, 24 Sep 1999 16:28:07 +0200 verna $
+## PRCS: $Id: Makefile 1.10 Wed, 29 Mar 2000 11:09:02 +0200 didier $
 
-## Author:        Didier Verna <verna@inf.enst.fr>
-## Maintainer:    Didier Verna <verna@inf.enst.fr>
-## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Fri Sep 24 16:10:25 1999
+## Author:        Didier Verna <didier@epita.fr>
+## Maintainer:    Didier Verna <didier@epita.fr>
+## Created:       Tue Jan  5 16:46:40 1999
+## Last Revision: Wed Mar 29 10:18:02 2000
 
 ## This file is part of FiXme.
 
@@ -29,13 +29,13 @@
 
 ### Code:
 
-# $Format: "VERSION=$ProjetVersion$"$
-VERSION=$ProjetVersion$
-ARCHIVE=xxx
-DISTFILES=README fixme.ins fixme.dtx
+STYDIR=${HOME}/share/tex/sty
+DOCDIR=${HOME}/share/tex/doc
 
-STYDIR=${HOME}/TeX/sty
-DOCDIR=${HOME}/TeX/doc
+## $Format: "VERSION := $PackageVersion$"$
+VERSION := 1.1-b19
+ARCHIVE := fixme-$(VERSION)
+DISTFILES := README fixme.ins fixme.dtx
 
 all: fixme.sty fixme.dvi
 
@@ -54,7 +54,7 @@ dist:
 	-rm -fr fixme-*
 	mkdir $(ARCHIVE)
 	cp $(DISTFILES) $(ARCHIVE)
-	gtar zcf $(ARCHIVE).tar.gz $(ARCHIVE)
+	tar zcvf $(ARCHIVE).tar.gz $(ARCHIVE)
 	rm -fr fixme-*
 
 checkin:
@@ -64,14 +64,14 @@ checkin:
 fixme.sty: fixme.ins fixme.dtx
 fixme.dvi: fixme.dtx
 
-.ins.sty:
+%.sty: %.ins
 	@echo "\n ===== Building the sty file ..."
 	latex $<
 
-.dtx.dvi:
+%.dvi: %.dtx
 	@echo "\n ===== Building the doc file ..."
 	latex $<
 
-.SUFFIXES: .ins .dtx .dvi .sty
+.PHONY: all install install-sty install-doc clean distclean dist checkin
 
 ### Makefile ends here
