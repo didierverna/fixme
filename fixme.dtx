@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.2 Tue, 05 Jan 1999 16:28:23 +0100 verna $
+% PRCS: $Id: fixme.dtx 1.3 Tue, 05 Jan 1999 17:49:34 +0100 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -49,9 +49,9 @@
 %
 % \fi
 %
-% \iffalse $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$ \fi
-% \newcommand{\packageversion}{1.0-b2}
-% \iffalse $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$ \fi
+% ^^A $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$
+% \newcommand{\packageversion}{1.0-b3}
+% ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
 % \newcommand{\packagedate}{1999/01/05}
 % \MakeShortVerb{\|}
 % \date{\today}
@@ -147,7 +147,8 @@
 % code implementing this package. First, the package identifies itself:
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
-\ProvidesPackage{fixme}[1994/06/01]
+%% $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
+\ProvidesPackage{fixme}[1999/01/05]
 
 %    \end{macrocode}
 % Then, we define our initial commands. Internal commands are all empty,
