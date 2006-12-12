@@ -4,3 +4,8 @@
 
 * From Michael Kubovy:
 turn fixme into a collaborative annotation tool.
+
+* From Brian van den Broek: we should escape fixme text before putting it into
+the index because of special caracters (! etc). Also, maybe mention in the doc
+problems with commands like \footenotesize going into the index, and the use
+of \protect.
