@@ -21,10 +21,12 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 3.2
 ===============
+** Fix incompatibility with AMS-Book
+reported by Claude Lacoursière: \@starttoc takes 2 arguments.
 ** Support for Croatian
-thanks to Marcel Maretic <marcel@fsb.hr>
+thanks to Marcel Maretic <marcel@fsb.hr>.
 ** Fix incompatibility with Beamer
-reported by Akim Demaille: protect contents of lox file.ug in environments
+reported by Akim Demaille: protect contents of lox file.ug in environments.
 
 * Version 3.1
 ===============
