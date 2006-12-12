@@ -1,3 +1,6 @@
 #### Is this still the case ??
 * Fixme doesn't work with beamer because of \RequirePackage{verbatim} which is
   here to define the comment environnement.
+
+* From Michael Kubovy:
+turn fixme into a collaborative annotation tool.

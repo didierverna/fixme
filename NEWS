@@ -18,6 +18,11 @@ version 1999/06/01 or later.
 
 FiXme consists of the files listed in the file `README'.
 
+* Version 3.3
+=============
+** Fix bug in \fixme@footnotetrue
+reported by Stefan Mann: a typo in the macro name.
+
 * Version 3.2
 =============
 ** Added the marginclue layout option
