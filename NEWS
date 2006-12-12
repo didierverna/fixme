@@ -22,6 +22,8 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 2.3
 =============
+** Added an optional first argument to the note insertion commands
+to change the layout locally.
 ** Fix bug in marginal notes
 reported by Akim Demaille: they could mess up the document's layout by
 flushing it right.
