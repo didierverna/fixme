@@ -40,7 +40,7 @@ DOCDIR := $(TEXDIR)/doc
 W3DIR  := ${HOME}/www/comp/development
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 1.5
+VERSION := 2.0
 
 ARCHIVE := $(PROJECT)-$(VERSION)
 DISTFILES := README $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
