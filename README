@@ -44,12 +44,9 @@ message. FiXme also comes with support for AUC-TeX.
 ** Version 2.0
 --------------
 *** New feature: note levels
-thanks to an optional argument to \fixme.
-*** New feature: counters
-and FiXme usage summary at end of processing.
-*** More translation work.
+*** New feature: note counters, FiXme usage summary
 *** Suggestions from Kasper B. Graversen <kbg@dkik.dk>.
-
+*** Support for Spanish
 
 ** Version 1.5
 --------------
