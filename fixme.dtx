@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.26 Tue, 19 Dec 2000 14:11:33 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.27 Tue, 26 Dec 2000 13:48:38 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -33,10 +33,10 @@
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
-\begin{document}
 % \OnlyDescription
-\newcommand{\fixme}{\textsf{FiXme}}
-\newcommand{\auctex}{AUC-\TeX}
+% \CodelineIndex
+% \RecordChanges
+\begin{document}
 \DocInput{fixme.dtx}
 \end{document}
 %</driver>
@@ -44,7 +44,22 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{207}
+% \CheckSum{208}
+%% \CharacterTable
+%%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%   Digits        \0\1\2\3\4\5\6\7\8\9
+%%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%%   Dollar        \$     Percent       \%     Ampersand     \&
+%%   Acute accent  \'     Left paren    \(     Right paren   \)
+%%   Asterisk      \*     Plus          \+     Comma         \,
+%%   Minus         \-     Point         \.     Solidus       \/
+%%   Colon         \:     Semicolon     \;     Less than     \<
+%%   Equals        \=     Greater than  \>     Question mark \?
+%%   Commercial at \@     Left bracket  \[     Backslash     \\
+%%   Right bracket \]     Circumflex    \^     Underscore    \_
+%%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
 % \newcommand{\version}{v1.2}
@@ -52,6 +67,8 @@
 % \newcommand{\releasedate}{2000/12/19}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2000 Didier Verna}
+% \newcommand{\fixme}{\textsf{FiXme}}
+% \newcommand{\auctex}{AUC-\TeX}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
@@ -201,10 +218,8 @@
 % \LaTeX{} styles directory). Please refer to the \auctex{} documentation for
 % more information on this.
 %
-%
 % \StopEventually{\par Well, I think that's it. Enjoy using \fixme{}!
 %   \vfill\hfill\small \packagecopyright{}.}
-%
 %
 % \section{The Code}
 %    \begin{macrocode}
@@ -215,23 +230,28 @@
 
 %    \end{macrocode}
 % \subsection{List macros}
-% \DescribeMacro{\listoffixmes}
-% \DescribeMacro{\listfixmename}
-% In order to redefine the list title, users have to call |\renewcommand|. I
-% don't like this much: it would be cleaner to provide a real command that
-% redefines the title internally. However, I'll stick with the current scheme
-% because it is consistent with the rest of \LaTeXe's lists.
+% \begin{macro}{\listoffixmes}
+%   \begin{macro}{\listfixmename}
+%     In order to redefine the list title, users have to call |\renewcommand|.
+%     I don't like this much: it would be cleaner to provide a real command
+%     that redefines the title internally. However, I'll stick with the
+%     current scheme because it is consistent with the rest of \LaTeXe's
+%     lists.
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \newif\if@fixmes\@fixmesfalse
 \newcommand\listoffixmes{\if@fixmes\@listoffixmes\fi}
 \newcommand*\listfixmename{}
 
 %    \end{macrocode}
-% \DescribeMacro{\listoffixmes@article}
-% \DescribeMacro{\l@fixme@article}
-% The different versions of |\listoffixmes|, depending on the current
-% document class (currently, article, report, and book are recognized). Let's
-% start with the article version:
+% \begin{macro}{\listoffixmes@article}
+%   \begin{macro}{\l@fixme@article}
+%     The different versions of |\listoffixmes|, depending on the current
+%     document class (currently, article, report, and book are recognized).
+%     Let's start with the article version:
+%   \end{macro}
+%  \end{macro}
 %    \begin{macrocode}
 \newcommand\@listoffixmes@article{%
   \section*{\listfixmename
@@ -242,9 +262,11 @@
 \newcommand*\l@fixme@article{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
-% \DescribeMacro{\listoffixmes@report}
-% \DescribeMacro{\l@fixme@report}
-% Here's the report version:
+% \begin{macro}{\listoffixmes@report}
+%   \begin{macro}{\l@fixme@report}
+%     Here's the report version:
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\@listoffixmes@report{%
   \if@twocolumn
@@ -261,9 +283,11 @@
 \newcommand*\l@fixme@report{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
-% \DescribeMacro{\listoffixmes@book}
-% \DescribeMacro{\l@fixme@book}
-% And here's the book version:
+% \begin{macro}{\listoffixmes@book}
+%   \begin{macro}{\l@fixme@book}
+%     And here's the book version:
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\@listoffixmes@book{%
   \if@twocolumn
@@ -282,20 +306,27 @@
 %    \end{macrocode}
 %
 % \subsection{Layout macros}
-% \DescribeMacro{\fixme}
-% |\fixme| is empty by default. The |final| or |draft| options will provide
-% the proper definition.
+% \begin{macro}{\fixme}
+%   |\fixme| is empty by default. The |final| or |draft| options will provide
+%   the proper definition.
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\fixme[1]{}
 
 %    \end{macrocode}
-% The macros to implement different layouts for the fixme notes:
-% \DescribeMacro{\FiXmeMargin}
-% \DescribeMacro{\FiXmeFootnote}
-% \DescribeMacro{\FiXmeIndex}
-% \DescribeMacro{\FiXmeInfo}
-% \DescribeMacro{\FiXmeWarning}
-% \DescribeMacro{\FiXmeUser}
+% \begin{macro}{\FiXmeMargin}
+%   \begin{macro}{\FiXmeFootnote}
+%     \begin{macro}{\FiXmeIndex}
+%       \begin{macro}{\FiXmeInfo}
+%         \begin{macro}{\FiXmeWarning}
+%           \begin{macro}{\FiXmeUser}
+%             The macros to implement different layouts for the fixme notes:
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\FiXmeMargin[1]{%
   \marginpar{\footnotesize\flushright\textbf{FIXME:} \emph{#1}}}
@@ -351,7 +382,10 @@
 %    \begin{macrocode}
 \DeclareOption{final}{
   \renewcommand{\fixme}[1]{%
-    \PackageError{FiXme}{`#1' fixme left in final version}\@ehc}
+    \PackageError{FiXme}{`#1' fixme left in final version}{%
+      You are processing your document in final mode,\MessageBreak
+      but you still have some FiXme's left behind.\MessageBreak
+      Type X to quit, fix your document, and rerun LaTeX.}}
   }
 
 \DeclareOption{draft}{
@@ -388,6 +422,8 @@
 
 %    \end{macrocode}
 %
-% \Finale\PrintChanges
+% ^^A \PrintChanges
+% ^^A \PrintIndex
+% \Finale
 %
 % ^^A fixme.dtx ends here.

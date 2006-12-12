@@ -1,8 +1,26 @@
+2000-12-26  Didier Verna  <didier@lrde.epita.fr>
+
+	* fixme.ins: prettyfied the preamble.
+
+        * fink.dtx: prepared for using index and glossary. Added a call to
+        `\CharacterTable'. Used the `macro' environment in code
+        description. Some documentation changes.
+	(final): improved error message passed to \PackageError.
+
+	* README (Changes): new section. It is not worth using index and
+        glossary in the dtx file right now.
+
+        * Makefile (clean): also remove index and glossary aux files.
+        (distclean): Moved the "-rm -fr $(PROJECT)-*" action to the
+        `clean' target.
+        (%.sty): answer `y' to LaTeX's question.
+        (%.dvi): prepared for using index and glossary.
+
 2000-12-19  Didier Verna  <didier@lrde.epita.fr>
 
 	* fixme.dtx: added backslashes to macro names in calls to
 	\DescribeMacro.
-	Moved the descriptioni of \listfixmename to the "Main Macros"
+	Moved the descriptions of \listfixmename to the "Main Macros"
 	section, and added a comment in the code.
 	Added support for german (from Harald Harders <h.harders@tu-bs.de>).
 
