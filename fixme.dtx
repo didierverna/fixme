@@ -2,9 +2,9 @@
 %
 % fixme.dtx --- Doc file for the FiXme package (code and documentation)
 %
-% Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna.
+% Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.69 Mon, 28 Feb 2005 17:05:24 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.70 Mon, 12 Sep 2005 09:39:49 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{807}
+% \CheckSum{837}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -291,9 +291,10 @@
 % \DescribeEnv{german}
 % \DescribeEnv{ngerman}
 % \DescribeEnv{danish}
-% \fixme{} currently supports English, French, Spanish, Italian, German and
-% Danish. You can select the language you want to use by passing the
-% corresponding option (these options are usually given directly to
+% \DescribeEnv{croatian}
+% \fixme{} currently supports English, French, Spanish, Italian, German,
+% Danish and Croatian. You can select the language you want to use by passing
+% the corresponding option (these options are usually given directly to
 % |\documentclass{}| which in turn passes them to all packages). The
 % \texttt{french} and \texttt{francais} options are synonyms. The
 % \texttt{german} and \texttt{ngerman} options are currently equivalent.\par
@@ -344,8 +345,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v3.2] Fix incompatibility with Beamer reported by Akim Demaille:
-%   protect contents of lox file.
+% \item[v3.2] Support for Croatian thanks to Marcel Maretic |<marcel@fsb.hr>|\\
+%   Fix incompatibility with Beamer reported by Akim Demaille: protect
+%   contents of lox file.
 % \item[v3.1] Fix bug reported by Arnold Beckmann: the environments were
 %   visible in final mode.
 % \item[v3.0] Added environments corresponding to the note insertion
@@ -960,6 +962,17 @@
   \renewcommand*\fixmeerrorindexname{**c@Fejl:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Rettelser}}
+\DeclareOption{croatian}{%
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Poruka}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Upozorenje}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Gre\v ska}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{\fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@Poruke:!}
+  \renewcommand*\fixmewarningindexname{**b@Upozorenja:!}
+  \renewcommand*\fixmeerrorindexname{**c@Greske:!}
+  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*{\listfixmename}{Popis korekcija}}
 
 %    \end{macrocode}
 %
