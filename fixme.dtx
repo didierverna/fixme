@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.41 Tue, 19 Feb 2002 18:17:12 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.42 Tue, 19 Feb 2002 18:35:13 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -115,9 +115,8 @@
 % Sticking a fixme note in your document is done thanks to the |\fixme| macro.
 % This macro takes one optional and one mandatory argument. The mandatory
 % argument is the note itself. But that, you guessed. The optional argument
-% (available since \fixme{} version 2.0) describes the ``importance level'' of
-% the note. Possible values are |note|, |warning| and |error| (which is the
-% default).
+% (available since \fixme{} version 2.0) describes the ``level'' of the note.
+% Possible values are |note|, |warning| and |error| (which is the default).
 %
 % \subsection{Controlling the behavior of \fixme}
 % \DescribeEnv{final}
@@ -187,7 +186,7 @@
 % \DescribeMacro{\FXMargin}
 % \DescribeMacro{\FXFootnote}
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
-% parts: a ``prefix'' which depends on the importance level, and the note
+% parts: a ``prefix'' which depends on the note level, and the note
 % itself. The prefix is one ``\fixme{} note:'', ``\fixme{} warning:'' or
 % ``FIXME:'', and appears in bold. The note itself appears emphasized. These
 % layouts are implemented thanks to corresponding macros that you can
@@ -196,8 +195,8 @@
 % \DescribeMacro{\FXIndex}
 % This macro is used for the \texttt{index} layout. All \fixme{} index entries
 % appear under the ``FIXME's'' key in the symbols section. There are 3
-% subcategories under this key, chosen according to the importance level of
-% each note: ``notes'', ``warnings'', and ``to be fixed''.\par
+% subcategories under this key, chosen according to the level of each note:
+% ``notes'', ``warnings'', and ``to be fixed''.\par
 % \DescribeMacro{\FXInfo}
 % \DescribeMacro{\FXWarning}
 % These commands are the ones used by \fixme{} to produce a package info or
@@ -261,6 +260,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v2.0] New feature: notes levels (optional argument to |\fixme|).
+% \item[] More translation work.
+% \item[] Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|
 % \item[v1.5] New appearance option: \texttt{inline}.
 % \item[v1.4] Support for the koma-script classes has been added.
 % \item[] Fix bug reported by Ulf Jaenicke-Roessler
