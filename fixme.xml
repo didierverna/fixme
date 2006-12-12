@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE entry SYSTEM "../catalogue.dtd">
 
-<entry id="fixme 2.1"
+<entry id="fixme 2.2"
        datestamp="2002/04/24"
        modifier="ftpmaint@tug.ctan.org">
   <about>
@@ -11,7 +11,7 @@
       <name>Didier Verna</name>
       <email>didier@lrde.epita.fr</email>
     </author>
-    <license type="lppl" />
+    <license type="lppl"/>
   </about>
   <description>
     <abstract>

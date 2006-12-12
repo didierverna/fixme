@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2002 Didier Verna.
 
-## PRCS: $Id: Makefile 1.17 Tue, 23 Apr 2002 17:58:20 +0200 didier $
+## PRCS: $Id: Makefile 1.18 Wed, 03 Jul 2002 16:20:30 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -43,7 +43,7 @@ W3DIR  := ${HOME}/www/comp/development
 VERSION := 2.2
 
 ARCHIVE := $(PROJECT)-$(VERSION)
-DISTFILES := README $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
+DISTFILES := README NEWS $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
 
 all: $(PROJECT).sty $(PROJECT).dvi
 
@@ -66,11 +66,17 @@ dist:
 	-rm -fr $(ARCHIVE)*
 	mkdir $(ARCHIVE)
 	cp $(DISTFILES) $(ARCHIVE)
-	tar zcvf $(ARCHIVE).tar.gz $(ARCHIVE)
-	rm -fr $(ARCHIVE)
+	tar cvf $(ARCHIVE).tar $(ARCHIVE)
+	gzip -c $(ARCHIVE).tar > $(ARCHIVE).tar.gz
+	bzip2 -c $(ARCHIVE).tar > $(ARCHIVE).tar.bz2
+	rm -fr $(ARCHIVE) $(ARCHIVE).tar
 
 install-www: dist
+	install -m 644 NEWS $(W3DIR)/fixme-news.txt
+	echo "$(VERSION)" > $(W3DIR)/fixme-version.txt
+	chmod 644 $(W3DIR)/fixme-version.txt
 	install -m 644 $(ARCHIVE).tar.gz $(W3DIR)/$(PROJECT).tar.gz
+	install -m 644 $(ARCHIVE).tar.bz2 $(W3DIR)/$(PROJECT).tar.bz2
 
 checkin:
 	prcs checkin
