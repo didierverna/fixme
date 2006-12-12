@@ -49,6 +49,7 @@
       '("FXNote")
       '("FXWarning")
       '("FXError")
+      '("FXFatal")
       ;; Counters:
       '("thefixmecount")
       '("thefixmenotecount")
