@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.72 Wed, 12 Apr 2006 15:15:39 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.73 Tue, 12 Sep 2006 11:21:00 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -62,7 +62,7 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
-% \newcommand\version{v3.2}
+% \newcommand\version{v3.3}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
 % \newcommand\releasedate{2006/04/12}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
@@ -368,6 +368,8 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v3.3] Fix bug reported by Stefan Mann: a typo in the
+% |\fixme@footnotetrue| macro name.
 % \item[v3.2] Added the marginclue layout option which only signals a fixme in
 %   the margin, withtout the actual contents.\\
 %   Fix incompatibility with \texttt{amsbook} reported by Claude
@@ -412,8 +414,8 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡$Format: "\\ProvidesPackage{fixme}[$ReleaseDate: 2004/10/19$ v$Version: 2.3$"$
-\ProvidesPackage{fixme}[2006/04/12 v3.2
-                        Insert fixme notes in your documents]
+\ProvidesPackage{fixme}[2006/04/12 v3.3
+			Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
 \RequirePackage{verbatim}
@@ -664,7 +666,7 @@
     \fixme@marginfalse%
   \fi%
   \fixme@margincluetrue}
-\let\fixme@setfootnote\fixme@fottnotetrue
+\let\fixme@setfootnote\fixme@footnotetrue
 \let\fixme@setuser\fixme@usertrue
 \let\fixme@setindex\fixme@indextrue
 
@@ -884,12 +886,12 @@
   \@for\fixme@option:=#2\do{%
     \expandafter\ifx\csname fixme@\fixme@option true\endcsname\relax
       \PackageError{FiXme}{Unknown layout option `\fixme@option'}{%
-        You have given an invalid option to \string\fixme, or an \string\fx %
-        command.\MessageBreak
-        Valid options are `inline', `margin', `marginclue', `footnote', %
-        `user',\MessageBreak
-        and `index'.\MessageBreak
-        Type X to quit, fix your document, and rerun LaTeX.}%
+	You have given an invalid option to \string\fixme, or an \string\fx %
+	command.\MessageBreak
+	Valid options are `inline', `margin', `marginclue', `footnote', %
+	`user',\MessageBreak
+	and `index'.\MessageBreak
+	Type X to quit, fix your document, and rerun LaTeX.}%
       \else%
       \csname fixme@set\fixme@option\endcsname%
     \fi}%
@@ -1060,25 +1062,25 @@
       \let\@listoffixmes@pretoc\@listoffixmes@pretoc@report
       \let\@listoffixmes@posttoc\@listoffixmes@posttoc@report}{
       \@ifclassloaded{book}{
-        \let\@listoffixmes@pretoc\@listoffixmes@pretoc@book
-        \let\@listoffixmes@posttoc\@listoffixmes@posttoc@book}{
-        \@ifclassloaded{scrartcl}{
-          \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrartcl
-          \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrartcl}{
-          \@ifclassloaded{scrreprt}{
-            \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrreprt
-            \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrreprt}{
-            \@ifclassloaded{scrbook}{
-              \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrbook
-              \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrbook}{
-              \@ifclassloaded{amsbook}{
-                \let\listoffixmes@draft\listoffixmes@draft@amsbook}{
-                %% Use the article layout by default.
-                \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
-                \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}
-            }
-          }
-        }
+	\let\@listoffixmes@pretoc\@listoffixmes@pretoc@book
+	\let\@listoffixmes@posttoc\@listoffixmes@posttoc@book}{
+	\@ifclassloaded{scrartcl}{
+	  \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrartcl
+	  \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrartcl}{
+	  \@ifclassloaded{scrreprt}{
+	    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrreprt
+	    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrreprt}{
+	    \@ifclassloaded{scrbook}{
+	      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrbook
+	      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrbook}{
+	      \@ifclassloaded{amsbook}{
+		\let\listoffixmes@draft\listoffixmes@draft@amsbook}{
+		%% Use the article layout by default.
+		\let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
+		\let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}
+	    }
+	  }
+	}
       }
     }
   }

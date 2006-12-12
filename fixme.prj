@@ -2,17 +2,23 @@
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description
  "A LaTeX2e package for inserting fixme notes in draft documents")
-(Project-Version fixme version-3-2 1)
-(Parent-Version fixme branch-3-2 4)
-(Version-Log "Version 3.2")
+(Project-Version fixme branch-3-3 1)
+;; PRCS note: this project version was originally checked in when
+;; the project was named `FiXme'.
+
+;; PRCS note: this project version was originally checked in when
+;; the project was named `fixme'.
+
+(Parent-Version fixme version-3-2 1)
+(Version-Log "Start of branch 3.3 -- Fix bug in macro name.")
 (New-Version-Log "")
-(Checkin-Time "Wed, 12 Apr 2006 15:15:39 +0200")
+(Checkin-Time "Tue, 12 Sep 2006 11:21:00 +0200")
 (Checkin-Login didier)
 (Populate-Ignore
  ("\\.aux$" "\\.dvi$" "\\.pdf$" "\\.lo.*$" "\\.sty$"
   "\\.auto/" "\\.tar\\.gz$" "\\.tar\\.bz2$"))
 (Project-Keywords
- (Version 3.2) ;; Sucker. This should be done automatically.
+ (Version 3.3) ;; Sucker. This should be done automatically.
  (ReleaseDate 2006/04/12)
  (TextCopyright
   "Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna")
@@ -21,11 +27,11 @@
  )
 (Files
  (README (fixme/0_README 1.24 640))
- (NEWS (fixme/8_NEWS 1.10 600))
- (TODO (fixme/9_TODO 1.4 644))
+ (NEWS (fixme/8_NEWS 1.11 600))
+ (TODO (fixme/9_TODO 1.5 644))
  (Makefile (fixme/3_Makefile 1.23 640))
- (Makefile.inc (fixme/10_Makefile.i 1.1 644))
- (fixme.dtx (fixme/1_fixme.dtx 1.72 640))
+ (Makefile.inc (fixme/10_Makefile.i 1.2 644))
+ (fixme.dtx (fixme/1_fixme.dtx 1.73 640))
  (fixme.ins (fixme/2_fixme.ins 1.15 640))
  (fixme.el (fixme/5_fixme.el 1.11 640))
 )
