@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999, 2000, 2001, 2002, 2004 Didier Verna.
 
-## PRCS: $Id: Makefile 1.21 Tue, 19 Oct 2004 11:16:38 +0200 didier $
+## PRCS: $Id: Makefile 1.22 Tue, 19 Oct 2004 17:22:50 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -107,7 +107,7 @@ $(PROJECT).dvi: $(PROJECT).dtx
 
 %.dvi: %.dtx
 	@echo "Building the dvi file ..."
-	latex $<
+	latex $< ; latex $<
 #	makeindex -s gglo -o $(PROJECT).gls $(PROJECT).glo
 #	makeindex -s gind $(PROJECT).idx
 #	latex $<
