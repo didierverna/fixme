@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.18 Fri, 24 Sep 1999 16:08:58 +0200 verna $
+% PRCS: $Id: fixme.dtx 1.19 Fri, 24 Sep 1999 16:28:07 +0200 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -45,7 +45,7 @@
 % \CheckSum{195}
 %
 % ^^A $Format: "% \\newcommand{\\packageversion}{v$PackageVersion$}"$
-% \newcommand{\packageversion}{v1.1-b16}
+% \newcommand{\packageversion}{v1.1-b17}
 % ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
 % \newcommand{\packagedate}{1999/09/24}
 % \newcommand{\fixme}{\textsf{FiXme}}
@@ -195,7 +195,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$ v$PackageVersion$"$
-\ProvidesPackage{fixme}[1999/09/24 v1.1-b16
+\ProvidesPackage{fixme}[1999/09/24 v1.1-b17
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
@@ -331,7 +331,7 @@
   \renewcommand{\fixme}[1]{%
     \iffixme@margin\FiXmeMargin{#1}\fi%
     \iffixme@footnote\FiXmeFootnote{#1}\fi%
-    \iffixme@warning\FiXmeWarning{#1}\else\iffixmeinfo\FiXmeInfo{#1}\fi\fi%
+    \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
     \iffixme@index\FiXmeIndex{#1}\fi%
     \iffixme@user\FiXmeUser{#1}\fi%
     \addcontentsline{lox}{fixme}{#1}}

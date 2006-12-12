@@ -2,12 +2,12 @@
 
 ## Copyright (C) 1999 Didier Verna.
 
-## PRCS: $Id: Makefile 1.8 Fri, 24 Sep 1999 16:08:58 +0200 verna $
+## PRCS: $Id: Makefile 1.9 Fri, 24 Sep 1999 16:28:07 +0200 verna $
 
 ## Author:        Didier Verna <verna@inf.enst.fr>
 ## Maintainer:    Didier Verna <verna@inf.enst.fr>
 ## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Fri Sep 24 11:30:28 1999
+## Last Revision: Fri Sep 24 16:10:25 1999
 
 ## This file is part of FiXme.
 
@@ -39,7 +39,7 @@ DOCDIR=${HOME}/TeX/doc
 
 all: fixme.sty fixme.dvi
 
-install: install-doc install-sty
+install: install-sty install-doc
 install-sty: fixme.sty
 	cp fixme.sty $(STYDIR)
 install-doc: fixme.dvi
