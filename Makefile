@@ -1,13 +1,13 @@
 ### Makefile --- Makefile for FiXme
 
-## Copyright (C) 1999-2000 Didier Verna.
+## Copyright (C) 1999-2002 Didier Verna.
 
-## PRCS: $Id: Makefile 1.15 Mon, 23 Apr 2001 12:07:55 +0200 didier $
+## PRCS: $Id: Makefile 1.16 Mon, 18 Feb 2002 14:54:22 +0100 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ## Created:       Thu Sep 23 17:27:00 1999
-## Last Revision: Tue Mar 28 18:49:43 2000
+## Last Revision: Mon Feb 18 14:46:28 2002
 
 ## This file is part of FiXme.
 
@@ -40,7 +40,7 @@ DOCDIR := $(TEXDIR)/doc
 W3DIR  := ${HOME}/www/comp/development
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 1.4
+VERSION := 1.5
 
 ARCHIVE := $(PROJECT)-$(VERSION)
 DISTFILES := README $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el

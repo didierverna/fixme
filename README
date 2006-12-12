@@ -2,7 +2,7 @@
 		  a LaTeX2e package for putting fixme notes
 			     in draft documents
 
-                    Copyright (C) 1998-2001 Didier Verna
+                    Copyright (C) 1998-2002 Didier Verna
 
 
 * Copyright
@@ -40,6 +40,10 @@ error. FiXme also comes with support for AUC-TeX.
 * Changes
 =========
 
+** Version 1.5
+--------------
+*** New appearance: `text'. Directly in the text, in parentheses.
+
 ** Version 1.4
 --------------
 *** Support for the koma-script classes.
@@ -73,7 +77,7 @@ a suitable AUC-TeX style directory.
 Didier Verna, didier@lrde.epita.fr, http://www.lrde.epita.fr/~didier
 
 EPITA / LRDE, 14-16 rue Voltaire   Tel.+33 (1) 53 14 59 47
-94276 Le Kremlin-Bicêtre, France   Fax.+33 (1) 44 08 01 99   didier@xemacs.org
+94276 Le Kremlin-Bicêtre, France   Fax.+33 (1) 53 14 59 22   didier@xemacs.org
 
 
 
