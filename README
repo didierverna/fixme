@@ -1,22 +1,49 @@
 		      This is the README file for FiXme,
-	 a LaTeX package for putting fixme notes in draft documents.
+		  a LaTeX2e package for putting fixme notes
+			     in draft documents.
 
-	   copyright (C) 1998-99 Didier Verna. All rights reserved.
+		      copyright (C) 1998-99 Didier Verna
 
 
-	This package provides a macro \fixme{} which you can use to generate
-fixme notes in documents being developped. According to several package
-options, such notes can appear in the margin of the document, as index
-entries, in the log file and as warnings on stdout. If your document is in
-final version, any remaining fixme notes will produce an error.
+* Copyright
+===========
 
-	To install the package, first run LaTeX on the `fixme.ins' file. This
-will create the style file `fixme.sty' which you must install into a place
-searched by LaTeX (see the TEXINPUTS variable). Then, you can typeset the
-documentation by running LaTeX on the file `fixme.dtx'.
+This file is part of FiXme.
 
-	Please refer to the top of the `fixme.ins' file for details on the
-copyright terms and conditions.
+FiXme may be distributed and/or modified under the
+conditions of the LaTeX Project Public License, either version 1.1
+of this license or (at your option) any later version.
+The latest version of this license is in
+http://www.latex-project.org/lppl.txt
+and version 1.1 or later is part of all distributions of LaTeX
+version 1999/06/01 or later.
+
+FiXme consists of the following files:
+
+- README (this file)
+- fixme.ins
+- fixme.dtx
+
+
+* Description
+=============
+
+	This package provides you with a way to insert fixme notes in
+documents being developped (in draft mode). Such notes can appear in the
+margin of the document, as index entries, in the log file and as warnings on
+stdout. It is also possible to summarize them in a list. If your document is
+in a final version, any remaining fixme note will produce an error.
+
+
+* Installation
+==============
+
+	To install the package, please follow these steps:
+
+- Run LaTeX on the file `fixme.ins'. This will create the style (fixme.sty).
+- Run LaTeX on the file `fixme.dtx'. This will create the doc (fixme.dvi).
+- Install these files anywhere you see fit.
+
 
 	Have fun!
 
@@ -25,3 +52,11 @@ copyright terms and conditions.
  - / / - / / /_/ /      E.N.S.T. INF C201.1      mailto:verna@inf.enst.fr
 /_/ / /_/ / /__ /        46 rue Barrault        Tel.   (33) 01 45 81 73 46
                       75634 Paris  cedex 13     Fax.   (33) 01 45 81 31 19
+
+
+
+
+
+Local Variables:
+mode: outline
+End:
