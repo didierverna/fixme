@@ -2,6 +2,10 @@
 
 	* version 1.3 released.
 
+	* README: updated my signature.
+
+	* Fixed missing \DescribeEnv{italian}.
+
 	* fixme.dtx: added support for Italian (from Riccardo Murri
 	<murri@phc.unipi.it>)
 
