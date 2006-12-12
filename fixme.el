@@ -5,7 +5,7 @@
 ;; Author:        Didier Verna <didier@lrde.epita.fr>
 ;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ;; Created:       Tue Apr 18 14:49:29 2000
-;; Last Revision: Mon Feb 18 14:46:09 2002
+;; Last Revision: Tue Mar 26 11:01:54 2002
 ;; Keywords:      tex abbrev data
 
 ;; This file is part of FiXme.
@@ -38,35 +38,43 @@
   (function
    (lambda ()
      (TeX-add-symbols
-      ;; Commands:
-      '("fixme" t)
+      '("fixmelogo")
+
       '("listoffixmes")
+      '("listfixmename")
+
       '("FXInline")
       '("FXMargin")
       '("FXFootnote")
       '("FXUser")
+      '("fixmeindexname")
       '("FXIndex")
+
       '("FXNote")
       '("FXWarning")
       '("FXError")
       '("FXFatal")
-      ;; Counters:
+
+      '("fixmenoteprefix")
+      '("fixmenoteindexname")
+      '("fixmewarningprefix")
+      '("fixmewarningindexname")
+      '("fixmeerrorprefix")
+      '("fixmeerrorindexname")
+      '("fixmefatalprefix")
+      '("fixmefatalindexname")
+
       '("thefixmecount")
       '("thefixmenotecount")
       '("thefixmewarningcount")
       '("thefixmeerrorcount")
       '("thefixmefatalcount")
-      ;; Translation:
-      '("fixmenoteprefix")
-      '("fixmewarningprefix")
-      '("fixmeerrorprefix")
-      '("fixmefatalprefix")
-      '("fixmeindexname")
-      '("fixmenoteindexname")
-      '("fixmewarningindexname")
-      '("fixmeerrorindexname")
-      '("fixmefatalindexname")
-      '("listfixmename")
+
+      '("fxnote" "Note")
+      '("fxwarning" "Warning")
+      '("fxerror" "Error")
+      '("fixme" "FiXme")
+
       ;; Obsolete stuff:
       '("FiXmeInline")
       '("FiXmeMargin")
