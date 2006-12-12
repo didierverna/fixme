@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.68 Mon, 31 Jan 2005 14:39:45 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.69 Mon, 28 Feb 2005 17:05:24 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{800}
+% \CheckSum{807}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -62,7 +62,7 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
-% \newcommand\version{v3.1}
+% \newcommand\version{v3.2}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
 % \newcommand\releasedate{2005/01/31}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
@@ -344,27 +344,29 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v3.2] Fix incompatibility with Beamer reported by Akim Demaille:
+%   protect contents of lox file.
 % \item[v3.1] Fix bug reported by Arnold Beckmann: the environments were
-% visible in final mode.
+%   visible in final mode.
 % \item[v3.0] Added environments corresponding to the note insertion
-% commands.\\
-% Added an optional first argument to the note insertion commands
-% to change the layout locally.\\
-% Fix bug reported by Akim Demaille: marginal notes could mess up the
-% document's layout by flushing it right.
+%   commands.\\
+%   Added an optional first argument to the note insertion commands
+%   to change the layout locally.\\
+%   Fix bug reported by Akim Demaille: marginal notes could mess up the
+%   document's layout by flushing it right.
 % \item[v2.2] New option \texttt{silent} to suppress notes logging\\
-% Support for Danish thanks to Kim Rud Bille |<krbi01@control.auc.dk>|
+%   Support for Danish thanks to Kim Rud Bille |<krbi01@control.auc.dk>|
 % \item[v2.1] Use |\nobreakspace| instead of the tilda character. This avoids
-% conflicts with Babel in Spanish environments.\\
-% Fix bug reported by Knut Lickert: index entries were unconditionally built.
+%   conflicts with Babel in Spanish environments.\\
+%   Fix bug reported by Knut Lickert: index entries were unconditionally built.
 % \item[v2.0] New feature: note levels\\
-% New feature: \fixme{} note counters and usage summary\\
-% Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|\\
-% Support for Spanish thanks to Agust\'in Mart\'in |<agusmba@terra.es>|
+%   New feature: \fixme{} note counters and usage summary\\
+%   Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|\\
+%   Support for Spanish thanks to Agust\'in Mart\'in |<agusmba@terra.es>|
 % \item[v1.5] New appearance option: \texttt{inline}.
 % \item[v1.4] Support for the koma-script classes\\
-% Fix bug reported by Ulf Jaenicke-Roessler: the |\listoffixmes| command
-% didn't work when called before the first \fixme{} note.
+%   Fix bug reported by Ulf Jaenicke-Roessler: the |\listoffixmes| command
+%   didn't work when called before the first \fixme{} note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri |<murri@phc.unipi.it>|
 % \item[v1.2] Support for German thanks to Harald Harders |<h.harders@tu-bs.de>|
 % \end{itemize}
@@ -379,7 +381,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡$Format: "\\ProvidesPackage{fixme}[$ReleaseDate: 2004/10/19$ v$Version: 2.3$"$
-\ProvidesPackage{fixme}[2005/01/31 v3.1
+\ProvidesPackage{fixme}[2005/01/31 v3.2
                         Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
@@ -726,10 +728,10 @@
   \fixme@text{\fixmenoteprefix}{#1}%
   \iffixme@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
   \iffixme@silent\else\FXNote{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
 \def\fixme@note@final#1{%
   \iffixme@silent\else\FXNote{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixmewarningprefix}
@@ -748,10 +750,10 @@
   \fixme@text{\fixmewarningprefix}{#1}%
   \iffixme@index\FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}\fi%
   \iffixme@silent\else\FXWarning{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
 \def\fixme@warning@final#1{%
   \iffixme@silent\else\FXWarning{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixmeerrorprefix}
@@ -770,10 +772,10 @@
   \fixme@text{\fixmeerrorprefix}{#1}%
   \iffixme@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
   \iffixme@silent\else\FXError{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 \def\fixme@error@final#1{%
   \iffixme@silent\else\FXError{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixmefatalindexname}
@@ -793,7 +795,7 @@
   \iffixme@index\FiXmeIndex{%
     \fixmefatalindexname\thefixmefatalcount: #1}\fi%
   \iffixme@silent\else\FXFatal{#1}\fi%
-  \addcontentsline{lox}{fixme}{\fixmefatalprefix: #1}}
+  \addcontentsline{lox}{fixme}{\protect\fixmefatalprefix: #1}}
 \def\fixme@fatal@final#1{%
   \PackageError{FiXme}{`#1' fixme left in final version}{%
     You are processing your document in final mode,\MessageBreak
