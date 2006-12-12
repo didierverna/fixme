@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.24 Mon, 11 Dec 2000 10:30:29 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.25 Mon, 11 Dec 2000 12:15:40 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -35,6 +35,8 @@
 \documentclass[a4paper]{ltxdoc}
 \begin{document}
 % \OnlyDescription
+\newcommand{\fixme}{\textsf{FiXme}}
+\newcommand{\auctex}{AUC-\TeX}
 \DocInput{fixme.dtx}
 \end{document}
 %</driver>
@@ -45,13 +47,11 @@
 % \CheckSum{202}
 %
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
-% \newcommand{\version}{v1.1}
+% \newcommand{\version}{v1.2}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
 % \newcommand{\releasedate}{2000/12/11}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2000 Didier Verna}
-% \newcommand{\fixme}{\textsf{FiXme}}
-% \newcommand{\auctex}{AUC-\TeX}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
@@ -209,7 +209,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2000/12/11 v1.1
+\ProvidesPackage{fixme}[2000/12/11 v1.2
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
