@@ -4,7 +4,7 @@
 
 
 
-*** Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005 Didier Verna
+*** Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna
 
 This file is part of FiXme.
 
@@ -18,9 +18,10 @@ version 1999/06/01 or later.
 
 FiXme consists of the files listed in the file `README'.
 
-
 * Version 3.2
-===============
+=============
+** Added the marginclue layout option
+which only signals a fixme in the margin, withtout the actual contents.
 ** Fix incompatibility with AMS-Book
 reported by Claude Lacoursière: \@starttoc takes 2 arguments.
 ** Support for Croatian
@@ -29,7 +30,7 @@ thanks to Marcel Maretic <marcel@fsb.hr>.
 reported by Akim Demaille: protect contents of lox file.ug in environments.
 
 * Version 3.1
-===============
+=============
 ** Fix bug in environments
 reported by Arnold Beckmann: they were visible in final mode.
 
