@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.45 Wed, 20 Feb 2002 17:12:16 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.46 Wed, 20 Feb 2002 17:46:31 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% ^^A \CheckSum{542}
+% \CheckSum{603}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -181,10 +181,11 @@
 % takes two mandatory arguments: the prefix and the note, in that order.\par
 % \DescribeMacro{\FXIndex}
 % This macro is used for the \texttt{index} layout. All \fixme{} index entries
-% appear under the ``\fixme{}'' key in the symbols section. There are 3
-% subcategories under this key, corresponding to the 3 non fatal note levels:
-% ``notes'', ``warnings'', and ``errors''. The notes are numbered in the
-% index\par
+% appear under the ``\fixme{}'' key in the symbols section. There are 4
+% subcategories under this key, as many as there are note levels. By default,
+% only the first 3 of them are used though (fatal errors do not appear under a
+% subkey, but directly under the \fixme{} key). The notes are numbered in the
+% index.\par
 % \DescribeMacro{\FXNote}
 % \DescribeMacro{\FXWarning}
 % \DescribeMacro{\FXError}
@@ -219,25 +220,27 @@
 % options are synonyms. The \texttt{german} and \texttt{ngerman} options are
 % currently equivalent.\par
 % If you want a finer grain on the language-dependent parts of \fixme{}, the
-% following macros are provided and can be redefined:\\
+% following macros are provided and can be redefined.\par
 % \DescribeMacro{\fixmenoteprefix}
-% Defines the prefix for simple notes.\\
 % \DescribeMacro{\fixmewarningprefix}
-% Defines the prefix for warnings.\\
 % \DescribeMacro{\fixmeerrorprefix}
-% Defines the prefix for errors.\\
 % \DescribeMacro{\fixmefatalprefix}
-% Defines the prefix for fatal errors.\\
+% \DescribeMacro{\fixmelogo}
+% These four macros define the prefix for the four different note levels. They
+% make intensive use of the macro |\fixmelogo| ;-)\par
 % \DescribeMacro{\fixmeindexname}
-% Defines the name of the \fixme{} index key.\\
 % \DescribeMacro{\fixmenoteindexname}
-% Defines the name of the note-level subkey.\\
 % \DescribeMacro{\fixmewarningindexname}
-% Defines the name of the warning-level subkey.\\
 % \DescribeMacro{\fixmeerrorindexname}
-% Defines the name of the error-level subkey.\\
+% \DescribeMacro{\fixmefatalindexname}
+% The macro |\fixmeindexname| defines the main \fixme{} index key. The other
+% ones define the different index subkeys for each note level. Please note that
+% an empty name for a subkey means that you don't actually want a subcategory
+% (that's the case by default for fatal errors). The corresponding notes will
+% then appear directly under the main \fixme{} key. For that reason, a non
+% empty subkey must end with an exclamation mark.\par
 % \DescribeMacro{\listfixmename}
-% Defines the title for the ``list of fixmes'' section.
+% |\listfixmename| defines the title for the ``list of fixmes'' section.
 %
 % \subsection{Counters}
 % \DescribeMacro{\thefixmecount}
@@ -537,6 +540,7 @@
 \newcommand\FiXmeMargin[1]{\FXMargin{\fixmefatalprefix}{#1}}
 \newcommand\FiXmeFootnote[1]{\FXFootnote{\fixmefatalprefix}{#1}}
 \newcommand\FiXmeUser[1]{}
+\let\FiXmeUser\empty
 
 \newcommand\FiXmeIndex[1]{\FXIndex{#1}}
 \newcommand\FiXmeInfo[1]{}
@@ -843,8 +847,8 @@
 % compilation:
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \ifx\FiXmeUser\undefined%
-    \def\FiXmeUser#1{\FXUser{\fixmefatalprefix}{#1}}
+  \ifx\FiXmeUser\empty
+    \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}
   \fi}
 
 \AtEndDocument{%
