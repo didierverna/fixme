@@ -19,6 +19,13 @@ version 1999/06/01 or later.
 FiXme consists of the files listed in the file `README'.
 
 
+* Version 3.2
+===============
+** Support for Croatian
+thanks to Marcel Maretic <marcel@fsb.hr>
+** Fix incompatibility with Beamer
+reported by Akim Demaille: protect contents of lox file.ug in environments
+
 * Version 3.1
 ===============
 ** Fix bug in environments
