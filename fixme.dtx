@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.39 Tue, 19 Feb 2002 11:33:48 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.40 Tue, 19 Feb 2002 12:35:11 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -247,7 +247,7 @@
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
 \ProvidesPackage{fixme}[2002/02/18 v1.5
-                        Insert fixme notes in your draft documents]
+                        Insert fixme notes in your documents]
 
 %    \end{macrocode}
 % \subsection{List macros}
@@ -411,7 +411,6 @@
 %    \end{macrocode}
 %
 % \subsection{Layout macros}
-%
 % \begin{macro}{\FXText}
 %   \begin{macro}{\FXMargin}
 %     \begin{macro}{\FXFootnote}
@@ -419,7 +418,7 @@
 %         \begin{macro}{\FXIndex}
 %           \begin{macro}{\FXInfo}
 %             \begin{macro}{\FXWarning}
-%               The macros to implement different layouts for the fixme notes.
+%               The macros to implement different layouts for the fixme notes:
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
@@ -435,6 +434,7 @@
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 \newcommand\FXUser[2]{}
+
 \newcommand\FXIndex[1]{%
   \index{***@FIXME's:!#1}}
 \newcommand\FXInfo[1]{\PackageInfo{FiXme}{`#1'}}
@@ -442,11 +442,49 @@
 
 %    \end{macrocode}
 %
-% \begin{macro}{\fx@text}
-%   This macro is a common part for all notes (textual appearance):
+% \begin{macro}{\FiXmeText}
+%   \begin{macro}{\FiXmeMargin}
+%     \begin{macro}{\FiXmeFootnote}
+%       \begin{macro}{\FiXmeUser}
+%         \begin{macro}{\FiXmeIndex}
+%           \begin{macro}{\FiXmeInfo}
+%             \begin{macro}{\FiXmeWarning}
+%               The following layout macros are kept only to preserve backward
+%               compatibility. They are used only by critical fixme notes
+%               (errors) and are made to call the new versions by default:
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\fx@text[2]{%
+\newcommand\FiXmeText[1]{\FXText{FIXME}{#1}}
+\newcommand\FiXmeMargin[1]{\FXMargin{FIXME}{#1}}
+\newcommand\FiXmeFootnote[1]{\FXFootnote{FIXME}{#1}}
+\newcommand\FiXmeUser[1]{\FXUser{FIXME}{#1}}
+\newcommand\FiXmeIndex[1]{\FXIndex{#1}}
+\newcommand\FiXmeInfo[1]{\FXInfo{#1}}
+\newcommand\FiXmeWarning[1]{\FXWarning{#1}}
+
+%    \end{macrocode}
+% Booleans that control which layouts are selected:
+%    \begin{macrocode}
+\newif\iffixme@text\fixme@textfalse
+\newif\iffixme@margin\fixme@marginfalse
+\newif\iffixme@footnote\fixme@footnotefalse
+\newif\iffixme@user\fixme@userfalse
+\newif\iffixme@index\fixme@indexfalse
+\newif\iffixme@info\fixme@infofalse
+\newif\iffixme@warning\fixme@warningfalse
+
+%    \end{macrocode}
+% \begin{macro}{\fixme@text}
+%   This macro implements the common (textual) part of all notes:
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\fixme@text[2]{%
   \iffixme@text\FXText{#1}{#2}\fi%
   \iffixme@margin\FXMargin{#1}{#2}\fi%
   \iffixme@footnote\FXFootnote{#1}{#2}\fi%
@@ -454,17 +492,16 @@
 
 %    \end{macrocode}
 %
-% \begin{macro}{\fixme}
-%   \begin{macro}{\fixme@final}
-%     \begin{macro}{\fixme@draft}
-%       |\fixme| and its implementation. The proper definition will be given
-%       by the |draft| or |final| option):
-%     \end{macro}
+% \subsection{Fixme notes}
+% \begin{macro}{\fixme@info@draft}
+%   \begin{macro}{\fixme@info@final}
+%     The different flavors of fixme notes. Proper definitions will be selected
+%     by the |draft| or |final| options. Let's start with the info notes:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
 \def\fixme@info@draft#1{%
-  \fx@text{\texttt{FiXme} info}{#1}%
+  \fixme@text{\textsf{FiXme} info}{#1}%
   \FXInfo{#1}%
   \FXIndex{**a@infos:!#1}%
   \addcontentsline{lox}{fixme}{info: #1}}
@@ -472,8 +509,15 @@
   \FXInfo{#1}%
   \addcontentsline{lox}{fixme}{info: #1}}
 
+%    \end{macrocode}
+% \begin{macro}{\fixme@warning@draft}
+%   \begin{macro}{\fixme@warning@final}
+%     Here are the warnings notes:
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \def\fixme@warning@draft#1{%
-  \fx@text{\texttt{FiXme} warning}{#1}%
+  \fixme@text{\textsf{FiXme} warning}{#1}%
   \FXWarning{#1}%
   \FXIndex{**b@warnings:!#1}%
   \addcontentsline{lox}{fixme}{warning: #1}}
@@ -481,6 +525,15 @@
   \FXWarning{#1}%
   \addcontentsline{lox}{fixme}{warning: #1}}
 
+%    \end{macrocode}
+% \begin{macro}{\fixme@error@draft}
+%   \begin{macro}{\fixme@error@final}
+%     And here are the error ones. Note that in \texttt{draft} mode, it's
+%     useless to generate both a warning and an information because warnings
+%     are also logged.
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \def\fixme@error@draft#1{%
   \iffixme@text\FiXmeText{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
@@ -495,44 +548,21 @@
     but you still have some critical FiXme's left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
 
-\newcommand\fixme[2][error]{\csname fixme@#1\endcsname{#2}}
-
 %    \end{macrocode}
-%
-% \begin{macro}{\FiXmeText}
-%   \begin{macro}{\FiXmeMargin}
-%     \begin{macro}{\FiXmeFootnote}
-%       \begin{macro}{\FiXmeIndex}
-%         \begin{macro}{\FiXmeInfo}
-%           \begin{macro}{\FiXmeWarning}
-%             \begin{macro}{\FiXmeUser}
-%               These macros are kept only to preserve backward compatibility:
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
+% \begin{macro}{\fixme}
+%   \begin{macro}{\fixme@info}
+%     \begin{macro}{\fixme@warning}
+%       \begin{macro}{\fixme@error}
+%         Here's the |\fixme| macro. By default, critical notes (errors) are
+%         generated. The different versions are |\let| to the draft of final
+%         flavors defined above by the \texttt{draft} or \texttt{fianl}
+%         options.
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FiXmeText[1]{\FXText{FIXME}{#1}}
-\newcommand\FiXmeMargin[1]{\FXMargin{FIXME}{#1}}
-\newcommand\FiXmeFootnote[1]{\FXFootnote{FIXME}{#1}}
-\newcommand\FiXmeIndex[1]{\FXIndex{#1}}
-\newcommand\FiXmeUser[1]{\FXUser{FIXME}{#1}}
-\newcommand\FiXmeInfo[1]{\FXInfo{#1}}
-\newcommand\FiXmeWarning[1]{\FXWarning{#1}}
-
-%    \end{macrocode}
-% Booleans that control which layouts are selected:
-%    \begin{macrocode}
-\newif\iffixme@text\fixme@textfalse
-\newif\iffixme@margin\fixme@marginfalse
-\newif\iffixme@footnote\fixme@footnotefalse
-\newif\iffixme@index\fixme@indexfalse
-\newif\iffixme@user\fixme@userfalse
-\newif\iffixme@info\fixme@infofalse
-\newif\iffixme@warning\fixme@warningfalse
+\newcommand\fixme[2][error]{\csname fixme@#1\endcsname{#2}}
 
 %    \end{macrocode}
 % Options that control which layouts are selected:
@@ -553,6 +583,7 @@
 \DeclareOption{nowarning}{\fixme@warningfalse}
 
 %    \end{macrocode}
+%
 % \subsection{Language macros}
 % Options that control which language is selected:
 % ^^A \changes{v1.1}{2000/12/26}{german: new option}
@@ -566,11 +597,16 @@
 \DeclareOption{italian}{\renewcommand*{\listfixmename}{Corrigenda}}
 
 %    \end{macrocode}
-% \subsection{Options processing}
-% Note that while |\fixme{}| generates an error in \texttt{final} mode,
-% calling |\listoffixmes| actually does nothing. Also, note that in
-% \texttt{draft} mode, it's useless to generate both a warning and an
-% information because warnings are also logged.
+%
+% \subsection{Document status processing}
+% \begin{macro}{\fixme@info}
+%   \begin{macro}{\fixme@warning}
+%     \begin{macro}{\fixme@error}
+%       Here's where the draft or final version of the internal macros are
+%       selected.
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \DeclareOption{final}{
   \let\fixme@info\fixme@info@final
