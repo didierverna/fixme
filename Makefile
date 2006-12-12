@@ -1,13 +1,13 @@
 ### Makefile --- Makefile for FiXme
 
-## Copyright (C) 1999-2002 Didier Verna.
+## Copyright (C) 1999, 2000, 2001, 2002, 2004 Didier Verna.
 
-## PRCS: $Id: Makefile 1.20 Tue, 19 Oct 2004 09:49:21 +0200 didier $
+## PRCS: $Id: Makefile 1.21 Tue, 19 Oct 2004 11:16:38 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ## Created:       Thu Sep 23 17:27:00 1999
-## Last Revision: Mon Feb 18 14:46:28 2002
+## Last Revision: Tue Oct 19 11:07:32 2004
 
 ## This file is part of FiXme.
 
@@ -42,8 +42,9 @@ W3DIR  := ${HOME}/www/comp/development
 ## $Format: "VERSION := $Version$"$
 VERSION := 2.3
 
-ARCHIVE := $(PROJECT)-$(VERSION)
-DISTFILES := README NEWS $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
+ARCHIVE        := $(PROJECT)-$(VERSION)
+DISTFILES      := README NEWS $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
+CTAN_DISTFILES := $(DISTFILES) $(PROJECT).pdf
 
 all: $(PROJECT).sty $(PROJECT).dvi
 
@@ -60,7 +61,7 @@ clean:
 	-rm -fr $(PROJECT)-*
 
 distclean: clean
-	-rm $(PROJECT).sty $(PROJECT).dvi
+	-rm $(PROJECT).sty $(PROJECT).dvi $(PROJECT).pdf $(PROJECT).ps
 	-rm -fr .auto
 
 dist:
@@ -72,11 +73,20 @@ dist:
 	bzip2 -c $(ARCHIVE).tar > $(ARCHIVE).tar.bz2
 	rm -fr $(ARCHIVE) $(ARCHIVE).tar
 
-install-www: dist $(PROJECT).dvi
+ctan-dist: $(PROJECT).pdf
+	-rm -fr $(ARCHIVE)*
+	mkdir $(ARCHIVE)
+	cp $(CTAN_DISTFILES) $(ARCHIVE)
+	tar cvf $(ARCHIVE).tar $(ARCHIVE)
+	gzip -c $(ARCHIVE).tar > $(ARCHIVE).tar.gz
+	bzip2 -c $(ARCHIVE).tar > $(ARCHIVE).tar.bz2
+	rm -fr $(ARCHIVE) $(ARCHIVE).tar
+
+install-www: dist $(PROJECT).dvi $(PROJECT).pdf
 	install -m 644 NEWS $(W3DIR)/$(PROJECT)-news.txt
 	echo "$(VERSION)" > $(W3DIR)/$(PROJECT)-version.txt
 	chmod 644 $(W3DIR)/$(PROJECT)-version.txt
-	install -m 644 $(PROJECT).dvi $(W3DIR)/
+	install -m 644 $(PROJECT).dvi $(PROJECT).pdf $(W3DIR)/
 	install -m 644 $(ARCHIVE).tar.gz $(W3DIR)/$(PROJECT).tar.gz
 	install -m 644 $(ARCHIVE).tar.bz2 $(W3DIR)/$(PROJECT).tar.bz2
 
@@ -88,6 +98,9 @@ checkin:
 $(PROJECT).sty: $(PROJECT).ins $(PROJECT).dtx
 $(PROJECT).dvi: $(PROJECT).dtx
 
+%.pdf: %.dvi
+	dvipdf $<
+
 %.sty: %.ins
 	@echo "Building the sty file ..."
 	echo y | latex $<
@@ -95,14 +108,15 @@ $(PROJECT).dvi: $(PROJECT).dtx
 %.dvi: %.dtx
 	@echo "Building the dvi file ..."
 	latex $<
-#	makeindex -s gglo -o fink.gls fink.glo
-#	makeindex -s gind fink.idx
+#	makeindex -s gglo -o $(PROJECT).gls $(PROJECT).glo
+#	makeindex -s gind $(PROJECT).idx
 #	latex $<
 
 .PHONY: all                                         \
         install install-sty install-doc install-auc \
         clean distclean                             \
-        dist                                        \
+        dist ctan-dist                              \
+	install-www                                 \
         checkin
 
 ### Makefile ends here
