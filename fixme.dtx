@@ -4,10 +4,10 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.22 Wed, 29 Mar 2000 11:48:53 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.23 Tue, 18 Apr 2000 15:02:52 +0200 didier $
 %
-% Author:        Didier Verna <didier@epita.fr>
-% Maintainer:    Didier Verna <didier@epita.fr>
+% Author:        Didier Verna <didier@lrde.epita.fr>
+% Maintainer:    Didier Verna <didier@lrde.epita.fr>
 % Created:       Thu Dec 10 16:04:01 1998
 % Last Revision: Thu Dec 10 16:04:01 1998
 %
@@ -45,9 +45,9 @@
 % \CheckSum{202}
 %
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
-% \newcommand{\version}{v1.1-b20}
+% \newcommand{\version}{v1.1-b21}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2000/03/29}
+% \newcommand{\releasedate}{2000/04/18}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2000 Didier Verna}
 % \newcommand{\fixme}{\textsf{FiXme}}
@@ -57,7 +57,7 @@
 % in draft documents \thanks{This document describes \fixme{}
 % \version, release date \releasedate.}}
 % \author{Didier Verna\\
-% \texttt{mailto:didier@epita.fr}\\
+% \texttt{mailto:didier@lrde.epita.fr}\\
 % \texttt{http://www.inf.enst.fr/\~{}verna}}
 % \maketitle
 %
@@ -66,7 +66,7 @@
 % In the process of writing a long document, it is common to let some parts
 % unwritten or uncomplete, and come back to them later. In such cases, you
 % probably want to stick clues about which parts need to be ``fixed'', where
-% they are located, and what has to be done. This is what I call ``fixme
+% they are located, and what needs to be done. This is what I call ``fixme
 % notes''. The purpose of this package is to provide you with convenient ways
 % to insert fixme notes in your documents.\par
 % The \fixme{} package is \packagecopyright{}, and distributed under the terms
@@ -82,8 +82,7 @@
 % instance.\\
 % All these forms are available when you're working in \texttt{draft} mode.
 % The behavior of \fixme{} is different in \texttt{final} mode, as any
-% remaining fixme note in the document will generate an error (waddya expected
-% anyway?).
+% remaining fixme note in the document will generate an error.
 %
 %
 % \section{User Interface}
@@ -115,8 +114,8 @@
 % \DescribeEnv{draft}
 % In \texttt{final} mode (the default) any remaining fixme note in the
 % document generates an error. Well, if there are parts to be fixed, the
-% document is not final right? This mode has be choosen as the default because
-% \LaTeX itself is in this mode by default. On the contrary, the
+% document is not final right? This mode has been choosen as the default
+% because \LaTeX itself is in this mode by default. On the contrary, the
 % \texttt{draft} option tells \fixme{} to actually produce the fixme notes.\\
 % \DescribeEnv{english}
 % \DescribeEnv{french}
@@ -195,11 +194,10 @@
 %
 %
 % \section{The Code}
-% If anybody knows of a \LaTeX{} timestamp I should use, tell me:
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$ v$PackageVersion$"$
-\ProvidesPackage{fixme}[$PackageDate$ v$PackageVersion$
+¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
+\ProvidesPackage{fixme}[2000/04/18 v1.1-b21
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}

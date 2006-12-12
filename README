@@ -1,8 +1,8 @@
 		      This is the README file for FiXme,
 		  a LaTeX2e package for putting fixme notes
-			     in draft documents.
+			     in draft documents
 
-                    copyright (C) 1998-2000 Didier Verna
+                    Copyright (C) 1998-2000 Didier Verna
 
 
 * Copyright
@@ -23,6 +23,7 @@ FiXme consists of the following files:
 - README (this file)
 - fixme.ins
 - fixme.dtx
+- fixme.el
 
 
 * Description
@@ -40,16 +41,18 @@ in a final version, any remaining fixme note will produce an error.
 
 	To install the package, please follow these steps:
 
-- Run LaTeX on the file `fixme.ins'. This will create the style (fixme.sty).
-- Run LaTeX on the file `fixme.dtx'. This will create the doc (fixme.dvi).
+- Run LaTeX on the file `fixme.ins' to create the style file `fixme.sty'.
+- Run LaTeX on the file `fixme.dtx' to create the doc   file `fixme.dvi'.
 - Install these files anywhere you see fit.
 
+	If you're an AUC-TeX user, you can also install the file `fink.el' in
+a suitable AUC-TeX style directory.
 
 	Have fun!
 
 --
     /     /   _   _       Didier Verna        http://www.inf.enst.fr/~verna/
- - / / - / / /_/ /        EPITA / LRDE            mailto:didier@epita.fr
+ - / / - / / /_/ /        EPITA / LRDE         mailto:didier@lrde.epita.fr
 /_/ / /_/ / /__ /      14-16 rue Voltaire        Tel. +33 (1) 44 08 01 77
                    94276 Kremlin-Bicêtre cedex   Fax. +33 (1) 44 08 01 99
 
