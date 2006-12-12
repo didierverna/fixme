@@ -1,5 +1,7 @@
 2002-07-03  Didier Verna  <didier@lrde.epita.fr>
 
+	* Version 2.2 released.
+
 	* README: move Changes section in a NEWS file.
 	* Makefile (install-www): also install a bz2 archive, and the DVI
 	file.
