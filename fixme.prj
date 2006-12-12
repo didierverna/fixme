@@ -1,21 +1,21 @@
 ;; -*- lisp -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "A LaTeX package for inserting fixme notes in drafts.")
-(Project-Version fixme branch-1-1 8)
-(Parent-Version fixme branch-1-1 7)
-(Version-Log "BUGFIX: wrong package date. Should always contains 2 digits")
+(Project-Version fixme branch-1-1 9)
+(Parent-Version fixme branch-1-1 8)
+(Version-Log "Fixed typo in the doc")
 (New-Version-Log "")
-(Checkin-Time "Tue, 06 Apr 1999 17:50:15 +0200")
+(Checkin-Time "Tue, 06 Apr 1999 18:02:58 +0200")
 (Checkin-Login verna)
 (Populate-Ignore (".aux$" ".dvi$" ".lo.*$" ".sty"))
 (Project-Keywords
- (PackageVersion 1.1-b8)
+ (PackageVersion 1.1-b9)
  (PackageDate 1999/04/06))
 (Files
 
  (README (fixme/0_README 1.1 640))
  (Makefile (fixme/3_Makefile 1.6 640))
- (fixme.dtx (fixme/1_fixme.dtx 1.12 640))
+ (fixme.dtx (fixme/1_fixme.dtx 1.13 640))
  (fixme.ins (fixme/2_fixme.ins 1.4 640))
  (test.ltx (fixme/4_test.ltx 1.3 640))
  )
