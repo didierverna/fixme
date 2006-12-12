@@ -38,10 +38,32 @@
   (function
    (lambda ()
      (TeX-add-symbols
+      ;; Commands:
       '("fixme" t)
       '("listoffixmes")
+      '("FXInline")
+      '("FXMargin")
+      '("FXFootnote")
+      '("FXUser")
+      '("FXIndex")
+      '("FXInfo")
+      '("FXWarning")
+      ;; Counters:
+      '("thefixmecount")
+      '("thefixmenotecount")
+      '("thefixmewarningcount")
+      '("thefixmeerrorcount")
+      ;; Translation:
+      '("fixmenoteprefix")
+      '("fixmewarningprefix")
+      '("fixmeerrorprefix")
+      '("fixmeindexname")
+      '("fixmenoteindexname")
+      '("fixmewarningindexname")
+      '("fixmeerrorindexname")
       '("listfixmename")
-      '("FiXmeText")
+      ;; Obsolete stuff:
+      '("FiXmeInline")
       '("FiXmeMargin")
       '("FiXmeFootnote")
       '("FiXmeIndex")
