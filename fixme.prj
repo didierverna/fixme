@@ -1,23 +1,22 @@
 ;; -*- lisp -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "A LaTeX package for inserting fixme notes in drafts.")
-(Project-Version fixme branch-1-1 10)
-(Parent-Version fixme branch-1-1 9)
-(Version-Log "- rewrote parts of the documentation
-- added english option
-- added footnote option")
+(Project-Version fixme branch-1-1 11)
+(Parent-Version fixme branch-1-1 10)
+(Version-Log "- more stuff in the ProvidesPackage arguments
+- say FiXme instead of fixme in the warnings infos and errors")
 (New-Version-Log "")
-(Checkin-Time "Wed, 07 Apr 1999 11:23:14 +0200")
+(Checkin-Time "Thu, 08 Apr 1999 21:08:38 +0200")
 (Checkin-Login verna)
 (Populate-Ignore (".aux$" ".dvi$" ".lo.*$" ".sty"))
 (Project-Keywords
- (PackageVersion 1.1-b10)
- (PackageDate 1999/04/07))
+ (PackageVersion 1.1-b11)
+ (PackageDate 1999/04/08))
 (Files
 
  (README (fixme/0_README 1.1 640))
  (Makefile (fixme/3_Makefile 1.6 640))
- (fixme.dtx (fixme/1_fixme.dtx 1.14 640))
+ (fixme.dtx (fixme/1_fixme.dtx 1.15 640))
  (fixme.ins (fixme/2_fixme.ins 1.4 640))
  (test.ltx (fixme/4_test.ltx 1.3 640))
  )
