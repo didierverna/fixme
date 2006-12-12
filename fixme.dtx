@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.54 Tue, 23 Apr 2002 18:24:54 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.55 Tue, 23 Apr 2002 18:38:38 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{636}
+% \CheckSum{651}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -271,7 +271,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v2.1] Fix bug reported by Knut Lickert |<knut@lickert.net>|: index
+% \item[v2.1] Use |\nobreakspace| instead of the tilda character. This avoids
+% conflicts with Babel in Spanish environments.\\
+% Fix bug reported by Knut Lickert |<knut@lickert.net>|: index
 % entries were unconditionally built.
 % \item[v2.0] New feature: note levels\\
 % New feature: \fixme{} note counters and usage summary\\
@@ -731,9 +733,9 @@
 % Options that control which language is selected:
 %    \begin{macrocode}
 \DeclareOption{english}{%
-  \renewcommand*\fixmenoteprefix{\fixmelogo~Note}
-  \renewcommand*\fixmewarningprefix{\fixmelogo~Warning}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo~Error}
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Warning}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Error}
   \renewcommand*\fixmefatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
   \renewcommand*\fixmenoteindexname{**a@Notes:!}
@@ -742,9 +744,9 @@
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{List of Corrections}}
 \DeclareOption{french}{%
-  \renewcommand*\fixmenoteprefix{\fixmelogo~Note}
-  \renewcommand*\fixmewarningprefix{\fixmelogo~Attention}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo~Erreur}
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Attention}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Erreur}
   \renewcommand*\fixmefatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
   \renewcommand*\fixmenoteindexname{**a@Notes:!}
@@ -754,9 +756,9 @@
   \renewcommand*{\listfixmename}{Liste des Corrections}}
 \DeclareOption{francais}{\ExecuteOptions{french}}
 \DeclareOption{spanish}{%
-  \renewcommand*\fixmenoteprefix{\fixmelogo~Nota}
-  \renewcommand*\fixmewarningprefix{\fixmelogo~Aviso}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo~Error}
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Nota}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Aviso}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Error}
   \renewcommand*\fixmefatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
   \renewcommand*\fixmenoteindexname{**a@Notas:!}
@@ -765,9 +767,9 @@
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
 \DeclareOption{italian}{%
-  \renewcommand*\fixmenoteprefix{\fixmelogo~Nota}
-  \renewcommand*\fixmewarningprefix{\fixmelogo~Avviso}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo~Errore}
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Nota}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Avviso}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Errore}
   \renewcommand*\fixmefatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
   \renewcommand*\fixmenoteindexname{**a@Note:!}
@@ -776,9 +778,9 @@
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Corrigenda}}
 \DeclareOption{german}{%
-  \renewcommand*\fixmenoteprefix{\fixmelogo~Anm}
-  \renewcommand*\fixmewarningprefix{\fixmelogo~Warnung}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo~Fehler}
+  \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Anm}
+  \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Warnung}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Fehler}
   \renewcommand*\fixmefatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
   \renewcommand*\fixmenoteindexname{**a@Anmerkungen:!}
