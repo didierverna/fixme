@@ -1,0 +1,27 @@
+		      This is the README file for FiXme,
+	 a LaTeX package for putting fixme notes in draft documents.
+
+	    copyright (C) 1998 Didier Verna. All rights reserved.
+
+
+	This package provides a macro \fixme{} which you can use to generate
+fixme notes in documents being developped. According to several package
+options, such notes can appear in the margin of the document, as index
+entries, in the log file and as warnings on stdout. If your document is in
+final version, any remaining fixme notes will produce an error.
+
+	To install the package, first run LaTeX on the `fixme.ins' file. This
+will create the style file `fixme.sty' which you must install into a place
+searched by LaTeX (see the TEXINPUTS variable). Then, you can typeset the
+documentation by running LaTeX on the file `fixme.dtx'.
+
+	Please refer to the top of the `fixme.ins' file for details on the
+copyright terms and conditions.
+
+	Have fun!
+
+--
+    /     /   _   _       Didier Verna        http://www.inf.enst.fr/~verna/
+ - / / - / / /_/ /      E.N.S.T. INF C201.1      mailto:verna@inf.enst.fr
+/_/ / /_/ / /__ /        46 rue Barrault        Tel.   (33) 01 45 81 73 46
+                      75634 Paris  cedex 13     Fax.   (33) 01 45 81 31 19

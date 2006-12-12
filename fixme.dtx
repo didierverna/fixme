@@ -1,0 +1,198 @@
+% \iffalse
+%
+% fixme.dtx --- Doc file for the FiXme package (code and documentation)
+%
+% Copyright (C) 1998 Didier Verna.
+%
+% PRCS: $Id: fixme.dtx 1.1 Tue, 05 Jan 1999 15:54:00 +0100 verna $
+%
+% Author:        Didier Verna <verna@inf.enst.fr>
+% Maintainer:    Didier Verna <verna@inf.enst.fr>
+% Created:       Thu Dec 10 16:04:01 1998 under XEmacs 21.2 (beta 6)
+% Last Revision: Thu Dec 10 16:04:01 1998
+%
+% This file is part of FiXme.
+%
+% FiXme is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+%
+% You are NOT ALLOWED to distribute this file alone. However,
+% you are allowed to distribute this file under the condition
+% that it is distributed along with the whole FiXme package.
+% If you receive only some of these files from someone, complain!
+%
+% You are NOT ALLOWED to modify this file, or any other file in the
+% FiXme package, neither to distribute modified versions of it. However,
+% you are allowed to freely incorporate (possibly modified) parts of
+% this file in other files with clearly different names, provided
+% that the original authors are given full credit for their work.
+%
+% You are NOT ALLOWED to charge a fee for distribution or use of this
+% package or any derivative work as described above, other than for the
+% physical act of transferring copies. 
+%
+% Commentary:
+%
+% Contents management by FCM version 0.1.
+%
+% Code:
+%
+%<*driver>
+\documentclass[a4paper]{ltxdoc}
+\usepackage[draft,warning]{fixme}
+\begin{document}
+% \OnlyDescription
+\DocInput{fixme.dtx}
+\end{document} 
+%</driver>
+%
+% \fi
+%
+% \iffalse $Format: "% \newcommand{\fileversion}{$PackageVersion$}"$ \fi
+% newcommand{fileversion}{0.2}
+% \newcommand{\filedate}{1998/12/29}
+% \newcommand{\docdate}{1998/12/29}
+% \MakeShortVerb{\|}
+% \date{\docdate}
+% \title{\textsf{fixme} -- a \LaTeX{} package fort inserting FIXME notes
+% in draft documents \thanks{This document describes \textsf{fixme} version
+% \fileversion , last updated \docdate .}}
+% \author{Didier Verna\\
+% |mailto:verna@inf.enst.fr|\\
+% |http://www.inf.enst.fr/~verna/|}
+% \maketitle
+%
+%
+% \begin{abstract}
+% In the process of writing a long document, it is common to let some parts
+% unwritten or uncomplete, and come back to them later. When you have an
+% important ammount of parts to be {\em fixed} in your document, you probably
+% want clues about where such parts are left (which I call ``fixme notes'').
+% That's what this package does.\\ 
+% The \textsf{fixme} package is copyright \copyright\ 1998 - Didier Verna. All
+% rights reserved.
+% \end{abstract}
+%
+%
+% \section{Introduction}
+% The \textsf{fixme} package essentially provides one macro, |\fixme{}|, that
+% allows you to stick clues about parts which should be fixed in your
+% document. If your are in {\em final} mode, any fixme notes left in the
+% document generates an error. If you are in {\em draft} mode, then the
+% behavior of the |\fixme{}| macro is controlled by a set of options, which
+% let you output warnings, insert margin notes\fixme{Here's a sample fixme
+% note for you guys}, add entries in the index etc.
+%
+% 
+% \section{User Interface}
+% To use the package, simply say |\usepackage[|\meta{options}|]{fixme}| in the
+% preamble of your document. The available options are described below.
+%
+% \subsection{Available Options}
+% First, you have to decide whether you're in {\em draft} or {\em final}
+% mode \footnote{Notice that those options are usually given to
+% \texttt{\bslash documentclass\{\}}, which in turn passes them to all
+% packages.}. Don't use both options, they are mutually exclusive.
+% \par
+% \DescribeEnv{final}\DescribeEnv{draft} In {\em final} mode (the default)
+% any remaining fixme note in the document generates an error. Well, if there
+% are parts to be fixed, the document is not final right? On the contrary, the
+% {\em draft} option tells \textsf{fixme} to issue fixme notes in a manner
+% defined by the following options (those ones can be mixed): 
+% \par
+% \DescribeEnv{nomargin} By default, \texttt{fixme} inserts the fixme notes
+% in the margin, like the one shown in the introduction of this document.
+% This is the original utility I wanted to implement. The note appears in
+% small characters, flushed to the right, and prefixed with a bold
+% \textbf{FIXME: }. If you want to disable this feature, pass the {\em
+% nomargin} option to the package.
+% \par
+% \DescribeEnv{index} With the {\em index} option, fixme notes can also be 
+% inserted in the index of your document. All \texttt{fixme} index entries
+% appear under the \textbf{***FIXME} key at the beginning of the index.
+% \par
+% \DescribeEnv{warning}\DescribeEnv{info} Additionally, you might want to
+% output warnings on the terminal or in the log file. The {\em warning} option 
+% outputs a warning on the terminal with the fixme note and the line number in
+% from source file. This warning is also registered in the log file. If you
+% only want to register the fixme notes in the log file, use the {\em info}
+% option instead. It does essentially the same, but doesn't mess up your
+% terminal output.
+% \begin{quote}
+% - And what if I want output on the terminal, but not in the log file?\\
+% - Well, just get lost \{:-)
+% \end{quote}
+% 
+% \StopEventually{\par Well, I think that's it. Enjoy using FiXme!!
+%   \vfill\hfill\small Copyright \copyright 1998 -- Didier Verna}
+% \subsection{Available Macros}
+% \DescribeMacro{\fixme} This is the one and only macro that you will use to
+% generate a fixme note in your document. It takes one argument: the note to
+% generate. You have an example of such a note in the margin of the
+% introduction, which was generated by the command
+% |\fixme{Here's a sample fixme note for you guys}|.
+% \par
+% \DescribeMacro{\FiXmeMargin}\DescribeMacro{\FiXmeIndex}
+% \DescribeMacro{\FiXmeWarning}\DescribeMacro{\FiXmeInfo}
+% Those macros (one per formatting option) are considered internal. They are
+% used by the |\fixme{}| command to generate the fixme note in different ways.
+% However, if you are not satisfied with the way they perform their job, you
+% can redefine them using |\renewcommand{}| if you like. Please refer to the
+% next section to see how they are implemented.
+%
+%
+% \section{The Code}
+% For the interested reader, here is a short sequential description of the
+% code implementing this package. First, the package identifies itself:
+%    \begin{macrocode}
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{fixme}[1994/06/01]
+
+%    \end{macrocode}
+% Then, we define our initial commands. Internal commands are all empty,
+% except for |\FiXmeMargin{}| which is the default. Also, the initial behavior 
+% of |\fixme{}| corresponds to the {\em final} mode (generating an error).
+%    \begin{macrocode}
+\newcommand{\FiXmeMargin}[1]{%
+\marginpar{\footnotesize\flushright\textbf{FIXME: }\em #1}}
+\newcommand{\FiXmeWarning}[1]{}
+\newcommand{\FiXmeInfo}[1]{}
+\newcommand{\FiXmeIndex}[1]{}
+
+\newcommand{\fixme}[1]{%
+\PackageError{fixme}{`FIXME: #1' left in final version.}}
+
+%    \end{macrocode}
+% Now, we declare our options. First, the options controlling which actions
+% should be performed when a \verb!\fixme{}! command is issued,
+%    \begin{macrocode}
+\DeclareOption{nomargin}{\renewcommand{\FiXmeMargin}[1]{}}
+
+\DeclareOption{warning}{\renewcommand{\FiXmeWarning}[1]{%
+\PackageWarning{fixme}{`FIXME: #1'}}}
+
+\DeclareOption{info}{\renewcommand{\FiXmeInfo}[1]{%
+\PackageInfo{fixme}{`FIXME: #1'}}}
+
+\DeclareOption{index}{\renewcommand{\FiXmeIndex}[1]{%
+\index{***@FIXME:!#1}}}
+
+%    \end{macrocode}
+% and then the global behavior options:
+%    \begin{macrocode}
+\DeclareOption{final}{}
+\DeclareOption{draft}{\renewcommand{\fixme}[1]{%
+\FiXmeMargin{#1}%
+\FiXmeWarning{#1}%
+\FiXmeInfo{#1}%
+\FiXmeIndex{#1}}}
+
+%    \end{macrocode}
+% Finally, we process the options.
+%    \begin{macrocode}
+\ProcessOptions
+
+%    \end{macrocode}
+%
+% \Finale\PrintChanges
