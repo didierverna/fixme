@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2002 Didier Verna.
 
-## PRCS: $Id: Makefile 1.19 Wed, 03 Jul 2002 16:40:25 +0200 didier $
+## PRCS: $Id: Makefile 1.20 Tue, 19 Oct 2004 09:49:21 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -40,7 +40,7 @@ DOCDIR := $(TEXDIR)/docs
 W3DIR  := ${HOME}/www/comp/development
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 2.2
+VERSION := 2.3
 
 ARCHIVE := $(PROJECT)-$(VERSION)
 DISTFILES := README NEWS $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
@@ -61,6 +61,7 @@ clean:
 
 distclean: clean
 	-rm $(PROJECT).sty $(PROJECT).dvi
+	-rm -fr .auto
 
 dist:
 	-rm -fr $(ARCHIVE)*
@@ -72,9 +73,9 @@ dist:
 	rm -fr $(ARCHIVE) $(ARCHIVE).tar
 
 install-www: dist $(PROJECT).dvi
-	install -m 644 NEWS $(W3DIR)/fixme-news.txt
-	echo "$(VERSION)" > $(W3DIR)/fixme-version.txt
-	chmod 644 $(W3DIR)/fixme-version.txt
+	install -m 644 NEWS $(W3DIR)/$(PROJECT)-news.txt
+	echo "$(VERSION)" > $(W3DIR)/$(PROJECT)-version.txt
+	chmod 644 $(W3DIR)/$(PROJECT)-version.txt
 	install -m 644 $(PROJECT).dvi $(W3DIR)/
 	install -m 644 $(ARCHIVE).tar.gz $(W3DIR)/$(PROJECT).tar.gz
 	install -m 644 $(ARCHIVE).tar.bz2 $(W3DIR)/$(PROJECT).tar.bz2
