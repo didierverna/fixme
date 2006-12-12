@@ -2,7 +2,7 @@
 		  a LaTeX2e package for putting fixme notes
 			     in draft documents
 
-                    Copyright (C) 1998-2000 Didier Verna
+                    Copyright (C) 1998-2001 Didier Verna
 
 
 * Copyright
@@ -29,12 +29,12 @@ FiXme consists of the following files:
 * Description
 =============
 
-	This package provides you with a way to insert fixme notes in
+	This package provides you with a way of inserting fixme notes in
 documents being developped (in draft mode). Such notes can appear in the
 margin of the document, as index entries, in the log file and as warnings on
-stdout. It is also possible to summarize them in a list. If your document is
-in a final version, any remaining fixme note will produce an error. FiXme also
-comes with support for AUC-TeX.
+stdout. It is also possible to summarize them in a list, and in the index. If
+your document is in a final version, any remaining fixme note will produce an
+error. FiXme also comes with support for AUC-TeX.
 
 
 * Changes
@@ -60,10 +60,10 @@ a suitable AUC-TeX style directory.
 	Have fun!
 
 --
-    /     /   _   _       Didier Verna        http://www.inf.enst.fr/~verna/
+    /     /   _   _       Didier Verna      http://www.lrde.epita.fr/~didier/
  - / / - / / /_/ /        EPITA / LRDE         mailto:didier@lrde.epita.fr
-/_/ / /_/ / /__ /      14-16 rue Voltaire        Tel. +33 (1) 44 08 01 77
-                   94276 Kremlin-Bicêtre cedex   Fax. +33 (1) 44 08 01 99
+/_/ / /_/ / /__ /      14-16 rue Voltaire       Tel.  +33 (1) 53 14 59 47
+                  94276 Kremlin-Bicêtre France  Fax.  +33 (1) 44 08 01 99
 
 
 
