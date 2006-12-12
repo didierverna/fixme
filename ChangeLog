@@ -1,3 +1,8 @@
+2002-02-19  Didier Verna  <didier@lrde.epita.fr>
+
+	* fixme.dtx: implemented fixme notes levels, usage counters and
+	summary, more translation work.
+
 2001-04-23  Didier Verna  <didier@lrde.epita.fr>
 
 	* version 1.3 released.

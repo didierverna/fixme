@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.43 Tue, 19 Feb 2002 18:43:57 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.44 Tue, 19 Feb 2002 19:50:49 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{501}
+% \CheckSum{522}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -247,6 +247,16 @@
 % \DescribeMacro{\listfixmename}
 % Defines the title for the ``list of fixmes'' section.
 %
+% \subsection{Counters}
+% \DescribeMacro{\thefixmecount}
+% \DescribeMacro{\thefixmenotecount}
+% \DescribeMacro{\thefixmewarningcount}
+% \DescribeMacro{\thefixmeerrorcount}
+% As of \fixme{} version 2.0, four counters are provided. They count
+% respectively the total number of fixme notes, and the number of
+% level-specific ones. At the end of processing, a \fixme{} usage summary is
+% displayed and logged.
+%
 %
 % \section{\auctex{} support}
 % \auctex{} is a powerful major mode for editing \TeX{} documents in
@@ -260,18 +270,19 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v2.0] New feature: notes levels (optional argument to |\fixme|).
-% \item[] More translation work.
-% \item[] Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|
+% \item[v2.0] New feature: notes levels (optional argument to |\fixme|).\\
+% New feature: fixme notes counters and usage summary.\\
+% More translation work.\\
+% Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|.
 % \item[v1.5] New appearance option: \texttt{inline}.
-% \item[v1.4] Support for the koma-script classes has been added.
-% \item[] Fix bug reported by Ulf Jaenicke-Roessler
-%   |<ujr@physik.phy.tu-dresden.de>|: the |\listoffixmes| command didn't work
-%   when called before the first fixme note.
+% \item[v1.4] Support for the koma-script classes has been added.\\
+% Fix bug reported by Ulf Jaenicke-Roessler
+% |<ujr@physik.phy.tu-dresden.de>|: the |\listoffixmes| command didn't work
+% when called before the first fixme note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri
 %   |<murri@phc.unipi.it>|.
 % \item[v1.2] Support for German thanks to Harald Harders
-%   |<h.harders@tu-bs.de>|.
+% |<h.harders@tu-bs.de>|.
 % \end{itemize}
 %
 % \StopEventually{\par Well, I think that's it. Enjoy using \fixme{}!
@@ -309,8 +320,8 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\listoffixmes{}
-\newcommand\listoffixmes@final{}
-\newcommand\listoffixmes@draft{%
+\def\listoffixmes@final{}
+\def\listoffixmes@draft{%
   \IfFileExists{\jobname .lox}{\@listoffixmes@pretoc}{}%
   \@starttoc{lox}%
   \IfFileExists{\jobname .lox}{\@listoffixmes@posttoc}{}%
@@ -337,12 +348,12 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@pretoc@article{%
+\def\@listoffixmes@pretoc@article{%
   \section*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
-\newcommand\@listoffixmes@posttoc@article{}
-\newcommand*\l@fixme@article{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\@listoffixmes@posttoc@article{}
+\def\l@fixme@article{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@report}
@@ -353,7 +364,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@pretoc@report{%
+\def\@listoffixmes@pretoc@report{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
@@ -362,8 +373,8 @@
   \chapter*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
-\newcommand\@listoffixmes@posttoc@report{\if@restonecol\twocolumn\fi}
-\newcommand*\l@fixme@report{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\@listoffixmes@posttoc@report{\if@restonecol\twocolumn\fi}
+\def\l@fixme@report{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@book}
@@ -374,7 +385,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@pretoc@book{%
+\def\@listoffixmes@pretoc@book{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
@@ -383,8 +394,8 @@
   \chapter*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
-\newcommand\@listoffixmes@posttoc@book{\if@restonecol\twocolumn\fi}
-\newcommand*\l@fixme@book{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\@listoffixmes@posttoc@book{\if@restonecol\twocolumn\fi}
+\def\l@fixme@book{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 %
@@ -397,12 +408,12 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@pretoc@scrartcl{%
+\def\@listoffixmes@pretoc@scrartcl{%
   \section*{\listfixmename%
     \@mkboth{\listfixmename}{\listfixmename}}%
   }
-\newcommand\@listoffixmes@posttoc@scrartcl{}
-\newcommand*\l@fixme@scrartcl{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\@listoffixmes@posttoc@scrartcl{}
+\def\l@fixme@scrartcl{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrreprt}
@@ -413,7 +424,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@pretoc@scrreprt{%
+\def\@listoffixmes@pretoc@scrreprt{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
@@ -422,8 +433,8 @@
   \chapter*{\listfixmename%
     \@mkboth{\listfixmename}{\listfixmename}}%
   }
-\newcommand\@listoffixmes@posttoc@scrreprt{\if@restonecol\twocolumn\fi}
-\newcommand*\l@fixme@scrreprt{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\@listoffixmes@posttoc@scrreprt{\if@restonecol\twocolumn\fi}
+\def\l@fixme@scrreprt{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrbook}
@@ -434,7 +445,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@pretoc@scrbook{%
+\def\@listoffixmes@pretoc@scrbook{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
@@ -443,8 +454,8 @@
   \chapter*{\listfixmename%
     \@mkboth{\listfixmename}{\listfixmename}}%
   }
-\newcommand\@listoffixmes@posttoc@scrbook{\if@restonecol\twocolumn\fi}
-\newcommand*\l@fixme@scrbook{\@dottedtocline{1}{1.5em}{2.3em}}
+\def\@listoffixmes@posttoc@scrbook{\if@restonecol\twocolumn\fi}
+\def\l@fixme@scrbook{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 %
@@ -622,7 +633,15 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\fixme[2][error]{\csname fixme@#1\endcsname{#2}}
+\newcounter{fixmecount}
+\newcounter{fixmenotecount}
+\newcounter{fixmewarningcount}
+\newcounter{fixmeerrorcount}
+
+\newcommand\fixme[2][error]{%
+  \stepcounter{fixmecount}%
+  \stepcounter{fixme#1count}%
+  \csname fixme@#1\endcsname{#2}}
 
 %    \end{macrocode}
 % Options that control which layouts are selected:
@@ -748,6 +767,20 @@
 \ExecuteOptions{english,final,margin,warning}
 \ProcessOptions*
 
+%    \end{macrocode}
+% Finally, output a summary giving the number of fixme notes at the end of the
+% compilation:
+%    \begin{macrocode}
+\AtEndDocument{%
+  \GenericWarning{%
+    (FiXme) \@spaces\@spaces\@spaces\@spaces
+  }{%
+    Package FiXme Summary: %
+    \space Number of notes: \thefixmenotecount,\MessageBreak%
+    Number of warnings: \thefixmewarningcount,\MessageBreak%
+    Number of errors: \thefixmeerrorcount,\MessageBreak%
+    Total: \thefixmecount\@gobble%
+  }}
 %    \end{macrocode}
 %
 % ^^A \PrintChanges
