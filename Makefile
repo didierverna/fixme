@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2000 Didier Verna.
 
-## PRCS: $Id: Makefile 1.12 Tue, 18 Apr 2000 15:02:52 +0200 didier $
+## PRCS: $Id: Makefile 1.13 Mon, 11 Dec 2000 12:15:40 +0100 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -38,7 +38,7 @@ AUCDIR := $(STYDIR)/.style
 DOCDIR := $(TEXDIR)/doc
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 1.1
+VERSION := 1.2
 
 ARCHIVE := $(PROJECT)-$(VERSION)
 DISTFILES := README $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el
@@ -57,13 +57,14 @@ clean:
 	-rm *~ *.aux *.lo*
 distclean: clean
 	-rm $(PROJECT).sty $(PROJECT).dvi
+	-rm -fr $(PROJECT)-*
 
 dist:
-	-rm -fr $(PROJECT)-*
+	-rm -fr $(ARCHIVE)*
 	mkdir $(ARCHIVE)
 	cp $(DISTFILES) $(ARCHIVE)
 	tar zcvf $(ARCHIVE).tar.gz $(ARCHIVE)
-	rm -fr $(PROJECT)-*
+	rm -fr $(ARCHIVE)
 
 checkin:
 	prcs checkin

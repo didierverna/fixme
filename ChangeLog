@@ -1,0 +1,16 @@
+2000-12-11  Didier Verna  <didier@lrde.epita.fr>
+
+	* ChangeLog: new file.
+
+	* fixme.prj (Populate-Ignore): add .tar.gz files.
+
+	* Makefile (distclean): also remove archive-related stuff.
+	(dist): fix removing of tar file just after creation. Also, don't
+	remove older archive related stuff.
+
+	* fixme.dtx: moved \fixme and \auctex definitions to the driver
+	section.
+
+2000-12-11  Didier Verna  <didier@lrde.epita.fr>
+
+	* version 1.1 released (first public reslease).
