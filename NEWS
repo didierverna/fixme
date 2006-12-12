@@ -20,8 +20,10 @@ FiXme consists of the files listed in the file `README'.
 
 
 
-* Version 2.3
+* Version 3.0
 =============
+** Added fixme environments
+providing similar functionalities as already existing macros.
 ** Added an optional first argument to the note insertion commands
 to change the layout locally.
 ** Fix bug in marginal notes

@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.63 Mon, 25 Oct 2004 11:45:47 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.64 Mon, 25 Oct 2004 16:47:04 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -62,9 +62,9 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
-% \newcommand\version{v2.3}
+% \newcommand\version{v3.0}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
-% \newcommand\releasedate{2004/10/19}
+% \newcommand\releasedate{2004/10/25}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
 % \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
@@ -117,6 +117,7 @@
 % preamble of your document.
 %
 % \subsection{Inserting notes}
+% \subsubsection{Macros}
 % \DescribeMacro{\fixme}
 % The main command for inserting a \fixme{} note in your document is the
 % |\fixme| macro. It takes the note to insert as its mandatory argument. Notes
@@ -130,6 +131,21 @@
 % comments have three different importance levels: note, warning and (non
 % critical) error. The corresponding macros obey the same syntax as |\fixme|.
 % However, none of the notes inserted via these macros are fatal.
+%
+% \subsubsection{Environments}
+% \DescribeEnv{anfxnote}
+% \DescribeEnv{anfxwarning}
+% \DescribeEnv{anfxerror}
+% \DescribeEnv{afixme}
+% As of version 3.0, \fixme{} provides environments for inserting longer
+% notes. These environments take one optional argument (should be short,
+% perhaps a summary of the note) that will be used in the list of fixme's and
+% in the index if required.\par
+% The \fixme{} environments behave exactly the same way as their macro
+% counterpart, except for the layout (see section \ref{sec:layout}): as they
+% are meant for longer notes, the layout is always \texttt{inline} (and
+% possibly \texttt{index} if so required). By default, \fixme{} environments
+% are typeset in a \texttt{quotation} one.
 %
 % \subsection{Controlling the behavior of \fixme\label{sec:behavior}}
 % \DescribeEnv{final}
@@ -170,7 +186,7 @@
 % \DescribeMacro{\fxnote[]}
 % \DescribeMacro{\fxwarning[]}
 % \DescribeMacro{\fxerror[]}
-% As of version 2.3, \fixme{} provides a way to change the selected layout(s)
+% As of version 3.0, \fixme{} provides a way to change the selected layout(s)
 % on a per-note basis: each note insertion command takes an optional first
 % argument that overrides the global layout. This argument consists of one or
 % more layout options (\texttt{inline}, \texttt{margin}, \texttt{footnote} and
@@ -183,6 +199,9 @@
 % \LaTeX{} (margin paragraphs are floats). In such a case, you would rather
 % inline the note, which can be done with something like
 % |\fixme[inline]{blah}|.\par
+% Finally, note that \fixme{} environments behave in a special way: they are
+% always typeset \texttt{inline}, regardless of your layout settings (they
+% respect you whish for an index though).\par
 %
 % \subsection{Controlling the notes logging}
 % \DescribeEnv{silent}
@@ -209,6 +228,7 @@
 %
 % \section{Customizing \fixme}
 % \subsection{Customizing the notes layout}
+% \subsubsection{Macros}
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
 % parts: a ``prefix'' which depends on the note level, and the note
 % itself. The prefix is one of ``\fixme{} note:'', ``\fixme{} warning:'',
@@ -227,6 +247,15 @@
 % By default, only the first 3 of them are used though (fatal errors do not
 % appear under a subkey, but directly under the \fixme{} key). The notes are
 % numbered in the index.\par
+%
+% \subsubsection{Environments}
+% \DescribeMacro{\FXEnvBegin}
+% \DescribeMacro{\FXEnvEnd}
+% The optional argument of \fixme{} environments is always typeset according
+% to the \texttt{inline} layout described above. By default, \fixme{} uses a
+% \texttt{quotation} for displaying the environments'contents. If you want to
+% change that, you can redefine the macros |\FXEnvBegin| and |\FXEnvEnd| that
+% open and close the environments.
 %
 % \subsection{Customizing the notes logging}
 % \DescribeMacro{\FXNote}
@@ -312,7 +341,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v2.3] Added an optional first argument to the note insertion commands
+% \item[v3.0] Added environments corresponding to the note insertion
+% commands.\\
+% Added an optional first argument to the note insertion commands
 % to change the layout locally.\\
 % Fix bug reported by Akim Demaille: marginal notes could mess up the
 % document's layout by flushing it right.
@@ -342,8 +373,8 @@
 % \end{macro}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2004/10/19 v2.3
+¡$Format: "\\ProvidesPackage{fixme}[$ReleaseDate: 2004/10/19$ v$Version: 2.3$"$
+\ProvidesPackage{fixme}[2004/10/25 v3.0
                         Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
