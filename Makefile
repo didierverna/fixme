@@ -1,34 +1,25 @@
-### Makefile --- Personnal Makefile for common FiXme targets
+### Makefile --- Personnal Makefile for FiXme
 
 ## Copyright (C) 1999 Didier Verna.
 
-## PRCS: $Id: Makefile 1.7 Sun, 11 Apr 1999 16:04:41 +0200 verna $
+## PRCS: $Id: Makefile 1.8 Fri, 24 Sep 1999 16:08:58 +0200 verna $
 
 ## Author:        Didier Verna <verna@inf.enst.fr>
 ## Maintainer:    Didier Verna <verna@inf.enst.fr>
 ## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Sun Apr 11 16:02:58 1999
+## Last Revision: Fri Sep 24 11:30:28 1999
 
 ## This file is part of FiXme.
 
-## FiXme is distributed in the hope that it will be useful,
-## but WITHOUT ANY WARRANTY; without even the implied warranty of
-## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+## FiXme may be distributed and/or modified under the
+## conditions of the LaTeX Project Public License, either version 1.1
+## of this license or (at your option) any later version.
+## The latest version of this license is in
+## http://www.latex-project.org/lppl.txt
+## and version 1.1 or later is part of all distributions of LaTeX
+## version 1999/06/01 or later.
 
-## You are NOT ALLOWED to distribute this file alone. However,
-## you are allowed to distribute this file under the condition
-## that it is distributed along with the whole FiXme package.
-## If you receive only some of these files from someone, complain!
-
-## You are NOT ALLOWED to modify this file, or any other file in the
-## FiXme package, other than for personal use or within an organization.
-## However, you are allowed to freely incorporate (possibly modified)
-## parts of this file in other files with clearly different names,
-## provided that the original authors are given full credit for their work.
-
-## You are NOT ALLOWED to charge a fee for distribution or use of this
-## package or any derivative work as described above, other than for the
-## physical act of transferring copies.
+## FiXme consists of the files listed in the file `README'.
 
 
 ### Commentary:
@@ -36,48 +27,39 @@
 ## Contents management by FCM version 0.1.
 
 
-### TODO:
-
-
-### Change Log:
-
-
 ### Code:
 
+# $Format: "VERSION=$ProjetVersion$"$
+VERSION=$ProjetVersion$
+ARCHIVE=xxx
 DISTFILES=README fixme.ins fixme.dtx
 
-STYDIR=${HOME}/TeX/styles
+STYDIR=${HOME}/TeX/sty
 DOCDIR=${HOME}/TeX/doc
 
 all: fixme.sty fixme.dvi
 
+install: install-doc install-sty
+install-sty: fixme.sty
+	cp fixme.sty $(STYDIR)
+install-doc: fixme.dvi
+	cp fixme.dvi $(DOCDIR)
+
+clean:
+	-rm *~ *.aux *.lo*
+distclean: clean
+	-rm fixme.sty fixme.dvi
+
 dist:
-	-rm -fr fixme
-	mkdir fixme
-	cp $(DISTFILES) fixme
-	gtar zcf fixme.tar.gz fixme
-	rm -fr fixme
+	-rm -fr fixme-*
+	mkdir $(ARCHIVE)
+	cp $(DISTFILES) $(ARCHIVE)
+	gtar zcf $(ARCHIVE).tar.gz $(ARCHIVE)
+	rm -fr fixme-*
 
 checkin:
 	prcs checkin
 	prcs rekey
-
-install: install-doc install-sty
-
-install-doc: fixme.dvi
-	cp fixme.dvi $(DOCDIR)
-install-sty: fixme.sty
-	cp fixme.sty $(STYDIR)
-
-distclean: clean clean-doc clean-sty
-
-clean:
-	-rm *~ *.aux *.log *.dvi *.sty *.lo*
-
-clean-doc:
-	-rm *.dvi
-clean-sty:
-	-rm *.sty
 
 fixme.sty: fixme.ins fixme.dtx
 fixme.dvi: fixme.dtx
@@ -90,6 +72,6 @@ fixme.dvi: fixme.dtx
 	@echo "\n ===== Building the doc file ..."
 	latex $<
 
-.SUFFIXES: .dvi .sty .dtx .ins .ltx
+.SUFFIXES: .ins .dtx .dvi .sty
 
 ### Makefile ends here
