@@ -1,16 +1,16 @@
 ;; -*- scheme -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "A LaTeX package for inserting fixme notes in drafts.")
-(Project-Version fixme 0 1)
-(Parent-Version -*- -*- -*-)
-(Version-Log "Initial project fill")
+(Project-Version fixme branch-1-0 1)
+(Parent-Version fixme 0 1)
+(Version-Log "Create the branch-1-0")
 (New-Version-Log "")
-(Checkin-Time "Tue, 05 Jan 1999 15:54:00 +0100")
+(Checkin-Time "Tue, 05 Jan 1999 16:28:23 +0100")
 (Checkin-Login verna)
 (Populate-Ignore (".aux$" ".dvi$" ".log$" ".sty"))
 (Project-Keywords
-  (PackageVersion 0.2)
-  (PackageDate 01/05/99))
+  (PackageVersion 1.0-b1)
+  (PackageDate 1999/01/05))
 (Files
   ;; This is a comment.  Fill in files here.
   ;; For example:  (prcs/checkout.cc ())
@@ -19,7 +19,7 @@
   ;; to version 0.0(w), by verna:
   
   (README (fixme/0_README 1.1 640))
-  (fixme.dtx (fixme/1_fixme.dtx 1.1 640))
+  (fixme.dtx (fixme/1_fixme.dtx 1.2 640))
   (fixme.ins (fixme/2_fixme.ins 1.1 640))
   )
 (Merge-Parents)
