@@ -38,7 +38,7 @@ AUCDIR := $(STYDIR)/.style
 DOCDIR := $(TEXDIR)/doc
 
 ## $Format: "VERSION := $Version$"$
-VERSION := 1.1-b21
+VERSION := 1.1-b22
 
 ARCHIVE := $(PROJECT)-$(VERSION)
 DISTFILES := README $(PROJECT).ins $(PROJECT).dtx $(PROJECT).el

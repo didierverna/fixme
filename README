@@ -45,7 +45,7 @@ in a final version, any remaining fixme note will produce an error.
 - Run LaTeX on the file `fixme.dtx' to create the doc   file `fixme.dvi'.
 - Install these files anywhere you see fit.
 
-	If you're an AUC-TeX user, you can also install the file `fink.el' in
+	If you're an AUC-TeX user, you can also install the file `fixme.el' in
 a suitable AUC-TeX style directory.
 
 	Have fun!
