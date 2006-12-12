@@ -1,22 +1,22 @@
 ;; -*- lisp -*-
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description "A LaTeX package for inserting fixme notes in drafts.")
-(Project-Version fixme branch-1-1 1)
-(Parent-Version fixme branch-1-0 6)
-(Version-Log "### Version 1.1 More clever rewrite of the code.")
+(Project-Version fixme branch-1-1 2)
+(Parent-Version fixme branch-1-1 1)
+(Version-Log "Corrected the checksum and the tilde in the URL")
 (New-Version-Log "")
-(Checkin-Time "Wed, 06 Jan 1999 15:00:36 +0100")
+(Checkin-Time "Wed, 06 Jan 1999 17:08:34 +0100")
 (Checkin-Login verna)
 (Populate-Ignore (".aux$" ".dvi$" ".log$" ".sty"))
 (Project-Keywords
- (PackageVersion 1.1-b1)
+ (PackageVersion 1.1-b2)
  (PackageDate 1999/01/06))
 (Files
  
  (README (fixme/0_README 1.1 640))
  (Makefile (fixme/3_Makefile 1.4 640))
- (fixme.dtx (fixme/1_fixme.dtx 1.6 640))
- (fixme.ins (fixme/2_fixme.ins 1.2 640))
+ (fixme.dtx (fixme/1_fixme.dtx 1.7 640))
+ (fixme.ins (fixme/2_fixme.ins 1.3 640))
  (test.ltx (fixme/4_test.ltx 1.1 640))
  )
 
