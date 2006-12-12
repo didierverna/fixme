@@ -2,11 +2,12 @@
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description
  "A LaTeX2e package for inserting fixme notes in draft documents")
-(Project-Version fixme branch-1-2 2)
-(Parent-Version fixme branch-1-2 1)
-(Version-Log "Doc fixes and improvements, german support")
+(Project-Version fixme branch-1-2 3)
+(Parent-Version fixme branch-1-2 2)
+(Version-Log "Prettyfied the .ins preamble, prepare for using index and
+glossary, use the macro environment in code description.")
 (New-Version-Log "")
-(Checkin-Time "Tue, 19 Dec 2000 14:11:33 +0100")
+(Checkin-Time "Tue, 26 Dec 2000 13:48:38 +0100")
 (Checkin-Login didier)
 (Populate-Ignore
  ("\\.aux$" "\\.dvi$" "\\.lo.*$" "\\.sty$"
@@ -21,12 +22,12 @@
   "Copyright \\\\copyright{} $FirstYear$--$LastYear$ Didier Verna")
  )
 (Files
- (README (fixme/0_README 1.7 640))
- (Makefile (fixme/3_Makefile 1.13 640))
- (fixme.dtx (fixme/1_fixme.dtx 1.26 640))
- (fixme.ins (fixme/2_fixme.ins 1.10 640))
+ (README (fixme/0_README 1.8 640))
+ (Makefile (fixme/3_Makefile 1.14 640))
+ (fixme.dtx (fixme/1_fixme.dtx 1.27 640))
+ (fixme.ins (fixme/2_fixme.ins 1.11 640))
  (fixme.el (fixme/5_fixme.el 1.1 640))
- (ChangeLog (fixme/6_ChangeLog 1.2 644))
+ (ChangeLog (fixme/6_ChangeLog 1.3 644))
 )
 
 (Merge-Parents)

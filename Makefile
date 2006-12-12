@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2000 Didier Verna.
 
-## PRCS: $Id: Makefile 1.13 Mon, 11 Dec 2000 12:15:40 +0100 didier $
+## PRCS: $Id: Makefile 1.14 Tue, 26 Dec 2000 13:48:38 +0100 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -54,10 +54,11 @@ install-auc: $(PROJECT).el
 	cp $< $(AUCDIR)
 
 clean:
-	-rm *~ *.aux *.lo*
+	-rm *~ *.aux *.lo* *.gl* *.idx *.ind *.ilg
+	-rm -fr $(PROJECT)-*
+
 distclean: clean
 	-rm $(PROJECT).sty $(PROJECT).dvi
-	-rm -fr $(PROJECT)-*
 
 dist:
 	-rm -fr $(ARCHIVE)*
@@ -76,11 +77,14 @@ $(PROJECT).dvi: $(PROJECT).dtx
 
 %.sty: %.ins
 	@echo "Building the sty file ..."
-	latex $<
+	echo y | latex $<
 
 %.dvi: %.dtx
 	@echo "Building the dvi file ..."
 	latex $<
+#	makeindex -s gglo -o fink.gls fink.glo
+#	makeindex -s gind fink.idx
+#	latex $<
 
 .PHONY: all                                         \
         install install-sty install-doc install-auc \

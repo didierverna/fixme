@@ -37,6 +37,14 @@ in a final version, any remaining fixme note will produce an error. FiXme also
 comes with support for AUC-TeX.
 
 
+* Changes
+=========
+
+** Version 1.2
+--------------
+*** Support for German thanks to Harald Harders <h.harders@tu-bs.de>
+
+
 * Installation
 ==============
 
