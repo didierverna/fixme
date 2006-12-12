@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.8 Thu, 07 Jan 1999 16:31:18 +0100 verna $
+% PRCS: $Id: fixme.dtx 1.9 Fri, 12 Mar 1999 12:36:06 +0100 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -30,7 +30,7 @@
 %
 % You are NOT ALLOWED to charge a fee for distribution or use of this
 % package or any derivative work as described above, other than for the
-% physical act of transferring copies. 
+% physical act of transferring copies.
 %
 % Commentary:
 %
@@ -44,14 +44,14 @@
 \begin{document}
 % \OnlyDescription
 \DocInput{fixme.dtx}
-\end{document} 
+\end{document}
 %</driver>
 %
 % \fi
 %
 % ^^A Donald Arseneau gave me this hint to put REAL comments in .dtx files
 % \catcode`\¡=14
-% \CheckSum{61}
+% \CheckSum{94}
 %
 % ^^A $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$
 % \newcommand{\packageversion}{1.1-b3}
@@ -73,7 +73,7 @@
 % unwritten or uncomplete, and come back to them later. When you have an
 % important ammount of parts to be {\em fixed} in your document, you probably
 % want clues about where such parts are left (which I call ``fixme notes'').
-% That's what this package does.\\ 
+% That's what this package does.\\
 % The \textsf{fixme} package is copyright \copyright\ 1998 - Didier Verna. All
 % rights reserved.
 % \end{abstract}
@@ -88,7 +88,7 @@
 % let you output warnings, insert margin notes\fixme{Here's a sample fixme
 % note for you guys}, add entries in the index etc.
 %
-% 
+%
 % \section{User Interface}
 % To use the package, simply say |\usepackage[|\meta{options}|]{fixme}| in the
 % preamble of your document. The available options are described below.
@@ -103,7 +103,7 @@
 % any remaining fixme note in the document generates an error. Well, if there
 % are parts to be fixed, the document is not final right? On the contrary, the
 % {\em draft} option tells \textsf{FiXme} to issue fixme notes in a manner
-% defined by the following options (those ones can be mixed): 
+% defined by the following options (those ones can be mixed):
 % \par
 % \DescribeEnv{nomargin} By default, \texttt{FiXme} inserts the fixme notes
 % in the margin, like the one shown in the introduction of this document.
@@ -112,22 +112,22 @@
 % \textbf{FIXME: }. If you want to disable margin notes, pass the {\em
 % nomargin} option to the package.
 % \par
-% \DescribeEnv{index} With the {\em index} option, fixme notes can also be 
+% \DescribeEnv{index} With the {\em index} option, fixme notes can also be
 % inserted in the index of your document. All \texttt{FiXme} index entries
 % appear under the \textbf{***FIXME} key at the beginning of the index.
 % \par
 % \DescribeEnv{warning}\DescribeEnv{info} Additionally, you might want to
-% output warnings on the terminal or in the log file. The {\em warning} option 
+% output warnings on the terminal or in the log file. The {\em warning} option
 % outputs a warning on the terminal with the fixme note and the line number
 % from the source file. This warning is also registered in the log file. If
 % you only want to register the fixme notes in the log file, use the {\em
-% info} option instead. It does essentially the same, but doesn't mess up your 
+% info} option instead. It does essentially the same, but doesn't mess up your
 % terminal output.
 % \begin{quote}
 % - And what if I want output on the terminal, but not in the log file?\\
 % - Well, just get lost \{:-)
 % \end{quote}
-% 
+%
 % \StopEventually{\par Well, I think that's it. Enjoy using FiXme!!
 %   \vfill\hfill\small Copyright \copyright 1998 -- Didier Verna}
 % \subsection{Available Macros}
@@ -151,14 +151,14 @@
 % code implementing this package. Nothing clever, really, I think. But you
 % know, I'm rather dumb as for writing packages\ldots{} this reminds
 % me\ldots{} my ol'mum used to tell me... anyway. First, the package
-% identifies itself: 
+% identifies itself:
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 ¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
 \ProvidesPackage{fixme}[1999/01/07]
 ¡
 %    \end{macrocode}
-% Here, we define some booleans that will control the behavior of the 
+% Here, we define some booleans that will control the behavior of the
 % |\fixme{}| macro. By default, only the margin note is enabled:
 %    \begin{macrocode}
 \newif\iffixmemargin\fixmemargintrue
@@ -168,21 +168,46 @@
 ¡
 %    \end{macrocode}
 %
-% There, we define our internal commands. The user will be able to redefine
+% Here, we define our internal commands. The user will be able to redefine
 % them with |\renewcommand{}| if he's not happy with the proposed
-% implementation. 
+% implementation.
 %    \begin{macrocode}
 \newcommand{\FiXmeMargin}[1]{%
-\marginpar{\footnotesize\flushright\textbf{FIXME: }\em #1}}
+  \marginpar{\footnotesize\flushright\textbf{FIXME: }\em #1}}
 \newcommand{\FiXmeIndex}[1]{\index{***@FIXME:!#1}}
 \newcommand{\FiXmeWarning}[1]{\PackageWarning{fixme}{`FIXME: #1'}}
 \newcommand{\FiXmeInfo}[1]{\PackageInfo{fixme}{`FIXME: #1'}}
 ¡
 %    \end{macrocode}
-% Now, we define |\fixme{}| to nothing by default. The options will take care
-% of setting it properly.
+%
+% There, we define different versions of the |\listoffixmes| command for some
+% document classes
+%    \begin{macrocode}
+\newcommand\listoffixmes@book{%
+  \if@twocolumn
+  \@restonecoltrue\onecolumn
+  \else
+  \@restonecolfalse
+  \fi
+  \chapter*{\listfixmename
+    \@mkboth{\MakeUppercase\listfixmename}%
+    {\MakeUppercase\listfixmename}}%
+  \@starttoc{lox}%
+  \if@restonecol\twocolumn\fi
+  }
+\newcommand*\l@fixme@book{\@dottedtocline{1}{1.5em}{2.3em}}
+¡
+%    \end{macrocode}
+% Let us define the string that will be used to display the list of fixmes:
+%    \begin{macrocode}
+\newcommand{\listfixmename}{List of FIXME's}
+¡
+%    \end{macrocode}
+% Now, we define the main interface functions |\fixme{}| and |\listoffixmes|
+% to nothing by default. The options will take care of setting them properly.
 %    \begin{macrocode}
 \newcommand{\fixme}[1]{}
+\newcommand{\listoffixmes}{}
 ¡
 %    \end{macrocode}
 % Time to deal with the options. First, the options controlling which actions
@@ -194,15 +219,21 @@
 \DeclareOption{info}{\fixmeinfotrue}
 ¡
 %    \end{macrocode}
-% and then the global behavior options:
+% and then the global behavior options. Note that while a \textsf{fixme}
+% generates an error in `final' mode, calling |\listoffixmes| does nothing.
 %    \begin{macrocode}
-\DeclareOption{final}{\renewcommand{\fixme}[1]{%
-\PackageError{fixme}{`FIXME: #1' left in final version.}}}
-\DeclareOption{draft}{\renewcommand{\fixme}[1]{%
-\iffixmemargin\FiXmeMargin{#1}\fi%
-\iffixmewarning\FiXmeWarning{#1}\fi%
-\iffixmeinfo\FiXmeInfo{#1}\fi%
-\iffixmeindex\FiXmeIndex{#1}\fi}}
+\DeclareOption{final}{%
+  \renewcommand{\fixme}[1]{%
+    \PackageError{fixme}{`FIXME: #1' left in final version.}}}
+\DeclareOption{draft}{%
+  \renewcommand{\fixme}[1]{%
+    \iffixmemargin\FiXmeMargin{#1}\fi%
+    \iffixmewarning\FiXmeWarning{#1}\fi%
+    \iffixmeinfo\FiXmeInfo{#1}\fi%
+    \iffixmeindex\FiXmeIndex{#1}\fi%
+    \addcontentsline{lox}{fixme}{#1}}
+  \let\l@fixme\l@fixme@book
+  \let\listoffixmes\listoffixmes@book}
 ¡
 %    \end{macrocode}
 % The {\em final} mode is considered to be the default:
@@ -210,8 +241,8 @@
 \ExecuteOptions{final}
 ¡
 %    \end{macrocode}
-% Finally, we process the options. In order to be sure that global options are 
-% processed first (this allows overriding them by passing opposite ones to the 
+% Finally, we process the options. In order to be sure that global options are
+% processed first (this allows overriding them by passing opposite ones to the
 % package directly), I use the *-form.
 %    \begin{macrocode}
 \ProcessOptions*
