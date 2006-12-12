@@ -2,18 +2,18 @@
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description
  "A LaTeX2e package for inserting fixme notes in draft documents")
-(Project-Version fixme branch-2-1 3)
-(Parent-Version fixme branch-2-1 2)
-(Version-Log "use nobreakspace instead of ~")
+(Project-Version fixme version-2-1 1)
+(Parent-Version fixme branch-2-1 3)
+(Version-Log "Version 2.1 released")
 (New-Version-Log "")
-(Checkin-Time "Tue, 23 Apr 2002 18:38:38 +0200")
+(Checkin-Time "Wed, 24 Apr 2002 10:37:22 +0200")
 (Checkin-Login didier)
 (Populate-Ignore
  ("\\.aux$" "\\.dvi$" "\\.lo.*$" "\\.sty$"
   "\\.auto/" "\\.tar\\.gz$"))
 (Project-Keywords
  (Version 2.1) ;; Sucker. This should be done automatically.
- (ReleaseDate 2002/04/23)
+ (ReleaseDate 2002/04/24)
  (FirstYear 1998)
  (LastYear  2002)
  (TextCopyright "Copyright (C) $FirstYear$-$LastYear$ Didier Verna")
@@ -26,7 +26,7 @@
  (fixme.dtx (fixme/1_fixme.dtx 1.55 640))
  (fixme.ins (fixme/2_fixme.ins 1.14 640))
  (fixme.el (fixme/5_fixme.el 1.6 640))
- (ChangeLog (fixme/6_ChangeLog 1.12 644))
+ (ChangeLog (fixme/6_ChangeLog 1.13 644))
 )
 
 (Merge-Parents)
