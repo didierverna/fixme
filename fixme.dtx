@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.9 Fri, 12 Mar 1999 12:36:06 +0100 verna $
+% PRCS: $Id: fixme.dtx 1.10 Fri, 12 Mar 1999 14:36:02 +0100 verna $
 %
 % Author:        Didier Verna <verna@inf.enst.fr>
 % Maintainer:    Didier Verna <verna@inf.enst.fr>
@@ -54,9 +54,9 @@
 % \CheckSum{94}
 %
 % ^^A $Format: "% \\newcommand{\\packageversion}{$PackageVersion$}"$
-% \newcommand{\packageversion}{1.1-b3}
+% \newcommand{\packageversion}{1.1-b4}
 % ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
-% \newcommand{\packagedate}{1999/01/07}
+% \newcommand{\packagedate}{1999/03/12}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\textsf{FiXme} -- a \LaTeXe{} package fort inserting fixme notes
@@ -74,7 +74,7 @@
 % important ammount of parts to be {\em fixed} in your document, you probably
 % want clues about where such parts are left (which I call ``fixme notes'').
 % That's what this package does.\\
-% The \textsf{fixme} package is copyright \copyright\ 1998 - Didier Verna. All
+% The \textsf{fixme} package is copyright \copyright\ 1998-99 Didier Verna. All
 % rights reserved.
 % \end{abstract}
 %
@@ -86,7 +86,10 @@
 % document generates an error. If you are in {\em draft} mode, then the
 % behavior of the |\fixme{}| macro is controlled by a set of options, which
 % let you output warnings, insert margin notes\fixme{Here's a sample fixme
-% note for you guys}, add entries in the index etc.
+% note for you guys}, add entries in the index etc. Additionally, you can
+% summarize all fixme notes encountered in your document by issuing the
+% command |\listoffixmes|. This generates a list in a format similar to that
+% of figures or tables for instance.
 %
 %
 % \section{User Interface}
@@ -128,8 +131,6 @@
 % - Well, just get lost \{:-)
 % \end{quote}
 %
-% \StopEventually{\par Well, I think that's it. Enjoy using FiXme!!
-%   \vfill\hfill\small Copyright \copyright 1998 -- Didier Verna}
 % \subsection{Available Macros}
 % \DescribeMacro{\fixme} This is the one and only macro that you will use to
 % generate a fixme note in your document. It takes one argument: the note to
@@ -144,18 +145,27 @@
 % However, if you are not satisfied with the way they perform their job, you
 % can redefine them using |\renewcommand{}| if you like. Please refer to the
 % next section to see how they are implemented by default.
+% \par
+% \DescribeMacro{\listoffixmes}\DescribeEnv{\listfixmename}
+% \texttt{FiXme} remembers where you put fixme notes in a toc-like file with
+% extension ``.lox''. This command generates a list of fixme notes in a manner
+% similar to that of the list of figures for instance. By default, the list is
+% labeled ``List of FIXME's''. This is the default value of |\listfixmename|
+% that you can change with |\renewcommand{}|.
 %
 %
+% \StopEventually{\par Well, I think that's it. Enjoy using FiXme!!
+%   \vfill\hfill\small Copyright \copyright 1998-99 Didier Verna.}
 % \section{The Code}
 % For the interested reader, here is a short sequential description of the
 % code implementing this package. Nothing clever, really, I think. But you
-% know, I'm rather dumb as for writing packages\ldots{} this reminds
-% me\ldots{} my ol'mum used to tell me... anyway. First, the package
+% know, I'm rather dumb as for writing packages\ldots{} that's life you know
+% \ldots{} but I like it this way\ldots{} anyway. First, the package
 % identifies itself:
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}[1994/06/01]
 ¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$]"$
-\ProvidesPackage{fixme}[1999/01/07]
+\ProvidesPackage{fixme}[1999/03/12]
 ¡
 %    \end{macrocode}
 % Here, we define some booleans that will control the behavior of the
@@ -168,20 +178,18 @@
 ¡
 %    \end{macrocode}
 %
-% Here, we define our internal commands. The user will be able to redefine
-% them with |\renewcommand{}| if he's not happy with the proposed
-% implementation.
+% Here, we define our internal commands used in the |\fixme{}| macro,
 %    \begin{macrocode}
 \newcommand{\FiXmeMargin}[1]{%
   \marginpar{\footnotesize\flushright\textbf{FIXME: }\em #1}}
 \newcommand{\FiXmeIndex}[1]{\index{***@FIXME:!#1}}
-\newcommand{\FiXmeWarning}[1]{\PackageWarning{fixme}{`FIXME: #1'}}
-\newcommand{\FiXmeInfo}[1]{\PackageInfo{fixme}{`FIXME: #1'}}
+\newcommand{\FiXmeWarning}[1]{\PackageWarning{fixme}{`#1'}}
+\newcommand{\FiXmeInfo}[1]{\PackageInfo{fixme}{`#1'}}
 ¡
 %    \end{macrocode}
 %
-% There, we define different versions of the |\listoffixmes| command for some
-% document classes
+% and the different versions of the |\listoffixmes| command for the different
+% document classes:
 %    \begin{macrocode}
 \newcommand\listoffixmes@book{%
   \if@twocolumn
@@ -198,13 +206,13 @@
 \newcommand*\l@fixme@book{\@dottedtocline{1}{1.5em}{2.3em}}
 ¡
 %    \end{macrocode}
-% Let us define the string that will be used to display the list of fixmes:
+% Let us now define the string that will be used to display the list,
 %    \begin{macrocode}
 \newcommand{\listfixmename}{List of FIXME's}
 ¡
 %    \end{macrocode}
-% Now, we define the main interface functions |\fixme{}| and |\listoffixmes|
-% to nothing by default. The options will take care of setting them properly.
+%  and the main interface functions |\fixme{}| and |\listoffixmes|. They do
+% nothing by default. The options will take care of setting them properly.
 %    \begin{macrocode}
 \newcommand{\fixme}[1]{}
 \newcommand{\listoffixmes}{}
