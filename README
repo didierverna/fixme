@@ -2,7 +2,7 @@
 		  a LaTeX2e package for putting fixme notes
 			     in draft documents.
 
-		      copyright (C) 1998-99 Didier Verna
+                    copyright (C) 1998-2000 Didier Verna
 
 
 * Copyright
@@ -49,10 +49,9 @@ in a final version, any remaining fixme note will produce an error.
 
 --
     /     /   _   _       Didier Verna        http://www.inf.enst.fr/~verna/
- - / / - / / /_/ /      E.N.S.T. INF C201.1      mailto:verna@inf.enst.fr
-/_/ / /_/ / /__ /        46 rue Barrault        Tel.   (33) 01 45 81 73 46
-                      75634 Paris  cedex 13     Fax.   (33) 01 45 81 31 19
-
+ - / / - / / /_/ /        EPITA / LRDE            mailto:didier@epita.fr
+/_/ / /_/ / /__ /      14-16 rue Voltaire        Tel. +33 (1) 44 08 01 77
+                   94276 Kremlin-Bicêtre cedex   Fax. +33 (1) 44 08 01 99
 
 
 
