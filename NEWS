@@ -22,6 +22,8 @@ FiXme consists of the files listed in the file `README'.
 =============
 ** Fix bug in \fixme@footnotetrue
 reported by Stefan Mann: a typo in the macro name.
+** Documentation improvements
+suggested by Brian van den Broek.
 
 * Version 3.2
 =============
