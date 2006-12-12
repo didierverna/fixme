@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.27 Tue, 26 Dec 2000 13:48:38 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.28 Tue, 26 Dec 2000 13:58:43 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -145,6 +145,7 @@
 % \DescribeEnv{francais}
 % \DescribeEnv{german}
 % \DescribeEnv{ngerman}
+% ^^A \changes{v1.2}{2000/12/26}{Support for German thanks to Harald Harders}
 % \fixme{} currently supports English, French and German. This actually
 % only has the effect of modifying the title of the ``list of fixmes'' if you
 % happen to use it. The \texttt{french} and \texttt{francais} options are
@@ -366,6 +367,8 @@
 %    \end{macrocode}
 % \subsection{Language macros}
 % Options that control which language is selected:
+% ^^A \changes{v1.1}{2000/12/26}{german: new option}
+% ^^A \changes{v1.1}{2000/12/26}{ngerman: new option}
 %    \begin{macrocode}
 \DeclareOption{english}{\renewcommand*{\listfixmename}{List of FIXME's}}
 \DeclareOption{french}{\renewcommand*{\listfixmename}{Liste des FIXME's}}
