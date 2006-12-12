@@ -2,14 +2,14 @@
 %
 % fixme.dtx --- Doc file for the FiXme package (code and documentation)
 %
-% Copyright (C) 1998-2001 Didier Verna.
+% Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.36 Wed, 05 Sep 2001 15:34:01 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.37 Mon, 18 Feb 2002 14:54:22 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
 % Created:       Thu Dec 10 16:04:01 1998
-% Last Revision: Mon Mar 26 18:10:18 2001
+% Last Revision: Mon Feb 18 14:49:01 2002
 %
 % This file is part of FiXme.
 %
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{326}
+% \CheckSum{338}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -62,11 +62,11 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
-% \newcommand{\version}{v1.4}
+% \newcommand{\version}{v1.5}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2001/09/05}
+% \newcommand{\releasedate}{2002/02/18}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
-% \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2001 Didier Verna}
+% \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2002 Didier Verna}
 % \newcommand{\fixme}{\textsf{FiXme}}
 % \newcommand{\auctex}{AUC-\TeX}
 % \MakeShortVerb{\|}
@@ -93,11 +93,11 @@
 %
 % \section{Description}
 % The fixme notes can appear in several forms, depending on which options you
-% pass to the package. These forms currently are: marginal notes, footnotes,
-% index entries, warnings on stdout and information in the log file. You can
-% use multiple forms (possibly all) at the same time. Additionally, you can
-% summarize all fixme notes in a list similar to the ``list of figures'' for
-% instance.\par
+% pass to the package. These forms currently are: directly in text, marginal
+% notes, footnotes, index entries, warnings on stdout and information in the
+% log file. You can use multiple forms (possibly all) at the same time.
+% Additionally, you can summarize all fixme notes in a list similar to the
+% ``list of figures'' for instance.\par
 % All these forms are available when you're working in \texttt{draft} mode.
 % The behavior of \fixme{} is different in \texttt{final} mode, as any
 % remaining fixme note in the document will generate an error.
@@ -162,10 +162,13 @@
 % counterpart that suppresses its behavior. The counterpart option has the same
 % name, prefixed with \texttt{no}. By default, only the \texttt{margin} layout
 % is enabled.\par
-% \DescribeEnv{margin}
-% By default or given this option, \fixme{} inserts the fixme notes in the
-% margin. The notes appear in small characters and flushed to the right. If
-% you want to disable margin notes, use the \texttt{nomargin} option.\par
+% ^^A \changes{v1.5}{2002/02/18}{New appearance option: \texttt{text}}
+% \DescribeEnv{text} With the \texttt{text} option, fixme notes appear
+% directly in the text, in parentheses.\par
+% \DescribeEnv{margin} By default or given this option, \fixme{} inserts the
+% fixme notes in the margin. The notes appear in small characters and flushed
+% to the right. If you want to disable margin notes, use the \texttt{nomargin}
+% option.\par
 % \DescribeEnv{footnote} If you prefer to have footnotes, or if you want to
 % have both (hey, don't forget to save some space for real text!), use this
 % option.\par
@@ -197,6 +200,7 @@
 %
 %
 % \section{Inner Macros}
+% \DescribeMacro{\FiXmeText}
 % \DescribeMacro{\FiXmeMargin}
 % \DescribeMacro{\FiXmeFootnote}
 % \DescribeMacro{\FiXmeIndex}
@@ -224,6 +228,7 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v1.5] New appearance option: \texttt{text}.
 % \item[v1.4] Support for the koma-script classes has been added.
 % \item[] Fix bug reported by Ulf Jaenicke-Roessler
 %   |<ujr@physik.phy.tu-dresden.de>|: the |\listoffixmes| command didn't work
@@ -241,7 +246,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2001/09/05 v1.4
+\ProvidesPackage{fixme}[2002/02/18 v1.5
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
@@ -422,6 +427,7 @@
     but you still have some FiXme's left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
 \newcommand\fixme@draft[1]{%
+  \iffixme@text\FiXmeText{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
   \iffixme@footnote\FiXmeFootnote{#1}\fi%
   \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
@@ -430,13 +436,15 @@
   \addcontentsline{lox}{fixme}{#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\FiXmeMargin}
-%   \begin{macro}{\FiXmeFootnote}
-%     \begin{macro}{\FiXmeIndex}
-%       \begin{macro}{\FiXmeInfo}
-%         \begin{macro}{\FiXmeWarning}
-%           \begin{macro}{\FiXmeUser}
-%             The macros to implement different layouts for the fixme notes:
+% \begin{macro}{\FiXmeText}
+%   \begin{macro}{\FiXmeMargin}
+%     \begin{macro}{\FiXmeFootnote}
+%       \begin{macro}{\FiXmeIndex}
+%         \begin{macro}{\FiXmeInfo}
+%           \begin{macro}{\FiXmeWarning}
+%             \begin{macro}{\FiXmeUser}
+%               The macros to implement different layouts for the fixme notes:
+%             \end{macro}
 %           \end{macro}
 %         \end{macro}
 %       \end{macro}
@@ -444,6 +452,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
+\newcommand\FiXmeText[1]{(#1)}
 \newcommand\FiXmeMargin[1]{%
   \marginpar{\footnotesize\flushright\textbf{FIXME:} \emph{#1}}}
 \newcommand\FiXmeFootnote[1]{%
@@ -456,6 +465,7 @@
 %    \end{macrocode}
 % Booleans that control which layouts are selected:
 %    \begin{macrocode}
+\newif\iffixme@text\fixme@textfalse
 \newif\iffixme@margin\fixme@marginfalse
 \newif\iffixme@footnote\fixme@footnotefalse
 \newif\iffixme@index\fixme@indexfalse
@@ -466,6 +476,8 @@
 %    \end{macrocode}
 % Options that control which layouts are selected:
 %    \begin{macrocode}
+\DeclareOption{text}{\fixme@texttrue}
+\DeclareOption{notext}{\fixme@textfalse}
 \DeclareOption{margin}{\fixme@margintrue}
 \DeclareOption{nomargin}{\fixme@marginfalse}
 \DeclareOption{footnote}{\fixme@footnotetrue}
