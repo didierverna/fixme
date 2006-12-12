@@ -2,12 +2,12 @@
 
 ## Copyright (C) 1999 Didier Verna.
 
-## PRCS: $Id: Makefile 1.6 Tue, 06 Apr 1999 17:50:15 +0200 verna $
+## PRCS: $Id: Makefile 1.7 Sun, 11 Apr 1999 16:04:41 +0200 verna $
 
 ## Author:        Didier Verna <verna@inf.enst.fr>
 ## Maintainer:    Didier Verna <verna@inf.enst.fr>
 ## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Tue Apr  6 17:06:53 1999
+## Last Revision: Sun Apr 11 16:02:58 1999
 
 ## This file is part of FiXme.
 
@@ -58,8 +58,6 @@ dist:
 	gtar zcf fixme.tar.gz fixme
 	rm -fr fixme
 
-test: test.dvi
-
 checkin:
 	prcs checkin
 	prcs rekey
@@ -83,7 +81,6 @@ clean-sty:
 
 fixme.sty: fixme.ins fixme.dtx
 fixme.dvi: fixme.dtx
-test.dvi: test.ltx fixme.sty
 
 .ins.sty:
 	@echo "\n ===== Building the sty file ..."
@@ -91,10 +88,6 @@ test.dvi: test.ltx fixme.sty
 
 .dtx.dvi:
 	@echo "\n ===== Building the doc file ..."
-	latex $<
-
-.ltx.dvi:
-	@echo "\n ===== Building the test file ..."
 	latex $<
 
 .SUFFIXES: .dvi .sty .dtx .ins .ltx

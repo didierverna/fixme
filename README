@@ -1,7 +1,7 @@
 		      This is the README file for FiXme,
 	 a LaTeX package for putting fixme notes in draft documents.
 
-	    copyright (C) 1998 Didier Verna. All rights reserved.
+	   copyright (C) 1998-99 Didier Verna. All rights reserved.
 
 
 	This package provides a macro \fixme{} which you can use to generate
