@@ -2,9 +2,9 @@
 %
 % fixme.dtx --- Doc file for the FiXme package (code and documentation)
 %
-% Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005 Didier Verna.
+% Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.71 Thu, 13 Oct 2005 12:22:07 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.72 Wed, 12 Apr 2006 15:15:39 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{809}
+% \CheckSum{860}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -64,9 +64,9 @@
 % ^^A $Format: "% \\newcommand\\version{v$Version$}"$
 % \newcommand\version{v3.2}
 % ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
-% \newcommand\releasedate{2005/10/13}
+% \newcommand\releasedate{2006/04/12}
 % ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
-% \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004, 2005 Didier Verna}
+% \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
 % \newcommand\auctex{AUC-\TeX}
 % \MakeShortVerb{\|}
@@ -146,9 +146,9 @@
 % in the index if required.\par
 % The \fixme{} environments behave exactly the same way as their macro
 % counterpart, except for the layout (see section \ref{sec:layout}): as they
-% are meant for longer notes, the layout is always \texttt{inline} (and
-% possibly \texttt{index} if so required). By default, \fixme{} environments
-% are typeset in a \texttt{quotation} one.
+% are meant for longer notes, the layout is always \texttt{inline}. The
+% \texttt{index} and \texttt{marginclue} layouts are still honored however. By
+% default, \fixme{} environments are typeset in a \texttt{quotation} one.
 %
 % \subsection{Controlling the behavior of \fixme\label{sec:behavior}}
 % \DescribeEnv{final}
@@ -173,18 +173,40 @@
 % itself behaves this way.\par
 %
 % \subsection{Controlling the notes layout\label{sec:layout}}
+% \fixme{} notes can appear in several forms (that can be combined) in your
+% document.
+% \subsubsection{Global layout}
 % \DescribeEnv{inline}
 % \DescribeEnv{margin}
+% \DescribeEnv{marginclue}
 % \DescribeEnv{footnote}
 % \DescribeEnv{index}
-% \fixme{} notes can appear in several forms (that can be combined) in your
-% document. The forms currently supported are: inline (directly in the text),
-% marginal notes, footnotes, and index entries. To activate a particular
-% layout, use the corresponding package option. By default, only the
-% \texttt{margin} layout is active.\par
+% The layout forms currently supported are: inline (directly in the text),
+% marginal notes, marginal clues (see below), footnotes, and index entries. To
+% activate a particular layout globally (that is, for the whole document), use
+% the corresponding package option. By default, only the \texttt{margin}
+% layout is active.\par
 % Each layout option has a counterpart that deactivates it. The counterpart
 % option has the same name, prefixed with \texttt{no}. For instance, if you
 % don't want marginal notes, use the \texttt{nomargin} option.\par
+% Finally, note that \fixme{} environments behave in a special way: they are
+% always typeset \texttt{inline}, regardless of your layout settings (they
+% respect your whish for index and marginal clues though).\par
+%
+% \subsubsection{Marginal Clues}
+% Sometimes, marginal notes are too narrow for what you want to put in them,
+% so you would switch to an inline or a footnote layout. But then, it is more
+% difficult to keep track of the \fixme{} note's location on the page.\par
+% As of version 3.2, \fixme{} provides a special layout called ``marginal
+% clue'' to help locating the notes: a marginal clue does not display the
+% note's contents, but only an indication that there is a note at that place.
+% So you have to use another layout form (typically inline or footnote) in
+% order to get the actual contents.\par
+% Obvisouly, \texttt{margin} and \texttt{marginclue} are mutually exclusive.
+% If you try to activate both, only the most recently activated form will be
+% enabled (and you'll get a notice in the compilation log).
+%
+% \subsubsection{Local Layout}
 % \DescribeMacro{\fixme[]}
 % \DescribeMacro{\fxnote[]}
 % \DescribeMacro{\fxwarning[]}
@@ -192,9 +214,9 @@
 % As of version 3.0, \fixme{} provides a way to change the selected layout(s)
 % on a per-note basis: each note insertion command takes an optional first
 % argument that overrides the global layout. This argument consists of one or
-% more layout options (\texttt{inline}, \texttt{margin}, \texttt{footnote} and
-% \texttt{index}) separated by commas. Remember that local layouts
-% \emph{override} the global ones; they don't add to it.\par
+% more layout options (\texttt{inline}, \texttt{margin}, \texttt{marginclue},
+% \texttt{footnote} and \texttt{index}) separated by commas. Remember that
+% local layouts \emph{override} the global ones; they don't add to it.\par
 % On what occasion would one want to modify the layout for a particular note~?
 % Here is a typical situation: suppose you have a document in which \fixme{}
 % notes are typeset as margin paragraphs (this is the default). You would not
@@ -202,9 +224,6 @@
 % \LaTeX{} (margin paragraphs are floats). In such a case, you would rather
 % inline the note, which can be done with something like
 % |\fixme[inline]{blah}|.\par
-% Finally, note that \fixme{} environments behave in a special way: they are
-% always typeset \texttt{inline}, regardless of your layout settings (they
-% respect your whish for an index though).\par
 %
 % \subsection{Controlling the notes logging}
 % \DescribeEnv{silent}
@@ -243,6 +262,10 @@
 % These layouts are implemented thanks to the corresponding |\FX*| macros that
 % you can redefine if you whish. Each such macro takes two mandatory
 % arguments: the prefix and the note, in that order.\par
+% \DescribeMacro{\FXMarginCLue}
+% The special \texttt{marginclue} layout only outputs the prefix mentioned
+% above. Its layout is controlled by the macro |\FXMarginClue| which takes the
+% prefix as its only mandatory argument.
 % \DescribeMacro{\FXIndex}
 % The |\FXIndex| macro is used for the \texttt{index} layout. All \fixme{}
 % index entries appear under the ``\fixme{}'' key in the symbols section.
@@ -345,7 +368,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v3.2] Fix incompatibility with \texttt{amsbook} reported by Claude
+% \item[v3.2] Added the marginclue layout option which only signals a fixme in
+%   the margin, withtout the actual contents.\\
+%   Fix incompatibility with \texttt{amsbook} reported by Claude
 %   Lacoursi\`ere: \cs{@starttoc} takes two arguments.\\
 %   Support for Croatian thanks to Marcel Maretic |<marcel@fsb.hr>|.\\
 %   Fix incompatibility with Beamer reported by Akim Demaille: protect
@@ -387,7 +412,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡$Format: "\\ProvidesPackage{fixme}[$ReleaseDate: 2004/10/19$ v$Version: 2.3$"$
-\ProvidesPackage{fixme}[2005/10/13 v3.2
+\ProvidesPackage{fixme}[2006/04/12 v3.2
                         Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
@@ -550,8 +575,10 @@
 % \subsection{Layout macros}
 % \begin{macro}{\FXInline}
 %   \begin{macro}{\FXMargin}
-%     \begin{macro}{\FXFootnote}
-%       The macros to implement different layouts for the fixme notes:
+%     \begin{macro}{\FXMarginCLue}
+%       \begin{macro}{\FXFootnote}
+%         The macros to implement different layouts for the fixme notes:
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -560,6 +587,8 @@
   \textbf{#1}: \emph{#2}}
 \newcommand\FXMargin[2]{%
   \marginpar{\footnotesize\raggedleft\textbf{#1}: \emph{#2}}}
+\newcommand\FXMarginClue[1]{%
+  \marginpar{\footnotesize\raggedleft\textbf{#1}~!}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
@@ -612,9 +641,32 @@
 %    \begin{macrocode}
 \newif\iffixme@inline
 \newif\iffixme@margin
+\newif\iffixme@marginclue
 \newif\iffixme@footnote
 \newif\iffixme@user
 \newif\iffixme@index
+
+%    \end{macrocode}
+% Setters for these booleans (some might required special treatment):
+%    \begin{macrocode}
+\let\fixme@setinline\fixme@inlinetrue
+\def\fixme@setmargin{%
+  \iffixme@marginclue%
+    \PackageWarning{FiXme}{%
+      Marginal notes requested; tunrning marginal clues off}%
+    \fixme@margincluefalse%
+  \fi%
+  \fixme@margintrue}
+\def\fixme@setmarginclue{%
+  \iffixme@margin%
+    \PackageWarning{FiXme}{%
+      Marginal clues requested; tunrning marginal notes off}%
+    \fixme@marginfalse%
+  \fi%
+  \fixme@margincluetrue}
+\let\fixme@setfootnote\fixme@fottnotetrue
+\let\fixme@setuser\fixme@usertrue
+\let\fixme@setindex\fixme@indextrue
 
 %    \end{macrocode}
 % \begin{macro}{\fixme@text}
@@ -624,16 +676,19 @@
 \def\fixme@text#1#2{%
   \iffixme@inline\FXInline{#1}{#2}\fi%
   \iffixme@margin\FXMargin{#1}{#2}\fi%
+  \iffixme@marginclue\FXMarginClue{#1}\fi%
   \iffixme@footnote\FXFootnote{#1}{#2}\fi%
   \iffixme@user\FXUser{#1}{#2}\fi}
 
 %    \end{macrocode}
 % Options that control which layouts are selected:
 %    \begin{macrocode}
-\DeclareOption{inline}{\fixme@inlinetrue}
+\DeclareOption{inline}{\fixme@setinline}
 \DeclareOption{noinline}{\fixme@inlinefalse}
-\DeclareOption{margin}{\fixme@margintrue}
+\DeclareOption{margin}{\fixme@setmargin}
 \DeclareOption{nomargin}{\fixme@marginfalse}
+\DeclareOption{marginclue}{\fixme@setmarginclue}
+\DeclareOption{nomarginclue}{\fixme@margincluefalse}
 \DeclareOption{footnote}{\fixme@footnotetrue}
 \DeclareOption{nofootnote}{\fixme@footnotefalse}
 \DeclareOption{user}{\fixme@usertrue}
@@ -786,6 +841,7 @@
 \def\fixme@fatal@draft#1{%
   \iffixme@inline\FiXmeInline{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
+  \iffixme@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
   \iffixme@footnote\FiXmeFootnote{#1}\fi%
   \iffixme@user\FiXmeUser{#1}\fi%
   \iffixme@index\FiXmeIndex{%
@@ -821,19 +877,21 @@
   \bgroup%
   \fixme@inlinefalse%
   \fixme@marginfalse%
+  \fixme@margincluefalse%
   \fixme@footnotefalse%
   \fixme@userfalse%
   \fixme@indexfalse%
   \@for\fixme@option:=#2\do{%
     \expandafter\ifx\csname fixme@\fixme@option true\endcsname\relax
       \PackageError{FiXme}{Unknown layout option `\fixme@option'}{%
-        You have given an invalid option to \string\fixme, %
-        or an \string\fx command.\MessageBreak
-        Valid options are `inline', `margin', `footnote' and `index'.%
-        \MessageBreak
+        You have given an invalid option to \string\fixme, or an \string\fx %
+        command.\MessageBreak
+        Valid options are `inline', `margin', `marginclue', `footnote', %
+        `user',\MessageBreak
+        and `index'.\MessageBreak
         Type X to quit, fix your document, and rerun LaTeX.}%
       \else%
-      \csname fixme@\fixme@option true\endcsname%
+      \csname fixme@set\fixme@option\endcsname%
     \fi}%
   \@@fixme{#1}{#3}%
   \egroup}
@@ -858,10 +916,14 @@
 
 \def\@fxenvbegin@draft#1#2{%
   \FXEnvBegin
-  \edef\fixme@args{inline\iffixme@index,index\fi}%
+  \edef\fixme@args{inline%
+    \iffixme@index,index\fi%
+    \iffixme@marginclue,marginclue\fi}%
   \csname#1\endcsname[\fixme@args]{#2}}
 \def\@fxenvbegin@final#1#2{
-  \edef\fixme@args{inline\iffixme@index,index\fi}%
+  \edef\fixme@args{inline%
+    \iffixme@index,index\fi%
+    \iffixme@marginclue,marginclue\fi}%
   \csname#1\endcsname[\fixme@args]{#2}
   \comment
 }

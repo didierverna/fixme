@@ -1,6 +1,6 @@
 ;;; fixme.el --- AUC-TeX style file for FiXme
 
-;; Copyright (C) 2000, 2002, 2004 Didier Verna.
+;; Copyright (C) 2000, 2002, 2004, 2006 Didier Verna.
 
 ;; Author:        Didier Verna <didier@lrde.epita.fr>
 ;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -39,6 +39,7 @@
 
       '("FXInline")
       '("FXMargin")
+      '("FXMarginClue")
       '("FXFootnote")
       '("FXUser")
       '("fixmeindexname")
