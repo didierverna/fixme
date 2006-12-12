@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.44 Tue, 19 Feb 2002 19:50:49 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.45 Wed, 20 Feb 2002 17:12:16 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{522}
+% ^^A \CheckSum{542}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -61,16 +61,16 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %
-% ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
-% \newcommand{\version}{v2.0}
-% ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2002/02/19}
-% ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
-% \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2002 Didier Verna}
-% \newcommand{\fixme}{\textsf{FiXme}}
-% \newcommand{\auctex}{AUC-\TeX}
+% ^^A $Format: "% \\newcommand\\version{v$Version$}"$
+% \newcommand\version{v2.0}
+% ^^A $Format: "% \\newcommand\\releasedate{$ReleaseDate$}"$
+% \newcommand\releasedate{2002/02/19}
+% ^^A $Format: "% \\newcommand\\packagecopyright{$LaTeXCopyright$}"$
+% \newcommand\packagecopyright{Copyright \copyright{} 1998--2002 Didier Verna}
+% \newcommand\fixme{\textsf{FiXme}}
+% \newcommand\auctex{AUC-\TeX}
 % \MakeShortVerb{\|}
-% \date{\today}
+% \date\today
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
 % in your documents \thanks{This document describes \fixme{}
 % \version, release date \releasedate.}}
@@ -86,19 +86,19 @@
 % cases, you probably want to stick clues about which parts need to be
 % ``fixed'', where they are located, and what needs to be done. This is what I
 % call ``fixme notes''. The purpose of this package is to provide you with
-% convenient ways to insert fixme notes in your documents.\par
+% convenient ways to insert \fixme{} notes in your documents.\par
 % The \fixme{} package is \packagecopyright{}, and distributed under the terms
 % of the LPPL license.
 % \end{abstract}
 %
 %
 % \section{Description}
-% Fixme notes can appear in several forms, depending on which option(s) you
+% \fixme{} notes can appear in several forms, depending on which option(s) you
 % pass to the package. These forms currently are: inline, marginal notes,
-% footnotes, index entries, warnings on stdout and information in the log
-% file. You can use multiple forms (possibly all) at the same time.
-% Additionally, you can summarize all fixme notes in a list similar to the
-% ``list of figures'' for instance.\par
+% footnotes and index entries (the notes are also logged and some of them are
+% displayed on the terminal). You can use multiple forms (possibly all) at the
+% same time. Additionally, you can summarize all \fixme{} notes in a list
+% similar to the ``list of figures'' for instance.\par
 % All these forms are available when you're working in \texttt{draft} mode.
 % In \texttt{final} mode, the behavior is slightly different: any remaining
 % critical note generates an error (the compilation aborts), while non
@@ -111,12 +111,14 @@
 % preamble of your document.
 %
 % \subsection{Inserting notes}
+% \DescribeMacro{\fxnote}
+% \DescribeMacro{\fxwarning}
+% \DescribeMacro{\fxerror}
 % \DescribeMacro{\fixme}
-% Sticking a fixme note in your document is done thanks to the |\fixme| macro.
-% This macro takes one optional and one mandatory argument. The mandatory
-% argument is the note itself. But that, you guessed. The optional argument
-% (available since \fixme{} version 2.0) describes the ``level'' of the note.
-% Possible values are |note|, |warning| and |error| (which is the default).
+% To stick a note in your document, use one of these macros. As you can see,
+% you have four different levels of notes: simple notes, warnings, errors (non
+% fatal) and critical errors (fixmes). These macros take the note itself as
+% their mandatory argument.
 %
 % \subsection{Controlling the behavior of \fixme}
 % \DescribeEnv{final}
@@ -126,15 +128,17 @@
 % to |\documentclass{}| which in turn passes them to all packages.\par
 % In \texttt{draft} mode, the notes are logged (in the log file, that is) and
 % appear in the text as specified (please refer to the ``layout'' sections).
+% Additionally, warnings, errors and fatal errors are also displayed on the
+% terminal.\par
 % In \texttt{final} mode, the notes are still logged, but they're removed from
-% the document's body.\par
-% Additionaly, it is not possible to compile a final document with remaining
-% error-level notes: such notes will abort compilation with an informative
-% message. This will help you track down forgotten critical caveats. Final
-% documents can only have notes and warnings left. Well, if, for some reason,
-% you rilly rilly want to compile in \texttt{final} mode with critical fixme
-% notes left behind, you always have the possibility to pass the
-% \texttt{draft} option to \fixme{} directly\ldots\par
+% the document's body. Additionaly, it is not possible to compile a final
+% document with remaining critical errors: such notes will abort compilation
+% with an informative message. This will help you track down forgotten
+% important caveats in your document. Final documents can only have notes,
+% warnings, and (non fatal) errors left. Well, if, for some reason, you rilly
+% rilly want to compile in \texttt{final} mode with critical \fixme{} notes
+% left behind, you always have the possibility to pass the \texttt{draft}
+% option to \fixme{} directly\ldots\par
 % The \texttt{final} mode has been chosen as the default because \LaTeXe{}
 % itself behaves this way.\par
 %
@@ -143,7 +147,7 @@
 % \DescribeEnv{margin}
 % \DescribeEnv{footnote}
 % \DescribeEnv{index}
-% Fixme notes can appear in several forms (that can be combined) in your
+% \fixme{} notes can appear in several forms (that can be combined) in your
 % document. The forms currently supported are: inline (directly in the text),
 % as marginal notes, footnotes, and index entries. To activate a particular
 % layout, use the corresponding option. By default, only the \texttt{margin}
@@ -152,56 +156,42 @@
 % option has the same name, prefixed with \texttt{no}. For instance, if you
 % don't want marginal notes, use the \texttt{nomargin} option.\par
 % \DescribeMacro{\listoffixmes}
-% \fixme{} remembers where you put fixme notes in a toc-like file whose
+% \fixme{} remembers where you put \fixme{} notes in a toc-like file whose
 % extension is \texttt{lox}. The |\listoffixmes| macro generates the list of
-% all fixme notes in a manner similar to that of the ``list of figures'' for
-% instance. A standard layout is automatically used for the `article',
+% all \fixme{} notes in a manner similar to that of the ``list of figures''
+% for instance. A standard layout is automatically used for the `article',
 % `report', `book' classes and their koma-script replacements. If another
 % class is used, the `article' layout is selected. Also, note that if no
-% fixme notes remain in the document, this macro doesn't generate an empty
+% \fixme{} notes remain in the document, this macro doesn't generate an empty
 % list, but rather stays silent. It also stays silent in \texttt{final} mode,
 % regardless of the presence of remaining notes.
 %
-% \subsection{Special layout control}
-% \DescribeEnv{info}
-% \DescribeEnv{warning}
-% Info-level notes are always registered in the log file, and warning-level
-% ones also always appear on the terminal. For error-level notes, you have the
-% choice: the \texttt{warning} option makes error-level notes also appear as
-% warnings on the terminal with the fixme note and the line number from the
-% source file. This warning is also registered in the log file. If you only
-% want to register the error-level notes in the log file, use the
-% \texttt{info} option instead. It does essentially the same, but doesn't mess
-% up your terminal output. By default, the \texttt{warning} option is assumed.
-% \begin{quote}
-% - And what if I want output on the terminal, but not in the log file?\\
-% - Well, just get lost :-)
-% \end{quote}
-%
 % \subsection{Customizing the layout}
-% The following macros are semi-internal: you can redefine them with
-% |\renewcommand{}| if you are not satisfied with the way \fixme{} formats the
-% notes.\par
+% The following macros are semi-internal: you can redefine them if you are not
+% satisfied with the way \fixme{} formats the notes.\par
 % \DescribeMacro{\FXInline}
 % \DescribeMacro{\FXMargin}
 % \DescribeMacro{\FXFootnote}
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
 % parts: a ``prefix'' which depends on the note level, and the note
-% itself. The prefix is one ``\fixme{} note:'', ``\fixme{} warning:'' or
-% ``FIXME:'', and appears in bold. The note itself appears emphasized. These
-% layouts are implemented thanks to corresponding macros that you can
-% redefine if you whish. Each such macro takes two mandatory arguments: the
-% prefix and the note, in that order.\par
+% itself. The prefix is one of ``\fixme{} note:'', ``\fixme{} warning:'',
+% ``\fixme{} error:''  or simply ``\fixme{}:'', and appears in bold. The note
+% itself appears emphasized. These layouts are implemented thanks to
+% corresponding macros that you can redefine if you whish. Each such macro
+% takes two mandatory arguments: the prefix and the note, in that order.\par
 % \DescribeMacro{\FXIndex}
 % This macro is used for the \texttt{index} layout. All \fixme{} index entries
-% appear under the ``FIXME's'' key in the symbols section. There are 3
-% subcategories under this key, chosen according to the level of each note:
-% ``notes'', ``warnings'', and ``to be fixed''.\par
-% \DescribeMacro{\FXInfo}
+% appear under the ``\fixme{}'' key in the symbols section. There are 3
+% subcategories under this key, corresponding to the 3 non fatal note levels:
+% ``notes'', ``warnings'', and ``errors''. The notes are numbered in the
+% index\par
+% \DescribeMacro{\FXNote}
 % \DescribeMacro{\FXWarning}
-% These commands are the ones used by \fixme{} to produce a package info or
-% warning for error-level notes. They take the note itself as mandatory
-% argument.
+% \DescribeMacro{\FXError}
+% \DescribeMacro{\FXFatal}
+% These commands are the ones used by |\fxnote|, |\fxwarning|, |\fxerror| and
+% |\fixme| to log (and optionally display on the terminal) the notes. They
+% take the note itself as mandatory argument.
 %
 % \subsection{Fancy fruit salad layout}
 % \DescribeEnv{user}
@@ -231,11 +221,13 @@
 % If you want a finer grain on the language-dependent parts of \fixme{}, the
 % following macros are provided and can be redefined:\\
 % \DescribeMacro{\fixmenoteprefix}
-% Defines the prefix for note-level notes.\\
+% Defines the prefix for simple notes.\\
 % \DescribeMacro{\fixmewarningprefix}
-% Defines the prefix for warning-level notes.\\
+% Defines the prefix for warnings.\\
 % \DescribeMacro{\fixmeerrorprefix}
-% Defines the prefix for error-level notes.\\
+% Defines the prefix for errors.\\
+% \DescribeMacro{\fixmefatalprefix}
+% Defines the prefix for fatal errors.\\
 % \DescribeMacro{\fixmeindexname}
 % Defines the name of the \fixme{} index key.\\
 % \DescribeMacro{\fixmenoteindexname}
@@ -252,8 +244,9 @@
 % \DescribeMacro{\thefixmenotecount}
 % \DescribeMacro{\thefixmewarningcount}
 % \DescribeMacro{\thefixmeerrorcount}
+% \DescribeMacro{\thefixmefatalcount}
 % As of \fixme{} version 2.0, four counters are provided. They count
-% respectively the total number of fixme notes, and the number of
+% respectively the total number of \fixme{} notes, and the number of
 % level-specific ones. At the end of processing, a \fixme{} usage summary is
 % displayed and logged.
 %
@@ -270,15 +263,15 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v2.0] New feature: notes levels (optional argument to |\fixme|).\\
-% New feature: fixme notes counters and usage summary.\\
+% \item[v2.0] New feature: note levels.\\
+% New feature: \fixme{} note counters and usage summary.\\
 % More translation work.\\
 % Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|.
 % \item[v1.5] New appearance option: \texttt{inline}.
 % \item[v1.4] Support for the koma-script classes has been added.\\
 % Fix bug reported by Ulf Jaenicke-Roessler
 % |<ujr@physik.phy.tu-dresden.de>|: the |\listoffixmes| command didn't work
-% when called before the first fixme note.
+% when called before the first \fixme{} note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri
 %   |<murri@phc.unipi.it>|.
 % \item[v1.2] Support for German thanks to Harald Harders
@@ -289,6 +282,9 @@
 %   \vfill\hfill\small \packagecopyright{}.}
 %
 % \section{The Code}
+% \begin{macro}{\fixmelogo}
+%   Here's the preamble:
+% \end{macro}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
@@ -464,15 +460,7 @@
 % \begin{macro}{\FXInline}
 %   \begin{macro}{\FXMargin}
 %     \begin{macro}{\FXFootnote}
-%       \begin{macro}{\FXUser}
-%         \begin{macro}{\FXIndex}\begin{macro}{\fixmeindexname}
-%           \begin{macro}{\FXInfo}
-%             \begin{macro}{\FXWarning}
-%               The macros to implement different layouts for the fixme notes:
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}\end{macro}
-%       \end{macro}
+%       The macros to implement different layouts for the fixme notes:
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -483,17 +471,47 @@
   \marginpar{\footnotesize\flushright\textbf{#1}: \emph{#2}}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
-\newcommand\FXUser[2]{}
 
+%    \end{macrocode}
+% \begin{macro}{\fixmeindexname}
+%   \begin{macro}{\FXIndex}
+%     The macros for index generation:
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \newcommand*\fixmeindexname{}
 \newcommand\FXIndex[1]{%
   \index{***@\fixmeindexname:!#1}}
-\newcommand\FXInfo[1]{\PackageInfo{FiXme}{`#1'}}
-\newcommand\FXWarning[1]{\PackageWarning{FiXme}{`#1'}}
+
+%    \end{macrocode}
+% \begin{macro}{\FXNote}
+%   \begin{macro}{\FXWarning}
+%     \begin{macro}{\FXerror}
+%       \begin{macro}{\FXFatal}
+%         And the ones for logging and terminal output:
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\FXNote[1]{%
+  \GenericInfo{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    Package FiXme Note: `#1'}}
+\newcommand\FXWarning[1]{%
+  \PackageWarning{FiXme}{`#1'}}
+\newcommand\FXError[1]{%
+  \GenericWarning{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    Package FiXme Error: `#1'}}
+\newcommand\FXFatal[1]{%
+  \GenericWarning{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    Package FiXme: `#1'}}
 
 %    \end{macrocode}
 %
-% \begin{macro}{\fixmeerrorprefix}
+% \begin{macro}{\fixmefatalprefix}
 % \begin{macro}{\FiXmeInline}
 %   \begin{macro}{\FiXmeMargin}
 %     \begin{macro}{\FiXmeFootnote}
@@ -501,9 +519,10 @@
 %         \begin{macro}{\FiXmeIndex}
 %           \begin{macro}{\FiXmeInfo}
 %             \begin{macro}{\FiXmeWarning}
-%               The following layout macros are kept only to preserve backward
-%               compatibility. They are used only by critical fixme notes
-%               (errors) and are made to call the new versions by default:
+%               Apart from |\fixmefatalprefix|, the following macros are kept
+%               only to preserve backward compatibility. They are used only by
+%               critical notes and are made to call the new versions by
+%               default:
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
@@ -513,15 +532,15 @@
 % \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand*\fixmeerrorprefix{}
-\newcommand\FiXmeInline[1]{\FXInline{\fixmeerrorprefix}{#1}}
-\newcommand\FiXmeMargin[1]{\FXMargin{\fixmeerrorprefix}{#1}}
-\newcommand\FiXmeFootnote[1]{\FXFootnote{\fixmeerrorprefix}{#1}}
-\newcommand\FiXmeUser[1]{\FXUser{\fixmeerrorprefix}{#1}}
+\newcommand*\fixmefatalprefix{}
+\newcommand\FiXmeInline[1]{\FXInline{\fixmefatalprefix}{#1}}
+\newcommand\FiXmeMargin[1]{\FXMargin{\fixmefatalprefix}{#1}}
+\newcommand\FiXmeFootnote[1]{\FXFootnote{\fixmefatalprefix}{#1}}
+\newcommand\FiXmeUser[1]{}
 
 \newcommand\FiXmeIndex[1]{\FXIndex{#1}}
-\newcommand\FiXmeInfo[1]{\FXInfo{#1}}
-\newcommand\FiXmeWarning[1]{\FXWarning{#1}}
+\newcommand\FiXmeInfo[1]{}
+\newcommand\FiXmeWarning[1]{}
 
 %    \end{macrocode}
 % Booleans that control which layouts are selected:
@@ -531,8 +550,6 @@
 \newif\iffixme@footnote\fixme@footnotefalse
 \newif\iffixme@user\fixme@userfalse
 \newif\iffixme@index\fixme@indexfalse
-\newif\iffixme@info\fixme@infofalse
-\newif\iffixme@warning\fixme@warningfalse
 
 %    \end{macrocode}
 % \begin{macro}{\fixme@text}
@@ -548,10 +565,19 @@
 %    \end{macrocode}
 %
 % \subsection{Fixme notes}
-% \begin{macro}{\fixme@note@draft}
-%   \begin{macro}{\fixme@note@final}
-%     \begin{macro}{\fixmenoteprefix}
-%       \begin{macro}{\fixmenoteindexname}
+% Here are the counters:
+%    \begin{macrocode}
+\newcounter{fixmecount}
+\newcounter{fixmenotecount}
+\newcounter{fixmewarningcount}
+\newcounter{fixmeerrorcount}
+\newcounter{fixmefatalcount}
+
+%    \end{macrocode}
+% \begin{macro}{\fixmenoteprefix}
+%   \begin{macro}{\fixmenoteindexname}
+%     \begin{macro}{\fixme@note@draft}
+%       \begin{macro}{\fixme@note@final}
 %         The different flavors of fixme notes. Proper definitions will be
 %         selected by the |draft| or |final| options. Let's start with the
 %         note notes:
@@ -564,18 +590,18 @@
 \newcommand*\fixmenoteindexname{}
 \def\fixme@note@draft#1{%
   \fixme@text{\fixmenoteprefix}{#1}%
-  \FXInfo{#1}%
-  \FXIndex{**a@\fixmenoteindexname:!#1}%
+  \FXIndex{\fixmenoteindexname\thefixmenotecount: #1}%
+  \FXNote{#1}%
   \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
 \def\fixme@note@final#1{%
-  \FXInfo{#1}%
+  \FXNote{#1}%
   \addcontentsline{lox}{fixme}{\fixmenoteprefix: #1}}
 
 %    \end{macrocode}
-% \begin{macro}{\fixme@warning@draft}
-%   \begin{macro}{\fixme@warning@final}
-%     \begin{macro}{\fixmewarningprefix}
-%       \begin{macro}{\fixmewarningindexname}
+% \begin{macro}{\fixmewarningprefix}
+%   \begin{macro}{\fixmewarningindexname}
+%     \begin{macro}{\fixme@warning@draft}
+%       \begin{macro}{\fixme@warning@final}
 %         Here are the warnings notes:
 %       \end{macro}
 %     \end{macro}
@@ -586,62 +612,84 @@
 \newcommand*\fixmewarningindexname{}
 \def\fixme@warning@draft#1{%
   \fixme@text{\fixmewarningprefix}{#1}%
+  \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
   \FXWarning{#1}%
-  \FXIndex{**b@\fixmewarningindexname:!#1}%
   \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
 \def\fixme@warning@final#1{%
   \FXWarning{#1}%
   \addcontentsline{lox}{fixme}{\fixmewarningprefix: #1}}
 
 %    \end{macrocode}
-% \begin{macro}{\fixme@error@draft}
-%   \begin{macro}{\fixme@error@final}
-%     \begin{macro}{\fixmeerrorindexname}
-%       And here are the error ones. Note that in \texttt{draft} mode, it's
-%       useless to generate both a warning and an information because warnings
-%       are also logged.
+% \begin{macro}{\fixmeerrorprefix}
+%   \begin{macro}{\fixmeerrorindexname}
+%     \begin{macro}{\fixme@error@draft}
+%       \begin{macro}{\fixme@error@final}
+%         Here are the errors notes:
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
+\newcommand*\fixmeerrorprefix{}
 \newcommand*\fixmeerrorindexname{}
 \def\fixme@error@draft#1{%
+  \fixme@text{\fixmeerrorprefix}{#1}%
+  \FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}%
+  \FXError{#1}%
+  \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
+\def\fixme@error@final#1{%
+  \FXError{#1}%
+  \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
+
+%    \end{macrocode}
+% \begin{macro}{\fixmefatalindexname}
+%   \begin{macro}{\fixme@fatal@draft}
+%     \begin{macro}{\fixme@fatal@final}
+%       And here are the fatal ones:
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand*\fixmefatalindexname{}
+\def\fixme@fatal@draft#1{%
   \iffixme@inline\FiXmeInline{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
   \iffixme@footnote\FiXmeFootnote{#1}\fi%
   \iffixme@user\FiXmeUser{#1}\fi%
-  \iffixme@index\FiXmeIndex{**c@\fixmeerrorindexname:!#1}\fi%
-  \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
-  \addcontentsline{lox}{fixme}{\fixmeerrorprefix: #1}}
-\def\fixme@error@final#1{%
+  \iffixme@index\FiXmeIndex{%
+    \fixmefatalindexname\thefixmefatalcount: #1}\fi%
+  \FXFatal{#1}%
+  \addcontentsline{lox}{fixme}{\fixmefatalprefix: #1}}
+\def\fixme@fatal@final#1{%
   \PackageError{FiXme}{`#1' fixme left in final version}{%
     You are processing your document in final mode,\MessageBreak
     but you still have some critical FiXme's left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
 
 %    \end{macrocode}
-% \begin{macro}{\fixme}
-%   \begin{macro}{\fixme@note}
-%     \begin{macro}{\fixme@warning}
-%       \begin{macro}{\fixme@error}
-%         Here's the |\fixme| macro. By default, critical notes (errors) are
-%         generated. The different versions are |\let| to the draft of final
-%         flavors defined above by the \texttt{draft} or \texttt{fianl}
-%         options.
+% \begin{macro}{\@fixme}
+%   \begin{macro}{\fxnote}
+%     \begin{macro}{\fxwarning}
+%       \begin{macro}{\fxerror}
+%         \begin{macro}{\fixme}
+%           Here are the notes insertion macros. The different versions are
+%           |\let| to the draft of final flavors defined above by the
+%           \texttt{draft} or \texttt{final} options.
+%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcounter{fixmecount}
-\newcounter{fixmenotecount}
-\newcounter{fixmewarningcount}
-\newcounter{fixmeerrorcount}
-
-\newcommand\fixme[2][error]{%
+\def\@fixme#1#2{%
   \stepcounter{fixmecount}%
   \stepcounter{fixme#1count}%
   \csname fixme@#1\endcsname{#2}}
+
+\newcommand\fxnote[1]{\@fixme{note}{#1}}
+\newcommand\fxwarning[1]{\@fixme{warning}{#1}}
+\newcommand\fxerror[1]{\@fixme{error}{#1}}
+\newcommand\fixme[1]{\@fixme{fatal}{#1}}
 
 %    \end{macrocode}
 % Options that control which layouts are selected:
@@ -656,10 +704,15 @@
 \DeclareOption{nouser}{\fixme@userfalse}
 \DeclareOption{index}{\fixme@indextrue}
 \DeclareOption{noindex}{\fixme@indexfalse}
-\DeclareOption{info}{\fixme@infotrue}
-\DeclareOption{noinfo}{\fixme@infofalse}
-\DeclareOption{warning}{\fixme@warningtrue}
-\DeclareOption{nowarning}{\fixme@warningfalse}
+
+%    \end{macrocode}
+% The following options are here for backward compatibility, but are not used
+% anymore:
+%    \begin{macrocode}
+\DeclareOption{info}{}
+\DeclareOption{noinfo}{}
+\DeclareOption{warning}{}
+\DeclareOption{nowarning}{}
 
 %    \end{macrocode}
 %
@@ -671,34 +724,49 @@
 \DeclareOption{english}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo~note}
   \renewcommand*\fixmewarningprefix{\fixmelogo~warning}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{Corrections}
-  \renewcommand*\fixmenoteindexname{\fixmelogo~notes}
-  \renewcommand*\fixmewarningindexname{\fixmelogo~warnings}
-  \renewcommand*\fixmeerrorindexname{\fixmelogo's}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo~error}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{\fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@notes:!}
+  \renewcommand*\fixmewarningindexname{**b@warnings:!}
+  \renewcommand*\fixmeerrorindexname{**c@errors:!}
+  \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{List of Corrections}}
 \DeclareOption{french}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo~note}
   \renewcommand*\fixmewarningprefix{\fixmelogo~attn}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{Corrections}
-  \renewcommand*\fixmenoteindexname{\fixmelogo~notes}
-  \renewcommand*\fixmewarningindexname{\fixmelogo~attn}
-  \renewcommand*\fixmeerrorindexname{\fixmelogo's}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo~err}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{\fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@notes:!}
+  \renewcommand*\fixmewarningindexname{**b@avertissements:!}
+  \renewcommand*\fixmeerrorindexname{**c@erreurs:!}
+  \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Liste des Corrections}}
 \DeclareOption{francais}{\ExecuteOptions{french}}
 \DeclareOption{german}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo~anm}
   \renewcommand*\fixmewarningprefix{\fixmelogo~warnung}
-  \renewcommand*\fixmeerrorprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{Korrekturen}
-  \renewcommand*\fixmenoteindexname{\fixmelogo~anm}
-  \renewcommand*\fixmewarningindexname{\fixmelogo~warnungen}
-  \renewcommand*\fixmeerrorindexname{\fixmelogo's}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo~error}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@anmerkungen:!}
+  \renewcommand*\fixmewarningindexname{**b@warnungen:!}
+  \renewcommand*\fixmeerrorprefix{**c@errors:!}
+  \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Liste der Korrekturen}}
 \DeclareOption{ngerman}{%
   \ExecuteOptions{german}}
 \DeclareOption{italian}{%
+  \renewcommand*\fixmenoteprefix{\fixmelogo~nota}
+  \renewcommand*\fixmewarningprefix{\fixmelogo~avviso}
+  \renewcommand*\fixmeerrorprefix{\fixmelogo~errore}
+  \renewcommand*\fixmefatalprefix{\fixmelogo}
+  \renewcommand*\fixmeindexname{\fixmelogo}
+  \renewcommand*\fixmenoteindexname{**a@note:!}
+  \renewcommand*\fixmewarningindexname{**b@avvisi:!}
+  \renewcommand*\fixmeerrorprefix{**c@errori:!}
+  \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Corrigenda}}
 
 %    \end{macrocode}
@@ -717,6 +785,7 @@
   \let\fixme@note\fixme@note@final
   \let\fixme@warning\fixme@warning@final
   \let\fixme@error\fixme@error@final
+  \let\fixme@fatal\fixme@fatal@final
   \let\listoffixmes\listoffixmes@final
   }
 
@@ -724,6 +793,7 @@
   \let\fixme@note\fixme@note@draft
   \let\fixme@warning\fixme@warning@draft
   \let\fixme@error\fixme@error@draft
+  \let\fixme@fatal\fixme@fatal@draft
   \let\listoffixmes\listoffixmes@draft
   \@ifclassloaded{article}{
     \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
@@ -762,23 +832,29 @@
 
 %    \end{macrocode}
 % Put us in \texttt{english} and \texttt{final} mode, and enable the marginal
-% notes. Also output error-level notes as warnings by default:
+% notes.
 %    \begin{macrocode}
-\ExecuteOptions{english,final,margin,warning}
+\ExecuteOptions{english,final,margin}
 \ProcessOptions*
 
 %    \end{macrocode}
-% Finally, output a summary giving the number of fixme notes at the end of the
+% Finally, ensure backward compatibility for |\fixme| with |\FiXmeUser|, and
+% output a summary giving the number of fixme notes at the end of the
 % compilation:
 %    \begin{macrocode}
+\AtBeginDocument{%
+  \ifx\FiXmeUser\undefined%
+    \def\FiXmeUser#1{\FXUser{\fixmefatalprefix}{#1}}
+  \fi}
+
 \AtEndDocument{%
   \GenericWarning{%
-    (FiXme) \@spaces\@spaces\@spaces\@spaces
+    (FiXme)\@spaces\@spaces\@spaces\@spaces
   }{%
-    Package FiXme Summary: %
-    \space Number of notes: \thefixmenotecount,\MessageBreak%
+    Package FiXme Summary: Number of notes: \thefixmenotecount,\MessageBreak%
     Number of warnings: \thefixmewarningcount,\MessageBreak%
     Number of errors: \thefixmeerrorcount,\MessageBreak%
+    Number of fatal errors: \thefixmefatalcount,\MessageBreak%
     Total: \thefixmecount\@gobble%
   }}
 %    \end{macrocode}
