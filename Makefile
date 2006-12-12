@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2002 Didier Verna.
 
-## PRCS: $Id: Makefile 1.16 Mon, 18 Feb 2002 14:54:22 +0100 didier $
+## PRCS: $Id: Makefile 1.17 Tue, 23 Apr 2002 17:58:20 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -35,7 +35,7 @@ PROJECT := fixme
 TEXDIR := ${HOME}/share/tex
 STYDIR := $(TEXDIR)/sty
 AUCDIR := $(STYDIR)/.style
-DOCDIR := $(TEXDIR)/doc
+DOCDIR := $(TEXDIR)/docs
 
 W3DIR  := ${HOME}/www/comp/development
 
