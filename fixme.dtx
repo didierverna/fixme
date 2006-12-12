@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2002 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.38 Tue, 19 Feb 2002 09:26:37 +0100 didier $
+% PRCS: $Id: fixme.dtx 1.39 Tue, 19 Feb 2002 11:33:48 +0100 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{421}
+% \CheckSum{411}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -411,21 +411,15 @@
 %    \end{macrocode}
 %
 % \subsection{Layout macros}
-% The main entry points |\fxnote|, |\fxwarning| and |\fixme| are empty by
-% default. The |final| or |draft| options will provide the proper definitions.
 %
 % \begin{macro}{\FXText}
 %   \begin{macro}{\FXMargin}
 %     \begin{macro}{\FXFootnote}
-%       \begin{macro}{\FXIndex}
-%         \begin{macro}{\FXUser}
+%       \begin{macro}{\FXUser}
+%         \begin{macro}{\FXIndex}
 %           \begin{macro}{\FXInfo}
 %             \begin{macro}{\FXWarning}
-%               \begin{macro}{\FXError}
 %               The macros to implement different layouts for the fixme notes.
-%               The definition for |\FXError|, which non fatal requires a
-%               special trickery inspired from the standard warning mechanism.
-%               \end{macro}
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
@@ -434,43 +428,22 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FXText[2]{(\textbf{#1}: \emph{#2})}
+\newcommand\FXText[2]{%
+  \textbf{#1}: \emph{#2}}
 \newcommand\FXMargin[2]{%
   \marginpar{\footnotesize\flushright\textbf{#1}: \emph{#2}}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
-\newcommand\FXIndex[1]{\index{***@FIXME's:!#1}}
 \newcommand\FXUser[2]{}
-
+\newcommand\FXIndex[1]{%
+  \index{***@FIXME's:!#1}}
 \newcommand\FXInfo[1]{\PackageInfo{FiXme}{`#1'}}
 \newcommand\FXWarning[1]{\PackageWarning{FiXme}{`#1'}}
-\newcommand\FXError[1]{%
-  \GenericWarning{%
-    (FiXme)\@spaces\@spaces\@spaces\@spaces
-  }{%
-    Package FiXme Error: `#1'%
-  }%
-}
-
-%    \end{macrocode}
-%
-% \begin{macro}{\fxnote}
-%   \begin{macro}{\fxwarning}
-%     \begin{macro}{fxerror}
-%       The main entry points for non-fatal notes (proper definition will be
-%       given by the |draft| or |final| option):
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\newcommand\fxnote[1]{}
-\newcommand\fxwarning[1]{}
-\newcommand\fxerror[1]{}
 
 %    \end{macrocode}
 %
 % \begin{macro}{\fx@text}
-%   This macro is a common part for all non-fatal notes (textual appearance):
+%   This macro is a common part for all notes (textual appearance):
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\fx@text[2]{%
@@ -490,20 +463,39 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\fixme[1]{}
-\newcommand\fixme@final[1]{%
-  \PackageError{FiXme}{`#1' fixme left in final version}{%
-    You are processing your document in final mode,\MessageBreak
-    but you still have some FiXme's left behind.\MessageBreak
-    Type X to quit, fix your document, and rerun LaTeX.}}
-\newcommand\fixme@draft[1]{%
+\def\fixme@info@draft#1{%
+  \fx@text{\texttt{FiXme} info}{#1}%
+  \FXInfo{#1}%
+  \FXIndex{**a@infos:!#1}%
+  \addcontentsline{lox}{fixme}{info: #1}}
+\def\fixme@info@final#1{%
+  \FXInfo{#1}%
+  \addcontentsline{lox}{fixme}{info: #1}}
+
+\def\fixme@warning@draft#1{%
+  \fx@text{\texttt{FiXme} warning}{#1}%
+  \FXWarning{#1}%
+  \FXIndex{**b@warnings:!#1}%
+  \addcontentsline{lox}{fixme}{warning: #1}}
+\def\fixme@warning@final#1{%
+  \FXWarning{#1}%
+  \addcontentsline{lox}{fixme}{warning: #1}}
+
+\def\fixme@error@draft#1{%
   \iffixme@text\FiXmeText{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
   \iffixme@footnote\FiXmeFootnote{#1}\fi%
-  \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
-  \iffixme@index\FiXmeIndex{#1}\fi%
   \iffixme@user\FiXmeUser{#1}\fi%
+  \iffixme@index\FiXmeIndex{**c@errors:!#1}\fi%
+  \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
   \addcontentsline{lox}{fixme}{#1}}
+\def\fixme@error@final#1{%
+  \PackageError{FiXme}{`#1' fixme left in final version}{%
+    You are processing your document in final mode,\MessageBreak
+    but you still have some critical FiXme's left behind.\MessageBreak
+    Type X to quit, fix your document, and rerun LaTeX.}}
+
+\newcommand\fixme[2][error]{\csname fixme@#1\endcsname{#2}}
 
 %    \end{macrocode}
 %
@@ -581,36 +573,16 @@
 % information because warnings are also logged.
 %    \begin{macrocode}
 \DeclareOption{final}{
-  \renewcommand\fxnote[1]{%
-    \FXInfo{#1}%
-    \addcontentsline{lox}{fixme}{note: #1}}
-  \renewcommand\fxwarning[1]{%
-    \FXWarning{#1}%
-    \addcontentsline{lox}{fixme}{warning: #1}}
-  \renewcommand\fxerror[1]{%
-    \FXError{#1}%
-    \addcontentsline{lox}{fixme}{error: #1}}
-  \let\fixme\fixme@final
+  \let\fixme@info\fixme@info@final
+  \let\fixme@warning\fixme@warning@final
+  \let\fixme@error\fixme@error@final
   \let\listoffixmes\listoffixmes@final
   }
 
 \DeclareOption{draft}{
-  \renewcommand\fxnote[1]{%
-    \FXInfo{#1}%
-    \addcontentsline{lox}{fixme}{note: #1}%
-    \fx@text{\texttt{FiXme} note}{#1}%
-    \FXIndex{**a@notes:!#1}}
-  \renewcommand\fxwarning[1]{%
-    \FXWarning{#1}%
-    \addcontentsline{lox}{fixme}{warning: #1}%
-    \fx@text{\texttt{FiXme} warning}{#1}%
-    \FXIndex{**b@warnings:!#1}}
-  \renewcommand\fxerror[1]{%
-    \FXError{#1}%
-    \addcontentsline{lox}{fixme}{error: #1}%
-    \fx@text{\texttt{FiXme} error}{#1}%
-    \FXIndex{**c@errors:!#1}}
-  \let\fixme\fixme@draft
+  \let\fixme@info\fixme@info@draft
+  \let\fixme@warning\fixme@warning@draft
+  \let\fixme@error\fixme@error@draft
   \let\listoffixmes\listoffixmes@draft
   \@ifclassloaded{article}{
     \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
