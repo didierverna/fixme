@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2000 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.21 Wed, 29 Mar 2000 11:09:02 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.22 Wed, 29 Mar 2000 11:48:53 +0200 didier $
 %
 % Author:        Didier Verna <didier@epita.fr>
 % Maintainer:    Didier Verna <didier@epita.fr>
@@ -44,18 +44,18 @@
 % \catcode`\¡=14
 % \CheckSum{202}
 %
-% ^^A $Format: "% \\newcommand{\\packageversion}{v$PackageVersion$}"$
-% \newcommand{\packageversion}{v1.1-b19}
-% ^^A $Format: "% \\newcommand{\\packagedate}{$PackageDate$}"$
-% \newcommand{\packagedate}{2000/03/29}
-% ^^A $Format: "% \\newcommand{\\packagecopyright}{$PackageFirstYear$--$PackageLastYear$}"$
-% \newcommand{\packagecopyright}{1998--2000}
+% ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
+% \newcommand{\version}{v1.1-b20}
+% ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
+% \newcommand{\releasedate}{2000/03/29}
+% ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
+% \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2000 Didier Verna}
 % \newcommand{\fixme}{\textsf{FiXme}}
 % \MakeShortVerb{\|}
 % \date{\today}
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
 % in draft documents \thanks{This document describes \fixme{}
-% \packageversion, release date \packagedate.}}
+% \version, release date \releasedate.}}
 % \author{Didier Verna\\
 % \texttt{mailto:didier@epita.fr}\\
 % \texttt{http://www.inf.enst.fr/\~{}verna}}
@@ -69,8 +69,8 @@
 % they are located, and what has to be done. This is what I call ``fixme
 % notes''. The purpose of this package is to provide you with convenient ways
 % to insert fixme notes in your documents.\par
-% The \fixme{} package is copyright \copyright{} \packagecopyright{} Didier
-% Verna, and distributed under the terms of the LPPL license.
+% The \fixme{} package is \packagecopyright{}, and distributed under the terms
+% of the LPPL license.
 % \end{abstract}
 %
 % \section{Description}
@@ -191,8 +191,7 @@
 % its value with |\renewcommand{}|.
 %
 % \StopEventually{\par Well, I think that's it. Enjoy using \fixme!
-%   \vfill\hfill\small Copyright \copyright{} \packagecopyright{} Didier
-%   Verna.}
+%   \vfill\hfill\small \packagecopyright{}.}
 %
 %
 % \section{The Code}
@@ -200,7 +199,7 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$PackageDate$ v$PackageVersion$"$
-\ProvidesPackage{fixme}[2000/03/29 v1.1-b19
+\ProvidesPackage{fixme}[$PackageDate$ v$PackageVersion$
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}

@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2000 Didier Verna.
 
-## PRCS: $Id: Makefile 1.10 Wed, 29 Mar 2000 11:09:02 +0200 didier $
+## PRCS: $Id: Makefile 1.11 Wed, 29 Mar 2000 11:48:53 +0200 didier $
 
 ## Author:        Didier Verna <didier@epita.fr>
 ## Maintainer:    Didier Verna <didier@epita.fr>
@@ -32,8 +32,8 @@
 STYDIR=${HOME}/share/tex/sty
 DOCDIR=${HOME}/share/tex/doc
 
-## $Format: "VERSION := $PackageVersion$"$
-VERSION := 1.1-b19
+## $Format: "VERSION := $Version$"$
+VERSION := 1.1-b20
 ARCHIVE := fixme-$(VERSION)
 DISTFILES := README fixme.ins fixme.dtx
 
