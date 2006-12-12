@@ -40,6 +40,11 @@ error. FiXme also comes with support for AUC-TeX.
 * Changes
 =========
 
+** Version 1.4
+--------------
+*** Fix bug reported by Ulf Jaenicke-Roessler <ujr@physik.phy.tu-dresden.de>:
+the list of fixme's didn't work when called before the first fixme note.
+
 ** Version 1.3
 --------------
 *** Support for Italian thanks to Riccardo Murri <murri@phc.unipi.it>

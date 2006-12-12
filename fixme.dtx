@@ -4,7 +4,7 @@
 %
 % Copyright (C) 1998-2001 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.32 Mon, 23 Apr 2001 13:54:43 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.33 Tue, 04 Sep 2001 14:59:47 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -44,7 +44,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{211}
+% \CheckSum{242}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -64,7 +64,7 @@
 % ^^A $Format: "% \\newcommand{\\version}{v$Version$}"$
 % \newcommand{\version}{v1.3}
 % ^^A $Format: "% \\newcommand{\\releasedate}{$ReleaseDate$}"$
-% \newcommand{\releasedate}{2001/04/23}
+% \newcommand{\releasedate}{2001/09/04}
 % ^^A $Format: "% \\newcommand{\\packagecopyright}{$LaTeXCopyright$}"$
 % \newcommand{\packagecopyright}{Copyright \copyright{} 1998--2001 Didier Verna}
 % \newcommand{\fixme}{\textsf{FiXme}}
@@ -124,6 +124,7 @@
 % `article' layout is selected. Also, note that if no fixmes were introduced
 % in the document, this macro doesn't generate an empty list, but rather stays
 % silent.\par
+% ^^A \changes{v1.4}{2001/09/04}{Fix bug reported by Ulf Jaenicke-Roessler}
 % \DescribeMacro{\listfixmename}
 % The list of fixmes has a title which defaults to ``List of FIXME's'' for
 % English. The language options modify this title, but you can also directly
@@ -223,6 +224,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v1.4] Fix bug reported by Ulf Jaenicke-Roessler
+%   |<ujr@physik.phy.tu-dresden.de>|: the list of fixme's
+%   didn't work when called before the first fixme note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri
 %   |<murri@phc.unipi.it>|.
 % \item[v1.2] Support for German thanks to Harald Harders
@@ -236,93 +240,131 @@
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 ¡ $Format: "\\ProvidesPackage{fixme}[$ReleaseDate$ v$Version$"$
-\ProvidesPackage{fixme}[2001/04/23 v1.3
+\ProvidesPackage{fixme}[2001/09/04 v1.3
                         Insert fixme notes in your draft documents]
 
 %    \end{macrocode}
 % \subsection{List macros}
 % \begin{macro}{\listoffixmes}
-%   \begin{macro}{\listfixmename}
-%     In order to redefine the list title, users have to call |\renewcommand|.
-%     I don't like this much: it would be cleaner to provide a real command
-%     that redefines the title internally. However, I'll stick with the
-%     current scheme because it is consistent with the rest of \LaTeXe's
-%     lists.
+%   \begin{macro}{\listoffixmes@final}
+%     \begin{macro}{\listoffixmes@draft}
+%       |\listoffixmes| is empty by default. The |final| or |draft| options
+%       will provide the proper definition.
+%
+%       In order to prevent the List of Fixme's chapter heading from being
+%       generated when there are no fixmes, a test on the existence of the lox
+%       file is performed. There's a slight bug left however: after removing
+%       the last fixme, one ends up with an empty lox file, so the heading
+%       still appear. Previously, this was done by checking if some fixmes
+%       were given, but that was buggy: the list of fixme's could not appear
+%       before the first fixme note\ldots
+%     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newif\if@fixmes\@fixmesfalse
-\newcommand\listoffixmes{\if@fixmes\@listoffixmes\fi}
+\newcommand\listoffixmes{}
+\newcommand\listoffixmes@final{}
+\newcommand\listoffixmes@draft{%
+  \IfFileExists{\jobname .lox}{\@listoffixmes@pretoc}{}%
+  \@starttoc{lox}%
+  \IfFileExists{\jobname .lox}{\@listoffixmes@posttoc}{}%
+  }
+
+%    \end{macrocode}
+% \begin{macro}{\listfixmename}
+%   In order to redefine the list title, users have to call |\renewcommand|.
+%   I don't like this much: it would be cleaner to provide a real command
+%   that redefines the title internally. However, I'll stick with the
+%   current scheme because it is consistent with the rest of \LaTeXe's lists.
+% \end{macro}
+%    \begin{macrocode}
 \newcommand*\listfixmename{}
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@article}
-%   \begin{macro}{\l@fixme@article}
-%     The different versions of |\listoffixmes|, depending on the current
-%     document class (currently, article, report, and book are recognized).
-%     Let's start with the article version:
+% \begin{macro}{\listoffixmes@pretoc@article}
+%   \begin{macro}{\listoffixmes@posttoc@article}
+%     \begin{macro}{\l@fixme@article}
+%       The different versions of pre and post toc commands, depending on the
+%       current document class (currently, article, report, and book are
+%       recognized). Let's start with the article version:
+%     \end{macro}
 %   \end{macro}
-%  \end{macro}
+% \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@article{%
-  \section*{\listfixmename
-    \@mkboth{\MakeUppercase\listfixmename}%
-    {\MakeUppercase\listfixmename}}%
-  \@starttoc{lox}%
+\newcommand\@listoffixmes@pretoc@article{%
+  \section*{\listfixmename%
+    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
+\newcommand\@listoffixmes@posttoc@article{}
 \newcommand*\l@fixme@article{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@report}
-%   \begin{macro}{\l@fixme@report}
-%     Here's the report version:
+% \begin{macro}{\listoffixmes@pretoc@report}
+%   \begin{macro}{\listoffixmes@posttoc@report}
+%     \begin{macro}{\l@fixme@report}
+%       Here's the report version:
+%     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@report{%
+\newcommand\@listoffixmes@pretoc@report{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
     \@restonecolfalse
   \fi
-  \chapter*{\listfixmename
-    \@mkboth{\MakeUppercase\listfixmename}%
-    {\MakeUppercase\listfixmename}}%
-  \@starttoc{lox}%
-  \if@restonecol\twocolumn\fi
+  \chapter*{\listfixmename%
+    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
+\newcommand\@listoffixmes@posttoc@report{\if@restonecol\twocolumn\fi}
 \newcommand*\l@fixme@report{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@book}
-%   \begin{macro}{\l@fixme@book}
-%     And here's the book version:
+% \begin{macro}{\listoffixmes@pretoc@book}
+%   \begin{macro}{\listoffixmes@posttoc@book}
+%     \begin{macro}{\l@fixme@book}
+%       And here's the book version:
+%     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@listoffixmes@book{%
+\newcommand\@listoffixmes@pretoc@book{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
     \@restonecolfalse
   \fi
-  \chapter*{\listfixmename
-    \@mkboth{\MakeUppercase\listfixmename}%
-    {\MakeUppercase\listfixmename}}%
-  \@starttoc{lox}%
-  \if@restonecol\twocolumn\fi
+  \chapter*{\listfixmename%
+    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
+\newcommand\@listoffixmes@posttoc@book{\if@restonecol\twocolumn\fi}
 \newcommand*\l@fixme@book{\@dottedtocline{1}{1.5em}{2.3em}}
 
 %    \end{macrocode}
 %
 % \subsection{Layout macros}
 % \begin{macro}{\fixme}
-%   |\fixme| is empty by default. The |final| or |draft| options will provide
-%   the proper definition.
+%   \begin{macro}{\fixme@final}
+%     \begin{macro}{\fixme@draft}
+%       |\fixme| is empty by default. The |final| or |draft| options will
+%       provide the proper definition.
+%     \end{macro}
+%   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\fixme[1]{}
+\newcommand\fixme@final[1]{%
+  \PackageError{FiXme}{`#1' fixme left in final version}{%
+    You are processing your document in final mode,\MessageBreak
+    but you still have some FiXme's left behind.\MessageBreak
+    Type X to quit, fix your document, and rerun LaTeX.}}
+\newcommand\fixme@draft[1]{%
+  \iffixme@margin\FiXmeMargin{#1}\fi%
+  \iffixme@footnote\FiXmeFootnote{#1}\fi%
+  \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
+  \iffixme@index\FiXmeIndex{#1}\fi%
+  \iffixme@user\FiXmeUser{#1}\fi%
+  \addcontentsline{lox}{fixme}{#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\FiXmeMargin}
@@ -395,34 +437,29 @@
 % information because warnings are also logged.
 %    \begin{macrocode}
 \DeclareOption{final}{
-  \renewcommand{\fixme}[1]{%
-    \PackageError{FiXme}{`#1' fixme left in final version}{%
-      You are processing your document in final mode,\MessageBreak
-      but you still have some FiXme's left behind.\MessageBreak
-      Type X to quit, fix your document, and rerun LaTeX.}}
+  \let\fixme\fixme@final
+  \let\listoffixmes\listoffixmes@final
   }
 
 \DeclareOption{draft}{
-  \renewcommand{\fixme}[1]{%
-    \@fixmestrue%
-    \iffixme@margin\FiXmeMargin{#1}\fi%
-    \iffixme@footnote\FiXmeFootnote{#1}\fi%
-    \iffixme@warning\FiXmeWarning{#1}\else\iffixme@info\FiXmeInfo{#1}\fi\fi%
-    \iffixme@index\FiXmeIndex{#1}\fi%
-    \iffixme@user\FiXmeUser{#1}\fi%
-    \addcontentsline{lox}{fixme}{#1}}
+  \let\fixme\fixme@draft
+  \let\listoffixmes\listoffixmes@draft
   \@ifclassloaded{article}{
-    \let\l@fixme\l@fixme@article
-    \let\@listoffixmes\@listoffixmes@article}{
+    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
+    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article
+    \let\l@fixme\l@fixme@article}{
     \@ifclassloaded{report}{
-      \let\l@fixme\l@fixme@report
-      \let\@listoffixmes\@listoffixmes@report}{
+      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@report
+      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@report
+      \let\l@fixme\l@fixme@report}{
       \@ifclassloaded{book}{
-        \let\l@fixme\l@fixme@book
-        \let\@listoffixmes\@listoffixmes@book}{
+        \let\@listoffixmes@pretoc\@listoffixmes@pretoc@book
+        \let\@listoffixmes@posttoc\@listoffixmes@posttoc@book
+        \let\l@fixme\l@fixme@book}{
         %% Use the article layout by default.
-        \let\l@fixme\l@fixme@article
-        \let\@listoffixmes\@listoffixmes@article}
+        \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
+        \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article
+        \let\l@fixme\l@fixme@article}
       }
     }
   }
