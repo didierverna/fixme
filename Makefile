@@ -2,12 +2,12 @@
 
 ## Copyright (C) 1999 Didier Verna.
 
-## PRCS: $Id: Makefile 1.1 Tue, 05 Jan 1999 17:16:59 +0100 verna $
+## PRCS: $Id: Makefile 1.2 Tue, 05 Jan 1999 17:49:34 +0100 verna $
 
 ## Author:        Didier Verna <verna@inf.enst.fr>
 ## Maintainer:    Didier Verna <verna@inf.enst.fr>
 ## Created:       Tue Jan  5 16:46:40 1999 under XEmacs 21.2 (beta 8)
-## Last Revision: Tue Jan  5 17:14:22 1999
+## Last Revision: Tue Jan  5 17:43:22 1999
 
 ## This file is part of FiXme.
 
@@ -44,10 +44,19 @@
 
 ### Code:
 
+DISTFILES=README fixme.ins fixme.dtx
+
 STYDIR=$HOME/TeX/styles
 DOCDIR=$HOME/Tex/doc
 
 all: fixme.sty fixme.dvi
+
+dist:
+	-rm -fr fixme
+	mkdir fixme
+	cp $(DISTFILES) fixme
+	gtar zcf fixme.tar.gz fixme
+	rm -fr fixme
 
 install: install-doc install-sty
 
@@ -59,16 +68,15 @@ install-sty: fixme.sty
 distclean: clean clean-doc clean-sty
 
 clean:
-	rm *~ *.aux *.log
+	-rm *~ *.aux *.log
 
 clean-doc:
-	rm *.dvi
+	-rm *.dvi
 clean-sty:
-	rm *.sty
+	-rm *.sty
 
 fixme.sty: fixme.ins fixme.dtx
 fixme.dvi: fixme.dtx
-
 
 .ins.sty:
 	@echo "\n ===== Building the sty file ..."
