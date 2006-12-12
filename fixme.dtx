@@ -2,14 +2,14 @@
 %
 % fixme.dtx --- Doc file for the FiXme package (code and documentation)
 %
-% Copyright (C) 1998-2002 Didier Verna.
+% Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004 Didier Verna.
 %
-% PRCS: $Id: fixme.dtx 1.59 Tue, 19 Oct 2004 09:49:21 +0200 didier $
+% PRCS: $Id: fixme.dtx 1.60 Tue, 19 Oct 2004 11:16:38 +0200 didier $
 %
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
 % Created:       Thu Dec 10 16:04:01 1998
-% Last Revision: Tue Mar 26 11:02:22 2002
+% Last Revision: Tue Oct 19 11:07:44 2004
 %
 % This file is part of FiXme.
 %
@@ -93,17 +93,17 @@
 %
 %
 % \section{Description}
-% \fixme{} notes can appear in several forms, depending on which option(s) you
-% pass to the package. These forms currently are: inline, marginal notes,
-% footnotes and index entries (the notes are also logged and some of them are
-% displayed on the terminal). You can use multiple forms (possibly all) at the
-% same time. Additionally, you can summarize all \fixme{} notes in a list
-% similar to the ``list of figures'' for instance.\par
-% All these forms are available when you're working in \texttt{draft} mode.
+% \fixme{} notes can be displayed in different ways. Currently inline,
+% marginal notes, footnotes and index entries are available. The notes are
+% also recorded in the log file, and some of them are displayed on the
+% terminal. You can use multiple layouts (possibly all) at the same time.
+% Additionally, you can summarize all \fixme{} notes in a ``list of
+% fixme's''.\par
+% All these features are available when you're working in \texttt{draft} mode.
 % In \texttt{final} mode, the behavior is slightly different: any remaining
 % critical note generates an error (the compilation aborts), while non
 % critical ones are just removed from the document's body (they're still
-% logged though).
+% recorded in the log file though).
 %
 %
 % \section{User Interface}
@@ -156,8 +156,8 @@
 % \fixme{} notes can appear in several forms (that can be combined) in your
 % document. The forms currently supported are: inline (directly in the text),
 % marginal notes, footnotes, and index entries. To activate a particular
-% layout, use the corresponding option. By default, only the \texttt{margin}
-% layout is active.\par
+% layout, use the corresponding package option. By default, only the
+% \texttt{margin} layout is active.\par
 % Each layout option has a counterpart that deactivates it. The counterpart
 % option has the same name, prefixed with \texttt{no}. For instance, if you
 % don't want marginal notes, use the \texttt{nomargin} option.\par
@@ -216,12 +216,10 @@
 % \subsection{Fancy fruit salad layout}
 % \DescribeEnv{user}
 % \DescribeMacro{\FXUser}
-% And what if you wanted something rilly, rilly fancy? I mean, like playing
-% ``A Candle in the Wind'' on your loudspeaker and displaying a picture of
-% Pamela Anderson naked on your boss' computer screen? Well, you \textbf{can}
-% do that. Just pass the \texttt{user} option to the package (it also has its
-% \texttt{nouser} counterpart), and define an |\FXUser| macro in the following
-% manner:\\
+% If, for some totally unjustified reason, you are not happy with the
+% available layouts, you have the ability to define your own: pass the
+% \texttt{user} option to the package (it also has its \texttt{nouser}
+% counterpart), and define an |\FXUser| macro in the following manner:\\
 % |\newcommand{\FXUser}[2]{|\meta{fancy fruit salad layout job}|}|\\ The
 % arguments are the prefix, and the note itself, in that order.
 %
@@ -287,21 +285,21 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v2.3] Fix bug reported by Akim Demaille: marginal notes could mess up
+% the document's layout by flushing it right.
 % \item[v2.2] New option \texttt{silent} to suppress notes logging\\
 % Support for Danish thanks to Kim Rud Bille |<krbi01@control.auc.dk>|
 % \item[v2.1] Use |\nobreakspace| instead of the tilda character. This avoids
 % conflicts with Babel in Spanish environments.\\
-% Fix bug reported by Knut Lickert |<knut@lickert.net>|: index
-% entries were unconditionally built.
+% Fix bug reported by Knut Lickert: index entries were unconditionally built.
 % \item[v2.0] New feature: note levels\\
 % New feature: \fixme{} note counters and usage summary\\
 % Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|\\
 % Support for Spanish thanks to Agust\'in Mart\'in |<agusmba@terra.es>|
 % \item[v1.5] New appearance option: \texttt{inline}.
 % \item[v1.4] Support for the koma-script classes\\
-% Fix bug reported by Ulf Jaenicke-Roessler
-% |<ujr@physik.phy.tu-dresden.de>|: the |\listoffixmes| command didn't work
-% when called before the first \fixme{} note.
+% Fix bug reported by Ulf Jaenicke-Roessler: the |\listoffixmes| command
+% didn't work when called before the first \fixme{} note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri |<murri@phc.unipi.it>|
 % \item[v1.2] Support for German thanks to Harald Harders |<h.harders@tu-bs.de>|
 % \end{itemize}
@@ -337,7 +335,8 @@
 %       the last fixme, one ends up with an empty lox file, so the heading
 %       still appear. Previously, this was done by checking if some fixmes
 %       were given, but that was buggy: the list of fixme's could not appear
-%       before the first fixme note\ldots
+%       before the first fixme note\ldots I should try to detect whether the
+%       file is empty.
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -494,7 +493,7 @@
 \newcommand\FXInline[2]{%
   \textbf{#1}: \emph{#2}}
 \newcommand\FXMargin[2]{%
-  \marginpar{\footnotesize\flushright\textbf{#1}: \emph{#2}}}
+  \marginpar{\footnotesize\raggedleft\textbf{#1}: \emph{#2}}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 

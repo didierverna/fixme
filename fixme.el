@@ -1,11 +1,11 @@
 ;;; fixme.el --- AUC-TeX style file for FiXme
 
-;; Copyright (C) 2000-2002 Didier Verna.
+;; Copyright (C) 2000, 2002, 2004 Didier Verna.
 
 ;; Author:        Didier Verna <didier@lrde.epita.fr>
 ;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ;; Created:       Tue Apr 18 14:49:29 2000
-;; Last Revision: Tue Mar 26 11:01:54 2002
+;; Last Revision: Tue Oct 19 11:09:53 2004
 ;; Keywords:      tex abbrev data
 
 ;; This file is part of FiXme.
@@ -24,12 +24,6 @@
 ;;; Commentary:
 
 ;; Contents management by FCM version 0.1-b2.
-
-
-;;; TODO:
-
-
-;;; Change Log:
 
 
 ;;; Code:
