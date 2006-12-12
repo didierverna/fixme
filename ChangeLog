@@ -1,5 +1,8 @@
 2002-07-03  Didier Verna  <didier@lrde.epita.fr>
 
+	* README: move Changes section in a NEWS file.
+	* Makefile (install-www): also install a bz2 archive, and the DVI
+	file.
 	* fixme.dtx: new option "(no)silent".
 
 2002-05-21  Didier Verna  <didier@lrde.epita.fr>

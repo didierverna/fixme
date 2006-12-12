@@ -2,7 +2,7 @@
 
 ## Copyright (C) 1999-2002 Didier Verna.
 
-## PRCS: $Id: Makefile 1.18 Wed, 03 Jul 2002 16:20:30 +0200 didier $
+## PRCS: $Id: Makefile 1.19 Wed, 03 Jul 2002 16:40:25 +0200 didier $
 
 ## Author:        Didier Verna <didier@lrde.epita.fr>
 ## Maintainer:    Didier Verna <didier@lrde.epita.fr>
@@ -71,10 +71,11 @@ dist:
 	bzip2 -c $(ARCHIVE).tar > $(ARCHIVE).tar.bz2
 	rm -fr $(ARCHIVE) $(ARCHIVE).tar
 
-install-www: dist
+install-www: dist $(PROJECT).dvi
 	install -m 644 NEWS $(W3DIR)/fixme-news.txt
 	echo "$(VERSION)" > $(W3DIR)/fixme-version.txt
 	chmod 644 $(W3DIR)/fixme-version.txt
+	install -m 644 $(PROJECT).dvi $(W3DIR)/
 	install -m 644 $(ARCHIVE).tar.gz $(W3DIR)/$(PROJECT).tar.gz
 	install -m 644 $(ARCHIVE).tar.bz2 $(W3DIR)/$(PROJECT).tar.bz2
 
