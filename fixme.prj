@@ -2,12 +2,11 @@
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description
  "A LaTeX2e package for inserting fixme notes in draft documents")
-(Project-Version fixme version-1-2 1)
-(Parent-Version fixme branch-1-2 5)
-(Version-Log "Version 1.2
-")
+(Project-Version fixme branch-1-3 1)
+(Parent-Version fixme version-1-2 1)
+(Version-Log "Branch 1.3 fork")
 (New-Version-Log "")
-(Checkin-Time "Mon, 26 Mar 2001 18:19:28 +0200")
+(Checkin-Time "Mon, 23 Apr 2001 12:07:55 +0200")
 (Checkin-Login didier)
 (Populate-Ignore
  ("\\.aux$" "\\.dvi$" "\\.lo.*$" "\\.sty$"
@@ -23,8 +22,8 @@
  )
 (Files
  (README (fixme/0_README 1.9 640))
- (Makefile (fixme/3_Makefile 1.14 640))
- (fixme.dtx (fixme/1_fixme.dtx 1.29 640))
+ (Makefile (fixme/3_Makefile 1.15 640))
+ (fixme.dtx (fixme/1_fixme.dtx 1.30 640))
  (fixme.ins (fixme/2_fixme.ins 1.13 640))
  (fixme.el (fixme/5_fixme.el 1.1 640))
  (ChangeLog (fixme/6_ChangeLog 1.4 644))
