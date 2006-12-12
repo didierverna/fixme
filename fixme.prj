@@ -2,11 +2,11 @@
 (Created-By-Prcs-Version 1 3 3)
 (Project-Description
  "A LaTeX2e package for inserting fixme notes in draft documents")
-(Project-Version fixme version-3-1 1)
-(Parent-Version fixme branch-3-1 2)
-(Version-Log "Version 3.1")
+(Project-Version fixme branch-3-2 1)
+(Parent-Version fixme version-3-1 1)
+(Version-Log "")
 (New-Version-Log "")
-(Checkin-Time "Mon, 31 Jan 2005 14:48:32 +0100")
+(Checkin-Time "Mon, 31 Jan 2005 14:50:25 +0100")
 (Checkin-Login didier)
 (Populate-Ignore
  ("\\.aux$" "\\.dvi$" "\\.pdf$" "\\.lo.*$" "\\.sty$"
