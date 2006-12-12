@@ -5,7 +5,7 @@
 ;; Author:        Didier Verna <didier@lrde.epita.fr>
 ;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ;; Created:       Tue Apr 18 14:49:29 2000
-;; Last Revision: Tue Oct 19 11:09:53 2004
+;; Last Revision: Tue Oct 19 18:07:27 2004
 ;; Keywords:      tex abbrev data
 
 ;; This file is part of FiXme.
@@ -64,10 +64,10 @@
       '("thefixmeerrorcount")
       '("thefixmefatalcount")
 
-      '("fxnote" "Note")
-      '("fxwarning" "Warning")
-      '("fxerror" "Error")
-      '("fixme" "FiXme")
+      '("fxnote" [ "Layout" ] "Note")
+      '("fxwarning" [ "Layout" ] "Warning")
+      '("fxerror" [ "Layout" ] "Error")
+      '("fixme" [ "Layout" ] "FiXme")
 
       ;; Obsolete stuff:
       '("FiXmeInline")
