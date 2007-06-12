@@ -77,12 +77,12 @@ fi
 # hack the dtx file:
 if test $dry_run = yes
     then
-    echo "perl -pi -e \"s/(\\\newcommand\{\\\version\}).*/\1\{$version\}/\" $dtx.dtx"
-    echo "perl -pi -e \"s|(\\\newcommand\{\\\releasedate\}).*|\1\{$date\}|\" $dtx.dtx"
+    echo "perl -pi -e \"s/(\\\newcommand\\\version).*/\1\{$version\}/\" $dtx.dtx"
+    echo "perl -pi -e \"s|(\\\newcommand\\\releasedate).*|\1\{$date\}|\" $dtx.dtx"
     echo "perl -pi -e \"s|(\\\ProvidesPackage\{$dtx\}).*|\1\[$date v$version|\" $dtx.dtx"
 else
-    perl -pi -e "s/(\\\newcommand\{\\\version\}).*/\1\{$version\}/"    $dtx.dtx
-    perl -pi -e "s|(\\\newcommand\{\\\releasedate\}).*|\1\{$date\}|"   $dtx.dtx
+    perl -pi -e "s/(\\\newcommand\\\version).*/\1\{$version\}/"    $dtx.dtx
+    perl -pi -e "s|(\\\newcommand\\\releasedate).*|\1\{$date\}|"   $dtx.dtx
     perl -pi -e "s|(\\\ProvidesPackage\{$dtx\}).*|\1\[$date v$version|" $dtx.dtx
 fi
 
