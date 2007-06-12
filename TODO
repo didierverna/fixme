@@ -1,3 +1,5 @@
+* REMOVE VERSION.SH FROM REPOSITORY IF I EVER MAKE IT WRITABLE
+
 #### Is this still the case ??
 * Fixme doesn't work with beamer because of \RequirePackage{verbatim} which is
   here to define the comment environnement.
