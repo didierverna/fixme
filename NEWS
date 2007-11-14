@@ -20,12 +20,12 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 3.3
 =============
+** Documentation improvements
+suggested by Brian van den Broek.
 ** Fix incompatibility with AMS-Art
 reported by Lars Madsen: \@starttoc takes 2 arguments.
 ** Fix bug in \fixme@footnotetrue
 reported by Stefan Mann: a typo in the macro name.
-** Documentation improvements
-suggested by Brian van den Broek.
 
 * Version 3.2
 =============
