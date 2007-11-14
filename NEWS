@@ -20,6 +20,8 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 3.3
 =============
+** Fix incompatibility with AMS-Art
+reported by Lars Madsen: \@starttoc takes 2 arguments.
 ** Fix bug in \fixme@footnotetrue
 reported by Stefan Mann: a typo in the macro name.
 ** Documentation improvements
@@ -29,10 +31,10 @@ suggested by Brian van den Broek.
 =============
 ** Added the marginclue layout option
 which only signals a fixme in the margin, withtout the actual contents.
-** Fix incompatibility with AMS-Book
-reported by Claude Lacoursière: \@starttoc takes 2 arguments.
 ** Support for Croatian
 thanks to Marcel Maretic <marcel@fsb.hr>.
+** Fix incompatibility with AMS-Book
+reported by Claude Lacoursière: \@starttoc takes 2 arguments.
 ** Fix incompatibility with Beamer
 reported by Akim Demaille: protect contents of lox file.ug in environments.
 
