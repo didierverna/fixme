@@ -21,6 +21,8 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 3.3
 =============
+** Honor twoside option in marginal layout
+suggested by Jens Remus.
 ** Support KOMA-Script classes version 2006/07/30 v2.95b
 suggested by Jens Remus.
 ** Documentation improvements
