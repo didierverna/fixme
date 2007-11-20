@@ -43,7 +43,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{874}
+% \CheckSum{892}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -61,7 +61,7 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % \newcommand\version{beta-3.3}
-% \newcommand\releasedate{2007/11/19}
+% \newcommand\releasedate{2007/11/20}
 % \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006, 2007 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
 % \newcommand\auctex{AUC-\TeX}
@@ -415,7 +415,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fixme}[2007/11/19 vbeta-3.3
+\ProvidesPackage{fixme}[2007/11/20 vbeta-3.3
 			Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
@@ -608,9 +608,21 @@
 \newcommand\FXInline[2]{%
   \textbf{#1}: \emph{#2}}
 \newcommand\FXMargin[2]{%
-  \marginpar{\footnotesize\raggedleft\textbf{#1}: \emph{#2}}}
+  \marginpar{\footnotesize%
+    \if@mparswitch%
+      \ifodd\c@page\raggedright\else\raggedleft\fi%
+    \else%
+      \raggedright%
+    \fi%
+    \textbf{#1}: \emph{#2}}}
 \newcommand\FXMarginClue[1]{%
-  \marginpar{\footnotesize\raggedleft\textbf{#1}~!}}
+  \marginpar{\footnotesize%
+    \if@mparswitch%
+      \ifodd\c@page\raggedright\else\raggedleft\fi%
+    \else%
+      \raggedright%
+    \fi%
+    \textbf{#1}~!}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
