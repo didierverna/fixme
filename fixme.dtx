@@ -43,7 +43,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{864}
+% \CheckSum{874}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -61,7 +61,7 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % \newcommand\version{beta-3.3}
-% \newcommand\releasedate{2007/11/14}
+% \newcommand\releasedate{2007/11/19}
 % \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006, 2007 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
 % \newcommand\auctex{AUC-\TeX}
@@ -365,7 +365,9 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v3.3] Documentation improvements suggested by Brian van den Broek.\\
+% \item[v3.3] Support for KOMA-Script classes version 2006/07/30 v2.95b,
+%   suggested by Jens Remus.\\
+%   Documentation improvements suggested by Brian van den Broek.\\
 %   Fix incompatibility with \texttt{amsart} reported by Lars Madsen:
 %   \cs{@starttoc} takes two arguments.\\
 %   Fix bug reported by Stefan Mann: a typo in the |\fixme@footnotetrue| macro
@@ -413,7 +415,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fixme}[2007/11/14 vbeta-3.3
+\ProvidesPackage{fixme}[2007/11/19 vbeta-3.3
 			Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
@@ -523,6 +525,14 @@
 %    \end{macrocode}
 %
 % \subsubsection{koma-script classes}
+% The code below (version 3.3) mimics KOMA-Script version 2006/07/30 v2.95b.
+% Older versions (using chapter*) are no longer supported because it is
+% simpler that way, but if some people complain, I'll  have to conditionalize
+% on the KOMA-Script version, which would be a PITA.
+%    \begin{macrocode}
+\newcommand*\lox@heading{\float@listhead{\listfixmename}}
+
+%    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrartcl}
 %   \begin{macro}{\listoffixmes@posttoc@scrartcl}
 %     Let's start with the scrartcl version:
@@ -530,10 +540,13 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@scrartcl{%
-  \section*{\listfixmename%
-    \@mkboth{\listfixmename}{\listfixmename}}%
+  \begingroup%
+    \lox@heading%
+    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
   }
-\def\@listoffixmes@posttoc@scrartcl{}
+\def\@listoffixmes@posttoc@scrartcl{%
+  \endgroup
+  }
 
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrreprt}
@@ -543,15 +556,19 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@scrreprt{%
-  \if@twocolumn
-    \@restonecoltrue\onecolumn
-  \else
-    \@restonecolfalse
-  \fi
-  \chapter*{\listfixmename%
-    \@mkboth{\listfixmename}{\listfixmename}}%
+  \begingroup%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \lox@heading%
+    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
   }
-\def\@listoffixmes@posttoc@scrreprt{\if@restonecol\twocolumn\fi}
+\def\@listoffixmes@posttoc@scrreprt{%
+    \if@restonecol\twocolumn\fi
+  \endgroup
+  }
 
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrbook}
@@ -561,15 +578,19 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@scrbook{%
-  \if@twocolumn
-    \@restonecoltrue\onecolumn
-  \else
-    \@restonecolfalse
-  \fi
-  \chapter*{\listfixmename%
-    \@mkboth{\listfixmename}{\listfixmename}}%
-  }
-\def\@listoffixmes@posttoc@scrbook{\if@restonecol\twocolumn\fi}
+  \begingroup%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \lox@heading%
+    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
+}
+\def\@listoffixmes@posttoc@scrbook{%
+    \if@restonecol\twocolumn\fi
+  \endgroup
+}
 
 %    \end{macrocode}
 %

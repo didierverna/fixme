@@ -18,4 +18,3 @@ autres (avec pretoc etc).
 * Jens Remus: les notes de marge doivent changer d'alignement en mode twoside
   - \ifodd\c@page\raggedright\else\raggedleft\fi
     mais il faudrait en fait paramétriser le formattage
-  - les Koma script classes ont changé. Mettre à jour listoffixmes
