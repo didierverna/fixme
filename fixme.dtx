@@ -43,7 +43,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{892}
+% \CheckSum{881}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -610,21 +610,11 @@
 \newcommand\FXInline[2]{%
   \textbf{#1}: \emph{#2}}
 \newcommand\FXMargin[2]{%
-  \marginpar{\footnotesize%
-    \if@mparswitch%
-      \ifodd\c@page\raggedright\else\raggedleft\fi%
-    \else%
-      \raggedright%
-    \fi%
-    \textbf{#1}: \emph{#2}}}
+  \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
+    \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
 \newcommand\FXMarginClue[1]{%
-  \marginpar{\footnotesize%
-    \if@mparswitch%
-      \ifodd\c@page\raggedright\else\raggedleft\fi%
-    \else%
-      \raggedright%
-    \fi%
-    \textbf{#1}~!}}
+  \marginpar[\footnotesize\raggedleft\textbf{#1}~!]{%
+    \footnotesize\raggedright\textbf{#1}~!}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
