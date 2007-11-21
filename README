@@ -1,13 +1,8 @@
-		      This is the README file for FiXme,
-		  a LaTeX2e package for putting fixme notes
-			     in draft documents
+
+				 ABOUT FIXME
 
 
-
-* Copyright
-===========
-
-Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005 2006 Didier Verna
+Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna
 Copyright (C) 2007 Didier Verna
 
 This file is part of FiXme.
@@ -27,6 +22,7 @@ FiXme consists of the following files:
 - fixme.ins
 - fixme.dtx
 - fixme.el
+- THANKS
 
 
 * Description
@@ -58,8 +54,8 @@ a suitable AUC-TeX style directory.
 --
 Didier Verna, didier@lrde.epita.fr, http://www.lrde.epita.fr/~didier
 
-EPITA / LRDE, 14-16 rue Voltaire   Tel.+33 (1) 44 08 01 85
-94276 Le Kremlin-Bicêtre, France   Fax.+33 (1) 53 14 59 22   didier@xemacs.org
+EPITA / LRDE, 14-16 rue Voltaire   Tel.+33 (0)1 44 08 01 85
+94276 Le Kremlin-Bicêtre, France   Fax.+33 (0)1 53 14 59 22
 
 
 
