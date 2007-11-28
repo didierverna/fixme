@@ -222,6 +222,13 @@
 % inline the note, which can be done with something like
 % |\fixme[inline]{blah}|.\par
 %
+% \subsubsection{Class compatibility}
+% By default, \fixme{} is set to use marginal notes. You should know that this
+% is known to cause problems with at least the ACM SIG classes:
+% \texttt{acm\_proc\_article-sp} and \texttt{sig-alternate}. These classes
+% forbid the use of |\marginpar|, so if you use them, you should choose
+% another layout for \fixme{}, and also avoid using marginal clues\ldots
+%
 % \subsection{Controlling the notes logging}
 % \DescribeEnv{silent}
 % \DescribeEnv{nosilent}
@@ -365,8 +372,10 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v3.3] Honor \texttt{twoside} option in marginal layout, suggested by
-%   Jens Remus.\\
+% \item[v3.3] Document incompatibility between marginal layout and the ACM
+%   SIG classes, reported by Jochen Wuttke.\\
+%   Honor \texttt{twoside} option in marginal layout, suggested by Jens
+%   Remus.\\
 %   Support for KOMA-Script classes version 2006/07/30 v2.95b,
 %   suggested by Jens Remus.\\
 %   Documentation improvements suggested by Brian van den Broek.\\
@@ -1122,7 +1131,14 @@
 
 %    \end{macrocode}
 % Put us in \texttt{english} and \texttt{final} mode, and enable the marginal
-% notes.
+% notes. Note that as documented, marginal notes are incompatible with the ACM
+% SIG classes. Initially, I thought I would detect these classes and issue
+% an error if marginal layout (or clue) is active. However, I changed my mind,
+% because nothing prevents somebody to write a new class on top of these ones
+% and authorize |\marginpar| back again. Normally these classes issue an error
+% if |\marginpar| is used. However, the 2.3 / June 2007 versions are buggy and
+% the error actually triggers a stack overflow in \LaTeX\ldots Patch on its
+% way. Oh boy, these classes are a mess.
 %    \begin{macrocode}
 \ExecuteOptions{english,final,margin,nosilent}
 \ProcessOptions*
