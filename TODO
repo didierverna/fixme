@@ -14,3 +14,22 @@ of \protect.
 
 * Revoir les hacks pour ams{book|art}. Ils ne fonctionnent pas comme les
 autres (avec pretoc etc).
+
+* Voir PGF/TikZ example: Todo notes| fauskes.net
+  http://www.fauskes.net/pgftikzexamples/todo-notes/
+
+*  Rasmus Villemoes wrote:
+> Hi
+>
+> Is there some way to make a \fixme entry in the \listoffixmes, which
+> doesn't belong to a particular place in the text. I'm thinking of
+>> stuff which relates to the preamble, or in some other way relates to
+>> the entire document. It would be nice to have a \fixme* which could be
+>> used for instance near the \usepackage[...]{hyperref} containing
+>>
+>>   \fixme*{Remember to edit the pdf meta information given to the hyperref
+>>   package!}
+>>
+>> and then this would show up in the list of fixmes (with empty
+>> pagenumber, or perhaps "pa" or...).
+>>
