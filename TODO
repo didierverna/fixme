@@ -33,3 +33,88 @@ autres (avec pretoc etc).
 >> and then this would show up in the list of fixmes (with empty
 >> pagenumber, or perhaps "pa" or...).
 >>
+
+* Will Robertson <wspr81@gmail.com> wrote:
+
+> Second, using margin notes in captions doesn't work. But this
+> situation can be detected, so it's possible to work around it. Here's
+> a proof-of-concept that I think would make \fixme a little nicer when
+> margin notes are being used:
+>
+> \documentclass[12pt]{article}
+> \usepackage[draft]{fixme}
+> \begin{document}
+> \DeclareRobustCommand\todo[1]{%
+>   \ifinner
+>     \fixme[inline]{#1}%
+>   \else
+>     \fixme{#1}%
+>   \fi}
+> \begin{figure}
+> %\caption{\protect\fixme{broke}}%  uncomment to see the current behaviour that
+> breaks
+> \caption{\todo{here}}% how \fixme could behave
+> \end{figure}
+> \end{document}
+
+  That's interesting. I didn't know about \ifinner. In fact, I have
+plans, for the next release, to provide keyval-style arguments for all
+commands, so that one could locally override the note's layout when in a
+caption for instance. But then, your comment makes me think that we
+could /also/ automatically change the layout, and even let the user
+choose his preferred fallback method; something like:
+
+innerfallback=inline
+
+> Finally, and this is pie-in-the-sky territory, it'd be great if the
+> list of fixme's could be segregated by section. I'm imagining output
+> that might look like
+>
+> Section 1
+>   - FixMe: xyz
+>   - FixMe: abc
+> Section 2
+>   - FixMe: dfg
+> ...
+>
+> This is a bit harder, and less well defined depending on the class and
+> so on. But it'd be nice :)
+
+  Okay :-) And then, that makes me think of minitoc. It would also be
+nice to have local lists of fixmes and stuff...
+
+God dammit. This is never going to stop! :-)
+
+
+* Mark Edgington <edgimar@gmail.com>
+
+I recently checked out your fixme package, and think its nice -- in
+particular, I like the ability to create a list of fixmes. But, I miss
+something when I compare it with my home-made comment macros (which I provide
+below).
+
+The macros I use do the following: they both highlight a section of text, and
+print an associated comment. I also have made macros for different people
+editing the same document, so that the comments from different people show up
+with a different prefix in them.
+
+\newcommand{\addcomment}[3]
+{%
+\ifthenelse{\equal{#1}{inline}}{\textbf{#2} [\textit{\scriptsize
+#3}]}{}% comment shown inline
+\ifthenelse{\equal{#1}{footnote}}{\textbf{#2}\footnote{\scriptsize
+#3}}{}% comment as footnote
+\ifthenelse{\equal{#1}{margin}}{\marginpar{\scriptsize #3}
+\textbf{#2}}{}% comment in margin
+\ifthenelse{\equal{#1}{hidden}}{\textbf{*#2*}}{}% highlights commented
+text, but doesn't show comments
+\ifthenelse{\equal{#1}{omit}}{#2}{}% nothing changed
+}
+
+% uncomment to include comments in compiled version...
+\newcommand{\person1}[3][margin]{\addcomment{#1}{#2}{P1: #3}}
+\newcommand{\person2}[3][margin]{\addcomment{#1}{#2}{P2: #3}}
+
+% uncomment to omit comments from compiled version...
+%\newcommand{\person1}[3][omit]{\addcomment{omit}{#2}{#3}}
+%\newcommand{\person2}[3][omit]{\addcomment{omit}{#2}{#3}}
