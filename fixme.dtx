@@ -60,9 +60,10 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %
-% \newcommand\version{3.3}
-% \newcommand\releasedate{2007/11/28}
-% \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006, 2007 Didier Verna}
+% \newcommand\version{3.4}
+% \newcommand\releasedate{2009/07/11}
+% \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001,
+%   2002, 2004, 2005, 2006, 2007, 2009 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
 % \newcommand\auctex{AUC-\TeX}
 % \MakeShortVerb{\|}
@@ -372,6 +373,8 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v3.4] |\fixme|, |\fxerror|, |\fxwarning| and |\fxnote| are now robust,
+%   thanks to Will Robertson.
 % \item[v3.3] Document incompatibility between marginal layout and the ACM
 %   SIG classes, reported by Jochen Wuttke.\\
 %   Honor \texttt{twoside} option in marginal layout, suggested by Jens
@@ -426,7 +429,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fixme}[2007/11/28 v3.3
+\ProvidesPackage{fixme}[2009/07/11 v3.4
 			Insert fixme notes in your documents]
 
 \RequirePackage{ifthen}
@@ -930,13 +933,13 @@
     \fi}%
   \@@fixme{#1}{#3}%
   \egroup}
-\newcommand\fxnote{\@ifnextchar[%]
+\DeclareRobustCommand\fxnote{\@ifnextchar[%]
   {\@fixme{note}}{\@@fixme{note}}}
-\newcommand\fxwarning{\@ifnextchar[%]
+\DeclareRobustCommand\fxwarning{\@ifnextchar[%]
   {\@fixme{warning}}{\@@fixme{warning}}}
-\newcommand\fxerror{\@ifnextchar[%]
+\DeclareRobustCommand\fxerror{\@ifnextchar[%]
   {\@fixme{error}}{\@@fixme{error}}}
-\newcommand\fixme{\@ifnextchar[%]
+\DeclareRobustCommand\fixme{\@ifnextchar[%]
   {\@fixme{fatal}}{\@@fixme{fatal}}}
 
 %    \end{macrocode}
