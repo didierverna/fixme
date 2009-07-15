@@ -43,7 +43,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{881}
+% \CheckSum{880}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -374,7 +374,9 @@
 % \section{Changes}
 % \begin{itemize}
 % \item[v3.4] |\fixme|, |\fxerror|, |\fxwarning| and |\fxnote| are now robust,
-%   thanks to Will Robertson.
+%   thanks to Will Robertson.\\
+%   Fix incompatibility with KOMA-Script classes version of |\@starttoc| when
+%   the lox file is inexistent, reported by Philipp Stephani.
 % \item[v3.3] Document incompatibility between marginal layout and the ACM
 %   SIG classes, reported by Jochen Wuttke.\\
 %   Honor \texttt{twoside} option in marginal layout, suggested by Jens
@@ -463,10 +465,11 @@
 \newcommand\listoffixmes{}
 \def\listoffixmes@final{}
 \def\listoffixmes@draft{%
-  \IfFileExists{\jobname .lox}{\@listoffixmes@pretoc}{}%
-  \@starttoc{lox}%
-  \IfFileExists{\jobname .lox}{\@listoffixmes@posttoc}{}%
-  }
+  \IfFileExists{\jobname .lox}{%
+    \@listoffixmes@pretoc%
+    \@starttoc{lox}%
+    \@listoffixmes@posttoc}{%
+    \@starttoc{lox}}}
 
 %    \end{macrocode}
 % The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea of
