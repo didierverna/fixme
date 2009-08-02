@@ -742,10 +742,14 @@
 % The following options are here for backward compatibility, but are not used
 % anymore:
 %    \begin{macrocode}
-\DeclareOptionX[fx]<legacy>{info}{}
-\DeclareOptionX[fx]<legacy>{noinfo}{}
-\DeclareOptionX[fx]<legacy>{warning}{}
-\DeclareOptionX[fx]<legacy>{nowarning}{}
+\newcommand\FXDeclareLegacyOption[1]{%
+  \DeclareOptionX[fx]<legacy>{#1}{\PackageWarning{FiXme}{%
+      `#1' is a legacy option that has no effect anymore,}}}
+
+\FXDeclareLegacyOption{info}
+\FXDeclareLegacyOption{noinfo}
+\FXDeclareLegacyOption{warning}
+\FXDeclareLegacyOption{nowarning}
 
 %    \end{macrocode}
 %
