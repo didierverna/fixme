@@ -43,7 +43,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{880}
+% ^^A\CheckSum{880}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -436,6 +436,7 @@
 
 \RequirePackage{ifthen}
 \RequirePackage{verbatim}
+\RequirePackage{xkeyval}
 
 \newcommand*\fixmelogo{\textsf{FiXme}}
 
@@ -724,27 +725,27 @@
 %    \end{macrocode}
 % Options that control which layouts are selected:
 %    \begin{macrocode}
-\DeclareOption{inline}{\fixme@setinline}
-\DeclareOption{noinline}{\fixme@inlinefalse}
-\DeclareOption{margin}{\fixme@setmargin}
-\DeclareOption{nomargin}{\fixme@marginfalse}
-\DeclareOption{marginclue}{\fixme@setmarginclue}
-\DeclareOption{nomarginclue}{\fixme@margincluefalse}
-\DeclareOption{footnote}{\fixme@setfootnote}
-\DeclareOption{nofootnote}{\fixme@footnotefalse}
-\DeclareOption{user}{\fixme@setuser}
-\DeclareOption{nouser}{\fixme@userfalse}
-\DeclareOption{index}{\fixme@setindex}
-\DeclareOption{noindex}{\fixme@indexfalse}
+\DeclareOptionX[fx]<layout>{inline}{\fixme@setinline}
+\DeclareOptionX[fx]<layout>{noinline}{\fixme@inlinefalse}
+\DeclareOptionX[fx]<layout>{margin}{\fixme@setmargin}
+\DeclareOptionX[fx]<layout>{nomargin}{\fixme@marginfalse}
+\DeclareOptionX[fx]<layout>{marginclue}{\fixme@setmarginclue}
+\DeclareOptionX[fx]<layout>{nomarginclue}{\fixme@margincluefalse}
+\DeclareOptionX[fx]<layout>{footnote}{\fixme@setfootnote}
+\DeclareOptionX[fx]<layout>{nofootnote}{\fixme@footnotefalse}
+\DeclareOptionX[fx]<layout>{user}{\fixme@setuser}
+\DeclareOptionX[fx]<layout>{nouser}{\fixme@userfalse}
+\DeclareOptionX[fx]<layout>{index}{\fixme@setindex}
+\DeclareOptionX[fx]<layout>{noindex}{\fixme@indexfalse}
 
 %    \end{macrocode}
 % The following options are here for backward compatibility, but are not used
 % anymore:
 %    \begin{macrocode}
-\DeclareOption{info}{}
-\DeclareOption{noinfo}{}
-\DeclareOption{warning}{}
-\DeclareOption{nowarning}{}
+\DeclareOptionX[fx]<legacy>{info}{}
+\DeclareOptionX[fx]<legacy>{noinfo}{}
+\DeclareOptionX[fx]<legacy>{warning}{}
+\DeclareOptionX[fx]<legacy>{nowarning}{}
 
 %    \end{macrocode}
 %
@@ -782,8 +783,8 @@
 %    \end{macrocode}
 %% Options that control whether to be silent or not:
 %    \begin{macrocode}
-\DeclareOption{silent}{\fixme@silenttrue}
-\DeclareOption{nosilent}{\fixme@silentfalse}
+\DeclareOptionX[fx]<log>{silent}{\fixme@silenttrue}
+\DeclareOptionX[fx]<log>{nosilent}{\fixme@silentfalse}
 
 %    \end{macrocode}
 %
@@ -990,7 +991,7 @@
 % \subsection{Language processing}
 % Options that control which language is selected:
 %    \begin{macrocode}
-\DeclareOption{english}{%
+\DeclareOptionX[fx]<lang>{english}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Warning}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Error}
@@ -1001,7 +1002,7 @@
   \renewcommand*\fixmeerrorindexname{**c@Errors:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{List of Corrections}}
-\DeclareOption{french}{%
+\DeclareOptionX[fx]<lang>{french}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Attention}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Erreur}
@@ -1012,8 +1013,8 @@
   \renewcommand*\fixmeerrorindexname{**c@Erreurs:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Liste des Corrections}}
-\DeclareOption{francais}{\ExecuteOptions{french}}
-\DeclareOption{spanish}{%
+\DeclareOptionX[fx]<lang>{francais}{\ExecuteOptionsX[fx]<lang>{french}}
+\DeclareOptionX[fx]<lang>{spanish}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Nota}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Aviso}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Error}
@@ -1024,7 +1025,7 @@
   \renewcommand*\fixmeerrorindexname{**c@Errores:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
-\DeclareOption{italian}{%
+\DeclareOptionX[fx]<lang>{italian}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Nota}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Avviso}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Errore}
@@ -1035,7 +1036,7 @@
   \renewcommand*\fixmeerrorindexname{**c@Errori:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Corrigenda}}
-\DeclareOption{german}{%
+\DeclareOptionX[fx]<lang>{german}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Anm}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Warnung}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Fehler}
@@ -1046,9 +1047,9 @@
   \renewcommand*\fixmeerrorindexname{**c@Fehler:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
-\DeclareOption{ngerman}{%
-  \ExecuteOptions{german}}
-\DeclareOption{danish}{%
+\DeclareOptionX[fx]<lang>{ngerman}{%
+  \ExecuteOptionsX[fx]<lang>{german}}
+\DeclareOptionX[fx]<lang>{danish}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Advarsel}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Fejl}
@@ -1059,7 +1060,7 @@
   \renewcommand*\fixmeerrorindexname{**c@Fejl:!}
   \renewcommand*\fixmefatalindexname{}
   \renewcommand*{\listfixmename}{Rettelser}}
-\DeclareOption{croatian}{%
+\DeclareOptionX[fx]<lang>{croatian}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Poruka}
   \renewcommand*\fixmewarningprefix{\fixmelogo\nobreakspace Upozorenje}
   \renewcommand*\fixmeerrorprefix{\fixmelogo\nobreakspace Gre\v ska}
@@ -1083,7 +1084,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\DeclareOption{final}{
+\DeclareOptionX[fx]<ltx>{final}{
   \let\fixme@note\fixme@note@final
   \let\fixme@warning\fixme@warning@final
   \let\fixme@error\fixme@error@final
@@ -1093,7 +1094,7 @@
   \let\listoffixmes\listoffixmes@final
   }
 
-\DeclareOption{draft}{
+\DeclareOptionX[fx]<ltx>{draft}{
   \@ifclassloaded{article}{
     \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
     \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}{
@@ -1146,8 +1147,8 @@
 % the error actually triggers a stack overflow in \LaTeX\ldots Patch on its
 % way. Oh boy, these classes are a mess.
 %    \begin{macrocode}
-\ExecuteOptions{english,final,margin,nosilent}
-\ProcessOptions*
+\ExecuteOptionsX[fx]<layout,log,lang,ltx>{final,english,nosilent,margin}
+\ProcessOptionsX*[fx]<legacy,layout,log,lang,ltx>
 
 %    \end{macrocode}
 % Finally, ensure backward compatibility for |\fixme| with |\FiXmeUser|, and
