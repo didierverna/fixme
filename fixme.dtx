@@ -373,6 +373,7 @@
 %
 % \section{Changes}
 % \begin{itemize}
+% \item[v4.0] Homogenize the log and console messages.
 % \item[v3.4] |\fixme|, |\fxerror|, |\fxwarning| and |\fxnote| are now robust,
 %   thanks to Will Robertson.\\
 %   Fix incompatibility with KOMA-Script classes version of |\@starttoc| when
@@ -767,17 +768,19 @@
 \newcommand\FXNote[1]{%
   \GenericInfo{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    Package FiXme Note: `#1'}}
+    FiXme Note: `#1'}}
 \newcommand\FXWarning[1]{%
-  \PackageWarning{FiXme}{`#1'}}
+  \GenericWarning{%
+    (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
+    FiXme Warning: `#1'}}
 \newcommand\FXError[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    Package FiXme Error: `#1'}}
+    FiXme Error: `#1'}}
 \newcommand\FXFatal[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    Package FiXme: `#1'}}
+    FiXme: `#1'}}
 
 %    \end{macrocode}
 % Boolean that control wether to stay silent or not:
