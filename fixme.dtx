@@ -462,7 +462,8 @@
 %%}
 
 \newcommand\FXDeclareLegacyOption[1]{%
-  \DeclareOptionX[fx]<legacy>{#1}{\PackageWarning{FiXme}{%
+  \DeclareOptionX[fx]<legacy>{#1}{%
+    \PackageWarning{FiXme}{%
       `#1' is a legacy option that has no effect anymore,}}}
 
 \newcommand\@fxvoidoptionerror[2]{%
