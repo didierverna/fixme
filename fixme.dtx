@@ -717,7 +717,7 @@
 %    \end{macrocode}
 % Booleans that control which layouts are selected:
 %    \begin{macrocode}
-\newif\iffixme@inline
+\define@boolkey[fx]{layout}{inline}[true]
 \newif\iffixme@margin
 \newif\iffixme@marginclue
 \newif\iffixme@footnote
@@ -727,7 +727,7 @@
 %    \end{macrocode}
 % Setters for these booleans (some might require special treatment):
 %    \begin{macrocode}
-\let\fixme@setinline\fixme@inlinetrue
+\def\fixme@setinline{\fx@layout@inline{true}}
 \def\fixme@setmargin{%
   \iffixme@marginclue%
     \PackageWarning{FiXme}{%
@@ -752,7 +752,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\fixme@text#1#2{%
-  \iffixme@inline\FXInline{#1}{#2}\fi%
+  \iffx@layout@inline\FXInline{#1}{#2}\fi%
   \iffixme@margin\FXMargin{#1}{#2}\fi%
   \iffixme@marginclue\FXMarginClue{#1}\fi%
   \iffixme@footnote\FXFootnote{#1}{#2}\fi%
@@ -761,8 +761,8 @@
 %    \end{macrocode}
 % Options that control which layouts are selected:
 %    \begin{macrocode}
-\FXDeclareVoidOption{layout}{inline}{\fixme@setinline}
-\FXDeclareVoidOption{layout}{noinline}{\fixme@inlinefalse}
+\DeclareOptionX[fx]<layout>{inline}[true]{\XKV@setbool{fx@layout@inline}{#1}}
+\FXDeclareVoidOption{layout}{noinline}{\fx@layout@inline{false}}
 \FXDeclareVoidOption{layout}{margin}{\fixme@setmargin}
 \FXDeclareVoidOption{layout}{nomargin}{\fixme@marginfalse}
 \FXDeclareVoidOption{layout}{marginclue}{\fixme@setmarginclue}
@@ -919,7 +919,7 @@
 %    \begin{macrocode}
 \newcommand*\fixmefatalindexname{}
 \def\fixme@fatal@draft#1{%
-  \iffixme@inline\FiXmeInline{#1}\fi%
+  \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
   \iffixme@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
   \iffixme@footnote\FiXmeFootnote{#1}\fi%
@@ -955,7 +955,7 @@
   \csname fixme@#1\endcsname{#2}}
 \def\@fixme#1[#2]#3{%
   \bgroup%
-  \fixme@inlinefalse%
+  \fx@layout@inline{false}%
   \fixme@marginfalse%
   \fixme@margincluefalse%
   \fixme@footnotefalse%
