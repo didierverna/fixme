@@ -445,6 +445,22 @@
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
 
+%%\def\XKV@setbool#1#2{%
+%%  \def\XKV@tempa{true}%
+%%  \def\XKV@tempb{false}%
+%%  \lowercase{\def\XKV@tempc{#2}}%
+%%  \ifx\XKV@tempc\XKV@tempa\else
+%%    \ifx\XKV@tempc\XKV@tempb\else
+%%      \let\XKV@tempc\relax
+%%    \fi
+%%  \fi
+%%  \ifx\XKV@tempc\relax
+%%    \XKV@err{boolean can only be `true' or `false'}%
+%%  \else
+%%    \csname#1\XKV@tempc\endcsname
+%%  \fi
+%%}
+
 \newcommand\FXDeclareLegacyOption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{\PackageWarning{FiXme}{%
       `#1' is a legacy option that has no effect anymore,}}}
