@@ -476,6 +476,10 @@
   \DeclareOptionX[fx]<#1>{#2}[]{%
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
 
+\newcommand\FXDeclareBoolOption[2]{%
+  \DeclareOptionX[fx]<#1>{#2}[true]{\XKV@setbool{fx@#1@#2}{##1}}
+  \FXDeclareVoidOption{#1}{no#2}{\fx@layout@inline{false}}}
+
 %    \end{macrocode}
 % \subsection{List macros}
 % \begin{macro}{\listoffixmes}
@@ -761,8 +765,7 @@
 %    \end{macrocode}
 % Options that control which layouts are selected:
 %    \begin{macrocode}
-\DeclareOptionX[fx]<layout>{inline}[true]{\XKV@setbool{fx@layout@inline}{#1}}
-\FXDeclareVoidOption{layout}{noinline}{\fx@layout@inline{false}}
+\FXDeclareBoolOption{layout}{inline}
 \FXDeclareVoidOption{layout}{margin}{\fixme@setmargin}
 \FXDeclareVoidOption{layout}{nomargin}{\fixme@marginfalse}
 \FXDeclareVoidOption{layout}{marginclue}{\fixme@setmarginclue}
