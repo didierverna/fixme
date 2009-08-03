@@ -696,14 +696,14 @@
 \def\fixme@setmargin{%
   \iffixme@marginclue%
     \PackageWarning{FiXme}{%
-      Marginal notes requested; turning marginal clues off}%
+      Marginal notes requested; turning marginal clues off,}%
     \fixme@margincluefalse%
   \fi%
   \fixme@margintrue}
 \def\fixme@setmarginclue{%
   \iffixme@margin%
     \PackageWarning{FiXme}{%
-      Marginal clues requested; turning marginal notes off}%
+      Marginal clues requested; turning marginal notes off,}%
     \fixme@marginfalse%
   \fi%
   \fixme@margincluetrue}
@@ -1099,7 +1099,7 @@
   \let\@fxenvbegin\@fxenvbegin@final
   \let\@fxenvend\@fxenvend@final
   \let\listoffixmes\listoffixmes@final
-  }
+}
 
 \DeclareOptionX[fx]<ltx>{draft}{
   \@ifclassloaded{article}{
@@ -1169,9 +1169,9 @@
 
 \AtEndDocument{%
   \GenericWarning{%
-    (FiXme)\@spaces\@spaces\@spaces\@spaces
+    (FiXme)\@spaces\@spaces
   }{%
-    Package FiXme Summary: Number of notes: \thefixmenotecount,\MessageBreak%
+    FiXme Summary: Number of notes: \thefixmenotecount,\MessageBreak%
     Number of warnings: \thefixmewarningcount,\MessageBreak%
     Number of errors: \thefixmeerrorcount,\MessageBreak%
     Number of fatal errors: \thefixmefatalcount,\MessageBreak%
