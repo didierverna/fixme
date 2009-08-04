@@ -729,7 +729,6 @@
 %    \begin{macrocode}
 \newif\iffixme@margin
 \newif\iffixme@marginclue
-\newif\iffixme@index
 
 %    \end{macrocode}
 % Setters for these booleans (some might require special treatment):
@@ -751,7 +750,7 @@
   \fixme@margincluetrue}
 \def\fixme@setfootnote{\fx@layout@footnote{true}}
 \def\fixme@setuser{\fx@layout@user{true}}
-\let\fixme@setindex\fixme@indextrue
+\def\fixme@setindex{\fx@layout@index{true}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixme@text}
@@ -775,8 +774,7 @@
 \FXDeclareVoidOption{layout}{nomarginclue}{\fixme@margincluefalse}
 \fx@declarebooloptkey{layout}{footnote}
 \fx@declarebooloptkey{layout}{user}
-\FXDeclareVoidOption{layout}{index}{\fixme@setindex}
-\FXDeclareVoidOption{layout}{noindex}{\fixme@indexfalse}
+\fx@declarebooloptkey{layout}{index}
 
 %    \end{macrocode}
 % The following options are here for backward compatibility, but are not used
@@ -861,7 +859,7 @@
 \newcommand*\fixmenoteindexname{}
 \def\fixme@note@draft#1{%
   \fixme@text{\fixmenoteprefix}{#1}%
-  \iffixme@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
+  \iffx@layout@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
   \iffixme@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
 \def\fixme@note@final#1{%
@@ -883,7 +881,9 @@
 \newcommand*\fixmewarningindexname{}
 \def\fixme@warning@draft#1{%
   \fixme@text{\fixmewarningprefix}{#1}%
-  \iffixme@index\FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}\fi%
+  \iffx@layout@index%
+    \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
+  \fi%
   \iffixme@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
 \def\fixme@warning@final#1{%
@@ -905,7 +905,7 @@
 \newcommand*\fixmeerrorindexname{}
 \def\fixme@error@draft#1{%
   \fixme@text{\fixmeerrorprefix}{#1}%
-  \iffixme@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
+  \iffx@layout@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
   \iffixme@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 \def\fixme@error@final#1{%
@@ -928,8 +928,9 @@
   \iffixme@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
-  \iffixme@index\FiXmeIndex{%
-    \fixmefatalindexname\thefixmefatalcount: #1}\fi%
+  \iffx@layout@index%
+    \FiXmeIndex{\fixmefatalindexname\thefixmefatalcount: #1}%
+  \fi%
   \iffixme@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmefatalprefix: #1}}
 \def\fixme@fatal@final#1{%
@@ -964,7 +965,7 @@
   \fixme@margincluefalse%
   \fx@layout@footnote{false}%
   \fx@layout@user{false}%
-  \fixme@indexfalse%
+  \fx@layout@index{false}%
   \@for\fixme@option:=#2\do{%
     \expandafter\ifx\csname fixme@\fixme@option true\endcsname\relax
       \PackageError{FiXme}{Unknown layout option `\fixme@option'}{%
@@ -1001,12 +1002,12 @@
 \def\@fxenvbegin@draft#1#2{%
   \FXEnvBegin
   \edef\fixme@args{inline%
-    \iffixme@index,index\fi%
+    \iffx@layout@index,index\fi%
     \iffixme@marginclue,marginclue\fi}%
   \csname#1\endcsname[\fixme@args]{#2}}
 \def\@fxenvbegin@final#1#2{
   \edef\fixme@args{inline%
-    \iffixme@index,index\fi%
+    \iffx@layout@index,index\fi%
     \iffixme@marginclue,marginclue\fi}%
   \csname#1\endcsname[\fixme@args]{#2}
   \comment
