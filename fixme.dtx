@@ -727,25 +727,25 @@
 %    \end{macrocode}
 % Booleans that control which layouts are selected:
 %    \begin{macrocode}
-\newif\iffixme@margin
 \newif\iffixme@marginclue
 
 %    \end{macrocode}
 % Setters for these booleans (some might require special treatment):
 %    \begin{macrocode}
-\def\fixme@setinline{\fx@layout@inline{true}}
-\def\fixme@setmargin{%
-  \iffixme@marginclue%
+\fx@declarebooloptkey{layout}{margin}
+\def\fx@layout@margin#1{%
+  \XKV@setbool{fx@layout@margin}{#1}
+  \ifthenelse{\equal{#1}{true}\and\boolean{fixme@marginclue}}{%
     \PackageWarning{FiXme}{%
       Marginal notes requested; turning marginal clues off,}%
-    \fixme@margincluefalse%
-  \fi%
-  \fixme@margintrue}
+    \fixme@margincluefalse}}
+\def\fixme@setmargin{\fx@layout@margin{true}}
+\def\fixme@setinline{\fx@layout@inline{true}}
 \def\fixme@setmarginclue{%
-  \iffixme@margin%
+  \iffx@layout@margin%
     \PackageWarning{FiXme}{%
       Marginal clues requested; turning marginal notes off,}%
-    \fixme@marginfalse%
+    \fx@layout@margin{false}%
   \fi%
   \fixme@margincluetrue}
 \def\fixme@setfootnote{\fx@layout@footnote{true}}
@@ -759,7 +759,7 @@
 %    \begin{macrocode}
 \def\fixme@text#1#2{%
   \iffx@layout@inline\FXInline{#1}{#2}\fi%
-  \iffixme@margin\FXMargin{#1}{#2}\fi%
+  \iffx@layout@margin\FXMargin{#1}{#2}\fi%
   \iffixme@marginclue\FXMarginClue{#1}\fi%
   \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffx@layout@user\FXUser{#1}{#2}\fi}
@@ -768,8 +768,6 @@
 % Options that control which layouts are selected:
 %    \begin{macrocode}
 \fx@declarebooloptkey{layout}{inline}
-\FXDeclareVoidOption{layout}{margin}{\fixme@setmargin}
-\FXDeclareVoidOption{layout}{nomargin}{\fixme@marginfalse}
 \FXDeclareVoidOption{layout}{marginclue}{\fixme@setmarginclue}
 \FXDeclareVoidOption{layout}{nomarginclue}{\fixme@margincluefalse}
 \fx@declarebooloptkey{layout}{footnote}
@@ -924,7 +922,7 @@
 \newcommand*\fixmefatalindexname{}
 \def\fixme@fatal@draft#1{%
   \iffx@layout@inline\FiXmeInline{#1}\fi%
-  \iffixme@margin\FiXmeMargin{#1}\fi%
+  \iffx@layout@margin\FiXmeMargin{#1}\fi%
   \iffixme@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
@@ -961,7 +959,7 @@
 \def\@fixme#1[#2]#3{%
   \bgroup%
   \fx@layout@inline{false}%
-  \fixme@marginfalse%
+  \fx@layout@margin{false}%
   \fixme@margincluefalse%
   \fx@layout@footnote{false}%
   \fx@layout@user{false}%
