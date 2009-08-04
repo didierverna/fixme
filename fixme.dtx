@@ -729,7 +729,6 @@
 %    \begin{macrocode}
 \newif\iffixme@margin
 \newif\iffixme@marginclue
-\newif\iffixme@footnote
 \newif\iffixme@user
 \newif\iffixme@index
 
@@ -751,7 +750,7 @@
     \fixme@marginfalse%
   \fi%
   \fixme@margincluetrue}
-\let\fixme@setfootnote\fixme@footnotetrue
+\def\fixme@setfootnote{\fx@layout@footnote{true}}
 \let\fixme@setuser\fixme@usertrue
 \let\fixme@setindex\fixme@indextrue
 
@@ -764,7 +763,7 @@
   \iffx@layout@inline\FXInline{#1}{#2}\fi%
   \iffixme@margin\FXMargin{#1}{#2}\fi%
   \iffixme@marginclue\FXMarginClue{#1}\fi%
-  \iffixme@footnote\FXFootnote{#1}{#2}\fi%
+  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffixme@user\FXUser{#1}{#2}\fi}
 
 %    \end{macrocode}
@@ -775,8 +774,7 @@
 \FXDeclareVoidOption{layout}{nomargin}{\fixme@marginfalse}
 \FXDeclareVoidOption{layout}{marginclue}{\fixme@setmarginclue}
 \FXDeclareVoidOption{layout}{nomarginclue}{\fixme@margincluefalse}
-\FXDeclareVoidOption{layout}{footnote}{\fixme@setfootnote}
-\FXDeclareVoidOption{layout}{nofootnote}{\fixme@footnotefalse}
+\fx@declarebooloptkey{layout}{footnote}
 \FXDeclareVoidOption{layout}{user}{\fixme@setuser}
 \FXDeclareVoidOption{layout}{nouser}{\fixme@userfalse}
 \FXDeclareVoidOption{layout}{index}{\fixme@setindex}
@@ -930,7 +928,7 @@
   \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffixme@margin\FiXmeMargin{#1}\fi%
   \iffixme@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
-  \iffixme@footnote\FiXmeFootnote{#1}\fi%
+  \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffixme@user\FiXmeUser{#1}\fi%
   \iffixme@index\FiXmeIndex{%
     \fixmefatalindexname\thefixmefatalcount: #1}\fi%
@@ -966,7 +964,7 @@
   \fx@layout@inline{false}%
   \fixme@marginfalse%
   \fixme@margincluefalse%
-  \fixme@footnotefalse%
+  \fx@layout@footnote{false}%
   \fixme@userfalse%
   \fixme@indexfalse%
   \@for\fixme@option:=#2\do{%
