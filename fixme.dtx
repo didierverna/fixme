@@ -476,9 +476,15 @@
   \DeclareOptionX[fx]<#1>{#2}[]{%
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
 
-\newcommand\FXDeclareBoolOption[2]{%
+%    \end{macrocode}
+%    There is no simple way to create a boolean option in |xkeyval|. The macro
+%    below creates one that can serve as a key in macros as well. FIXME:
+%    explanation.
+%    \begin{macrocode}
+\newcommand\fx@declarebooloptkey[2]{%
+  \define@boolkey[fx]{#1}{#2}[true]
   \DeclareOptionX[fx]<#1>{#2}[true]{\XKV@setbool{fx@#1@#2}{##1}}
-  \FXDeclareVoidOption{#1}{no#2}{\fx@layout@inline{false}}}
+  \FXDeclareVoidOption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
 % \subsection{List macros}
@@ -721,7 +727,6 @@
 %    \end{macrocode}
 % Booleans that control which layouts are selected:
 %    \begin{macrocode}
-\define@boolkey[fx]{layout}{inline}[true]
 \newif\iffixme@margin
 \newif\iffixme@marginclue
 \newif\iffixme@footnote
@@ -765,7 +770,7 @@
 %    \end{macrocode}
 % Options that control which layouts are selected:
 %    \begin{macrocode}
-\FXDeclareBoolOption{layout}{inline}
+\fx@declarebooloptkey{layout}{inline}
 \FXDeclareVoidOption{layout}{margin}{\fixme@setmargin}
 \FXDeclareVoidOption{layout}{nomargin}{\fixme@marginfalse}
 \FXDeclareVoidOption{layout}{marginclue}{\fixme@setmarginclue}
