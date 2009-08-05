@@ -808,15 +808,9 @@
     FiXme: `#1'}}
 
 %    \end{macrocode}
-% Boolean that control wether to stay silent or not:
+%% Option that controls whether to be silent or not:
 %    \begin{macrocode}
-\newif\iffixme@silent
-
-%    \end{macrocode}
-%% Options that control whether to be silent or not:
-%    \begin{macrocode}
-\FXDeclareVoidOption{log}{silent}{\fixme@silenttrue}
-\FXDeclareVoidOption{log}{nosilent}{\fixme@silentfalse}
+\fx@declarebooloptkey{log}{silent}
 
 %    \end{macrocode}
 %
@@ -852,10 +846,10 @@
 \def\fixme@note@draft#1{%
   \fixme@text{\fixmenoteprefix}{#1}%
   \iffx@layout@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
-  \iffixme@silent\else\FXNote{#1}\fi%
+  \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
 \def\fixme@note@final#1{%
-  \iffixme@silent\else\FXNote{#1}\fi%
+  \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
 
 %    \end{macrocode}
@@ -876,10 +870,10 @@
   \iffx@layout@index%
     \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
   \fi%
-  \iffixme@silent\else\FXWarning{#1}\fi%
+  \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
 \def\fixme@warning@final#1{%
-  \iffixme@silent\else\FXWarning{#1}\fi%
+  \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
 
 %    \end{macrocode}
@@ -898,10 +892,10 @@
 \def\fixme@error@draft#1{%
   \fixme@text{\fixmeerrorprefix}{#1}%
   \iffx@layout@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
-  \iffixme@silent\else\FXError{#1}\fi%
+  \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 \def\fixme@error@final#1{%
-  \iffixme@silent\else\FXError{#1}\fi%
+  \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 
 %    \end{macrocode}
@@ -923,7 +917,7 @@
   \iffx@layout@index%
     \FiXmeIndex{\fixmefatalindexname\thefixmefatalcount: #1}%
   \fi%
-  \iffixme@silent\else\FXFatal{#1}\fi%
+  \iffx@log@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmefatalprefix: #1}}
 \def\fixme@fatal@final#1{%
   \PackageError{FiXme}{`#1' fixme left in final version}{%
