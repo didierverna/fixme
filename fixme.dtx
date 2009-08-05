@@ -427,14 +427,15 @@
 %   \vfill\hfill\small \packagecopyright{}.}
 %
 % \section{The Code}
-% \begin{macro}{\fixmelogo}
-%   Here's the preamble:
-% \end{macro}
+% \subsection{Preamble}~
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{fixme}[2009/08/05 v4.0
 			Insert fixme notes in your documents]
 
+%    \end{macrocode}
+% \DescribeMacro{\fixmelogo}
+%    \begin{macrocode}
 \newcommand*\fixmelogo{\textsf{FiXme}}
 
 \RequirePackage{ifthen}
@@ -461,11 +462,17 @@
 %%  \fi
 %%}
 
+%    \end{macrocode}
+% A ``legacy'' option is a package option that is not used anymore.
+%    \begin{macrocode}
 \newcommand\FXDeclareLegacyOption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \PackageWarning{FiXme}{%
       `#1' is a legacy option that has no effect anymore,}}}
 
+%    \end{macrocode}
+% A ``void'' option is a package option that doesn't expect any argument.
+%    \begin{macrocode}
 \newcommand\@fxvoidoptionerror[2]{%
   \PackageError{FiXme}{misuse of option `#1'}{%
     You have given the option `#1' the argument `#2' but it takes
@@ -477,9 +484,14 @@
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
 
 %    \end{macrocode}
-%    There is no simple way to create a boolean option in |xkeyval|. The macro
-%    below creates one that can serve as a key in macros as well. FIXME:
-%    explanation.
+% A ``boolean option-key'' is a boolean package option and macro key argument
+% as well. For each |arg| option-key, there is a |noarg| void option-key
+% counterpart.\par
+% |xkeyval| doesn't provide any simple way to create boolean options. The
+% somewhat gross macro below does the job. First, we create the key. This
+% provides us with the \cs{if} conditionals. Then, we redefine the same key,
+% but as an option this time, and we set the function to the |xkeyval| boolean
+% assignation. Finally, we provide the negative couterpart void option.
 %    \begin{macrocode}
 \newcommand\fx@declarebooloptkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]
