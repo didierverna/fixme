@@ -946,24 +946,7 @@
   \csname fixme@#1\endcsname{#2}}
 \def\@fixme#1[#2]#3{%
   \bgroup%
-  \fx@layout@inline{false}%
-  \fx@layout@margin{false}%
-  \fx@layout@marginclue{false}%
-  \fx@layout@footnote{false}%
-  \fx@layout@user{false}%
-  \fx@layout@index{false}%
-  \@for\fixme@option:=#2\do{%
-    \expandafter\ifx\csname fixme@\fixme@option true\endcsname\relax
-      \PackageError{FiXme}{Unknown layout option `\fixme@option'}{%
-	You have given an invalid option to \string\fixme, or an \string\fx %
-	command.\MessageBreak
-	Valid options are `inline', `margin', `marginclue', `footnote', %
-	`user',\MessageBreak
-	and `index'.\MessageBreak
-	Type X to quit, fix your document, and rerun LaTeX.}%
-      \else%
-      \csname fixme@set\fixme@option\endcsname%
-    \fi}%
+  \setkeys[fx]{layout,log}{#2}%
   \@@fixme{#1}{#3}%
   \egroup}
 \DeclareRobustCommand\fxnote{\@ifnextchar[%]
