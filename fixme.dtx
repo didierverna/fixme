@@ -442,7 +442,7 @@
 \RequirePackage{verbatim}
 
 %    \end{macrocode}
-% The |xkeyval| package and some convenience wrappers:
+% |xkeyval| and some convenience wrappers:
 %    \begin{macrocode}
 \RequirePackage{xkeyval}
 
@@ -552,7 +552,7 @@
 % \subsubsection{Standard classes}
 % \begin{macro}{\listoffixmes@pretoc@article}
 %   \begin{macro}{\listoffixmes@posttoc@article}
-%     Let's start with the article version:
+%     |article| version:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -565,7 +565,7 @@
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@report}
 %   \begin{macro}{\listoffixmes@posttoc@report}
-%     Here's the report version:
+%     |report| version:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -583,7 +583,7 @@
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@book}
 %   \begin{macro}{\listoffixmes@posttoc@book}
-%     And here's the book version:
+%     |book| version:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -611,7 +611,7 @@
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrartcl}
 %   \begin{macro}{\listoffixmes@posttoc@scrartcl}
-%     Let's start with the scrartcl version:
+%     |scrartcl| version:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -627,7 +627,7 @@
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrreprt}
 %   \begin{macro}{\listoffixmes@posttoc@scrreprt}
-%     Here's the scrreprt version:
+%     |scrreprt| version:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -649,7 +649,7 @@
 %    \end{macrocode}
 % \begin{macro}{\listoffixmes@pretoc@scrbook}
 %   \begin{macro}{\listoffixmes@posttoc@scrbook}
-%     And here's the scrbook version:
+%     |scrbook| version:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -675,7 +675,7 @@
 %   \begin{macro}{\FXMargin}
 %     \begin{macro}{\FXMarginCLue}
 %       \begin{macro}{\FXFootnote}
-%         The macros to implement different layouts for the fixme notes:
+%         Layout generation:
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -695,7 +695,7 @@
 %    \end{macrocode}
 % \begin{macro}{\fixmeindexname}
 %   \begin{macro}{\FXIndex}
-%     The macros for index generation:
+%     Index generation:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -737,7 +737,10 @@
 \newcommand\FiXmeWarning[1]{}
 
 %    \end{macrocode}
-% Setters for these booleans (some might require special treatment):
+% Layout conditionals. As of version 4, these conditionals are implemented
+% as |xkeyval| keys, and are available both as package and macros options.
+% The |margin| and |marginclue| layouts are mutually exclusive, so we have to
+% redefine the |xkeyval| key macro to handle this.
 %    \begin{macrocode}
 \fx@declarebooloptkey{layout}{margin}
 \def\fx@layout@margin#1{%
@@ -746,7 +749,6 @@
     \PackageWarning{FiXme}{%
       Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}}
-\def\fixme@setmargin{\fx@layout@margin{true}}
 \fx@declarebooloptkey{layout}{marginclue}
 \def\fx@layout@marginclue#1{%
   \XKV@setbool{fx@layout@marginclue}{#1}
@@ -754,27 +756,7 @@
     \PackageWarning{FiXme}{%
       Marginal clues requested; turning marginal notes off,}%
     \fx@layout@margin{false}}}
-\def\fixme@setmarginclue{\fx@layout@marginclue{true}}
-\def\fixme@setinline{\fx@layout@inline{true}}
-\def\fixme@setfootnote{\fx@layout@footnote{true}}
-\def\fixme@setuser{\fx@layout@user{true}}
-\def\fixme@setindex{\fx@layout@index{true}}
 
-%    \end{macrocode}
-% \begin{macro}{\fixme@text}
-%   This macro implements the common (textual) part of all notes:
-% \end{macro}
-%    \begin{macrocode}
-\def\fixme@text#1#2{%
-  \iffx@layout@inline\FXInline{#1}{#2}\fi%
-  \iffx@layout@margin\FXMargin{#1}{#2}\fi%
-  \iffx@layout@marginclue\FXMarginClue{#1}\fi%
-  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
-  \iffx@layout@user\FXUser{#1}{#2}\fi}
-
-%    \end{macrocode}
-% Options that control which layouts are selected:
-%    \begin{macrocode}
 \fx@declarebooloptkey{layout}{inline}
 \fx@declarebooloptkey{layout}{footnote}
 \fx@declarebooloptkey{layout}{user}
@@ -790,13 +772,25 @@
 \FXDeclareLegacyOption{nowarning}
 
 %    \end{macrocode}
+% \begin{macro}{\fixme@text}
+%   This macro implements the common (textual) part of all notes:
+% \end{macro}
+%    \begin{macrocode}
+\def\fixme@text#1#2{%
+  \iffx@layout@inline\FXInline{#1}{#2}\fi%
+  \iffx@layout@margin\FXMargin{#1}{#2}\fi%
+  \iffx@layout@marginclue\FXMarginClue{#1}\fi%
+  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
+  \iffx@layout@user\FXUser{#1}{#2}\fi}
+
+%    \end{macrocode}
 %
 % \subsection{Logging macros}
 % \begin{macro}{\FXNote}
 %   \begin{macro}{\FXWarning}
 %     \begin{macro}{\FXerror}
 %       \begin{macro}{\FXFatal}
-%         The macros forcontrolling logging (log file and terminal output):
+%         Logging includes both log file and terminal output.
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -820,14 +814,15 @@
     FiXme: `#1'}}
 
 %    \end{macrocode}
-%% Option that controls whether to be silent or not:
+% Logging conditional.
 %    \begin{macrocode}
 \fx@declarebooloptkey{log}{silent}
 
 %    \end{macrocode}
 %
 % \subsection{\fixme{} notes}
-% Here are the counters:
+% Notes counters. |fixmecount| maintains the total of all notes, regardless of
+% their level.
 % \DescribeMacro{\thefixmecount}
 % \DescribeMacro{\thefixmenotecount}
 % \DescribeMacro{\thefixmewarningcount}
