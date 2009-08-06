@@ -308,7 +308,7 @@
 % |\newcommand{\FXUser}[2]{|\meta{fancy fruit salad layout job}|}|\\ The
 % arguments are the prefix, and the note itself, in that order.\par
 % Note that the \texttt{user} option can also be used in the optional argument
-% of the notes insertion commands.
+% of the note insertion commands.
 %
 % \subsection{Internationalization}
 % \DescribeEnv{english}
@@ -939,7 +939,7 @@
 %       \begin{macro}{\fxwarning}
 %         \begin{macro}{\fxerror}
 %           \begin{macro}{\fixme}
-%             Notes insertion macros. The different versions are
+%             Note insertion macros. The different versions are
 %             |\let| to the draft of final flavors defined above by the
 %             \texttt{draft} or \texttt{final} options.
 %           \end{macro}
@@ -970,9 +970,9 @@
 %    \end{macrocode}
 %
 % \subsection{\fixme{} environments}
-% The \fixme{} environments use the corresponding macro version to handle
-% inline (and possibly index) layout, and to perform logging. In final mode,
-% verbatim's \texttt{comment} environment is used to suppress output.
+% \fixme{} environments use the corresponding macro version to handle
+% inline (and possibly index) layout, and to perform logging. In |final| mode,
+% |verbatim|'s \texttt{comment} environment is used to suppress output.
 %    \begin{macrocode}
 \newcommand\FXEnvBegin{\begin{quotation}}
 \newcommand\FXEnvEnd{\end{quotation}}
@@ -1165,8 +1165,8 @@
 % because nothing prevents somebody to write a new class on top of these ones
 % and authorize |\marginpar| back again. Normally these classes issue an error
 % if |\marginpar| is used. However, the 2.3 / June 2007 versions are buggy and
-% the error actually triggers a stack overflow in \LaTeX\ldots Patch on its
-% way. Oh boy, these classes are a mess.
+% the error actually triggers a stack overflow in \LaTeX\ldots (patch
+% submitted). Oh boy, these classes are a mess.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<layout,log,lang,ltx>{final,english,nosilent,margin}
 \ProcessOptionsX*[fx]<legacy,layout,log,lang,ltx>
