@@ -463,7 +463,7 @@
 %%}
 
 %    \end{macrocode}
-% A ``legacy'' option is a package option that is not used anymore.
+% A ``legacy option'' is a package option that is not used anymore.
 %    \begin{macrocode}
 \newcommand\FXDeclareLegacyOption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
@@ -471,7 +471,7 @@
       `#1' is a legacy option that has no effect anymore,}}}
 
 %    \end{macrocode}
-% A ``void'' option is a package option that doesn't expect any argument.
+% A ``void option'' is a package option that doesn't expect any argument.
 %    \begin{macrocode}
 \newcommand\@fxvoidoptionerror[2]{%
   \PackageError{FiXme}{misuse of option `#1'}{%
@@ -505,8 +505,8 @@
 %     \begin{macro}{\listoffixmes@draft}
 %       |\listoffixmes| is empty by default. The |final| or |draft| options
 %       will provide the proper definition. Lists are output in a document
-%       class dependant fashion. Classes currently recognized are article,
-%       report, book and their koma-script replacements.
+%       class dependant fashion. Classes currently recognized are |article|,
+%       |report|, |book| and their koma-script replacements.
 %
 %       In order to prevent the List of Fixme's heading from being generated
 %       when there are no fixmes, a test on the existence of the lox file is
