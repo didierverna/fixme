@@ -126,3 +126,10 @@ e.g.  fixmenoteprefix -> fxnoteprefix
 
 * Provide optional layout argument to environments
 restricted to marginclue and index though
+
+* fixme@text -> @fxlayout ?
+
+* Revoir si le hack de FiXmeUser (atbegindocument) est vraiment utile
+
+* The index layout should be handled by fixme@text, but IIRC, I had macro
+expansion problems when trying to do so.

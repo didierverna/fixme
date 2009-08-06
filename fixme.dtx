@@ -470,6 +470,13 @@
     \PackageWarning{FiXme}{%
       `#1' is a legacy option that has no effect anymore,}}}
 
+% A ``legacy boolean option'' is a legacy |arg| option and its |noarg|
+% counterpart.
+%    \begin{macrocode}
+\newcommand\FXDeclareLegacyBoolOption[1]{%
+  \FXDeclareLegacyOption{#1}
+  \FXDeclareLegacyOption{no#1}}
+
 %    \end{macrocode}
 % A ``void option'' is a package option that doesn't expect any argument.
 %    \begin{macrocode}
@@ -503,11 +510,9 @@
 % \begin{macro}{\listoffixmes}
 %   \begin{macro}{\listoffixmes@final}
 %     \begin{macro}{\listoffixmes@draft}
-%       |\listoffixmes| is empty by default. The |final| or |draft| options
-%       will provide the proper definition. Lists are output in a document
-%       class dependant fashion. Classes currently recognized are |article|,
-%       |report|, |book| and their koma-script replacements.
-%
+%       Lists are output in a document class dependant fashion. Classes
+%       currently recognized are |article|, |report|, |book| and their
+%       koma-script replacements.\par
 %       In order to prevent the List of Fixme's heading from being generated
 %       when there are no fixmes, a test on the existence of the lox file is
 %       performed. There's a slight bug left however: after removing the last
@@ -670,11 +675,11 @@
 
 %    \end{macrocode}
 %
-% \subsection{Layout macros}
-% \subsubsection{Layout generation}
-% \begin{macro}{\FXInline}
-%   \begin{macro}{\FXMargin}
-%     \begin{macro}{\FXMarginCLue}
+% \subsection{Layout}
+% \subsubsection{Layout macros}
+% \begin{macro}{\FXMargin}
+%   \begin{macro}{\FXMarginCLue}
+%     \begin{macro}{\FXInline}
 %       \begin{macro}{\FXFootnote}
 %         Textual output:
 %       \end{macro}
@@ -682,18 +687,21 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FXInline[2]{%
-  \textbf{#1}: \emph{#2}}
 \newcommand\FXMargin[2]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
     \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
 \newcommand\FXMarginClue[1]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}~!]{%
     \footnotesize\raggedright\textbf{#1}~!}}
+\newcommand\FXInline[2]{%
+  \textbf{#1}: \emph{#2}}
 \newcommand\FXFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
 %    \end{macrocode}
+% Note that \cs{FXUser} is not defined here. Requesting the |user| layout
+% without defining this command would then produce an error.
+%
 % \begin{macro}{\fixmeindexname}
 %   \begin{macro}{\FXIndex}
 %     Index output:
@@ -705,41 +713,24 @@
   \index{***@\fixmeindexname:!#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\fixmefatalprefix}
-% \begin{macro}{\FiXmeInline}
-%   \begin{macro}{\FiXmeMargin}
-%     \begin{macro}{\FiXmeFootnote}
-%       \begin{macro}{\FiXmeUser}
-%         \begin{macro}{\FiXmeIndex}
-%           \begin{macro}{\FiXmeInfo}
-%             \begin{macro}{\FiXmeWarning}
-%               Apart from |\fixmefatalprefix|, the following macros are kept
-%               only to preserve backward compatibility. They are used only by
-%               critical notes and are made to call the new versions by
-%               default:
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
+% \begin{macro}{\FiXmeInfo}
+%   \begin{macro}{\FiXmeWarning}
+%     Macros unused since version 2.2, but kept here anyway to avoid breaking
+%     compilation of older documents.
 %   \end{macro}
 % \end{macro}
-% \end{macro}
 %    \begin{macrocode}
-\newcommand*\fixmefatalprefix{}
-\newcommand\FiXmeInline[1]{\FXInline{\fixmefatalprefix}{#1}}
-\newcommand\FiXmeMargin[1]{\FXMargin{\fixmefatalprefix}{#1}}
-\newcommand\FiXmeFootnote[1]{\FXFootnote{\fixmefatalprefix}{#1}}
-\newcommand\FiXmeUser[1]{}
-\let\FiXmeUser\empty
-
-\newcommand\FiXmeIndex[1]{\FXIndex{#1}}
-\newcommand\FiXmeInfo[1]{}
-\newcommand\FiXmeWarning[1]{}
+\newcommand\FiXmeInfo[1]{%
+  \PackageWarning{FiXme}{%
+    \string\FiXmeInfo\space is a legacy command that has no effect anymore,}}
+\newcommand\FiXmeWarning[1]{%
+  \PackageWarning{FiXme}{%
+    \string\FiXmeWarning\space is a legacy command that has no effect
+    anymore,}}
 
 %    \end{macrocode}
-% \subsubsection{Layout conditionals}
-% As of version 4, these conditionals are implemented as |xkeyval| keys, and
+% \subsubsection{Layout options}
+% As of version 4, these options are implemented as |xkeyval| keys, and
 % are available both as package and macros options. The |margin| and
 % |marginclue| layouts are mutually exclusive, so we have to redefine the
 % |xkeyval| key macro to handle this.
@@ -751,6 +742,7 @@
     \PackageWarning{FiXme}{%
       Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}}
+
 \fx@declarebooloptkey{layout}{marginclue}
 \def\fx@layout@marginclue#1{%
   \XKV@setbool{fx@layout@marginclue}{#1}
@@ -765,30 +757,9 @@
 \fx@declarebooloptkey{layout}{index}
 
 %    \end{macrocode}
-% The following options are here for backward compatibility, but are not used
-% anymore:
-%    \begin{macrocode}
-\FXDeclareLegacyOption{info}
-\FXDeclareLegacyOption{noinfo}
-\FXDeclareLegacyOption{warning}
-\FXDeclareLegacyOption{nowarning}
-
-%    \end{macrocode}
-% \subsubsection{Textual output}
-% \begin{macro}{\fixme@text}
-%   This macro implements the common (textual) part of all notes:
-% \end{macro}
-%    \begin{macrocode}
-\def\fixme@text#1#2{%
-  \iffx@layout@inline\FXInline{#1}{#2}\fi%
-  \iffx@layout@margin\FXMargin{#1}{#2}\fi%
-  \iffx@layout@marginclue\FXMarginClue{#1}\fi%
-  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
-  \iffx@layout@user\FXUser{#1}{#2}\fi}
-
-%    \end{macrocode}
 %
-% \subsection{Logging macros}
+% \subsection{Logging}
+% \subsubsection{Logging macros}
 % \begin{macro}{\FXNote}
 %   \begin{macro}{\FXWarning}
 %     \begin{macro}{\FXerror}
@@ -817,15 +788,20 @@
     FiXme: `#1'}}
 
 %    \end{macrocode}
-% Logging conditional.
+% \subsubsection{Logging options}
 %    \begin{macrocode}
 \fx@declarebooloptkey{log}{silent}
 
 %    \end{macrocode}
+% The following options are here for backward compatibility, but are not used
+% anymore:
+%    \begin{macrocode}
+\FXDeclareLegacyBoolOption{info}
+\FXDeclareLegacyBoolOption{warning}
+
+%    \end{macrocode}
 %
 % \subsection{\fixme{} notes}
-% Each note comes in two flavors: |final| or |draft|. The proper definition
-% will be selected by the |draft| or |final| option.\par
 % \subsubsection{Note counters}
 % |fixmecount| maintains the total of all notes, regardless of their level.
 % \DescribeMacro{\thefixmecount}
@@ -841,6 +817,20 @@
 \newcounter{fixmefatalcount}
 
 %    \end{macrocode}
+% \subsubsection{Generic layout dispatch}
+% \begin{macro}{\fixme@text}
+%   This macro dispatches all active layouts, index excepted.
+% \end{macro}
+%    \begin{macrocode}
+\def\fixme@text#1#2{%
+  \iffx@layout@margin\FXMargin{#1}{#2}\fi%
+  \iffx@layout@marginclue\FXMarginClue{#1}\fi%
+  \iffx@layout@inline\FXInline{#1}{#2}\fi%
+  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
+  \iffx@layout@user\FXUser{#1}{#2}\fi}
+
+%    \end{macrocode}
+% \subsubsection{Specific layout dispatch}
 % \begin{macro}{\fixmenoteprefix}
 %   \begin{macro}{\fixmenoteindexname}
 %     \begin{macro}{\fixme@note@draft}
@@ -909,19 +899,39 @@
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 
 %    \end{macrocode}
-% \begin{macro}{\fixmefatalindexname}
-%   \begin{macro}{\fixme@fatal@draft}
-%     \begin{macro}{\fixme@fatal@final}
-%       fixmes:
+% \begin{macro}{\fixmefatalprefix}
+%   \begin{macro}{\fixmefatalindexname}
+%     \begin{macro}{\fixme@fatal@draft}
+%       \begin{macro}{\fixme@fatal@final}
+%         fixmes:
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
+\newcommand*\fixmefatalprefix{}
 \newcommand*\fixmefatalindexname{}
+
+%    \end{macrocode}
+% The |\FiXme*| macros are kept only to preserve backward compatibility. They
+% are used by fatal notes only and are made to call the new versions by
+% default:
+%    \begin{macrocode}
+\newcommand\FiXmeInline[1]{\FXInline{\fixmefatalprefix}{#1}}
+\newcommand\FiXmeMargin[1]{\FXMargin{\fixmefatalprefix}{#1}}
+\newcommand\FiXmeFootnote[1]{\FXFootnote{\fixmefatalprefix}{#1}}
+\newcommand\FiXmeUser[1]{}
+\let\FiXmeUser\empty
+\newcommand\FiXmeIndex[1]{\FXIndex{#1}}
+
+%    \end{macrocode}
+% And because of that, we can't define \cs{fixme@fatal@draft} in terms of
+% \cs{fixme@text}.
+%    \begin{macrocode}
 \def\fixme@fatal@draft#1{%
-  \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
   \iffx@layout@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
+  \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
   \iffx@layout@index%
