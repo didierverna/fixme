@@ -427,7 +427,7 @@
 %   \vfill\hfill\small \packagecopyright{}.}
 %
 % \section{The Code}
-% \subsection{Preamble}~
+% \subsection{Preamble}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{fixme}[2009/08/06 v4.0
@@ -470,6 +470,7 @@
     \PackageWarning{FiXme}{%
       `#1' is a legacy option that has no effect anymore,}}}
 
+%    \end{macrocode}
 % A ``legacy boolean option'' is a legacy |arg| option and its |noarg|
 % counterpart.
 %    \begin{macrocode}
@@ -830,7 +831,7 @@
   \iffx@layout@user\FXUser{#1}{#2}\fi}
 
 %    \end{macrocode}
-% \subsubsection{Specific layout dispatch}
+% \subsubsection{\texttt{final} and \texttt{draft} versions}
 % \begin{macro}{\fixmenoteprefix}
 %   \begin{macro}{\fixmenoteindexname}
 %     \begin{macro}{\fixme@note@draft}
@@ -946,15 +947,13 @@
     Type X to quit, fix your document, and rerun LaTeX.}}
 
 %    \end{macrocode}
+% \subsubsection{Actual notes}
 % \begin{macro}{\@@fixme}
 %   \begin{macro}{\@fixme}
 %     \begin{macro}{\fxnote}
 %       \begin{macro}{\fxwarning}
 %         \begin{macro}{\fxerror}
 %           \begin{macro}{\fixme}
-%             Note insertion macros. The different versions are
-%             |\let| to the draft of final flavors defined above by the
-%             \texttt{draft} or \texttt{final} options.
 %           \end{macro}
 %         \end{macro}
 %       \end{macro}
@@ -987,11 +986,14 @@
 % |inline|, |marginclue| and possibly |index| layout in |draft| mode, and to
 % perform logging. In |final| mode, |verbatim|'s \texttt{comment} environment
 % is used to suppress output.
-% \subsubsection{Generic environment implementation}
+% \subsubsection{Layout}
 %    \begin{macrocode}
 \newcommand\FXEnvBegin{\begin{quotation}}
 \newcommand\FXEnvEnd{\end{quotation}}
 
+%    \end{macrocode}
+% \subsubsection{\texttt{final} and \texttt{draft} versions}
+%    \begin{macrocode}
 \def\@fxenvbegin@draft#1#2{%
   \FXEnvBegin
   \edef\fixme@args{inline%
@@ -1011,7 +1013,7 @@
 
 %    \end{macrocode}
 %
-% \subsubsection{Actual environments implementation}
+% \subsubsection{Actual environments}
 %    \begin{macrocode}
 \newenvironment{anfxnote}[1][]{%
   \@fxenvbegin{fxnote}{#1}}{%
@@ -1028,7 +1030,7 @@
 
 %    \end{macrocode}
 %
-% \subsection{Language processing}
+% \subsection{Internationalization}
 %    \begin{macrocode}
 \FXDeclareVoidOption{lang}{english}{%
   \renewcommand*\fixmenoteprefix{\fixmelogo\nobreakspace Note}
@@ -1178,7 +1180,7 @@
 %    \end{macrocode}
 %
 % \subsection{Finale}
-% Put us in \texttt{english} and \texttt{final} mode, and enable the marginal
+% Put us in \texttt{english} and \texttt{final} mode, and enable marginal
 % notes. Note that as documented, marginal notes are incompatible with the ACM
 % SIG classes. Initially, I thought I would detect these classes and issue
 % an error if marginal layout (or clue) is active. However, I changed my mind,
