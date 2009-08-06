@@ -121,6 +121,8 @@ text, but doesn't show comments
 
 * Harmonize prefix for all interface levels
 e.g.  fixmenoteprefix -> fxnoteprefix
+      FXNote -> FXLogNote
+      etc.
 
 * Provide optional layout argument to environments
 restricted to marginclue and index though

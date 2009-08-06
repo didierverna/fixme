@@ -61,7 +61,7 @@
 %%   Right brace   \}     Tilde         \~}
 %
 % \newcommand\version{4.0}
-% \newcommand\releasedate{2009/08/05}
+% \newcommand\releasedate{2009/08/06}
 % \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001,
 %   2002, 2004, 2005, 2006, 2007, 2009 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
@@ -430,7 +430,7 @@
 % \subsection{Preamble}~
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fixme}[2009/08/05 v4.0
+\ProvidesPackage{fixme}[2009/08/06 v4.0
 			Insert fixme notes in your documents]
 
 %    \end{macrocode}
@@ -841,7 +841,7 @@
 %     \begin{macro}{\fixme@note@draft}
 %       \begin{macro}{\fixme@note@final}
 %         The different flavors of fixme notes. Proper definitions will be
-%         selected by the |draft| or |final| options. Let's start with the
+%         selected by the |draft| or |final| options.\par
 %         fxnotes:
 %       \end{macro}
 %     \end{macro}
@@ -864,7 +864,7 @@
 %   \begin{macro}{\fixmewarningindexname}
 %     \begin{macro}{\fixme@warning@draft}
 %       \begin{macro}{\fixme@warning@final}
-%         Here are the fxwarnings:
+%         fxwarnings:
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -888,7 +888,7 @@
 %   \begin{macro}{\fixmeerrorindexname}
 %     \begin{macro}{\fixme@error@draft}
 %       \begin{macro}{\fixme@error@final}
-%         Here are the fxerrors:
+%         fxerrors:
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -909,7 +909,7 @@
 % \begin{macro}{\fixmefatalindexname}
 %   \begin{macro}{\fixme@fatal@draft}
 %     \begin{macro}{\fixme@fatal@final}
-%       And here are the fixmes:
+%       fixmes:
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -938,7 +938,7 @@
 %     \begin{macro}{\fxwarning}
 %       \begin{macro}{\fxerror}
 %         \begin{macro}{\fixme}
-%           Here are the notes insertion macros. The different versions are
+%           Notes insertion macros. The different versions are
 %           |\let| to the draft of final flavors defined above by the
 %           \texttt{draft} or \texttt{final} options.
 %         \end{macro}
