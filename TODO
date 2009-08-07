@@ -130,5 +130,3 @@ e.g.  fixmenoteprefix -> fxnoteprefix
 
 * The index layout should be handled by fixme@text, but IIRC, I had macro
 expansion problems when trying to do so.
-
-* Replace ~ with \nobreak space ?
