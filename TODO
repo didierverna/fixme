@@ -130,3 +130,5 @@ e.g.  fixmenoteprefix -> fxnoteprefix
 
 * The index layout should be handled by fixme@text, but IIRC, I had macro
 expansion problems when trying to do so.
+
+* See if we can stick footnotes from environments to text before
