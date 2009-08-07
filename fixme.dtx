@@ -215,7 +215,7 @@
 % more layout options (\texttt{inline}, \texttt{margin}, \texttt{marginclue},
 % \texttt{footnote} and \texttt{index}) separated by commas. Remember that
 % local layouts \emph{override} the global ones; they don't add to it.\par
-% On what occasion would one want to modify the layout for a particular note~?
+% On what occasion would one want to modify the layout for a particular note?
 % Here is a typical situation: suppose you have a document in which \fixme{}
 % notes are typeset as margin paragraphs (this is the default). You would not
 % be able to put a note in a figure, because floats can't be nested in
@@ -692,8 +692,8 @@
   \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
     \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
 \newcommand\FXMarginClue[1]{%
-  \marginpar[\footnotesize\raggedleft\textbf{#1}~!]{%
-    \footnotesize\raggedright\textbf{#1}~!}}
+  \marginpar[\footnotesize\raggedleft\textbf{#1}!]{%
+    \footnotesize\raggedright\textbf{#1}!}}
 \newcommand\FXInline[2]{%
   \textbf{#1}: \emph{#2}}
 \newcommand\FXFootnote[2]{%
