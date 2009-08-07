@@ -824,10 +824,10 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\fixme@text#1#2{%
+  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffx@layout@margin\FXMargin{#1}{#2}\fi%
   \iffx@layout@marginclue\FXMarginClue{#1}\fi%
   \iffx@layout@inline\FXInline{#1}{#2}\fi%
-  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffx@layout@user\FXUser{#1}{#2}\fi}
 
 %    \end{macrocode}
@@ -930,10 +930,10 @@
 % \cs{fixme@text}.
 %    \begin{macrocode}
 \def\fixme@fatal@draft#1{%
+  \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
   \iffx@layout@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
   \iffx@layout@inline\FiXmeInline{#1}\fi%
-  \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
   \iffx@layout@index%
     \FiXmeIndex{\fixmefatalindexname\thefixmefatalcount: #1}%
