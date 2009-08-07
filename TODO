@@ -124,9 +124,6 @@ e.g.  fixmenoteprefix -> fxnoteprefix
       FXNote -> FXLogNote
       etc.
 
-* Provide optional layout argument to environments
-restricted to marginclue and index though
-
 * fixme@text -> @fxlayout ?
 
 * Revoir si le hack de FiXmeUser (atbegindocument) est vraiment utile
