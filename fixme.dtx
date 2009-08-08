@@ -507,6 +507,16 @@
   \FXDeclareVoidOption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
+% A ``cmd option-key'' is a command (in the |xkeyval| sense) package option
+% and macro key argument as well. Same comment as above for creating such
+% beasts.
+%    \begin{macrocode}
+\newcommand\fx@declarecmdoptkey[3][]{%
+  \define@cmdkey[fx]{#2}{#3}[#1]
+  \DeclareOptionX[fx]<#2>{#3}[#1]{%
+    \expandafter\def\csname fx@#2@#3@cmd\endcsname{##1}}}
+
+%    \end{macrocode}
 % \subsection{List macros}
 % \begin{macro}{\listoffixmes}
 %   \begin{macro}{\listoffixmes@final}
