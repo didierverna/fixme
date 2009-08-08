@@ -18,6 +18,14 @@ version 1999/06/01 or later.
 FiXme consists of the files listed in the file `README'.
 
 
+* Version 4.0
+=============
+** Support for key/value argument syntax in user interface
+** Automatically avoid margin layout when not in outer par mode
+suggested by Will Robertson.
+** Homogenize log and console messages
+** Heavy internals refactoring
+
 * Version 3.4
 =============
 ** \fixme, \fxerror, \fxwarning and \fxnote are now robust
