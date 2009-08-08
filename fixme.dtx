@@ -373,7 +373,11 @@
 %
 % \section{Changes}
 % \begin{itemize}
-% \item[v4.0] Homogenize the log and console messages.
+% \item[v4.0] Support for key/value argument syntax in user interface.\\
+%   Automatically avoid margin layout when not in outer par mode, suggested by
+%   Will Robertson.\\
+%   Homogenize the log and console messages.\\
+%   Heavy internals refactoring.
 % \item[v3.4] |\fixme|, |\fxerror|, |\fxwarning| and |\fxnote| are now robust,
 %   thanks to Will Robertson.\\
 %   Fix incompatibility with KOMA-Script classes version of |\@starttoc| when
@@ -831,12 +835,27 @@
 \newcounter{fixmefatalcount}
 
 %    \end{macrocode}
+% \subsubsection{Inner fallback}
+%    \begin{macrocode}
+\def\fx@innerfallbackcmd#1{%
+  \csname fx@layout@#1\endcsname}
+\def\fx@handleinnerfallback{%
+  \ifinner%
+    \fx@layout@marginclue{false}%
+    \iffx@layout@margin%
+      \fx@layout@margin{false}%
+      \fx@innerfallbackcmd{\fx@layout@innerfallback@cmd}{true}%
+    \fi%
+  \fi}
+
+%    \end{macrocode}
 % \subsubsection{Generic layout dispatch}
 % \begin{macro}{\fixme@text}
 %   This macro dispatches all active layouts, index excepted.
 % \end{macro}
 %    \begin{macrocode}
 \def\fixme@text#1#2{%
+  \fx@handleinnerfallback%
   \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffx@layout@margin\FXMargin{#1}{#2}\fi%
   \iffx@layout@marginclue\FXMarginClue{#1}\fi%
@@ -943,6 +962,7 @@
 % \cs{fixme@text}.
 %    \begin{macrocode}
 \def\fixme@fatal@draft#1{%
+  \fx@handleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
   \iffx@layout@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
