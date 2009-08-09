@@ -505,7 +505,7 @@
 % but as an option this time, and we set the function to the |xkeyval| boolean
 % assignation. Finally, we provide the negative couterpart void option.
 %    \begin{macrocode}
-\newcommand\fx@declarebooloptkey[2]{%
+\newcommand\@fxdeclarebooloptkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]
   \DeclareOptionX[fx]<#1>{#2}[true]{\XKV@setbool{fx@#1@#2}{##1}}
   \FXDeclareVoidOption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
@@ -515,7 +515,7 @@
 % and macro key argument as well. Same comment as above for creating such
 % beasts.
 %    \begin{macrocode}
-\newcommand\fx@declarecmdoptkey[3][]{%
+\newcommand\@fxdeclarecmdoptkey[3][]{%
   \define@cmdkey[fx]{#2}{#3}[#1]
   \DeclareOptionX[fx]<#2>{#3}[#1]{%
     \expandafter\def\csname fx@#2@#3@cmd\endcsname{##1}}}
@@ -750,7 +750,7 @@
 % |marginclue| layouts are mutually exclusive, so we have to redefine the
 % |xkeyval| key macro to handle this.
 %    \begin{macrocode}
-\fx@declarebooloptkey{layout}{margin}
+\@fxdeclarebooloptkey{layout}{margin}
 \def\fx@layout@margin#1{%
   \XKV@setbool{fx@layout@margin}{#1}
   \ifthenelse{\equal{#1}{true}\and\boolean{fx@layout@marginclue}}{%
@@ -758,7 +758,7 @@
       Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}}
 
-\fx@declarebooloptkey{layout}{marginclue}
+\@fxdeclarebooloptkey{layout}{marginclue}
 \def\fx@layout@marginclue#1{%
   \XKV@setbool{fx@layout@marginclue}{#1}
   \ifthenelse{\equal{#1}{true}\and\boolean{fx@layout@margin}}{%
@@ -766,12 +766,12 @@
       Marginal clues requested; turning marginal notes off,}%
     \fx@layout@margin{false}}}
 
-\fx@declarebooloptkey{layout}{inline}
-\fx@declarebooloptkey{layout}{footnote}
-\fx@declarebooloptkey{layout}{user}
-\fx@declarebooloptkey{layout}{index}
+\@fxdeclarebooloptkey{layout}{inline}
+\@fxdeclarebooloptkey{layout}{footnote}
+\@fxdeclarebooloptkey{layout}{user}
+\@fxdeclarebooloptkey{layout}{index}
 
-\fx@declarecmdoptkey[inline]{layout}{innerfallback}
+\@fxdeclarecmdoptkey[inline]{layout}{innerfallback}
 \fx@layout@innerfallback{inline}
 
 %    \end{macrocode}
@@ -808,7 +808,7 @@
 %    \end{macrocode}
 % \subsubsection{Logging options}
 %    \begin{macrocode}
-\fx@declarebooloptkey{log}{silent}
+\@fxdeclarebooloptkey{log}{silent}
 
 %    \end{macrocode}
 % The following options are here for backward compatibility, but are not used
