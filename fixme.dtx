@@ -1223,14 +1223,19 @@
 
 %    \end{macrocode}
 % Ensure backward compatibility with |\FiXmeUser|. We need to do this
-% differently from the other |\FiXme*| commands, because users of former
-% versions were instructed to |\renewcommand| it to something useful. So we
+% differently from the other |\FiXme*| commands, because users of version 1
+% were instructed to |\renewcommand| it to something useful. So we
 % |\newcommand| it to |\empty|, and unless changed in the document's preamble,
-% we then define it to call the modern one.
+% we then define it to call the modern one. Note also that this will work with
+% the |\fixme| command, but not with the |\fx*| ones that appeared in version
+% 2 (they would try to call the undefined macro |\FXUser|). This is ok because
+% if somebody is aware of \fixme{} notes, then they (should) know that the new
+% way to provide a user layout is to define |\FXUser|, not anymore to redefine
+% |\FiXmeUser|.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \ifx\FiXmeUser\empty
-    \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}
+  \ifx\FiXmeUser\empty%
+    \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}%
   \fi}
 
 %    \end{macrocode}
