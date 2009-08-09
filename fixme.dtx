@@ -1222,15 +1222,21 @@
 \ProcessOptionsX*[fx]<legacy,layout,log,lang,ltx>
 
 %    \end{macrocode}
-% Finally, ensure backward compatibility for |\fixme| with |\FiXmeUser|, and
-% output a summary giving the number of fixme notes at the end of the
-% compilation:
+% Ensure backward compatibility with |\FiXmeUser|. We need to do this
+% differently from the other |\FiXme*| commands, because users of former
+% versions were instructed to |\renewcommand| it to something useful. So we
+% |\newcommand| it to |\empty|, and unless changed in the document's preamble,
+% we then define it to call the modern one.
 %    \begin{macrocode}
 \AtBeginDocument{%
   \ifx\FiXmeUser\empty
     \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}
   \fi}
 
+%    \end{macrocode}
+% Finally, output a summary giving the number of fixme notes at the end of the
+% compilation:
+%    \begin{macrocode}
 \AtEndDocument{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces
