@@ -866,8 +866,8 @@
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
 % \begin{macro}{\fixmenoteprefix}
 %   \begin{macro}{\fixmenoteindexname}
-%     \begin{macro}{\fixme@note@draft}
-%       \begin{macro}{\fixme@note@final}
+%     \begin{macro}{\@fxnote@draft}
+%       \begin{macro}{\@fxnote@final}
 %         fxnotes:
 %       \end{macro}
 %     \end{macro}
@@ -876,20 +876,20 @@
 %    \begin{macrocode}
 \newcommand*\fixmenoteprefix{}
 \newcommand*\fixmenoteindexname{}
-\def\fixme@note@draft#1{%
+\def\@fxnote@draft#1{%
   \@fxlayout{\fixmenoteprefix}{#1}%
   \iffx@layout@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
   \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
-\def\fixme@note@final#1{%
+\def\@fxnote@final#1{%
   \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixmewarningprefix}
 %   \begin{macro}{\fixmewarningindexname}
-%     \begin{macro}{\fixme@warning@draft}
-%       \begin{macro}{\fixme@warning@final}
+%     \begin{macro}{\@fxwarning@draft}
+%       \begin{macro}{\@fxwarning@final}
 %         fxwarnings:
 %       \end{macro}
 %     \end{macro}
@@ -898,22 +898,22 @@
 %    \begin{macrocode}
 \newcommand*\fixmewarningprefix{}
 \newcommand*\fixmewarningindexname{}
-\def\fixme@warning@draft#1{%
+\def\@fxwarning@draft#1{%
   \@fxlayout{\fixmewarningprefix}{#1}%
   \iffx@layout@index%
     \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
   \fi%
   \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
-\def\fixme@warning@final#1{%
+\def\@fxwarning@final#1{%
   \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmewarningprefix: #1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixmeerrorprefix}
 %   \begin{macro}{\fixmeerrorindexname}
-%     \begin{macro}{\fixme@error@draft}
-%       \begin{macro}{\fixme@error@final}
+%     \begin{macro}{\@fxerror@draft}
+%       \begin{macro}{\@fxerror@final}
 %         fxerrors:
 %       \end{macro}
 %     \end{macro}
@@ -922,20 +922,20 @@
 %    \begin{macrocode}
 \newcommand*\fixmeerrorprefix{}
 \newcommand*\fixmeerrorindexname{}
-\def\fixme@error@draft#1{%
+\def\@fxerror@draft#1{%
   \@fxlayout{\fixmeerrorprefix}{#1}%
   \iffx@layout@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
   \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
-\def\fixme@error@final#1{%
+\def\@fxerror@final#1{%
   \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fixmefatalprefix}
 %   \begin{macro}{\fixmefatalindexname}
-%     \begin{macro}{\fixme@fatal@draft}
-%       \begin{macro}{\fixme@fatal@final}
+%     \begin{macro}{\@fxfatal@draft}
+%       \begin{macro}{\@fxfatal@final}
 %         fixmes:
 %       \end{macro}
 %     \end{macro}
@@ -961,7 +961,7 @@
 % And because of that, we can't define \cs{fixme@fatal@draft} in terms of
 % \cs{@fxlayout}.
 %    \begin{macrocode}
-\def\fixme@fatal@draft#1{%
+\def\@fxfatal@draft#1{%
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
@@ -973,7 +973,7 @@
   \fi%
   \iffx@log@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmefatalprefix: #1}}
-\def\fixme@fatal@final#1{%
+\def\@fxfatal@final#1{%
   \PackageError{FiXme}{`#1' fixme left in final version}{%
     You are processing your document in final mode,\MessageBreak
     but you still have some critical FiXme's left behind.\MessageBreak
@@ -981,8 +981,8 @@
 
 %    \end{macrocode}
 % \subsubsection{Actual notes}
-% \begin{macro}{\@@fixme}
-%   \begin{macro}{\@fixme}
+% \begin{macro}{\@@fx}
+%   \begin{macro}{\@fx}
 %     \begin{macro}{\fxnote}
 %       \begin{macro}{\fxwarning}
 %         \begin{macro}{\fxerror}
@@ -994,23 +994,23 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\def\@@fixme#1#2{%
+\def\@@fx#1#2{%
   \stepcounter{fixmecount}%
   \stepcounter{fixme#1count}%
-  \csname fixme@#1\endcsname{#2}}
-\def\@fixme#1[#2]#3{%
+  \csname @fx#1\endcsname{#2}}
+\def\@fx#1[#2]#3{%
   \bgroup%
   \setkeys[fx]{layout,log}{#2}%
-  \@@fixme{#1}{#3}%
+  \@@fx{#1}{#3}%
   \egroup}
 \DeclareRobustCommand\fxnote{\@ifnextchar[%]
-  {\@fixme{note}}{\@@fixme{note}}}
+  {\@fx{note}}{\@@fx{note}}}
 \DeclareRobustCommand\fxwarning{\@ifnextchar[%]
-  {\@fixme{warning}}{\@@fixme{warning}}}
+  {\@fx{warning}}{\@@fx{warning}}}
 \DeclareRobustCommand\fxerror{\@ifnextchar[%]
-  {\@fixme{error}}{\@@fixme{error}}}
+  {\@fx{error}}{\@@fx{error}}}
 \DeclareRobustCommand\fixme{\@ifnextchar[%]
-  {\@fixme{fatal}}{\@@fixme{fatal}}}
+  {\@fx{fatal}}{\@@fx{fatal}}}
 
 %    \end{macrocode}
 %
@@ -1144,9 +1144,9 @@
 %    \end{macrocode}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\fixme@note}
-%   \begin{macro}{\fixme@warning}
-%     \begin{macro}{\fixme@error}
+% \begin{macro}{\@fxnote}
+%   \begin{macro}{\@fxwarning}
+%     \begin{macro}{\@fxerror}
 %       Here's where the draft or final version of the internal macros are
 %       selected.
 %     \end{macro}
@@ -1154,10 +1154,10 @@
 % \end{macro}
 %    \begin{macrocode}
 \FXDeclareVoidOption{ltx}{final}{
-  \let\fixme@note\fixme@note@final
-  \let\fixme@warning\fixme@warning@final
-  \let\fixme@error\fixme@error@final
-  \let\fixme@fatal\fixme@fatal@final
+  \let\@fxnote\@fxnote@final
+  \let\@fxwarning\@fxwarning@final
+  \let\@fxerror\@fxerror@final
+  \let\@fxfatal\@fxfatal@final
   \let\@fxenvbegin\@fxenvbegin@final
   \let\@fxenvend\@fxenvend@final
   \let\listoffixmes\listoffixmes@final
@@ -1196,10 +1196,10 @@
       }
     }
   }
-  \let\fixme@note\fixme@note@draft
-  \let\fixme@warning\fixme@warning@draft
-  \let\fixme@error\fixme@error@draft
-  \let\fixme@fatal\fixme@fatal@draft
+  \let\@fxnote\@fxnote@draft
+  \let\@fxwarning\@fxwarning@draft
+  \let\@fxerror\@fxerror@draft
+  \let\@fxfatal\@fxfatal@draft
   \let\@fxenvbegin\@fxenvbegin@draft
   \let\@fxenvend\@fxenvend@draft
   \let\listoffixmes\listoffixmes@draft
