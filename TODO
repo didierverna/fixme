@@ -89,8 +89,6 @@ e.g.  fixmenoteprefix -> fxnoteprefix
       FXNote -> FXLogNote
       etc.
 
-* fixme@text -> @fxlayout ?
-
 * Revoir si le hack de FiXmeUser (atbegindocument) est vraiment utile
 
 * The index layout should be handled by fixme@text, but IIRC, I had macro
