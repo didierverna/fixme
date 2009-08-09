@@ -850,11 +850,11 @@
 
 %    \end{macrocode}
 % \subsubsection{Generic layout dispatch}
-% \begin{macro}{\fixme@text}
+% \begin{macro}{\@fxlayout}
 %   This macro dispatches all active layouts, index excepted.
 % \end{macro}
 %    \begin{macrocode}
-\def\fixme@text#1#2{%
+\def\@fxlayout#1#2{%
   \fx@handleinnerfallback%
   \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffx@layout@margin\FXMargin{#1}{#2}\fi%
@@ -877,7 +877,7 @@
 \newcommand*\fixmenoteprefix{}
 \newcommand*\fixmenoteindexname{}
 \def\fixme@note@draft#1{%
-  \fixme@text{\fixmenoteprefix}{#1}%
+  \@fxlayout{\fixmenoteprefix}{#1}%
   \iffx@layout@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
   \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmenoteprefix: #1}}
@@ -899,7 +899,7 @@
 \newcommand*\fixmewarningprefix{}
 \newcommand*\fixmewarningindexname{}
 \def\fixme@warning@draft#1{%
-  \fixme@text{\fixmewarningprefix}{#1}%
+  \@fxlayout{\fixmewarningprefix}{#1}%
   \iffx@layout@index%
     \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
   \fi%
@@ -923,7 +923,7 @@
 \newcommand*\fixmeerrorprefix{}
 \newcommand*\fixmeerrorindexname{}
 \def\fixme@error@draft#1{%
-  \fixme@text{\fixmeerrorprefix}{#1}%
+  \@fxlayout{\fixmeerrorprefix}{#1}%
   \iffx@layout@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
   \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fixmeerrorprefix: #1}}
@@ -959,7 +959,7 @@
 
 %    \end{macrocode}
 % And because of that, we can't define \cs{fixme@fatal@draft} in terms of
-% \cs{fixme@text}.
+% \cs{@fxlayout}.
 %    \begin{macrocode}
 \def\fixme@fatal@draft#1{%
   \fx@handleinnerfallback%
