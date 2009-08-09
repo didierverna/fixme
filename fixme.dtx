@@ -521,6 +521,21 @@
     \expandafter\def\csname fx@#2@#3@cmd\endcsname{##1}}}
 
 %    \end{macrocode}
+%
+%\subsection{Utilities}
+%
+% \begin{macro}{\@fxdeprecationwarning}
+%   Issue a warning about a deprecated command, suggesting to use the new one
+%   instead.
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxdeprecationwarning[2]{%
+  \PackageWarning{FiXme}{%
+    \expandafter\string\csname #1\endcsname\space is deprecated;
+    Please use \expandafter\string \csname #2\endcsname\space instead,}}
+
+%    \end{macrocode}
+%
 % \subsection{List macros}
 % \begin{macro}{\listoffixmes}
 %   \begin{macro}{\listoffixmes@final}
@@ -1009,8 +1024,12 @@
   {\@fx{warning}}{\@@fx{warning}}}
 \DeclareRobustCommand\fxerror{\@ifnextchar[%]
   {\@fx{error}}{\@@fx{error}}}
-\DeclareRobustCommand\fixme{\@ifnextchar[%]
+\DeclareRobustCommand\fxfatal{\@ifnextchar[%]
   {\@fx{fatal}}{\@@fx{fatal}}}
+\def\fixme{%
+  \@fxdeprecationwarning{fixme}{fxfatal}%
+  \fxfatal}
+
 
 %    \end{macrocode}
 %
