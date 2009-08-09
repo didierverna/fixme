@@ -837,14 +837,14 @@
 %    \end{macrocode}
 % \subsubsection{Inner fallback}
 %    \begin{macrocode}
-\def\fx@innerfallbackcmd#1{%
+\def\@fxinnerfallbackcmd#1{%
   \csname fx@layout@#1\endcsname}
-\def\fx@handleinnerfallback{%
+\def\@fxhandleinnerfallback{%
   \ifinner%
     \fx@layout@marginclue{false}%
     \iffx@layout@margin%
       \fx@layout@margin{false}%
-      \fx@innerfallbackcmd{\fx@layout@innerfallback@cmd}{true}%
+      \@fxinnerfallbackcmd{\fx@layout@innerfallback@cmd}{true}%
     \fi%
   \fi}
 
@@ -855,7 +855,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
-  \fx@handleinnerfallback%
+  \@fxhandleinnerfallback%
   \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
   \iffx@layout@margin\FXMargin{#1}{#2}\fi%
   \iffx@layout@marginclue\FXMarginClue{#1}\fi%
@@ -962,7 +962,7 @@
 % \cs{@fxlayout}.
 %    \begin{macrocode}
 \def\fixme@fatal@draft#1{%
-  \fx@handleinnerfallback%
+  \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
   \iffx@layout@marginclue\FXMarginClue{\fixmefatalprefix}\fi%
