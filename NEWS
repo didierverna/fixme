@@ -57,7 +57,7 @@ thanks to Marcel Maretic <marcel@fsb.hr>.
 ** Fix incompatibility with AMS-Book
 reported by Claude Lacoursière: \@starttoc takes 2 arguments.
 ** Fix incompatibility with Beamer
-reported by Akim Demaille: protect contents of lox file.ug in environments.
+reported by Akim Demaille: protect contents of lox file in environments.
 
 * Version 3.1
 =============
