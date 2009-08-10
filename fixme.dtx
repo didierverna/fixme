@@ -844,16 +844,32 @@
 % \subsubsection{Note counters}
 % |fixmecount| maintains the total of all notes, regardless of their level.
 % \DescribeMacro{\thefixmecount}
-% \DescribeMacro{\thefixmenotecount}
-% \DescribeMacro{\thefixmewarningcount}
-% \DescribeMacro{\thefixmeerrorcount}
-% \DescribeMacro{\thefixmefatalcount}
+% \DescribeMacro{\thefxnotecount}
+% \DescribeMacro{\thefxwarningcount}
+% \DescribeMacro{\thefxerrorcount}
+% \DescribeMacro{\thefxfatalcount}
 %    \begin{macrocode}
 \newcounter{fixmecount}
-\newcounter{fixmenotecount}
-\newcounter{fixmewarningcount}
-\newcounter{fixmeerrorcount}
-\newcounter{fixmefatalcount}
+
+\newcounter{fxnotecount}
+\def\thefixmenotecount{%
+  \@fxdeprecationwarning{thefixmenotecount}{thefxnotecount}%
+  \thefxnotecount}
+
+\newcounter{fxwarningcount}
+\def\thefixmewarningcount{%
+  \@fxdeprecationwarning{thefixmewarningcount}{thefxwarningcount}%
+  \thefxwarningcount}
+
+\newcounter{fxerrorcount}
+\def\thefixmeerrorcount{%
+  \@fxdeprecationerror{thefixmeerrorcount}{thefxerrorcount}%
+  \thefxerrorcount}
+
+\newcounter{fxfatalcount}
+\def\thefixmefatalcount{%
+  \@fxdeprecationfatal{thefixmefatalcount}{thefxfatalcount}%
+  \thefxfatalcount}
 
 %    \end{macrocode}
 % \subsubsection{Inner fallback}
@@ -901,7 +917,7 @@
 \newcommand*\fixmenoteindexname{}
 \def\@fxnote@draft#1{%
   \@fxlayout{\fxnoteprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxnoteindexname\thefixmenotecount: #1}\fi%
+  \iffx@layout@index\FXIndex{\fxnoteindexname\thefxnotecount: #1}\fi%
   \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
 \def\@fxnote@final#1{%
@@ -926,7 +942,7 @@
 \def\@fxwarning@draft#1{%
   \@fxlayout{\fxwarningprefix}{#1}%
   \iffx@layout@index%
-    \FXIndex{\fxwarningindexname\thefixmewarningcount: #1}%
+    \FXIndex{\fxwarningindexname\thefxwarningcount: #1}%
   \fi%
   \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
@@ -951,7 +967,7 @@
 \newcommand*\fixmeerrorindexname{}
 \def\@fxerror@draft#1{%
   \@fxlayout{\fxerrorprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxerrorindexname\thefixmeerrorcount: #1}\fi%
+  \iffx@layout@index\FXIndex{\fxerrorindexname\thefxerrorcount: #1}\fi%
   \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
 \def\@fxerror@final#1{%
@@ -999,7 +1015,7 @@
   \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
   \iffx@layout@index%
-    \FiXmeIndex{\fxfatalindexname\thefixmefatalcount: #1}%
+    \FiXmeIndex{\fxfatalindexname\thefxfatalcount: #1}%
   \fi%
   \iffx@log@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
@@ -1027,7 +1043,7 @@
 %    \begin{macrocode}
 \def\@@fx#1#2{%
   \stepcounter{fixmecount}%
-  \stepcounter{fixme#1count}%
+  \stepcounter{fx#1count}%
   \csname @fx#1\endcsname{#2}}
 \def\@fx#1[#2]#3{%
   \bgroup%
@@ -1268,11 +1284,11 @@
 %   Deprecate a |\fixme*| command in favor an |\fx*| one.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxdeprecate[1]{%
-  \ifthenelse{\equal{\csname fixme#1\endcsname}{}}{}{%
-    \@fxdeprecationwarning{fixme#1}{fx#1}%
+\newcommand\@fxdeprecate[2][]{%
+  \ifthenelse{\equal{\csname #1fixme#2\endcsname}{}}{}{%
+    \@fxdeprecationwarning{#1fixme#2}{#1fx#2}%
     %% #### FIXME: I'd want the body to be expanded only once. Check how to.
-    \expandafter\edef\csname fx#1\endcsname{\csname fixme#1\endcsname}}}
+    \expandafter\edef\csname #1fx#2\endcsname{\csname #1fixme#2\endcsname}}}
 
 %    \end{macrocode}
 % Backward compatibility with |\FiXmeUser| is done differently from the other
@@ -1306,10 +1322,10 @@
   \GenericWarning{%
     (FiXme)\@spaces\@spaces
   }{%
-    FiXme Summary: Number of notes: \thefixmenotecount,\MessageBreak%
-    Number of warnings: \thefixmewarningcount,\MessageBreak%
-    Number of errors: \thefixmeerrorcount,\MessageBreak%
-    Number of fatal errors: \thefixmefatalcount,\MessageBreak%
+    FiXme Summary: Number of notes: \thefxnotecount,\MessageBreak%
+    Number of warnings: \thefxwarningcount,\MessageBreak%
+    Number of errors: \thefxerrorcount,\MessageBreak%
+    Number of fatal errors: \thefxfatalcount,\MessageBreak%
     Total: \thefixmecount\@gobble%
   }}
 %    \end{macrocode}
