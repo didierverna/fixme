@@ -524,6 +524,17 @@
 %
 %\subsection{Utilities}
 %
+% \begin{macro}{\@fxnewlegacycmd}
+%   Defines a command taking one argument that has no effect anymore.
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxnewlegacycmd[1]{%
+  \expandafter\newcommand\csname #1\endcsname[1]{%
+    \PackageWarning{FiXme}{%
+      \expandafter\string\csname #1\endcsname\space is a legacy command that
+      has no effect anymore,}}}
+
+%    \end{macrocode}
 % \begin{macro}{\@fxdeprecationwarning}
 %   Issue a warning about a deprecated command, suggesting to use the new one
 %   instead.
@@ -750,13 +761,8 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FiXmeInfo[1]{%
-  \PackageWarning{FiXme}{%
-    \string\FiXmeInfo\space is a legacy command that has no effect anymore,}}
-\newcommand\FiXmeWarning[1]{%
-  \PackageWarning{FiXme}{%
-    \string\FiXmeWarning\space is a legacy command that has no effect
-    anymore,}}
+\@fxnewlegacycmd{FiXmeInfo}
+\@fxnewlegacycmd{FiXmeWarning}
 
 %    \end{macrocode}
 % \subsubsection{Layout options}
