@@ -1075,9 +1075,14 @@
 \newenvironment{anfxerror}[2][]{%
   \@fxenvbegin{fxerror}{#1}{#2}}{%
   \@fxenvend}
-\newenvironment{afixme}[2][]{%
+\newenvironment{anfxfatal}[2][]{%
   \@fxenvbegin{fxfatal}{#1}{#2}}{%
   \@fxenvend}
+\def\afixme{%
+  \PackageWarning{FiXme}{The 'afixme' environment is deprecated;
+    please use 'anfxfatal' instead,}%
+  \anfxfatal}
+\let\endafixme\endanfxfatal
 
 %    \end{macrocode}
 %
