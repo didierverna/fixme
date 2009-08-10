@@ -967,7 +967,8 @@
 %    \end{macrocode}
 % The |\FiXme*| macros are kept only to preserve backward compatibility. They
 % are used by fatal notes only and are made to call the new versions by
-% default:
+% default. |\FiXmeUser| is treated a bit differently though. See comment in
+% the Finale's ``Backward Compatibility'' section.
 %    \begin{macrocode}
 \newcommand\FiXmeInline[1]{\FXInline{\fxfatalprefix}{#1}}
 \newcommand\FiXmeMargin[1]{\FXMargin{\fxfatalprefix}{#1}}
@@ -1265,7 +1266,7 @@
 
 %    \end{macrocode}
 % Backward compatibility with |\FiXmeUser| is done differently from the other
-% |\FiXme*| commands, because users of version 1 were instructed to
+% |\FiXme*| commands, because users of version 1.|x| were instructed to
 % |\renewcommand| it to something useful. So we |\newcommand| it to |\empty|,
 % and unless changed in the document's preamble, we then define it to call the
 % modern one. Note also that this will work with the |\fixme| command, but not
