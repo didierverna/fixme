@@ -1261,22 +1261,20 @@
 % way to provide a user layout is to define |\FXUser|, not anymore to redefine
 % |\FiXmeUser|.
 %    \begin{macrocode}
+\newcommand\@fxdeprecate[1]{%
+  \ifthenelse{\equal{\csname fixme#1\endcsname}{}}{}{%
+    \@fxdeprecationwarning{fixme#1}{fx#1}%
+    %% #### FIXME: I'd want the body to be expanded only once. Check how to.
+    \expandafter\edef\csname fx#1\endcsname{\csname fixme#1\endcsname}}}
+
 \AtBeginDocument{%
   \ifx\FiXmeUser\empty%
     \renewcommand\FiXmeUser[1]{\FXUser{\fxfatalprefix}{#1}}%
   \fi%
-  \ifthenelse{\equal{\fixmenoteprefix}{}}{}{%
-    \@fxdeprecationwarning{fixmenoteprefix}{fxnoteprefix}%
-    \def\fxnoteprefix{\fixmenoteprefix}}%
-  \ifthenelse{\equal{\fixmewarningprefix}{}}{}{%
-    \@fxdeprecationwarning{fixmewarningprefix}{fxwarningprefix}%
-    \def\fxwarningprefix{\fixmewarningprefix}}%
-  \ifthenelse{\equal{\fixmeerrorprefix}{}}{}{%
-    \@fxdeprecationwarning{fixmeerrorprefix}{fxerrorprefix}%
-    \def\fxerrorprefix{\fixmeerrorprefix}}%
-  \ifthenelse{\equal{\fixmefatalprefix}{}}{}{%
-    \@fxdeprecationwarning{fixmefatalprefix}{fxfatalprefix}%
-    \def\fxfatalprefix{\fixmefatalprefix}}}
+  \@fxdeprecate{noteprefix}%
+  \@fxdeprecate{warningprefix}%
+  \@fxdeprecate{errorprefix}%
+  \@fxdeprecate{fatalprefix}}
 
 %    \end{macrocode}
 % Finally, output a summary giving the number of fixme notes at the end of the
