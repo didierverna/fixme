@@ -880,7 +880,7 @@
 %    \end{macrocode}
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
 % \begin{macro}{\fxnoteprefix}
-%   \begin{macro}{\fixmenoteindexname}
+%   \begin{macro}{\fxnoteindexname}
 %     \begin{macro}{\@fxnote@draft}
 %       \begin{macro}{\@fxnote@final}
 %         fxnotes:
@@ -891,10 +891,11 @@
 %    \begin{macrocode}
 \newcommand*\fxnoteprefix{}
 \newcommand*\fixmenoteprefix{}
+\newcommand*\fxnoteindexname{}
 \newcommand*\fixmenoteindexname{}
 \def\@fxnote@draft#1{%
   \@fxlayout{\fxnoteprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fixmenoteindexname\thefixmenotecount: #1}\fi%
+  \iffx@layout@index\FXIndex{\fxnoteindexname\thefixmenotecount: #1}\fi%
   \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
 \def\@fxnote@final#1{%
@@ -903,7 +904,7 @@
 
 %    \end{macrocode}
 % \begin{macro}{\fxwarningprefix}
-%   \begin{macro}{\fixmewarningindexname}
+%   \begin{macro}{\fxwarningindexname}
 %     \begin{macro}{\@fxwarning@draft}
 %       \begin{macro}{\@fxwarning@final}
 %         fxwarnings:
@@ -914,11 +915,12 @@
 %    \begin{macrocode}
 \newcommand*\fxwarningprefix{}
 \newcommand*\fixmewarningprefix{}
+\newcommand*\fxwarningindexname{}
 \newcommand*\fixmewarningindexname{}
 \def\@fxwarning@draft#1{%
   \@fxlayout{\fxwarningprefix}{#1}%
   \iffx@layout@index%
-    \FXIndex{\fixmewarningindexname\thefixmewarningcount: #1}%
+    \FXIndex{\fxwarningindexname\thefixmewarningcount: #1}%
   \fi%
   \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
@@ -928,7 +930,7 @@
 
 %    \end{macrocode}
 % \begin{macro}{\fxerrorprefix}
-%   \begin{macro}{\fixmeerrorindexname}
+%   \begin{macro}{\fxerrorindexname}
 %     \begin{macro}{\@fxerror@draft}
 %       \begin{macro}{\@fxerror@final}
 %         fxerrors:
@@ -939,10 +941,11 @@
 %    \begin{macrocode}
 \newcommand*\fxerrorprefix{}
 \newcommand*\fixmeerrorprefix{}
+\newcommand*\fxerrorindexname{}
 \newcommand*\fixmeerrorindexname{}
 \def\@fxerror@draft#1{%
   \@fxlayout{\fxerrorprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fixmeerrorindexname\thefixmeerrorcount: #1}\fi%
+  \iffx@layout@index\FXIndex{\fxerrorindexname\thefixmeerrorcount: #1}\fi%
   \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
 \def\@fxerror@final#1{%
@@ -951,7 +954,7 @@
 
 %    \end{macrocode}
 % \begin{macro}{\fxfatalprefix}
-%   \begin{macro}{\fixmefatalindexname}
+%   \begin{macro}{\fxfatalindexname}
 %     \begin{macro}{\@fxfatal@draft}
 %       \begin{macro}{\@fxfatal@final}
 %         fixmes:
@@ -962,6 +965,7 @@
 %    \begin{macrocode}
 \newcommand*\fxfatalprefix{}
 \newcommand*\fixmefatalprefix{}
+\newcommand*\fxfatalindexname{}
 \newcommand*\fixmefatalindexname{}
 
 %    \end{macrocode}
@@ -989,7 +993,7 @@
   \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
   \iffx@layout@index%
-    \FiXmeIndex{\fixmefatalindexname\thefixmefatalcount: #1}%
+    \FiXmeIndex{\fxfatalindexname\thefixmefatalcount: #1}%
   \fi%
   \iffx@log@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
@@ -1095,10 +1099,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Notes:!}
-  \renewcommand*\fixmewarningindexname{**b@Warnings:!}
-  \renewcommand*\fixmeerrorindexname{**c@Errors:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Notes:!}
+  \renewcommand*\fxwarningindexname{**b@Warnings:!}
+  \renewcommand*\fxerrorindexname{**c@Errors:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{List of Corrections}}
 \FXDeclareVoidOption{lang}{french}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
@@ -1106,10 +1110,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Erreur}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Notes:!}
-  \renewcommand*\fixmewarningindexname{**b@Avertissements:!}
-  \renewcommand*\fixmeerrorindexname{**c@Erreurs:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Notes:!}
+  \renewcommand*\fxwarningindexname{**b@Avertissements:!}
+  \renewcommand*\fxerrorindexname{**c@Erreurs:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Liste des Corrections}}
 \FXDeclareVoidOption{lang}{francais}{\ExecuteOptionsX[fx]<lang>{french}}
 \FXDeclareVoidOption{lang}{spanish}{%
@@ -1118,10 +1122,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Notas:!}
-  \renewcommand*\fixmewarningindexname{**b@Avisos:!}
-  \renewcommand*\fixmeerrorindexname{**c@Errores:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Notas:!}
+  \renewcommand*\fxwarningindexname{**b@Avisos:!}
+  \renewcommand*\fxerrorindexname{**c@Errores:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
 \FXDeclareVoidOption{lang}{italian}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}
@@ -1129,10 +1133,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Errore}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Note:!}
-  \renewcommand*\fixmewarningindexname{**b@Avvisi:!}
-  \renewcommand*\fixmeerrorindexname{**c@Errori:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Note:!}
+  \renewcommand*\fxwarningindexname{**b@Avvisi:!}
+  \renewcommand*\fxerrorindexname{**c@Errori:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Corrigenda}}
 \FXDeclareVoidOption{lang}{german}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Anm}
@@ -1140,10 +1144,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fehler}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Anmerkungen:!}
-  \renewcommand*\fixmewarningindexname{**b@Warnungen:!}
-  \renewcommand*\fixmeerrorindexname{**c@Fehler:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Anmerkungen:!}
+  \renewcommand*\fxwarningindexname{**b@Warnungen:!}
+  \renewcommand*\fxerrorindexname{**c@Fehler:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
 \FXDeclareVoidOption{lang}{ngerman}{%
   \ExecuteOptionsX[fx]<lang>{german}}
@@ -1153,10 +1157,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fejl}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Noter:!}
-  \renewcommand*\fixmewarningindexname{**b@Advarsler:!}
-  \renewcommand*\fixmeerrorindexname{**c@Fejl:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Noter:!}
+  \renewcommand*\fxwarningindexname{**b@Advarsler:!}
+  \renewcommand*\fxerrorindexname{**c@Fejl:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Rettelser}}
 \FXDeclareVoidOption{lang}{croatian}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Poruka}
@@ -1164,10 +1168,10 @@
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Gre\v ska}
   \renewcommand*\fxfatalprefix{\fixmelogo}
   \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fixmenoteindexname{**a@Poruke:!}
-  \renewcommand*\fixmewarningindexname{**b@Upozorenja:!}
-  \renewcommand*\fixmeerrorindexname{**c@Greske:!}
-  \renewcommand*\fixmefatalindexname{}
+  \renewcommand*\fxnoteindexname{**a@Poruke:!}
+  \renewcommand*\fxwarningindexname{**b@Upozorenja:!}
+  \renewcommand*\fxerrorindexname{**c@Greske:!}
+  \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Popis korekcija}}
 
 %    \end{macrocode}
@@ -1282,7 +1286,11 @@
   \@fxdeprecate{noteprefix}%
   \@fxdeprecate{warningprefix}%
   \@fxdeprecate{errorprefix}%
-  \@fxdeprecate{fatalprefix}}
+  \@fxdeprecate{fatalprefix}%
+  \@fxdeprecate{noteindexname}%
+  \@fxdeprecate{warningindexname}%
+  \@fxdeprecate{errorindexname}%
+  \@fxdeprecate{fatalindexname}}
 
 %    \end{macrocode}
 % Finally, output a summary giving the number of fixme notes at the end of the
