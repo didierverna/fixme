@@ -969,14 +969,13 @@
 \newcommand*\fixmenoteprefix{}
 \newcommand*\fxnoteindexname{}
 \newcommand*\fixmenoteindexname{}
-\def\@fxnote@draft#1{%
-  \@fxlayout{\fxnoteprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxnoteindexname\thefxnotecount: #1}\fi%
-  \iffx@log@silent\else\FXNote{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
 \def\@fxnote@final#1{%
   \iffx@log@silent\else\FXNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
+\def\@fxnote@draft#1{%
+  \@fxlayout{\fxnoteprefix}{#1}%
+  \iffx@layout@index\FXIndex{\fxnoteindexname\thefxnotecount: #1}\fi%
+  \@fxnote@final{#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fxwarningprefix}
@@ -993,16 +992,13 @@
 \newcommand*\fixmewarningprefix{}
 \newcommand*\fxwarningindexname{}
 \newcommand*\fixmewarningindexname{}
-\def\@fxwarning@draft#1{%
-  \@fxlayout{\fxwarningprefix}{#1}%
-  \iffx@layout@index%
-    \FXIndex{\fxwarningindexname\thefxwarningcount: #1}%
-  \fi%
-  \iffx@log@silent\else\FXWarning{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
 \def\@fxwarning@final#1{%
   \iffx@log@silent\else\FXWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
+\def\@fxwarning@draft#1{%
+  \@fxlayout{\fxwarningprefix}{#1}%
+  \iffx@layout@index\FXIndex{\fxwarningindexname\thefxwarningcount: #1}\fi%
+  \@fxwarning@final{#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fxerrorprefix}
@@ -1019,14 +1015,13 @@
 \newcommand*\fixmeerrorprefix{}
 \newcommand*\fxerrorindexname{}
 \newcommand*\fixmeerrorindexname{}
-\def\@fxerror@draft#1{%
-  \@fxlayout{\fxerrorprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxerrorindexname\thefxerrorcount: #1}\fi%
-  \iffx@log@silent\else\FXError{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
 \def\@fxerror@final#1{%
   \iffx@log@silent\else\FXError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
+\def\@fxerror@draft#1{%
+  \@fxlayout{\fxerrorprefix}{#1}%
+  \iffx@layout@index\FXIndex{\fxerrorindexname\thefxerrorcount: #1}\fi%
+  \@fxerror@final{#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\fxfatalprefix}
