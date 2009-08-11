@@ -546,6 +546,16 @@
     please use \expandafter\string \csname #2\endcsname\space instead,}}
 
 %    \end{macrocode}
+% \begin{macro}{\@fxdeprecatedenvwarning}
+%   Issue a warning about a deprecated environment, suggesting to use the new
+%   one instead.
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxdeprecatedenvwarning[2]{%
+  \PackageWarning{FiXme}{%
+    The '#1' environment is deprecated; please use '#2' instead,}}
+
+%    \end{macrocode}
 %
 % \subsection{List macros}
 % \begin{macro}{\listoffixmes}
@@ -1106,8 +1116,7 @@
   \@fxenvbegin{fxfatal}{#1}{#2}}{%
   \@fxenvend}
 \def\afixme{%
-  \PackageWarning{FiXme}{The 'afixme' environment is deprecated;
-    please use 'anfxfatal' instead,}%
+  \@fxdeprecatedenvwarning{afixme}{anfxfatal}%
   \anfxfatal}
 \let\endafixme\endanfxfatal
 
