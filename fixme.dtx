@@ -535,12 +535,12 @@
       has no effect anymore,}}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdeprecationwarning}
+% \begin{macro}{\@fxdeprecatedcmdwarning}
 %   Issue a warning about a deprecated command, suggesting to use the new one
 %   instead.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxdeprecationwarning[2]{%
+\newcommand\@fxdeprecatedcmdwarning[2]{%
   \PackageWarning{FiXme}{%
     \expandafter\string\csname #1\endcsname\space is deprecated;
     please use \expandafter\string \csname #2\endcsname\space instead,}}
@@ -853,12 +853,12 @@
 
 \newcounter{fxnotecount}
 \def\thefixmenotecount{%
-  \@fxdeprecationwarning{thefixmenotecount}{thefxnotecount}%
+  \@fxdeprecatedcmdwarning{thefixmenotecount}{thefxnotecount}%
   \thefxnotecount}
 
 \newcounter{fxwarningcount}
 \def\thefixmewarningcount{%
-  \@fxdeprecationwarning{thefixmewarningcount}{thefxwarningcount}%
+  \@fxdeprecatedcmdwarning{thefixmewarningcount}{thefxwarningcount}%
   \thefxwarningcount}
 
 \newcounter{fxerrorcount}
@@ -1059,7 +1059,7 @@
 \DeclareRobustCommand\fxfatal{\@ifnextchar[%]
   {\@fx{fatal}}{\@@fx{fatal}}}
 \def\fixme{%
-  \@fxdeprecationwarning{fixme}{fxfatal}%
+  \@fxdeprecatedcmdwarning{fixme}{fxfatal}%
   \fxfatal}
 
 
@@ -1286,7 +1286,7 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecate[2][]{%
   \ifthenelse{\equal{\csname #1fixme#2\endcsname}{}}{}{%
-    \@fxdeprecationwarning{#1fixme#2}{#1fx#2}%
+    \@fxdeprecatedcmdwarning{#1fixme#2}{#1fx#2}%
     %% #### FIXME: I'd want the body to be expanded only once. Check how to.
     \expandafter\edef\csname #1fx#2\endcsname{\csname #1fixme#2\endcsname}}}
 
