@@ -508,7 +508,7 @@
   \@fxpkgerror{misuse of option '#1'}{%
     You have given the option '#1' the argument '#2' but it takes
     none.\MessageBreak
-    Type X to quit, fix the option list passed to FiXme and re-run
+    Type X to quit, fix the options list passed to FiXme and re-run
     LaTeX.\MessageBreak}}
 \newcommand\FXDeclareVoidOption[3]{%
   \DeclareOptionX[fx]<#1>{#2}[]{%
@@ -855,7 +855,7 @@
 \newcommand\FXFatal[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
-    FiXme: '#1'}}
+    FiXme Fatal Error: '#1'}}
 
 %    \end{macrocode}
 % \subsubsection{Logging options}
@@ -1053,7 +1053,7 @@
 \def\@fxfatal@final#1{%
   \@fxpkgerror{'#1' fixme left in final version}{%
     You are processing your document in final mode,\MessageBreak
-    but you still have some critical FiXme's left behind.\MessageBreak
+    but you still have some FiXme fatal errors left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
 
 %    \end{macrocode}
