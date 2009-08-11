@@ -921,6 +921,10 @@
 
 %    \end{macrocode}
 % \subsubsection{Inner fallback}
+% \begin{macro}{\@fxinnerfallbackcmd}
+%   \begin{macro}{\@fxhandleinnerfallback}
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \def\@fxinnerfallbackcmd#1{%
   \csname fx@layout@#1\endcsname}
@@ -936,7 +940,7 @@
 %    \end{macrocode}
 % \subsubsection{Generic layout dispatch}
 % \begin{macro}{\@fxlayout}
-%   This macro dispatches all active layouts, index excepted.
+%   Dispatch all active layouts, index excepted.
 % \end{macro}
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
@@ -949,11 +953,13 @@
 
 %    \end{macrocode}
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
+% As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}. The
+% older ones are still defined for backward compatibility.
 % \begin{macro}{\fxnoteprefix}
 %   \begin{macro}{\fxnoteindexname}
-%     \begin{macro}{\@fxnote@draft}
-%       \begin{macro}{\@fxnote@final}
-%         fxnotes:
+%     \begin{macro}{\@fxnote@final}
+%       \begin{macro}{\@fxnote@draft}
+%         \textbf{fxnotes:}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -975,9 +981,9 @@
 %    \end{macrocode}
 % \begin{macro}{\fxwarningprefix}
 %   \begin{macro}{\fxwarningindexname}
-%     \begin{macro}{\@fxwarning@draft}
-%       \begin{macro}{\@fxwarning@final}
-%         fxwarnings:
+%     \begin{macro}{\@fxwarning@final}
+%       \begin{macro}{\@fxwarning@draft}
+%         \textbf{fxwarnings:}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -1001,9 +1007,9 @@
 %    \end{macrocode}
 % \begin{macro}{\fxerrorprefix}
 %   \begin{macro}{\fxerrorindexname}
-%     \begin{macro}{\@fxerror@draft}
-%       \begin{macro}{\@fxerror@final}
-%         fxerrors:
+%     \begin{macro}{\@fxerror@final}
+%       \begin{macro}{\@fxerror@draft}
+%         \textbf{fxerrors:}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
