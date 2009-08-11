@@ -574,8 +574,8 @@
     \expandafter\string\csname #1\endcsname\space is deprecated;
     please use \expandafter\string \csname #2\endcsname\space instead,}}
 \newcommand\@fxnewdeprecatedcmd[2]{%
-  \expandafter\edef\csname #1\endcsname{%
-    \noexpand\@fxdeprecatedcmdwarning{#1}{#2}%
+  \expandafter\def\csname #1\endcsname{%
+    \@fxdeprecatedcmdwarning{#1}{#2}%
     \csname #2\endcsname}}
 
 
