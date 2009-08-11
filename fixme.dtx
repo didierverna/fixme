@@ -847,6 +847,14 @@
 \fx@layout@innerfallback{inline}
 
 %    \end{macrocode}
+% The following options are unused since version 2.2 (at the time of which,
+% layout and logging were the same thing), but kept here anyway to avoid
+% breaking compilation of older documents.
+%    \begin{macrocode}
+\@fxdeclarelegacybooloption{info}
+\@fxdeclarelegacybooloption{warning}
+
+%    \end{macrocode}
 %
 % \subsection{Logging}
 % \subsubsection{Logging macros}
@@ -881,13 +889,6 @@
 % \subsubsection{Logging options}
 %    \begin{macrocode}
 \@fxdeclarebooloptkey{log}{silent}
-
-%    \end{macrocode}
-% The following options are here for backward compatibility, but are not used
-% anymore:
-%    \begin{macrocode}
-\@fxdeclarelegacybooloption{info}
-\@fxdeclarelegacybooloption{warning}
 
 %    \end{macrocode}
 %
