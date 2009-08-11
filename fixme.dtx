@@ -1106,10 +1106,7 @@
   {\@fx{error}}{\@@fx{error}}}
 \DeclareRobustCommand\fxfatal{\@ifnextchar[%]
   {\@fx{fatal}}{\@@fx{fatal}}}
-\def\fixme{%
-  \@fxdeprecatedcmdwarning{fixme}{fxfatal}%
-  \fxfatal}
-
+\@fxnewdeprecatedcmd{fixme}{fxfatal}
 
 %    \end{macrocode}
 %
