@@ -1115,7 +1115,11 @@
 % is laid out by the corresponding macro, but the |inline| layout is disabled.
 % In |final| mode, |verbatim|'s \texttt{comment} environment is used to
 % suppress output.
-% \subsubsection{Layout}
+% \subsubsection{Layout macros}
+% \begin{macro}{\FXEnvBegin}
+%   \begin{macro}{\FXEnvEnd}
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\FXEnvBegin[1]{\begin{quotation}
     \textbf{#1:}}
@@ -1123,16 +1127,24 @@
 
 %    \end{macrocode}
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
+% \begin{macro}{\@fxenvbegin@final}
+%   \begin{macro}{\@fxenvend@final}
+%     \begin{macro}{\@fxenvbegin@draft}
+%       \begin{macro}{\@fxenvend@draft}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
-\def\@fxenvbegin@draft#1#2#3{%
-  \csname#1\endcsname[#2,noinline]{#3}%
-  \FXEnvBegin{\csname #1prefix\endcsname}}
 \def\@fxenvbegin@final#1#2#3{%
   \csname#1\endcsname[#2]{#3}%
   \comment}
-
-\def\@fxenvend@draft{\FXEnvEnd}
 \def\@fxenvend@final{\endcomment}
+
+\def\@fxenvbegin@draft#1#2#3{%
+  \csname#1\endcsname[#2,noinline]{#3}%
+  \FXEnvBegin{\csname #1prefix\endcsname}}
+\def\@fxenvend@draft{\FXEnvEnd}
 
 %    \end{macrocode}
 %
