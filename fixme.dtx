@@ -478,6 +478,7 @@
 \newcommand\@fxpkgerror[2]{\PackageError{FiXme}{#1}{#2}}
 
 %    \end{macrocode}
+% \subsubsection{\texttt{xkeyval} related}
 % \begin{macro}{\FXDeclareLegacyOption}
 %   A ``legacy option'' is a package option that is not used anymore.
 % \end{macro}
@@ -546,6 +547,7 @@
 
 %    \end{macrocode}
 %
+% \subsubsection{Backward compatibility related}
 % \begin{macro}{\@fxnewlegacycmd}
 %   Defines a ``legacy'' command, taking one argument, and that has no effect
 %   anymore.
@@ -581,20 +583,22 @@
 %    \end{macrocode}
 %
 % \subsection{List macros}
-% \begin{macro}{\listoffixmes}
-%   \begin{macro}{\listoffixmes@final}
-%     \begin{macro}{\listoffixmes@draft}
-%       Lists are output in a document class dependant fashion. Classes
-%       currently recognized are |article|, |report|, |book| and their
-%       koma-script replacements.\par
-%       In order to prevent the List of Fixme's heading from being generated
-%       when there are no fixmes, a test on the existence of the lox file is
-%       performed. There's a slight bug left however: after removing the last
-%       fixme, one ends up with an empty lox file, so the heading still
-%       appear. Previously, this was done by checking if some fixmes were
-%       given, but that was buggy: the list of fixme's could not appear before
-%       the first fixme note\ldots I should try to detect whether the file is
-%       empty.
+% \begin{macro}{\l@fixme}
+%   \begin{macro}{\listoffixmes}
+%     \begin{macro}{\listoffixmes@final}
+%       \begin{macro}{\listoffixmes@draft}
+%         Lists are output in a document class dependant fashion. Classes
+%         currently recognized are |article|, |report|, |book| and their
+%         koma-script replacements.\par
+%         In order to prevent the List of Fixme's heading from being generated
+%         when there are no fixmes, a test on the existence of the lox file is
+%         performed. There's a slight bug left however: after removing the last
+%         fixme, one ends up with an empty lox file, so the heading still
+%         appear. Previously, this was done by checking if some fixmes were
+%         given, but that was buggy: the list of fixme's could not appear
+%         before the first fixme note\ldots I should try to detect whether the
+%         file is empty.
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -680,10 +684,12 @@
 %    \end{macrocode}
 %
 % \subsubsection{koma-script classes}
-% The code below (version 3.3) mimics KOMA-Script version 2006/07/30 v2.95b.
-% Older versions (using chapter*) are no longer supported because it is
-% simpler that way, but if some people complain, I'll  have to conditionalize
-% on the KOMA-Script version, which would be a PITA.
+% \begin{macro}{\lox@heading}
+%   The code below (version 3.3) mimics KOMA-Script version 2006/07/30 v2.95b.
+%   Older versions (using chapter*) are no longer supported because it is
+%   simpler that way, but if some people complain, I'll  have to
+%   conditionalize on the KOMA-Script version, which would be a PITA.
+% \end{macro}
 %    \begin{macrocode}
 \newcommand*\lox@heading{\float@listhead{\listfixmename}}
 
