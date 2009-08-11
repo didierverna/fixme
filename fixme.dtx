@@ -581,13 +581,21 @@
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeprecatedenvwarning}
-%   Issue a warning about a deprecated environment, suggesting to use the new
-%   one instead.
+%   \begin{macro}{\@fxnewdeprecatedenv}
+%     A ``deprecated environment'' is defined similarly to a deprecated
+%     command (see above).
+%   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
     The '#1' environment is deprecated; please use '#2' instead,}}
+\newcommand\@fxnewdeprecatedenv[2]{%
+  \expandafter\def\csname #1\endcsname{%
+    \@fxdeprecatedenvwarning{#1}{#2}%
+    \csname #2\endcsname}
+  \expandafter\def\csname end#1\endcsname{%
+    \csname end#2\endcsname}}
 
 %    \end{macrocode}
 %
@@ -1147,10 +1155,8 @@
 \newenvironment{anfxfatal}[2][]{%
   \@fxenvbegin{fxfatal}{#1}{#2}}{%
   \@fxenvend}
-\def\afixme{%
-  \@fxdeprecatedenvwarning{afixme}{anfxfatal}%
-  \anfxfatal}
-\let\endafixme\endanfxfatal
+
+\@fxnewdeprecatedenv{afixme}{anfxfatal}
 
 %    \end{macrocode}
 %
