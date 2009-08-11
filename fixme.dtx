@@ -479,28 +479,28 @@
 
 %    \end{macrocode}
 % \subsubsection{\texttt{xkeyval} related}
-% \begin{macro}{\FXDeclareLegacyOption}
+% \begin{macro}{\@fxdeclarelegacyoption}
 %   A ``legacy option'' is a package option that is not used anymore.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FXDeclareLegacyOption[1]{%
+\newcommand\@fxdeclarelegacyoption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \@fxpkgwarning{'#1' is a legacy option that has no effect anymore,}}}
 
 %    \end{macrocode}
-% \begin{macro}{\FXDeclareLegacyBoolOption}
+% \begin{macro}{\@fxdeclarelegacybooloption}
 %   A ``legacy boolean option'' is a legacy |arg| option and its |noarg|
 %   counterpart. Note that we don't really ensure the boolean status of these
 %   options anymore.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FXDeclareLegacyBoolOption[1]{%
-  \FXDeclareLegacyOption{#1}
-  \FXDeclareLegacyOption{no#1}}
+\newcommand\@fxdeclarelegacybooloption[1]{%
+  \@fxdeclarelegacyoption{#1}
+  \@fxdeclarelegacyoption{no#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxvoidoptionerror}
-%   \begin{macro}{\FXDeclareVoidOption}
+%   \begin{macro}{\@fxdeclarevoidoption}
 %     A ``void option'' is a package option that doesn't expect any argument.
 %   \end{macro}
 % \end{macro}
@@ -511,7 +511,7 @@
     none.\MessageBreak
     Type X to quit, fix the options list passed to FiXme and re-run
     LaTeX.\MessageBreak}}
-\newcommand\FXDeclareVoidOption[3]{%
+\newcommand\@fxdeclarevoidoption[3]{%
   \DeclareOptionX[fx]<#1>{#2}[]{%
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
 
@@ -531,7 +531,7 @@
 \newcommand\@fxdeclarebooloptkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]
   \DeclareOptionX[fx]<#1>{#2}[true]{\XKV@setbool{fx@#1@#2}{##1}}
-  \FXDeclareVoidOption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
+  \@fxdeclarevoidoption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeclarecmdoptkey}
@@ -795,8 +795,8 @@
 %    \end{macrocode}
 % \begin{macro}{\FiXmeInfo}
 %   \begin{macro}{\FiXmeWarning}
-%     Macros unused since version 2.2, but kept here anyway to avoid breaking
-%     compilation of older documents.
+%     The following macros are unused since version 2.2, but kept here anyway
+%     to avoid breaking compilation of older documents.
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -806,7 +806,7 @@
 %    \end{macrocode}
 % \subsubsection{Layout options}
 % As of version 4, these options are implemented as |xkeyval| keys, and
-% are available both as package and macros options. The |margin| and
+% are available both as package and macro options. The |margin| and
 % |marginclue| layouts are mutually exclusive, so we have to redefine the
 % |xkeyval| key macro to handle this.
 %    \begin{macrocode}
@@ -872,8 +872,8 @@
 % The following options are here for backward compatibility, but are not used
 % anymore:
 %    \begin{macrocode}
-\FXDeclareLegacyBoolOption{info}
-\FXDeclareLegacyBoolOption{warning}
+\@fxdeclarelegacybooloption{info}
+\@fxdeclarelegacybooloption{warning}
 
 %    \end{macrocode}
 %
@@ -1151,7 +1151,7 @@
 %
 % \subsection{Internationalization}
 %    \begin{macrocode}
-\FXDeclareVoidOption{lang}{english}{%
+\@fxdeclarevoidoption{lang}{english}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warning}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}
@@ -1162,7 +1162,7 @@
   \renewcommand*\fxerrorindexname{**c@Errors:!}
   \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{List of Corrections}}
-\FXDeclareVoidOption{lang}{french}{%
+\@fxdeclarevoidoption{lang}{french}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Attention}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Erreur}
@@ -1173,8 +1173,8 @@
   \renewcommand*\fxerrorindexname{**c@Erreurs:!}
   \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Liste des Corrections}}
-\FXDeclareVoidOption{lang}{francais}{\ExecuteOptionsX[fx]<lang>{french}}
-\FXDeclareVoidOption{lang}{spanish}{%
+\@fxdeclarevoidoption{lang}{francais}{\ExecuteOptionsX[fx]<lang>{french}}
+\@fxdeclarevoidoption{lang}{spanish}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Aviso}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}
@@ -1185,7 +1185,7 @@
   \renewcommand*\fxerrorindexname{**c@Errores:!}
   \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
-\FXDeclareVoidOption{lang}{italian}{%
+\@fxdeclarevoidoption{lang}{italian}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Avviso}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Errore}
@@ -1196,7 +1196,7 @@
   \renewcommand*\fxerrorindexname{**c@Errori:!}
   \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Corrigenda}}
-\FXDeclareVoidOption{lang}{german}{%
+\@fxdeclarevoidoption{lang}{german}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Anm}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warnung}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fehler}
@@ -1207,9 +1207,9 @@
   \renewcommand*\fxerrorindexname{**c@Fehler:!}
   \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
-\FXDeclareVoidOption{lang}{ngerman}{%
+\@fxdeclarevoidoption{lang}{ngerman}{%
   \ExecuteOptionsX[fx]<lang>{german}}
-\FXDeclareVoidOption{lang}{danish}{%
+\@fxdeclarevoidoption{lang}{danish}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Advarsel}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fejl}
@@ -1220,7 +1220,7 @@
   \renewcommand*\fxerrorindexname{**c@Fejl:!}
   \renewcommand*\fxfatalindexname{}
   \renewcommand*{\listfixmename}{Rettelser}}
-\FXDeclareVoidOption{lang}{croatian}{%
+\@fxdeclarevoidoption{lang}{croatian}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Poruka}
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Upozorenje}
   \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Gre\v ska}
@@ -1244,7 +1244,7 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\FXDeclareVoidOption{ltx}{final}{
+\@fxdeclarevoidoption{ltx}{final}{
   \let\@fxnote\@fxnote@final
   \let\@fxwarning\@fxwarning@final
   \let\@fxerror\@fxerror@final
@@ -1254,7 +1254,7 @@
   \let\listoffixmes\listoffixmes@final
 }
 
-\FXDeclareVoidOption{ltx}{draft}{
+\@fxdeclarevoidoption{ltx}{draft}{
   \@ifclassloaded{article}{
     \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
     \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}{
