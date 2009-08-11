@@ -438,10 +438,13 @@
 			Insert fixme notes in your documents]
 
 %    \end{macrocode}
-% \DescribeMacro{\fixmelogo}
+% \DescribeMacro{\fixmelogo} The \fixme{} logo:
 %    \begin{macrocode}
 \newcommand*\fixmelogo{\textsf{FiXme}}
 
+%    \end{macrocode}
+% Some required packages:
+%    \begin{macrocode}
 \RequirePackage{ifthen}
 \RequirePackage{verbatim}
 \RequirePackage{xkeyval}
@@ -467,7 +470,7 @@
 % \subsection{Utilities}
 % \begin{macro}{\@fxpkgwarning}
 %   \begin{macro}{\@fxpkgerror}
-%     Issue \fixme{} package warnings or errors.
+%     Issue \fixme{} package warnings or errors:
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -475,22 +478,31 @@
 \newcommand\@fxpkgerror[2]{\PackageError{FiXme}{#1}{#2}}
 
 %    \end{macrocode}
-% A ``legacy option'' is a package option that is not used anymore.
+% \begin{macro}{\FXDeclareLegacyOption}
+%   A ``legacy option'' is a package option that is not used anymore.
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\FXDeclareLegacyOption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \@fxpkgwarning{'#1' is a legacy option that has no effect anymore,}}}
 
 %    \end{macrocode}
-% A ``legacy boolean option'' is a legacy |arg| option and its |noarg|
-% counterpart.
+% \begin{macro}{\FXDeclareLegacyBoolOption}
+%   A ``legacy boolean option'' is a legacy |arg| option and its |noarg|
+%   counterpart. Note that we don't really ensure the boolean status of these
+%   options anymore.
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\FXDeclareLegacyBoolOption[1]{%
   \FXDeclareLegacyOption{#1}
   \FXDeclareLegacyOption{no#1}}
 
 %    \end{macrocode}
-% A ``void option'' is a package option that doesn't expect any argument.
+% \begin{macro}{\@fxvoidoptionerror}
+%   \begin{macro}{\FXDeclareVoidOption}
+%     A ``void option'' is a package option that doesn't expect any argument.
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxvoidoptionerror[2]{%
   \@fxpkgerror{misuse of option '#1'}{%
@@ -503,14 +515,17 @@
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
 
 %    \end{macrocode}
-% A ``boolean option-key'' is a boolean package option and macro key argument
-% as well. For each |arg| option-key, there is a |noarg| void option-key
-% counterpart.\par
-% |xkeyval| doesn't provide any simple way to create boolean options. The
-% somewhat gross macro below does the job. First, we create the key. This
-% provides us with the \cs{if} conditionals. Then, we redefine the same key,
-% but as an option this time, and we set the function to the |xkeyval| boolean
-% assignation. Finally, we provide the negative couterpart void option.
+% \begin{macro}{\@fxdeclarebooloptkey}
+%   A ``boolean option-key'' is a boolean package option and macro key
+%   argument as well. For each |arg| option-key, there is a |noarg| void
+%   option-key counterpart.\par
+%   |xkeyval| doesn't provide any simple way to create boolean options. The
+%   somewhat gross macro below does the job. First, we create the key. This
+%   provides us with the \cs{if} conditionals. Then, we redefine the same key,
+%   but as an option this time, and we set the function to the |xkeyval|
+%   boolean assignation. Finally, we provide the negative couterpart void
+%   option.
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeclarebooloptkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]
@@ -518,9 +533,11 @@
   \FXDeclareVoidOption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
-% A ``cmd option-key'' is a command (in the |xkeyval| sense) package option
-% and macro key argument as well. Same comment as above for creating such
-% beasts.
+% \begin{macro}{\@fxdeclarecmdoptkey}
+%   A ``command option-key'' is a command (in the |xkeyval| sense) package
+%   option and macro key argument as well. Same comment as above for creating
+%   such beasts.
+% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeclarecmdoptkey[3][]{%
   \define@cmdkey[fx]{#2}{#3}[#1]
@@ -530,7 +547,8 @@
 %    \end{macrocode}
 %
 % \begin{macro}{\@fxnewlegacycmd}
-%   Defines a command taking one argument that has no effect anymore.
+%   Defines a ``legacy'' command, taking one argument, and that has no effect
+%   anymore.
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnewlegacycmd[1]{%
@@ -557,7 +575,8 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
-  \@fxpkgwarning{The '#1' environment is deprecated; please use '#2' instead,}}
+  \@fxpkgwarning{%
+    The '#1' environment is deprecated; please use '#2' instead,}}
 
 %    \end{macrocode}
 %
