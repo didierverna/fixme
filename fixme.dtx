@@ -1026,9 +1026,9 @@
 %    \end{macrocode}
 % \begin{macro}{\fxfatalprefix}
 %   \begin{macro}{\fxfatalindexname}
-%     \begin{macro}{\@fxfatal@draft}
-%       \begin{macro}{\@fxfatal@final}
-%         fxfatals:
+%     \begin{macro}{\@fxfatal@final}
+%       \begin{macro}{\@fxfatal@draft}
+%         \textbf{fxfatals:}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -1042,8 +1042,9 @@
 %    \end{macrocode}
 % The |\FiXme*| macros are kept only to preserve backward compatibility. They
 % are used by fatal notes only and are made to call the new versions by
-% default. |\FiXmeUser| is treated a bit differently though. See comment in
-% the Finale's ``Backward Compatibility'' section.
+% default (|\FiXmeUser| is treated a bit differently though; see comment in
+% the Finale's ``Backward Compatibility'' section). Because of that, we can't
+% define \cs{fxfatal@draft} in terms of \cs{@fxlayout}.
 %    \begin{macrocode}
 \newcommand\FiXmeInline[1]{\FXInline{\fxfatalprefix}{#1}}
 \newcommand\FiXmeMargin[1]{\FXMargin{\fxfatalprefix}{#1}}
@@ -1053,9 +1054,12 @@
 \newcommand\FiXmeIndex[1]{\FXIndex{#1}}
 
 %    \end{macrocode}
-% And because of that, we can't define \cs{fxfatal@draft} in terms of
-% \cs{@fxlayout}.
 %    \begin{macrocode}
+\def\@fxfatal@final#1{%
+  \@fxpkgerror{'#1' fixme left in final version}{%
+    You are processing your document in final mode,\MessageBreak
+    but you still have some FiXme fatal errors left behind.\MessageBreak
+    Type X to quit, fix your document, and rerun LaTeX.}}
 \def\@fxfatal@draft#1{%
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
@@ -1068,14 +1072,9 @@
   \fi%
   \iffx@log@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
-\def\@fxfatal@final#1{%
-  \@fxpkgerror{'#1' fixme left in final version}{%
-    You are processing your document in final mode,\MessageBreak
-    but you still have some FiXme fatal errors left behind.\MessageBreak
-    Type X to quit, fix your document, and rerun LaTeX.}}
 
 %    \end{macrocode}
-% \subsubsection{Actual notes}
+% \subsubsection{User-level versions}
 % \begin{macro}{\@@fx}
 %   \begin{macro}{\@fx}
 %     \begin{macro}{\fxnote}
