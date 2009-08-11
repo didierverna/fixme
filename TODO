@@ -93,3 +93,5 @@ e.g.  fixmenoteprefix -> fxnoteprefix
 expansion problems when trying to do so.
 
 * See if we can stick footnotes from environments to text before
+
+* Ask for the translation of "fatal errors" in the supported languages
