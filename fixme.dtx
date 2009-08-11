@@ -900,12 +900,12 @@
 
 \newcounter{fxerrorcount}
 \def\thefixmeerrorcount{%
-  \@fxdeprecationerror{thefixmeerrorcount}{thefxerrorcount}%
+  \@fxdeprecatedcmdwarning{thefixmeerrorcount}{thefxerrorcount}%
   \thefxerrorcount}
 
 \newcounter{fxfatalcount}
 \def\thefixmefatalcount{%
-  \@fxdeprecationfatal{thefixmefatalcount}{thefxfatalcount}%
+  \@fxdeprecatedcmdwarning{thefixmefatalcount}{thefxfatalcount}%
   \thefxfatalcount}
 
 %    \end{macrocode}
