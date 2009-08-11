@@ -1106,6 +1106,7 @@
   {\@fx{error}}{\@@fx{error}}}
 \DeclareRobustCommand\fxfatal{\@ifnextchar[%]
   {\@fx{fatal}}{\@@fx{fatal}}}
+
 \@fxnewdeprecatedcmd{fixme}{fxfatal}
 
 %    \end{macrocode}
@@ -1148,7 +1149,7 @@
 
 %    \end{macrocode}
 %
-% \subsubsection{Actual environments}
+% \subsubsection{User-level environments}
 %    \begin{macrocode}
 \newenvironment{anfxnote}[2][]{%
   \@fxenvbegin{fxnote}{#1}{#2}}{%
@@ -1256,8 +1257,13 @@
 % \begin{macro}{\@fxnote}
 %   \begin{macro}{\@fxwarning}
 %     \begin{macro}{\@fxerror}
-%       Here's where the draft or final version of the internal macros are
-%       selected.
+%       \begin{macro}{\@fxfatal}
+%         \begin{macro}{\@fxenvbegin}
+%           \begin{macro}{\@fxenvend}
+%             Select draft or final versions of internal macros:
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
