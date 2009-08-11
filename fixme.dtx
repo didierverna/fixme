@@ -444,10 +444,6 @@
 
 \RequirePackage{ifthen}
 \RequirePackage{verbatim}
-
-%    \end{macrocode}
-% |xkeyval| and some convenience wrappers:
-%    \begin{macrocode}
 \RequirePackage{xkeyval}
 
 %%\def\XKV@setbool#1#2{%
@@ -467,12 +463,23 @@
 %%}
 
 %    \end{macrocode}
+%
+% \subsection{Utilities}
+% \begin{macro}{\@fxpkgwarning}
+%   \begin{macro}{\@fxpkgerror}
+%     Issue \fixme{} package warnings or errors.
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxpkgwarning[1]{\PackageWarning{FiXme}{#1}}
+\newcommand\@fxpkgerror[2]{\PackageError{FiXme}{#1}{#2}}
+
+%    \end{macrocode}
 % A ``legacy option'' is a package option that is not used anymore.
 %    \begin{macrocode}
 \newcommand\FXDeclareLegacyOption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
-    \PackageWarning{FiXme}{%
-      `#1' is a legacy option that has no effect anymore,}}}
+    \@fxpkgwarning{'#1' is a legacy option that has no effect anymore,}}}
 
 %    \end{macrocode}
 % A ``legacy boolean option'' is a legacy |arg| option and its |noarg|
@@ -486,8 +493,8 @@
 % A ``void option'' is a package option that doesn't expect any argument.
 %    \begin{macrocode}
 \newcommand\@fxvoidoptionerror[2]{%
-  \PackageError{FiXme}{misuse of option `#1'}{%
-    You have given the option `#1' the argument `#2' but it takes
+  \@fxpkgerror{misuse of option '#1'}{%
+    You have given the option '#1' the argument '#2' but it takes
     none.\MessageBreak
     Type X to quit, fix the option list passed to FiXme and re-run
     LaTeX.\MessageBreak}}
@@ -522,15 +529,13 @@
 
 %    \end{macrocode}
 %
-%\subsection{Utilities}
-%
 % \begin{macro}{\@fxnewlegacycmd}
 %   Defines a command taking one argument that has no effect anymore.
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnewlegacycmd[1]{%
   \expandafter\newcommand\csname #1\endcsname[1]{%
-    \PackageWarning{FiXme}{%
+    \@fxpkgwarning{%
       \expandafter\string\csname #1\endcsname\space is a legacy command that
       has no effect anymore,}}}
 
@@ -541,7 +546,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
-  \PackageWarning{FiXme}{%
+  \@fxpkgwarning{%
     \expandafter\string\csname #1\endcsname\space is deprecated;
     please use \expandafter\string \csname #2\endcsname\space instead,}}
 
@@ -552,8 +557,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
-  \PackageWarning{FiXme}{%
-    The '#1' environment is deprecated; please use '#2' instead,}}
+  \@fxpkgwarning{The '#1' environment is deprecated; please use '#2' instead,}}
 
 %    \end{macrocode}
 %
@@ -785,16 +789,14 @@
 \def\fx@layout@margin#1{%
   \XKV@setbool{fx@layout@margin}{#1}
   \ifthenelse{\equal{#1}{true}\and\boolean{fx@layout@marginclue}}{%
-    \PackageWarning{FiXme}{%
-      Marginal notes requested; turning marginal clues off,}%
+    \@fxpkgwarning{Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}}
 
 \@fxdeclarebooloptkey{layout}{marginclue}
 \def\fx@layout@marginclue#1{%
   \XKV@setbool{fx@layout@marginclue}{#1}
   \ifthenelse{\equal{#1}{true}\and\boolean{fx@layout@margin}}{%
-    \PackageWarning{FiXme}{%
-      Marginal clues requested; turning marginal notes off,}%
+    \@fxpkgwarning{Marginal clues requested; turning marginal notes off,}%
     \fx@layout@margin{false}}}
 
 \@fxdeclarebooloptkey{layout}{inline}
@@ -1030,7 +1032,7 @@
   \iffx@log@silent\else\FXFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
 \def\@fxfatal@final#1{%
-  \PackageError{FiXme}{`#1' fixme left in final version}{%
+  \@fxpkgerror{'#1' fixme left in final version}{%
     You are processing your document in final mode,\MessageBreak
     but you still have some critical FiXme's left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
