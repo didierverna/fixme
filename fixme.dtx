@@ -801,40 +801,56 @@
 %
 % \subsection{Layout}
 % \subsubsection{Layout macros}
-% \begin{macro}{\FXMargin}
-%   \begin{macro}{\FXMarginCLue}
-%     \begin{macro}{\FXInline}
-%       \begin{macro}{\FXFootnote}
-%         Textual output:
+% \begin{macro}{\@fxlayoutrenaming}
+%   As of version 4, layout macros have been renamed from \cs{FX*} to
+%   \cs{FXLayout*}. Older versions remain for backward compatibility.
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxlayoutrenaming[1]{%
+  \@fxnewdeprecatedrenewable{FX#1}{FXLayout#1}}
+
+%    \end{macrocode}
+% \begin{macro}{\FXLayoutMargin}
+%   \begin{macro}{\FXLayoutMarginCLue}
+%     \begin{macro}{\FXLayoutInline}
+%       \begin{macro}{\FXLayoutFootnote}
+%         \textbf{Textual output:}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FXMargin[2]{%
+\newcommand\FXLayoutMargin[2]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
     \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
-\newcommand\FXMarginClue[1]{%
+\newcommand\FXLayoutMarginClue[1]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}!]{%
     \footnotesize\raggedright\textbf{#1}!}}
-\newcommand\FXInline[2]{%
+\newcommand\FXLayoutInline[2]{%
   \textbf{#1}: \emph{#2}}
-\newcommand\FXFootnote[2]{%
+\newcommand\FXLayoutFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
+
+\@fxlayoutrenaming{Margin}
+\@fxlayoutrenaming{MarginClue}
+\@fxlayoutrenaming{Inline}
+\@fxlayoutrenaming{Footnote}
 
 %    \end{macrocode}
 % Note that \cs{FXUser} is not defined here. Requesting the |user| layout
 % without defining this command would then produce an error.
 %
 % \begin{macro}{\fixmeindexname}
-%   \begin{macro}{\FXIndex}
-%     Index output:
+%   \begin{macro}{\FXLayoutIndex}
+%     \textbf{Index output:}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
 \newcommand*\fixmeindexname{}
-\newcommand\FXIndex[1]{%
+\newcommand\FXLayoutIndex[1]{%
   \index{***@\fixmeindexname:!#1}}
+
+\@fxlayoutrenaming{Index}
 
 %    \end{macrocode}
 % The following macros are unused since version 2.2 (at the time of which,
@@ -973,10 +989,10 @@
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
   \@fxhandleinnerfallback%
-  \iffx@layout@footnote\FXFootnote{#1}{#2}\fi%
-  \iffx@layout@margin\FXMargin{#1}{#2}\fi%
-  \iffx@layout@marginclue\FXMarginClue{#1}\fi%
-  \iffx@layout@inline\FXInline{#1}{#2}\fi%
+  \iffx@layout@footnote\FXLayoutFootnote{#1}{#2}\fi%
+  \iffx@layout@margin\FXLayoutMargin{#1}{#2}\fi%
+  \iffx@layout@marginclue\FXLayoutMarginClue{#1}\fi%
+  \iffx@layout@inline\FXLayoutInline{#1}{#2}\fi%
   \iffx@layout@user\FXUser{#1}{#2}\fi}
 
 %    \end{macrocode}
@@ -1002,7 +1018,7 @@
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
 \def\@fxnote@draft#1{%
   \@fxlayout{\fxnoteprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxnoteindexname\thefxnotecount: #1}\fi%
+  \iffx@layout@index\FXLayoutIndex{\fxnoteindexname\thefxnotecount: #1}\fi%
   \@fxnote@final{#1}}
 
 %    \end{macrocode}
@@ -1025,7 +1041,9 @@
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
 \def\@fxwarning@draft#1{%
   \@fxlayout{\fxwarningprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxwarningindexname\thefxwarningcount: #1}\fi%
+  \iffx@layout@index%
+    \FXLayoutIndex{\fxwarningindexname\thefxwarningcount: #1}%
+  \fi%
   \@fxwarning@final{#1}}
 
 %    \end{macrocode}
@@ -1048,7 +1066,9 @@
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
 \def\@fxerror@draft#1{%
   \@fxlayout{\fxerrorprefix}{#1}%
-  \iffx@layout@index\FXIndex{\fxerrorindexname\thefxerrorcount: #1}\fi%
+  \iffx@layout@index%
+    \FXLayoutIndex{\fxerrorindexname\thefxerrorcount: #1}%
+  \fi%
   \@fxerror@final{#1}}
 
 %    \end{macrocode}
@@ -1074,12 +1094,12 @@
 % the Finale's ``Backward Compatibility'' section). Because of that, we can't
 % define \cs{fxfatal@draft} in terms of \cs{@fxlayout}.
 %    \begin{macrocode}
-\newcommand\FiXmeInline[1]{\FXInline{\fxfatalprefix}{#1}}
-\newcommand\FiXmeMargin[1]{\FXMargin{\fxfatalprefix}{#1}}
-\newcommand\FiXmeFootnote[1]{\FXFootnote{\fxfatalprefix}{#1}}
+\newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
+\newcommand\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
+\newcommand\FiXmeFootnote[1]{\FXLayoutFootnote{\fxfatalprefix}{#1}}
 \newcommand\FiXmeUser[1]{}
 \let\FiXmeUser\empty
-\newcommand\FiXmeIndex[1]{\FXIndex{#1}}
+\newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
 %    \begin{macrocode}
@@ -1092,7 +1112,7 @@
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
-  \iffx@layout@marginclue\FXMarginClue{\fxfatalprefix}\fi%
+  \iffx@layout@marginclue\FXLayoutMarginClue{\fxfatalprefix}\fi%
   \iffx@layout@inline\FiXmeInline{#1}\fi%
   \iffx@layout@user\FiXmeUser{#1}\fi%
   \iffx@layout@index%
