@@ -598,6 +598,34 @@
     \csname end#2\endcsname}}
 
 %    \end{macrocode}
+% \begin{macro}{\@fxnewdeprecatedrenewable}
+%   A ``deprecated renewable [command]'' is a deprecated command that is
+%   likely to be renew'ed by the user. There are several possibilities to
+%   implement this. One is to maintain the use of the older version in the
+%   core of \fixme{}, and make it just call the new one by default. That way,
+%   if the user redefines the older one, it will work out of the box. However,
+%   I prefer that the core of \fixme{} always use the newest API if possible,
+%   so the chosen solution is as follows:
+%   \begin{enumerate}
+%   \item \cs{newcommand} the old one and \cs{let} it be \cs{empty},
+%   \item \cs{AtBeginDocument}, check if the old command has been redefined
+%     (that is, if it is not \cs{empty} anymore),
+%   \item and if so, issue a deprecation warning and redefine the new one to
+%     call the old one.
+%   \end{enumerate}
+%   Note that we don't need to know the macro's prototype, because
+%   \cs{renewcommand} asks for it all over again.
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxnewdeprecatedrenewable[2]{%
+  \expandafter\newcommand\csname #1\endcsname{}
+  \expandafter\let\csname #1\endcsname\empty
+  \AtBeginDocument{%
+    \ifthenelse{\equal{\csname #1\endcsname}{\empty}}{}{%
+      \@fxdeprecatedcmdwarning{#1}{#2}%
+      \expandafter\def\csname #2\endcsname{\csname #1\endcsname}}}}
+
+%    \end{macrocode}
 % \subsection{List macros}
 % \begin{macro}{\l@fixme}
 %   \begin{macro}{\listoffixmes}
