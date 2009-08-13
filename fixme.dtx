@@ -831,6 +831,7 @@
 \newcommand\FXLayoutFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
+
 \@fxlayoutrenaming{Margin}
 \@fxlayoutrenaming{MarginClue}
 \@fxlayoutrenaming{Inline}
@@ -901,32 +902,46 @@
 %
 % \subsection{Logging}
 % \subsubsection{Logging macros}
-% \begin{macro}{\FXNote}
-%   \begin{macro}{\FXWarning}
-%     \begin{macro}{\FXerror}
-%       \begin{macro}{\FXFatal}
+% \begin{macro}{\@fxlogrenaming}
+%   As of version 4, logging macros have been renamed from \cs{FX*} to
+%   \cs{FXLog*}. Older versions remain for backward compatibility.
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxlogrenaming[1]{%
+  \@fxnewdeprecatedrenewable{FX#1}{FXLog#1}}
+
+%    \end{macrocode}
+% \begin{macro}{\FXLogNote}
+%   \begin{macro}{\FXLogWarning}
+%     \begin{macro}{\FXLogerror}
+%       \begin{macro}{\FXLogFatal}
 %         Logging includes both log file and terminal output.
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\FXNote[1]{%
+\newcommand\FXLogNote[1]{%
   \GenericInfo{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Note: '#1'}}
-\newcommand\FXWarning[1]{%
+\newcommand\FXLogWarning[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Warning: '#1'}}
-\newcommand\FXError[1]{%
+\newcommand\FXLogError[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Error: '#1'}}
-\newcommand\FXFatal[1]{%
+\newcommand\FXLogFatal[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Fatal Error: '#1'}}
+
+\@fxlogrenaming{Note}
+\@fxlogrenaming{Warning}
+\@fxlogrenaming{Error}
+\@fxlogrenaming{Fatal}
 
 %    \end{macrocode}
 % \subsubsection{Logging options}
@@ -1014,7 +1029,7 @@
 \newcommand*\fxnoteindexname{}
 \newcommand*\fixmenoteindexname{}
 \def\@fxnote@final#1{%
-  \iffx@log@silent\else\FXNote{#1}\fi%
+  \iffx@log@silent\else\FXLogNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
 \def\@fxnote@draft#1{%
   \@fxlayout{\fxnoteprefix}{#1}%
@@ -1037,7 +1052,7 @@
 \newcommand*\fxwarningindexname{}
 \newcommand*\fixmewarningindexname{}
 \def\@fxwarning@final#1{%
-  \iffx@log@silent\else\FXWarning{#1}\fi%
+  \iffx@log@silent\else\FXLogWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
 \def\@fxwarning@draft#1{%
   \@fxlayout{\fxwarningprefix}{#1}%
@@ -1062,7 +1077,7 @@
 \newcommand*\fxerrorindexname{}
 \newcommand*\fixmeerrorindexname{}
 \def\@fxerror@final#1{%
-  \iffx@log@silent\else\FXError{#1}\fi%
+  \iffx@log@silent\else\FXLogError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
 \def\@fxerror@draft#1{%
   \@fxlayout{\fxerrorprefix}{#1}%
@@ -1118,7 +1133,7 @@
   \iffx@layout@index%
     \FiXmeIndex{\fxfatalindexname\thefxfatalcount: #1}%
   \fi%
-  \iffx@log@silent\else\FXFatal{#1}\fi%
+  \iffx@log@silent\else\FXLogFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
 
 %    \end{macrocode}
