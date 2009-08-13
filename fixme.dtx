@@ -578,6 +578,14 @@
     \@fxdeprecatedcmdwarning{#1}{#2}%
     \csname #2\endcsname}}
 
+%    \end{macrocode}
+% \begin{macro}{\@fxprefixrename}
+%   Since version 4 comes with a lot of \texttt{fixme} to \texttt{fx} prefix
+%   change, we have a special macro for this:
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxprefixdeprecate[2][]{%
+  \@fxnewdeprecatedcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeprecatedenvwarning}
