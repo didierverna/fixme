@@ -856,8 +856,9 @@
 \@fxlayoutrename{Footnote}
 
 %    \end{macrocode}
-% Note that \cs{FXUser} is not defined here. Requesting the |user| layout
-% without defining this command would then produce an error.
+% Note that neither \cs{FXLayoutUser} (nor the deprecated version \cs{FXUser})
+% are defined here. Requesting the |user| layout without defining one or the
+% other would produce an error, which is the expected behavior.
 %
 % \begin{macro}{\fixmeindexname}
 %   \begin{macro}{\FXLayoutIndex}
@@ -1031,7 +1032,7 @@
   \iffx@layout@margin\FXLayoutMargin{#1}{#2}\fi%
   \iffx@layout@marginclue\FXLayoutMarginClue{#1}\fi%
   \iffx@layout@inline\FXLayoutInline{#1}{#2}\fi%
-  \iffx@layout@user\FXUser{#1}{#2}\fi}
+  \iffx@layout@user\FXLayoutUser{#1}{#2}\fi}
 
 %    \end{macrocode}
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
@@ -1133,17 +1134,19 @@
 \@fxprefixdeprecaterenewable{fatalindexname}
 
 %    \end{macrocode}
-% The \cs{FiXme*} macros are kept only to preserve backward compatibility. They
-% are used by fatal notes only and are made to call the new versions by
-% default (\cs{FiXmeUser} is treated a bit differently though; see comment in
-% the Finale's ``Backward Compatibility'' section). Because of that, we can't
-% define \cs{fxfatal@draft} in terms of \cs{@fxlayout}.
+% The \cs{FiXme*} macros are kept only to preserve backward compatibility.
+% They are used by fatal notes only and are made to call the new versions by
+% default. Because of that, we can't define \cs{fxfatal@draft} in terms of
+% \cs{@fxlayout}. \cs{FiXmeUser} is treated a bit differently though; see
+% comment in the Finale's ``Backward Compatibility'' section.
 %    \begin{macrocode}
 \newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
 \newcommand\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
 \newcommand\FiXmeFootnote[1]{\FXLayoutFootnote{\fxfatalprefix}{#1}}
+
 \newcommand\FiXmeUser[1]{}
 \let\FiXmeUser\empty
+
 \newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
@@ -1437,33 +1440,24 @@
 
 %    \end{macrocode}
 %
-% \subsubsection{Backward Compatibility Tweaks}
-% \begin{macro}{\@fxdeprecate}
-%   Deprecate a \cs{fixme*} command in favor an \cs{fx*} one.
-% \end{macro}
-%    \begin{macrocode}
-\newcommand\@fxdeprecate[2][]{%
-  \ifthenelse{\equal{\csname #1fixme#2\endcsname}{}}{}{%
-    \@fxdeprecatedcmdwarning{#1fixme#2}{#1fx#2}%
-    %% #### FIXME: I'd want the body to be expanded only once. Check how to.
-    \expandafter\edef\csname #1fx#2\endcsname{\csname #1fixme#2\endcsname}}}
-
-%    \end{macrocode}
-% Backward compatibility with \cs{FiXmeUser} is done differently from the
-% other \cs{FiXme*} commands, because users of version 1.|x| were instructed
-% to \cs{renewcommand} it to something useful. So we \cs{newcommand} it to
-% \cs{empty}, and unless changed in the document's preamble, we then define it
-% to call the modern one. Note also that this will work with the \cs{fixme}
-% command, but not with the \cs{fx*} ones that appeared in version 2 (they
-% would try to call the undefined macro \cs{FXUser}). This is ok because if
-% somebody is aware of \fixme{} notes, then they (should) know that the new
-% way to provide a user layout is to define \cs{FXUser}, not anymore to
-% redefine \cs{FiXmeUser}.
+% \subsubsection{User layout backward compatibility tweaks}
+% User layout Backward compatibility is not as simple as the rest of the
+% interface, because users of version 1 were instructed to \cs{renewcommand}
+% \cs{FiXmeUser} (which is specific to fatal notes), whereas they were
+% instructed to \cs{newcommand} \cs{FXUser} (which is now deprecated in favor
+% of \cs{FXLayoutUser})\ldots oh boy, what a mess.
 %    \begin{macrocode}
 \AtBeginDocument{%
-  \ifx\FiXmeUser\empty%
-    \renewcommand\FiXmeUser[1]{\FXUser{\fxfatalprefix}{#1}}%
-  \fi}
+  \ifthenelse{\NOT\isundefined{\FXLayoutUser}}{%
+    \renewcommand\FiXmeUser[1]{\FXLayoutUser{\fxfatalprefix}{#1}}}{%
+    \ifthenelse{\NOT\isundefined{\FXUser}}{%
+      \@fxdeprecatedcmdwarning{FXUser}{FXLayoutUser}%
+      \newcommand\FXLayoutUser[2]{\FXUser{#1}{#2}}%
+      \renewcommand\FiXmeUser[1]{\FXUser{\fxfatalprefix}{#1}}}{%
+      \ifx\FiXmeUser\empty%
+      \renewcommand\FiXmeUser[1]{}%
+      \else
+      \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}\fi}}}
 
 %    \end{macrocode}
 % Finally, output a summary giving the number of fixme notes at the end of the
