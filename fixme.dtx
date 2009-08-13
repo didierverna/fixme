@@ -802,12 +802,12 @@
 %
 % \subsection{Layout}
 % \subsubsection{Layout macros}
-% \begin{macro}{\@fxlayoutrenaming}
+% \begin{macro}{\@fxlayoutrename}
 %   As of version 4, layout macros have been renamed from \cs{FX*} to
 %   \cs{FXLayout*}. Older versions remain for backward compatibility.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxlayoutrenaming[1]{%
+\newcommand\@fxlayoutrename[1]{%
   \@fxnewdeprecatedrenewable{FX#1}{FXLayout#1}}
 
 %    \end{macrocode}
@@ -833,10 +833,10 @@
   \footnote{\textbf{#1}: \emph{#2}}}
 
 
-\@fxlayoutrenaming{Margin}
-\@fxlayoutrenaming{MarginClue}
-\@fxlayoutrenaming{Inline}
-\@fxlayoutrenaming{Footnote}
+\@fxlayoutrename{Margin}
+\@fxlayoutrename{MarginClue}
+\@fxlayoutrename{Inline}
+\@fxlayoutrename{Footnote}
 
 %    \end{macrocode}
 % Note that \cs{FXUser} is not defined here. Requesting the |user| layout
@@ -852,7 +852,7 @@
 \newcommand\FXLayoutIndex[1]{%
   \index{***@\fixmeindexname:!#1}}
 
-\@fxlayoutrenaming{Index}
+\@fxlayoutrename{Index}
 
 %    \end{macrocode}
 % The following macros are unused since version 2.2 (at the time of which,
@@ -903,12 +903,12 @@
 %
 % \subsection{Logging}
 % \subsubsection{Logging macros}
-% \begin{macro}{\@fxlogrenaming}
+% \begin{macro}{\@fxlogrename}
 %   As of version 4, logging macros have been renamed from \cs{FX*} to
 %   \cs{FXLog*}. Older versions remain for backward compatibility.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxlogrenaming[1]{%
+\newcommand\@fxlogrename[1]{%
   \@fxnewdeprecatedrenewable{FX#1}{FXLog#1}}
 
 %    \end{macrocode}
@@ -939,10 +939,10 @@
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Fatal Error: '#1'}}
 
-\@fxlogrenaming{Note}
-\@fxlogrenaming{Warning}
-\@fxlogrenaming{Error}
-\@fxlogrenaming{Fatal}
+\@fxlogrename{Note}
+\@fxlogrename{Warning}
+\@fxlogrename{Error}
+\@fxlogrename{Fatal}
 
 %    \end{macrocode}
 % \subsubsection{Logging options}
