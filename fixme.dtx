@@ -635,6 +635,15 @@
     \fi}}
 
 %    \end{macrocode}
+% \begin{macro}{\@fxprefixdeprecaterenewable}
+%   Since version 4 comes with a lot of \texttt{fixme} to \texttt{fx} prefix
+%   change, we have a special macro for this:
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxprefixdeprecaterenewable[2][]{%
+  \@fxnewdeprecatedrenewable{#1fixme#2}{#1fx#2}}
+
+%    \end{macrocode}
 % \subsection{List macros}
 % \begin{macro}{\l@fixme}
 %   \begin{macro}{\listoffixmes}
@@ -1039,9 +1048,11 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand*\fxnoteprefix{}
-\newcommand*\fixmenoteprefix{}
 \newcommand*\fxnoteindexname{}
-\newcommand*\fixmenoteindexname{}
+
+\@fxprefixdeprecaterenewable{noteprefix}
+\@fxprefixdeprecaterenewable{noteindexname}
+
 \def\@fxnote@final#1{%
   \iffx@log@silent\else\FXLogNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
@@ -1062,9 +1073,11 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand*\fxwarningprefix{}
-\newcommand*\fixmewarningprefix{}
 \newcommand*\fxwarningindexname{}
-\newcommand*\fixmewarningindexname{}
+
+\@fxprefixdeprecaterenewable{warningprefix}
+\@fxprefixdeprecaterenewable{warningindexname}
+
 \def\@fxwarning@final#1{%
   \iffx@log@silent\else\FXLogWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
@@ -1087,9 +1100,11 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand*\fxerrorprefix{}
-\newcommand*\fixmeerrorprefix{}
 \newcommand*\fxerrorindexname{}
-\newcommand*\fixmeerrorindexname{}
+
+\@fxprefixdeprecaterenewable{errorprefix}
+\@fxprefixdeprecaterenewable{errorindexname}
+
 \def\@fxerror@final#1{%
   \iffx@log@silent\else\FXLogError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
@@ -1112,9 +1127,10 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand*\fxfatalprefix{}
-\newcommand*\fixmefatalprefix{}
 \newcommand*\fxfatalindexname{}
-\newcommand*\fixmefatalindexname{}
+
+\@fxprefixdeprecaterenewable{fatalprefix}
+\@fxprefixdeprecaterenewable{fatalindexname}
 
 %    \end{macrocode}
 % The \cs{FiXme*} macros are kept only to preserve backward compatibility. They
@@ -1447,15 +1463,7 @@
 \AtBeginDocument{%
   \ifx\FiXmeUser\empty%
     \renewcommand\FiXmeUser[1]{\FXUser{\fxfatalprefix}{#1}}%
-  \fi%
-  \@fxdeprecate{noteprefix}%
-  \@fxdeprecate{warningprefix}%
-  \@fxdeprecate{errorprefix}%
-  \@fxdeprecate{fatalprefix}%
-  \@fxdeprecate{noteindexname}%
-  \@fxdeprecate{warningindexname}%
-  \@fxdeprecate{errorindexname}%
-  \@fxdeprecate{fatalindexname}}
+  \fi}
 
 %    \end{macrocode}
 % Finally, output a summary giving the number of fixme notes at the end of the
