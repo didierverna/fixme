@@ -960,7 +960,8 @@
 %           |fixmecount| maintains the total of all notes, regardless of their
 %           level. As of version 4, other |fixme*| counters have been renamed
 %           to |fx*|. Older versions of \cs{the*} macros remain for backward
-%           compatibility.
+%           compatibility (not the counters themselves, but that should be ok
+%           since users are not supposed to mess up with them).
 %         \end{macro}
 %       \end{macro}
 %     \end{macro}
@@ -999,7 +1000,9 @@
 %    \end{macrocode}
 % \subsubsection{Generic layout dispatch}
 % \begin{macro}{\@fxlayout}
-%   Dispatch all active layouts, index excepted.
+%   Dispatch all active layouts, index excepted. Note that we start with the
+%   footnote layout, so that it is sticked properly to the preceding text if
+%   active.
 % \end{macro}
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
@@ -1123,6 +1126,10 @@
     You are processing your document in final mode,\MessageBreak
     but you still have some FiXme fatal errors left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
+%    \end{macrocode}
+% Note that we start with the footnote layout, so that it is sticked properly
+% to the preceding text if active.
+%    \begin{macrocode}
 \def\@fxfatal@draft#1{%
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
