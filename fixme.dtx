@@ -579,12 +579,12 @@
     \csname #2\endcsname}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxprefixrename}
+% \begin{macro}{\@fxprefixdeprecatecmd}
 %   Since version 4 comes with a lot of \texttt{fixme} to \texttt{fx} prefix
 %   change, we have a special macro for this:
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxprefixdeprecate[2][]{%
+\newcommand\@fxprefixdeprecatecmd[2][]{%
   \@fxnewdeprecatedcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
@@ -983,7 +983,7 @@
 \newcounter{fxerrorcount}
 \newcounter{fxfatalcount}
 
-\newcommand\@fxcounterrename[1]{\@fxprefixdeprecate[the]{#1count}}
+\newcommand\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
 
 \@fxcounterrename{note}
 \@fxcounterrename{warning}
