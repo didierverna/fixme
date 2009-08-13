@@ -983,10 +983,12 @@
 \newcounter{fxerrorcount}
 \newcounter{fxfatalcount}
 
-\@fxnewdeprecatedcmd{thefixmenotecount}{thefxnotecount}
-\@fxnewdeprecatedcmd{thefixmewarningcount}{thefxwarningcount}
-\@fxnewdeprecatedcmd{thefixmeerrorcount}{thefxerrorcount}
-\@fxnewdeprecatedcmd{thefixmefatalcount}{thefxfatalcount}
+\newcommand\@fxcounterrename[1]{\@fxprefixdeprecate[the]{#1count}}
+
+\@fxcounterrename{note}
+\@fxcounterrename{warning}
+\@fxcounterrename{error}
+\@fxcounterrename{fatal}
 
 %    \end{macrocode}
 % \subsubsection{Inner fallback}
