@@ -621,9 +621,10 @@
   \expandafter\newcommand\csname #1\endcsname{}
   \expandafter\let\csname #1\endcsname\empty
   \AtBeginDocument{%
-    \ifthenelse{\equal{\csname #1\endcsname}{\empty}}{}{%
+    \expandafter\ifx\csname #1\endcsname\empty\else%
       \@fxdeprecatedcmdwarning{#1}{#2}%
-      \expandafter\def\csname #2\endcsname{\csname #1\endcsname}}}}
+      \expandafter\def\csname #2\endcsname{\csname #1\endcsname}
+    \fi}}
 
 %    \end{macrocode}
 % \subsection{List macros}
