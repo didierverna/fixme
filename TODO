@@ -84,15 +84,8 @@ text, but doesn't show comments
 %\newcommand{\person1}[3][omit]{\addcomment{omit}{#2}{#3}}
 %\newcommand{\person2}[3][omit]{\addcomment{omit}{#2}{#3}}
 
-* Harmonize prefix for all interface levels
-e.g.  fixmenoteprefix -> fxnoteprefix
-      FXNote -> FXLogNote
-      etc.
-
 * The index layout should be handled by fixme@text, but IIRC, I had macro
 expansion problems when trying to do so.
-
-* See if we can stick footnotes from environments to text before
 
 * Ask for the translation of "fatal errors" in the supported languages
 
@@ -100,3 +93,6 @@ expansion problems when trying to do so.
 	-> yes for logging
 	-> no for package messages
 
+* Investigate the "Floats lost" problem with fixmes in captions
+  (does not occur all the time)
+  and the footnote which is not sticked to the text
