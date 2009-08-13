@@ -1441,6 +1441,16 @@
 
 %    \end{macrocode}
 %
+% \subsection{The \cs{fxsetup} macro}
+% \begin{macro}{\fxsetup}
+%   The inevitable setup macro, extremely impressive yet as trivial as can be
+%   with the \texttt{xkeyval} package\ldots
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\fxsetup[1]{\setkeys[fx]{layout,log,lang,ltx}{#1}}
+
+%    \end{macrocode}
+%
 % \subsubsection{User layout backward compatibility tweaks}
 % User layout Backward compatibility is not as simple as the rest of the
 % interface, because users of version 1 were instructed to \cs{renewcommand}
