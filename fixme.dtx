@@ -375,8 +375,10 @@
 % \section{Changes}
 % \begin{itemize}
 % \item[v4.0] Support for key/value argument syntax in user interface.\\
-%   Automatically avoid margin layout when not in outer par mode, suggested by
-%   Will Robertson.\\
+%   New command \cs{fxsetup}.\\
+%   New layout option \texttt{innerfallback}, to automatically avoid the
+%   \texttt{margin} and \texttt{marginclue} layouts when not in outer par
+%   mode, suggested by Will Robertson.\\
 %   Homogenize the log and console messages.\\
 %   Heavy internals refactoring.
 % \item[v3.4] \cs{fixme}, \cs{fxerror}, \cs{fxwarning} and \cs{fxnote} are now
@@ -449,22 +451,6 @@
 \RequirePackage{ifthen}
 \RequirePackage{verbatim}
 \RequirePackage{xkeyval}
-
-%%\def\XKV@setbool#1#2{%
-%%  \def\XKV@tempa{true}%
-%%  \def\XKV@tempb{false}%
-%%  \lowercase{\def\XKV@tempc{#2}}%
-%%  \ifx\XKV@tempc\XKV@tempa\else
-%%    \ifx\XKV@tempc\XKV@tempb\else
-%%      \let\XKV@tempc\relax
-%%    \fi
-%%  \fi
-%%  \ifx\XKV@tempc\relax
-%%    \XKV@err{boolean can only be `true' or `false'}%
-%%  \else
-%%    \csname#1\XKV@tempc\endcsname
-%%  \fi
-%%}
 
 %    \end{macrocode}
 %
@@ -582,7 +568,7 @@
 %    \end{macrocode}
 % \begin{macro}{\@fxprefixdeprecatecmd}
 %   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
-%   \texttt{fx} prefix change, we have a special macro to do this for
+%   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated commands:
 % \end{macro}
 %    \begin{macrocode}
@@ -639,7 +625,7 @@
 %    \end{macrocode}
 % \begin{macro}{\@fxprefixdeprecaterenewable}
 %   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
-%   \texttt{fx} prefix change, we have a special macro to do this for
+%   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated renewable commands:
 % \end{macro}
 %    \begin{macrocode}
@@ -858,13 +844,15 @@
 \@fxlayoutrename{Footnote}
 
 %    \end{macrocode}
-% Note that neither \cs{FXLayoutUser} (nor the deprecated version \cs{FXUser})
+% Note that neither \cs{FXLayoutUser} nor the deprecated version \cs{FXUser}
 % are defined here. Requesting the |user| layout without defining one or the
 % other would produce an error, which is the expected behavior.
 %
 % \begin{macro}{\fixmeindexname}
 %   \begin{macro}{\FXLayoutIndex}
-%     \textbf{Index output:}
+%     \textbf{Index output:}\par
+%     The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
+%     well.
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
