@@ -850,7 +850,6 @@
 \newcommand\FXLayoutFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
-
 \@fxlayoutrename{Margin}
 \@fxlayoutrename{MarginClue}
 \@fxlayoutrename{Inline}
@@ -882,6 +881,7 @@
 \@fxnewlegacycmd{FiXmeWarning}
 
 %    \end{macrocode}
+%
 % \subsubsection{Layout options}
 % As of version 4, these options are implemented as |xkeyval| keys, and
 % are available both as package and macro options. The |margin| and
@@ -964,6 +964,21 @@
 \@fxlogrename{Fatal}
 
 %    \end{macrocode}
+% \begin{macro}{\@fxlogcs@note}
+%   \begin{macro}{\@fxlogcs@warning}
+%     \begin{macro}{\@fxlogcs@fatal}
+%       In order for the generic dispatch to be able to call the logging
+%       macros, we need a translation mechanism:
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\let\@fxlogcs@note\FXLogNote
+\let\@fxlogcs@warning\FXLogWarning
+\let\@fxlogcs@error\FXLogError
+
+%    \end{macrocode}
+%
 % \subsubsection{Logging options}
 %    \begin{macrocode}
 \@fxdeclarebooloptkey{log}{silent}
@@ -971,40 +986,100 @@
 %    \end{macrocode}
 %
 % \subsection{\fixme{} notes}
-% \subsubsection{Note counters}
+% \subsubsection{Note parameters}
+% As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}.
+% Older versions remain for backward compatibility.
+% \begin{macro}{\@fxcounterrename}
+%   |fixme*| counters have also been renamed to |fx*|. Older versions of
+%   \cs{the*} macros remain for backward compatibility (not the counters
+%   themselves, but that should be ok since users are not supposed to mess up
+%   with them).
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
+
+%    \end{macrocode}
 % \begin{macro}{\thefixmecount}
-%   \begin{macro}{\thefxnotecount}
-%     \begin{macro}{\thefxwarningcount}
-%       \begin{macro}{\thefxerrorcount}
-%         \begin{macro}{\thefxfatalcount}
-%           |fixmecount| maintains the total of all notes, regardless of their
-%           level. As of version 4, other |fixme*| counters have been renamed
-%           to |fx*|. Older versions of \cs{the*} macros remain for backward
-%           compatibility (not the counters themselves, but that should be ok
-%           since users are not supposed to mess up with them).
-%         \end{macro}
-%       \end{macro}
+%   |fixmecount| maintains the total of all notes, regardless of their level.
+% \end{macro}
+%    \begin{macrocode}
+\newcounter{fixmecount}
+
+%    \end{macrocode}
+% \begin{macro}{\thefxnotecount}
+%   \begin{macro}{\fxnoteprefix}
+%     \begin{macro}{\fxnoteindexname}
+%       \textbf{fxnotes:}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcounter{fixmecount}
 \newcounter{fxnotecount}
-\newcounter{fxwarningcount}
-\newcounter{fxerrorcount}
-\newcounter{fxfatalcount}
-
-\newcommand\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
+\newcommand*\fxnoteprefix{}
+\newcommand*\fxnoteindexname{}
 
 \@fxcounterrename{note}
-\@fxcounterrename{warning}
-\@fxcounterrename{error}
-\@fxcounterrename{fatal}
+\@fxprefixdeprecaterenewable{noteprefix}
+\@fxprefixdeprecaterenewable{noteindexname}
 
 %    \end{macrocode}
-% \subsubsection{Inner fallback}
+% \begin{macro}{\thefxwarningcount}
+%   \begin{macro}{\fxwarningprefix}
+%     \begin{macro}{\fxwarningindexname}
+%       \textbf{fxwarnings:}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcounter{fxwarningcount}
+\newcommand*\fxwarningprefix{}
+\newcommand*\fxwarningindexname{}
+
+\@fxcounterrename{warning}
+\@fxprefixdeprecaterenewable{warningprefix}
+\@fxprefixdeprecaterenewable{warningindexname}
+
+%    \end{macrocode}
+% \begin{macro}{\thefxerrorcount}
+%   \begin{macro}{\fxerrorprefix}
+%     \begin{macro}{\fxerrorindexname}
+%       \textbf{fxerrors:}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcounter{fxerrorcount}
+\newcommand*\fxerrorprefix{}
+\newcommand*\fxerrorindexname{}
+
+\@fxcounterrename{error}
+\@fxprefixdeprecaterenewable{errorprefix}
+\@fxprefixdeprecaterenewable{errorindexname}
+
+%    \end{macrocode}
+% \begin{macro}{\thefxfatalcount}
+%   \begin{macro}{\fxfatalprefix}
+%     \begin{macro}{\fxfatalindexname}
+%       \textbf{fxfatals:}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcounter{fxfatalcount}
+\newcommand*\fxfatalprefix{}
+\newcommand*\fxfatalindexname{}
+
+\@fxcounterrename{fatal}
+\@fxprefixdeprecaterenewable{fatalprefix}
+\@fxprefixdeprecaterenewable{fatalindexname}
+
+%    \end{macrocode}
+%
+% \subsubsection{Layout dispatch}
 % \begin{macro}{\@fxinnerfallbackcmd}
 %   \begin{macro}{\@fxhandleinnerfallback}
+%     Automatic disabling of the \texttt{margin} and \texttt{marginclue}
+%     layouts when \TeX{} is in \texttt{inner} mode.
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
@@ -1020,11 +1095,9 @@
   \fi}
 
 %    \end{macrocode}
-% \subsubsection{Generic layout dispatch}
 % \begin{macro}{\@fxlayout}
-%   Dispatch all active layouts, index excepted. Note that we start with the
-%   footnote layout, so that it is sticked properly to the preceding text if
-%   active.
+%   Dispatch all active layouts. Note that we start with the footnote layout,
+%   so that it is sticked properly to the preceding text if active.
 % \end{macro}
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
@@ -1040,102 +1113,60 @@
   \iffx@layout@index\FXLayoutIndex{\@fxtempb\@fxtempc: #2}\fi}
 
 %    \end{macrocode}
-% \subsubsection{\texttt{final} and \texttt{draft} versions}
-% As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}.
-% Older versions remain for backward compatibility.
-% \begin{macro}{\fxnoteprefix}
-%   \begin{macro}{\fxnoteindexname}
-%     \begin{macro}{\@fxnote@final}
-%       \begin{macro}{\@fxnote@draft}
-%         \textbf{fxnotes:}
+% \subsubsection{Non fatal notes}
+% \begin{macro}{\@@fx@final}
+%   \begin{macro}{\@@fx@draft}
+%     \begin{macro}{\@@fx}
+%       \begin{macro}{\@fx}
+%         The generic mechanism below applies only to \fixme{} notes, warnings
+%         and errors. Fatal notes are handled in the next section.
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand*\fxnoteprefix{}
-\newcommand*\fxnoteindexname{}
+\def\@@fx@final#1#2{%
+  \iffx@log@silent\else\csname @fxlogcs@#1\endcsname{#2}\fi%
+  \addcontentsline{lox}{fixme}{%
+    \expandafter\protect\csname fx#1prefix\endcsname: #2}}
+\def\@@fx@draft#1#2{%
+  \@fxlayout{#1}{#2}%
+  \@@fx@final{#1}{#2}}
 
-\@fxprefixdeprecaterenewable{noteprefix}
-\@fxprefixdeprecaterenewable{noteindexname}
-
-\def\@fxnote@final#1{%
-  \iffx@log@silent\else\FXLogNote{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
-\def\@fxnote@draft#1{%
-  \@fxlayout{note}{#1}%
-  \@fxnote@final{#1}}
+\def\@@fx#1#2{%
+  \stepcounter{fixmecount}%
+  \stepcounter{fx#1count}%
+  \@@fx@{#1}{#2}}
+\def\@fx#1[#2]#3{%
+  \bgroup%
+  \setkeys[fx]{layout,log}{#2}%
+  \@@fx{#1}{#3}%
+  \egroup}
 
 %    \end{macrocode}
-% \begin{macro}{\fxwarningprefix}
-%   \begin{macro}{\fxwarningindexname}
-%     \begin{macro}{\@fxwarning@final}
-%       \begin{macro}{\@fxwarning@draft}
-%         \textbf{fxwarnings:}
-%       \end{macro}
+% \begin{macro}{\fxnote}
+%   \begin{macro}{\fxwarning}
+%     \begin{macro}{\fxerror}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand*\fxwarningprefix{}
-\newcommand*\fxwarningindexname{}
-
-\@fxprefixdeprecaterenewable{warningprefix}
-\@fxprefixdeprecaterenewable{warningindexname}
-
-\def\@fxwarning@final#1{%
-  \iffx@log@silent\else\FXLogWarning{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
-\def\@fxwarning@draft#1{%
-  \@fxlayout{warning}{#1}%
-  \@fxwarning@final{#1}}
+\DeclareRobustCommand\fxnote{\@ifnextchar[%]
+  {\@fx{note}}{\@@fx{note}}}
+\DeclareRobustCommand\fxwarning{\@ifnextchar[%]
+  {\@fx{warning}}{\@@fx{warning}}}
+\DeclareRobustCommand\fxerror{\@ifnextchar[%]
+  {\@fx{error}}{\@@fx{error}}}
 
 %    \end{macrocode}
-% \begin{macro}{\fxerrorprefix}
-%   \begin{macro}{\fxerrorindexname}
-%     \begin{macro}{\@fxerror@final}
-%       \begin{macro}{\@fxerror@draft}
-%         \textbf{fxerrors:}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\newcommand*\fxerrorprefix{}
-\newcommand*\fxerrorindexname{}
-
-\@fxprefixdeprecaterenewable{errorprefix}
-\@fxprefixdeprecaterenewable{errorindexname}
-
-\def\@fxerror@final#1{%
-  \iffx@log@silent\else\FXLogError{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
-\def\@fxerror@draft#1{%
-  \@fxlayout{error}{#1}%
-  \@fxerror@final{#1}}
-
-%    \end{macrocode}
-% \begin{macro}{\fxfatalprefix}
-%   \begin{macro}{\fxfatalindexname}
-%     \begin{macro}{\@fxfatal@final}
-%       \begin{macro}{\@fxfatal@draft}
-%         \textbf{fxfatals:}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\newcommand*\fxfatalprefix{}
-\newcommand*\fxfatalindexname{}
-
-\@fxprefixdeprecaterenewable{fatalprefix}
-\@fxprefixdeprecaterenewable{fatalindexname}
-
-%    \end{macrocode}
+%
+%    \subsubsection{Fatal notes}
+% Fatal notes can't be handled in the same generic way as the others for two
+% reasons: backward compatibility problems, and the fact that their behavior
+% differs in \texttt{final} mode.\par
 % The \cs{FiXme*} macros are kept only to preserve backward compatibility.
 % They are used by fatal notes only and are made to call the new versions by
-% default. Because of that, we can't define \cs{fxfatal@draft} in terms of
-% \cs{@fxlayout}. \cs{FiXmeUser} is treated a bit differently though; see
+% default. \cs{FiXmeUser} is treated a bit differently though; see
 % comment in the Finale's ``Backward Compatibility'' section.
 %    \begin{macrocode}
 \newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
@@ -1148,17 +1179,19 @@
 \newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
+% \begin{macro}{\@fxfatal@final}
+%   \begin{macro}{\@fxfatal@draft}
+%     Note that we start with the footnote layout, so that it is sticked
+%     properly to the preceding text if active.
+%   \end{macro}
+% \end{macro}
 %    \begin{macrocode}
-\def\@fxfatal@final#1{%
+\def\@@@fxfatal@final#1{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
     You are processing your document in final mode,\MessageBreak
     but you still have some FiXme fatal errors left behind.\MessageBreak
     Type X to quit, fix your document, and rerun LaTeX.}}
-%    \end{macrocode}
-% Note that we start with the footnote layout, so that it is sticked properly
-% to the preceding text if active.
-%    \begin{macrocode}
-\def\@fxfatal@draft#1{%
+\def\@@@fxfatal@draft#1{%
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
@@ -1171,40 +1204,17 @@
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
 
-%    \end{macrocode}
-% \subsubsection{User-level versions}
-% \begin{macro}{\@@fx}
-%   \begin{macro}{\@fx}
-%     \begin{macro}{\fxnote}
-%       \begin{macro}{\fxwarning}
-%         \begin{macro}{\fxerror}
-%           \begin{macro}{\fxfatal}
-%             As of version 4, \cs{fxfatal} supersedes \cs{fixme}. \cs{fixme}
-%             remains for backward compatibility.
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\def\@@fx#1#2{%
+\def\@@fxfatal#1{%
   \stepcounter{fixmecount}%
-  \stepcounter{fx#1count}%
-  \csname @fx#1\endcsname{#2}}
-\def\@fx#1[#2]#3{%
+  \stepcounter{fxfatalcount}%
+  \@@@fxfatal{#1}}
+\def\@fxfatal[#1]#2{%
   \bgroup%
-  \setkeys[fx]{layout,log}{#2}%
-  \@@fx{#1}{#3}%
+  \setkeys[fx]{layout,log}{#1}%
+  \@@fxfatal{#2}%
   \egroup}
-\DeclareRobustCommand\fxnote{\@ifnextchar[%]
-  {\@fx{note}}{\@@fx{note}}}
-\DeclareRobustCommand\fxwarning{\@ifnextchar[%]
-  {\@fx{warning}}{\@@fx{warning}}}
-\DeclareRobustCommand\fxerror{\@ifnextchar[%]
-  {\@fx{error}}{\@@fx{error}}}
 \DeclareRobustCommand\fxfatal{\@ifnextchar[%]
-  {\@fx{fatal}}{\@@fx{fatal}}}
+  {\@fxfatal}{\@@fxfatal}}
 
 \@fxnewdeprecatedcmd{fixme}{fxfatal}
 
@@ -1368,10 +1378,8 @@
 % \end{macro}
 %    \begin{macrocode}
 \@fxdeclarevoidoption{ltx}{final}{
-  \let\@fxnote\@fxnote@final
-  \let\@fxwarning\@fxwarning@final
-  \let\@fxerror\@fxerror@final
-  \let\@fxfatal\@fxfatal@final
+  \let\@@fx@\@@fx@final
+  \let\@@@fxfatal\@@@fxfatal@final
   \let\@fxenvbegin\@fxenvbegin@final
   \let\@fxenvend\@fxenvend@final
   \let\listoffixmes\listoffixmes@final
@@ -1410,10 +1418,8 @@
       }
     }
   }
-  \let\@fxnote\@fxnote@draft
-  \let\@fxwarning\@fxwarning@draft
-  \let\@fxerror\@fxerror@draft
-  \let\@fxfatal\@fxfatal@draft
+  \let\@@fx@\@@fx@draft
+  \let\@@@fxfatal\@@@fxfatal@draft
   \let\@fxenvbegin\@fxenvbegin@draft
   \let\@fxenvend\@fxenvend@draft
   \let\listoffixmes\listoffixmes@draft
