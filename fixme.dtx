@@ -1129,8 +1129,8 @@
 \newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxfatal@final}
-%   \begin{macro}{\@fxfatal@draft}
+% \begin{macro}{\@@@fxfatal@final}
+%   \begin{macro}{\@@@fxfatal@draft}
 %     Note that we start with the footnote layout, so that it is sticked
 %     properly to the preceding text if active.
 %   \end{macro}
@@ -1154,6 +1154,14 @@
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
 
+%    \end{macrocode}
+% \begin{macro}{\@@fxfatal}
+%   \begin{macro}{\@fxfatal}
+%     \begin{macro}{\fxfatal}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \def\@@fxfatal#1{%
   \stepcounter{fixmecount}%
   \stepcounter{fxfatalcount}%
@@ -1313,13 +1321,15 @@
 %    \end{macrocode}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\@fxnote}
-%   \begin{macro}{\@fxwarning}
-%     \begin{macro}{\@fxerror}
-%       \begin{macro}{\@fxfatal}
-%         \begin{macro}{\@fxenvbegin}
-%           \begin{macro}{\@fxenvend}
-%             Select draft or final versions of internal macros:
+% \begin{macro}{\@@fx@}
+%   \begin{macro}{\@@@fxfatal}
+%     \begin{macro}{\@fxenvbegin}
+%       \begin{macro}{\@fxenvend}
+%         \begin{macro}{\listoffixmes}
+%           \begin{macro}{\@listoffixmes@pretoc}
+%             \begin{macro}{\@listoffixmes@posttoc}
+%               Select draft or final versions of internal macros:
+%             \end{macro}
 %           \end{macro}
 %         \end{macro}
 %       \end{macro}
@@ -1424,6 +1434,7 @@
       \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}\fi}}}
 
 %    \end{macrocode}
+% \subsubsection{\fixme{} summary}
 % Finally, output a summary giving the number of fixme notes at the end of the
 % compilation:
 %    \begin{macrocode}
