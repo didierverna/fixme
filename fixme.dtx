@@ -1029,11 +1029,12 @@
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
   \@fxhandleinnerfallback%
-  \iffx@layout@footnote\FXLayoutFootnote{#1}{#2}\fi%
-  \iffx@layout@margin\FXLayoutMargin{#1}{#2}\fi%
-  \iffx@layout@marginclue\FXLayoutMarginClue{#1}\fi%
-  \iffx@layout@inline\FXLayoutInline{#1}{#2}\fi%
-  \iffx@layout@user\FXLayoutUser{#1}{#2}\fi}
+  \def\@fxtempa{\csname fx#1prefix\endcsname}%
+  \iffx@layout@footnote\FXLayoutFootnote{\@fxtempa}{#2}\fi%
+  \iffx@layout@margin\FXLayoutMargin{\@fxtempa}{#2}\fi%
+  \iffx@layout@marginclue\FXLayoutMarginClue{\@fxtempa}\fi%
+  \iffx@layout@inline\FXLayoutInline{\@fxtempa}{#2}\fi%
+  \iffx@layout@user\FXLayoutUser{\@fxtempa}{#2}\fi}
 
 %    \end{macrocode}
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
@@ -1059,7 +1060,7 @@
   \iffx@log@silent\else\FXLogNote{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxnoteprefix: #1}}
 \def\@fxnote@draft#1{%
-  \@fxlayout{\fxnoteprefix}{#1}%
+  \@fxlayout{note}{#1}%
   \iffx@layout@index\FXLayoutIndex{\fxnoteindexname\thefxnotecount: #1}\fi%
   \@fxnote@final{#1}}
 
@@ -1084,7 +1085,7 @@
   \iffx@log@silent\else\FXLogWarning{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxwarningprefix: #1}}
 \def\@fxwarning@draft#1{%
-  \@fxlayout{\fxwarningprefix}{#1}%
+  \@fxlayout{warning}{#1}%
   \iffx@layout@index%
     \FXLayoutIndex{\fxwarningindexname\thefxwarningcount: #1}%
   \fi%
@@ -1111,7 +1112,7 @@
   \iffx@log@silent\else\FXLogError{#1}\fi%
   \addcontentsline{lox}{fixme}{\protect\fxerrorprefix: #1}}
 \def\@fxerror@draft#1{%
-  \@fxlayout{\fxerrorprefix}{#1}%
+  \@fxlayout{error}{#1}%
   \iffx@layout@index%
     \FXLayoutIndex{\fxerrorindexname\thefxerrorcount: #1}%
   \fi%
