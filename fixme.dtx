@@ -996,72 +996,32 @@
 \newcounter{fixmecount}
 
 %    \end{macrocode}
-% \begin{macro}{\thefxnotecount}
-%   \begin{macro}{\fxnoteprefix}
-%     \begin{macro}{\fxnoteindexname}
-%       \textbf{fxnotes:}
-%     \end{macro}
-%   \end{macro}
+% \begin{macro}{\@fxnoteparameters}
+%   The following macro creates all required note parameters:
 % \end{macro}
 %    \begin{macrocode}
-\newcounter{fxnotecount}
-\newcommand*\fxnoteprefix{}
-\newcommand*\fxnoteindexname{}
+\newcommand\@fxnoteparameters[1]{%
+  \newcounter{fx#1count}
+  \expandafter\newcommand\expandafter*\csname fx#1prefix\endcsname{}
+  \expandafter\newcommand\expandafter*\csname fx#1indexname\endcsname{}
 
-\@fxcounterrename{note}
-\@fxprefixdeprecaterenewable{noteprefix}
-\@fxprefixdeprecaterenewable{noteindexname}
+  \@fxcounterrename{#1}
+  \@fxprefixdeprecaterenewable{#1prefix}
+  \@fxprefixdeprecaterenewable{#1indexname}}
 
 %    \end{macrocode}
-% \begin{macro}{\thefxwarningcount}
-%   \begin{macro}{\fxwarningprefix}
-%     \begin{macro}{\fxwarningindexname}
-%       \textbf{fxwarnings:}
+% \begin{macro}{\thefx*count}
+%   \begin{macro}{\fx*prefix}
+%     \begin{macro}{\fx*indexname}
+%       And we use it for all note types:
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcounter{fxwarningcount}
-\newcommand*\fxwarningprefix{}
-\newcommand*\fxwarningindexname{}
-
-\@fxcounterrename{warning}
-\@fxprefixdeprecaterenewable{warningprefix}
-\@fxprefixdeprecaterenewable{warningindexname}
-
-%    \end{macrocode}
-% \begin{macro}{\thefxerrorcount}
-%   \begin{macro}{\fxerrorprefix}
-%     \begin{macro}{\fxerrorindexname}
-%       \textbf{fxerrors:}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\newcounter{fxerrorcount}
-\newcommand*\fxerrorprefix{}
-\newcommand*\fxerrorindexname{}
-
-\@fxcounterrename{error}
-\@fxprefixdeprecaterenewable{errorprefix}
-\@fxprefixdeprecaterenewable{errorindexname}
-
-%    \end{macrocode}
-% \begin{macro}{\thefxfatalcount}
-%   \begin{macro}{\fxfatalprefix}
-%     \begin{macro}{\fxfatalindexname}
-%       \textbf{fxfatals:}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
-\newcounter{fxfatalcount}
-\newcommand*\fxfatalprefix{}
-\newcommand*\fxfatalindexname{}
-
-\@fxcounterrename{fatal}
-\@fxprefixdeprecaterenewable{fatalprefix}
-\@fxprefixdeprecaterenewable{fatalindexname}
+\@fxnoteparameters{note}
+\@fxnoteparameters{warning}
+\@fxnoteparameters{error}
+\@fxnoteparameters{fatal}
 
 %    \end{macrocode}
 %
