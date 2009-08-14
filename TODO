@@ -86,9 +86,9 @@ text, but doesn't show comments
 
 * Ask for the translation of "fatal errors" in the supported languages
 
-* Maybe the log messages should be internationalized as well ?
-	-> yes for logging
-	-> no for package messages
+* Internationalize the FXLog* messages
+  1/ either by adding fxlog*prefix macros (dependent on the language)
+  2/ or by finding a way to adapt fx*prefix macros for tty output (?!)
 
 * Investigate the "Floats lost" problem with fixmes in captions
   (does not occur all the time)
