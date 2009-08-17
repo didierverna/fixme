@@ -93,3 +93,6 @@ text, but doesn't show comments
 * Investigate the "Floats lost" problem with fixmes in captions
   (does not occur all the time)
   and the footnote which is not sticked to the text
+
+* Provide a collection of themes as separate source files, redefining existing
+  (or adding user) layouts. See marginnote, and the todonotes package etc.
