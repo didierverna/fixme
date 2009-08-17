@@ -455,6 +455,13 @@
 %    \end{macrocode}
 %
 % \subsection{Utilities}
+% \begin{macro}{\@fxcsstring}
+%   Stringify a control sequence name:
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxcsstring[1]{\expandafter\string\csname#1\endcsname}
+
+%    \end{macrocode}
 % \begin{macro}{\@fxpkgwarning}
 %   \begin{macro}{\@fxpkgerror}
 %     \fixme{} package warnings or errors:
@@ -543,8 +550,7 @@
 \newcommand\@fxnewlegacycmd[1]{%
   \expandafter\newcommand\csname#1\endcsname[1]{%
     \@fxpkgwarning{%
-      \expandafter\string\csname#1\endcsname\space is a legacy command that
-      has no effect anymore,}}}
+      \@fxcsstring{#1} is a legacy command that has no effect anymore,}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeprecatedcmdwarning}
@@ -558,8 +564,7 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
-    \expandafter\string\csname#1\endcsname\space is deprecated;
-    please use \expandafter\string\csname#2\endcsname\space instead,}}
+    \@fxcsstring{#1} is deprecated; please use \@fxcsstring{#2} instead,}}
 \newcommand\@fxnewdeprecatedcmd[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedcmdwarning{#1}{#2}%
