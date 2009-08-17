@@ -563,7 +563,7 @@
 \newcommand\@fxnewdeprecatedcmd[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedcmdwarning{#1}{#2}%
-    \csname #2\endcsname}}
+    \@nameuse{#2}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxprefixdeprecatecmd}
@@ -589,8 +589,8 @@
 \newcommand\@fxnewdeprecatedenv[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedenvwarning{#1}{#2}%
-    \csname #2\endcsname}
-  \@namedef{end#1}{\csname end#2\endcsname}}
+    \@nameuse{#2}}
+  \@namedef{end#1}{\@nameuse{end#2}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxnewdeprecatedrenewable}
@@ -618,7 +618,7 @@
   \AtBeginDocument{%
     \expandafter\ifx\csname#1\endcsname\empty\else%
       \@fxdeprecatedcmdwarning{#1}{#2}%
-      \@namedef{#2}{\csname #1\endcsname}
+      \@namedef{#2}{\@nameuse{#1}}
     \fi}}
 
 %    \end{macrocode}
@@ -1033,7 +1033,7 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@fxinnerfallbackcmd#1{%
-  \csname fx@layout@#1\endcsname}
+  \@nameuse{fx@layout@#1}}
 \def\@fxhandleinnerfallback{%
   \ifinner%
     \fx@layout@marginclue{false}%
@@ -1051,9 +1051,9 @@
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
   \@fxhandleinnerfallback%
-  \def\@fxtempa{\csname fx#1prefix\endcsname}%
-  \def\@fxtempb{\csname fx#1indexname\endcsname}%
-  \def\@fxtempc{\csname thefx#1count\endcsname}%
+  \def\@fxtempa{\@nameuse{fx#1prefix}}%
+  \def\@fxtempb{\@nameuse{fx#1indexname}}%
+  \def\@fxtempc{\@nameuse{thefx#1count}}%
   \iffx@layout@footnote\FXLayoutFootnote{\@fxtempa}{#2}\fi%
   \iffx@layout@margin\FXLayoutMargin{\@fxtempa}{#2}\fi%
   \iffx@layout@marginclue\FXLayoutMarginClue{\@fxtempa}\fi%
@@ -1075,9 +1075,9 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@@fx@final#1#2{%
-  \iffx@log@silent\else\csname @fxlogcs@#1\endcsname{#2}\fi%
+  \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
   \addcontentsline{lox}{fixme}{%
-    \expandafter\protect\csname fx#1prefix\endcsname: #2}}
+    \expandafter\protect\@nameuse{fx#1prefix}: #2}}
 \def\@@fx@draft#1#2{%
   \@fxlayout{#1}{#2}%
   \@@fx@final{#1}{#2}}
@@ -1204,13 +1204,13 @@
 % \end{macro}
 %    \begin{macrocode}
 \def\@fxenvbegin@final#1#2#3{%
-  \csname#1\endcsname[#2]{#3}%
+  \@nameuse{#1}[#2]{#3}%
   \comment}
 \def\@fxenvend@final{\endcomment}
 
 \def\@fxenvbegin@draft#1#2#3{%
-  \csname#1\endcsname[#2,noinline]{#3}%
-  \FXEnvBegin{\csname #1prefix\endcsname}}
+  \@nameuse{#1}[#2,noinline]{#3}%
+  \FXEnvBegin{\@nameuse{#1prefix}}}
 \def\@fxenvend@draft{\FXEnvEnd}
 
 %    \end{macrocode}
