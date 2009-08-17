@@ -541,9 +541,9 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnewlegacycmd[1]{%
-  \expandafter\newcommand\csname #1\endcsname[1]{%
+  \expandafter\newcommand\csname#1\endcsname[1]{%
     \@fxpkgwarning{%
-      \expandafter\string\csname #1\endcsname\space is a legacy command that
+      \expandafter\string\csname#1\endcsname\space is a legacy command that
       has no effect anymore,}}}
 
 %    \end{macrocode}
@@ -558,8 +558,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
-    \expandafter\string\csname #1\endcsname\space is deprecated;
-    please use \expandafter\string \csname #2\endcsname\space instead,}}
+    \expandafter\string\csname#1\endcsname\space is deprecated;
+    please use \expandafter\string\csname#2\endcsname\space instead,}}
 \newcommand\@fxnewdeprecatedcmd[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedcmdwarning{#1}{#2}%
@@ -613,10 +613,10 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnewdeprecatedrenewable[2]{%
-  \expandafter\newcommand\csname #1\endcsname{}
-  \expandafter\let\csname #1\endcsname\empty
+  \expandafter\newcommand\csname#1\endcsname{}
+  \expandafter\let\csname#1\endcsname\empty
   \AtBeginDocument{%
-    \expandafter\ifx\csname #1\endcsname\empty\else%
+    \expandafter\ifx\csname#1\endcsname\empty\else%
       \@fxdeprecatedcmdwarning{#1}{#2}%
       \@namedef{#2}{\csname #1\endcsname}
     \fi}}
