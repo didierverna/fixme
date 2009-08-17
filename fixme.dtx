@@ -544,13 +544,38 @@
 % \subsubsection{Backward compatibility related}
 % \begin{macro}{\@fxnewlegacycmd}
 %   A ``legacy command'' is an old macro taking one argument and that has no
-%   effect anymore.
+%   effect anymore. Note: this is currently not used anywhere.
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnewlegacycmd[1]{%
   \expandafter\newcommand\csname#1\endcsname[1]{%
     \@fxpkgwarning{%
       \@fxcsstring{#1} is a legacy command that has no effect anymore,}}}
+
+%    \end{macrocode}
+% \begin{macro}{\@fxnewlegacycmswarning}
+%   \begin{macro}{\@fxnewlegacyrenewable}
+%     A ``legacy renewable [command]'' is a legacy command that might be
+%     renew'ed by the user instead of being used directly. Here is what we do:
+%     \begin{enumerate}
+%     \item \cs{newcommand} it and \cs{let} it be \cs{empty},
+%     \item \cs{AtBeginDocument}, check if it has been redefined (that is, if
+%       it is not \cs{empty} anymore),
+%     \item and if so, issue a legacy warning.
+%     \end{enumerate}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
+\newcommand\@fxlegacycmdwarning[1]{%
+  \@fxpkgwarning{%
+    \@fxcsstring{#1} is a legacy command that is not used anymore,}}
+\newcommand\@fxnewlegacyrenewable[1]{%
+  \expandafter\newcommand\csname#1\endcsname{}
+  \expandafter\let\csname#1\endcsname\empty
+  \AtBeginDocument{%
+    \expandafter\ifx\csname#1\endcsname\empty\else%
+      \@fxlegacycmdwarning{#1}
+    \fi}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeprecatedcmdwarning}
@@ -869,10 +894,10 @@
 %    \end{macrocode}
 % The following macros are unused since version 2.2 (at the time of which,
 % layout and logging were the same thing), but kept here anyway to avoid
-% breaking compilation of older documents.
+% breaking compilation of older documents (renewing these commands).
 %    \begin{macrocode}
-\@fxnewlegacycmd{FiXmeInfo}
-\@fxnewlegacycmd{FiXmeWarning}
+\@fxnewlegacyrenewable{FiXmeInfo}
+\@fxnewlegacyrenewable{FiXmeWarning}
 
 %    \end{macrocode}
 %
