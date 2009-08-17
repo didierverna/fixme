@@ -530,7 +530,7 @@
 \newcommand\@fxdeclarecmdoptkey[3][]{%
   \define@cmdkey[fx]{#2}{#3}[#1]
   \DeclareOptionX[fx]<#2>{#3}[#1]{%
-    \expandafter\def\csname fx@#2@#3@cmd\endcsname{##1}}}
+    \@namedef{fx@#2@#3@cmd}{##1}}}
 
 %    \end{macrocode}
 %
@@ -561,7 +561,7 @@
     \expandafter\string\csname #1\endcsname\space is deprecated;
     please use \expandafter\string \csname #2\endcsname\space instead,}}
 \newcommand\@fxnewdeprecatedcmd[2]{%
-  \expandafter\def\csname #1\endcsname{%
+  \@namedef{#1}{%
     \@fxdeprecatedcmdwarning{#1}{#2}%
     \csname #2\endcsname}}
 
@@ -587,11 +587,10 @@
   \@fxpkgwarning{%
     The '#1' environment is deprecated; please use '#2' instead,}}
 \newcommand\@fxnewdeprecatedenv[2]{%
-  \expandafter\def\csname #1\endcsname{%
+  \@namedef{#1}{%
     \@fxdeprecatedenvwarning{#1}{#2}%
     \csname #2\endcsname}
-  \expandafter\def\csname end#1\endcsname{%
-    \csname end#2\endcsname}}
+  \@namedef{end#1}{\csname end#2\endcsname}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxnewdeprecatedrenewable}
@@ -619,7 +618,7 @@
   \AtBeginDocument{%
     \expandafter\ifx\csname #1\endcsname\empty\else%
       \@fxdeprecatedcmdwarning{#1}{#2}%
-      \expandafter\def\csname #2\endcsname{\csname #1\endcsname}
+      \@namedef{#2}{\csname #1\endcsname}
     \fi}}
 
 %    \end{macrocode}
