@@ -1185,7 +1185,7 @@
   \@@@fxfatal{#1}}
 \def\@fxfatal[#1]#2{%
   \bgroup%
-  \setkeys[fx]{layout,log}{#1}%
+  \setkeys[fx]{layout,log,lang,ltx}{#1}%
   \@@fxfatal{#2}%
   \egroup}
 \DeclareRobustCommand\fxfatal{\@ifnextchar[%]
