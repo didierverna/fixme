@@ -510,19 +510,13 @@
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdeclarebooloptkey}
-%   A ``boolean option-key'' is a boolean package option and macro key
-%   argument as well. For each |arg| option-key, there is a |noarg| void
-%   option-key counterpart.\par
-%   |xkeyval| doesn't provide any simple way to create boolean options. The
-%   somewhat gross macro below does the job. First, we create the key. This
-%   provides us with the \cs{if} conditionals. Then, we redefine the same key,
-%   but as an option this time, and we set the function to the |xkeyval|
-%   boolean assignation. Finally, we provide the negative couterpart void
-%   option.
+% \begin{macro}{\@fxdefineboolkey}
+%   A \fixme{} ``boolkey'' is like an \texttt{xkeyval} one, with the addition
+%   that for every such \texttt{key}, there is a |nokey| void key
+%   counterpart.\par
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxdeclarebooloptkey[2]{%
+\newcommand\@fxdefineboolkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]{}
   \@fxdeclarevoidoption{#1}{no#2}{\@nameuse{fx@#1@#2}{false}}}
 
@@ -915,10 +909,10 @@
     \fx@layout@margin{false}}}
 \@fxdeclarevoidoption{layout}{nomarginclue}{\fx@layout@marginclue{false}}
 
-\@fxdeclarebooloptkey{layout}{inline}
-\@fxdeclarebooloptkey{layout}{footnote}
-\@fxdeclarebooloptkey{layout}{user}
-\@fxdeclarebooloptkey{layout}{index}
+\@fxdefineboolkey{layout}{inline}
+\@fxdefineboolkey{layout}{footnote}
+\@fxdefineboolkey{layout}{user}
+\@fxdefineboolkey{layout}{index}
 
 \@fxdeclarecmdoptkey[inline]{layout}{innerfallback}
 \fx@layout@innerfallback{inline}
@@ -994,7 +988,7 @@
 %
 % \subsubsection{Logging options}
 %    \begin{macrocode}
-\@fxdeclarebooloptkey{log}{silent}
+\@fxdefineboolkey{log}{silent}
 
 %    \end{macrocode}
 %
