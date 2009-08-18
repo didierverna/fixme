@@ -1,0 +1,1 @@
+/home/didier/share/ltxpkg/ltxpkg.mak
