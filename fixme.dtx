@@ -1196,10 +1196,6 @@
 %    \end{macrocode}
 %
 % \subsection{\fixme{} environments}
-% \fixme{} environments are always laid out inline. The environment's summary
-% is laid out by the corresponding macro, but the |inline| layout is disabled.
-% In |final| mode, |verbatim|'s \texttt{comment} environment is used to
-% suppress output.
 % \subsubsection{Layout macros}
 % \begin{macro}{\FXEnvBegin}
 %   \begin{macro}{\FXEnvEnd}
@@ -1212,6 +1208,12 @@
 
 %    \end{macrocode}
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
+% \fixme{} environments are always laid out inline. The environment's summary
+% is laid out by the corresponding macro, but the |inline| layout is disabled.
+% In |final| mode, |verbatim|'s \texttt{comment} environment is used to
+% suppress output. Note that contrary to the macro version, we don't need to
+% define the \texttt{fxfatal} environment in a specialized way because the
+% fatal error will be triggered by the call to \cs{fxfatal} anyway.
 % \begin{macro}{\@fxenvbegin@final}
 %   \begin{macro}{\@fxenvend@final}
 %     \begin{macro}{\@fxenvbegin@draft}
@@ -1221,13 +1223,13 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\def\@fxenvbegin@final#1#2#3{%
-  \@nameuse{#1}[#2]{#3}%
+\def\@fxenvbegin@final#1#2{%
+  \@nameuse{#1}{#2}%
   \comment}
 \def\@fxenvend@final{\endcomment}
 
-\def\@fxenvbegin@draft#1#2#3{%
-  \@nameuse{#1}[#2,noinline]{#3}%
+\def\@fxenvbegin@draft#1#2{%
+  \@nameuse{#1}[noinline]{#2}%
   \FXEnvBegin{\@nameuse{#1prefix}}}
 \def\@fxenvend@draft{\FXEnvEnd}
 
@@ -1236,17 +1238,29 @@
 % \subsubsection{User-level environments}
 %    \begin{macrocode}
 \newenvironment{anfxnote}[2][]{%
-  \@fxenvbegin{fxnote}{#1}{#2}}{%
-  \@fxenvend}
+  \bgroup%
+  \setkeys[fx]{layout,log,lang,ltx}{#1}%
+  \@fxenvbegin{fxnote}{#2}}{%
+  \@fxenvend%
+  \egroup}
 \newenvironment{anfxwarning}[2][]{%
-  \@fxenvbegin{fxwarning}{#1}{#2}}{%
-  \@fxenvend}
+  \bgroup%
+  \setkeys[fx]{layout,log,lang,ltx}{#1}%
+  \@fxenvbegin{fxwarning}{#2}}{%
+  \@fxenvend%
+  \egroup}
 \newenvironment{anfxerror}[2][]{%
-  \@fxenvbegin{fxerror}{#1}{#2}}{%
-  \@fxenvend}
+  \bgroup%
+  \setkeys[fx]{layout,log,lang,ltx}{#1}%
+  \@fxenvbegin{fxerror}{#2}}{%
+  \@fxenvend%
+  \egroup}
 \newenvironment{anfxfatal}[2][]{%
-  \@fxenvbegin{fxfatal}{#1}{#2}}{%
-  \@fxenvend}
+  \bgroup%
+  \setkeys[fx]{layout,log,lang,ltx}{#1}%
+  \@fxenvbegin{fxfatal}{#2}}{%
+  \@fxenvend%
+  \egroup}
 
 \@fxnewdeprecatedenv{afixme}{anfxfatal}
 
