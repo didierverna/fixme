@@ -101,3 +101,5 @@ text, but doesn't show comments
 * silent option does not shut up the summary. See if we want that, and if we
 would like to add values to this option (like silent={log,tty,summary,all}
 etc. 
+
+* make innerfallback a choice key
