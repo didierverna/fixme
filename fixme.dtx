@@ -523,9 +523,8 @@
 % \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeclarebooloptkey[2]{%
-  \define@boolkey[fx]{#1}{#2}[true]
-  \DeclareOptionX[fx]<#1>{#2}[true]{\XKV@setbool{fx@#1@#2}{##1}}
-  \@fxdeclarevoidoption{#1}{no#2}{\XKV@setbool{fx@#1@#2}{false}}}
+  \define@boolkey[fx]{#1}{#2}[true]{}
+  \@fxdeclarevoidoption{#1}{no#2}{\@nameuse{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeclarecmdoptkey}
@@ -907,19 +906,17 @@
 % |marginclue| layouts are mutually exclusive, so we have to redefine the
 % |xkeyval| key macro to handle this.
 %    \begin{macrocode}
-\@fxdeclarebooloptkey{layout}{margin}
-\def\fx@layout@margin#1{%
-  \XKV@setbool{fx@layout@margin}{#1}
-  \ifthenelse{\equal{#1}{true}\and\boolean{fx@layout@marginclue}}{%
+\define@boolkey[fx]{layout}{margin}[true]{%
+  \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}}
+\@fxdeclarevoidoption{layout}{nomargin}{\fx@layout@margin{false}}
 
-\@fxdeclarebooloptkey{layout}{marginclue}
-\def\fx@layout@marginclue#1{%
-  \XKV@setbool{fx@layout@marginclue}{#1}
-  \ifthenelse{\equal{#1}{true}\and\boolean{fx@layout@margin}}{%
+\define@boolkey[fx]{layout}{marginclue}[true]{%
+  \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{Marginal clues requested; turning marginal notes off,}%
     \fx@layout@margin{false}}}
+\@fxdeclarevoidoption{layout}{nomarginclue}{\fx@layout@marginclue{false}}
 
 \@fxdeclarebooloptkey{layout}{inline}
 \@fxdeclarebooloptkey{layout}{footnote}
