@@ -1,0 +1,42 @@
+\documentclass[draft]{article}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage[inline,footnote,index]{fixme}
+
+\begin{document}
+
+blabla\fxnote{note}\par
+bleble\fxwarning{warning}\par
+blibli\fxerror{error}\par
+bloblo\fxfatal{fatal}\par
+
+blabla
+\begin{anfxnote}{note}
+  This is an FXNote.
+\end{anfxnote}
+
+bleble
+\begin{anfxwarning}{warning}
+  This is an FXWarning.
+\end{anfxwarning}
+
+blibli
+\begin{anfxerror}{error}
+  This is an FXError.
+\end{anfxerror}
+
+bloblo
+\begin{anfxfatal}{fatal}
+  This is an FXFatal.
+\end{anfxfatal}
+
+\printindex
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
