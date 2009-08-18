@@ -1237,30 +1237,18 @@
 %
 % \subsubsection{User-level environments}
 %    \begin{macrocode}
-\newenvironment{anfxnote}[2][]{%
-  \begingroup%
-  \setkeys[fx]{layout,log,lang,ltx}{#1}%
-  \@fxenvbegin{fxnote}{#2}}{%
-  \@fxenvend%
-  \endgroup}
-\newenvironment{anfxwarning}[2][]{%
-  \begingroup%
-  \setkeys[fx]{layout,log,lang,ltx}{#1}%
-  \@fxenvbegin{fxwarning}{#2}}{%
-  \@fxenvend%
-  \endgroup}
-\newenvironment{anfxerror}[2][]{%
-  \begingroup%
-  \setkeys[fx]{layout,log,lang,ltx}{#1}%
-  \@fxenvbegin{fxerror}{#2}}{%
-  \@fxenvend%
-  \endgroup}
-\newenvironment{anfxfatal}[2][]{%
-  \begingroup%
-  \setkeys[fx]{layout,log,lang,ltx}{#1}%
-  \@fxenvbegin{fxfatal}{#2}}{%
-  \@fxenvend%
-  \endgroup}
+\newcommand\@fxdefineenvironment[1]{%
+  \newenvironment{anfx#1}[2][]{%
+    \begingroup%
+    \setkeys[fx]{layout,log,lang,ltx}{##1}%
+    \@fxenvbegin{fx#1}{##2}}{%
+    \@fxenvend%
+    \endgroup}}
+
+\@fxdefineenvironment{note}
+\@fxdefineenvironment{warning}
+\@fxdefineenvironment{error}
+\@fxdefineenvironment{fatal}
 
 \@fxnewdeprecatedenv{afixme}{anfxfatal}
 
