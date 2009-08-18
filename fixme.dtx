@@ -1153,9 +1153,11 @@
 %    \begin{macrocode}
 \def\@@@fxfatal@final#1{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
-    You are processing your document in final mode,\MessageBreak
+    You are currently processing in final mode,\MessageBreak
     but you still have some FiXme fatal errors left behind.\MessageBreak
-    Type X to quit, fix your document, and rerun LaTeX.}}
+    Type X to quit, fix your document (or switch back to draft
+    mode),\MessageBreak
+    and rerun LaTeX.}}
 \def\@@@fxfatal@draft#1{%
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
