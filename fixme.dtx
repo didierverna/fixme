@@ -1457,9 +1457,10 @@
       \newcommand\FXLayoutUser[2]{\FXUser{#1}{#2}}%
       \renewcommand\FiXmeUser[1]{\FXUser{\fxfatalprefix}{#1}}}{%
       \ifx\FiXmeUser\empty%
-      \renewcommand\FiXmeUser[1]{}%
-      \else
-      \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}\fi}}}
+        \renewcommand\FiXmeUser[1]{}%
+      \else%
+        \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}%
+      \fi}}}
 
 %    \end{macrocode}
 % \subsubsection{\fixme{} summary}
