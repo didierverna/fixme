@@ -493,21 +493,21 @@
   \@fxdeclarelegacyoption{no#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxvoidoptionerror}
-%   \begin{macro}{\@fxdeclarevoidoption}
-%     A ``void option'' is a package option that doesn't expect any argument.
+% \begin{macro}{\@fxvoidkeyerror}
+%   \begin{macro}{\@fxdefinevoidkey}
+%     A \fixme{} ``void key'' is an \texttt{xkeyval} key that doesn't expect
+%     any argument.
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxvoidoptionerror[2]{%
-  \@fxpkgerror{misuse of option '#1'}{%
-    You have given the option '#1' the argument '#2' but it takes
+\newcommand\@fxvoidkeyerror[2]{%
+  \@fxpkgerror{misuse of key '#1'}{%
+    You have given the key '#1' the argument '#2' but it takes
     none.\MessageBreak
-    Type X to quit, fix the options list passed to FiXme and re-run
-    LaTeX.\MessageBreak}}
-\newcommand\@fxdeclarevoidoption[3]{%
-  \DeclareOptionX[fx]<#1>{#2}[]{%
-    \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidoptionerror{#2}{##1}}}}
+    Type X to quit, fix that key and re-run LaTeX.\MessageBreak}}
+\newcommand\@fxdefinevoidkey[3]{%
+  \define@key[fx]{#1}{#2}[]{%
+    \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidkeyerror{#2}{##1}}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdefineboolkey}
@@ -518,7 +518,7 @@
 %    \begin{macrocode}
 \newcommand\@fxdefineboolkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]{}
-  \@fxdeclarevoidoption{#1}{no#2}{\@nameuse{fx@#1@#2}{false}}}
+  \@fxdefinevoidkey{#1}{no#2}{\@nameuse{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdeclarecmdoptkey}
@@ -899,13 +899,13 @@
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}}
-\@fxdeclarevoidoption{layout}{nomargin}{\fx@layout@margin{false}}
+\@fxdefinevoidkey{layout}{nomargin}{\fx@layout@margin{false}}
 
 \define@boolkey[fx]{layout}{marginclue}[true]{%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{Marginal clues requested; turning marginal notes off,}%
     \fx@layout@margin{false}}}
-\@fxdeclarevoidoption{layout}{nomarginclue}{\fx@layout@marginclue{false}}
+\@fxdefinevoidkey{layout}{nomarginclue}{\fx@layout@marginclue{false}}
 
 \@fxdefineboolkey{layout}{inline}
 \@fxdefineboolkey{layout}{footnote}
@@ -1252,85 +1252,84 @@
 %
 % \subsection{Internationalization}
 %    \begin{macrocode}
-\@fxdeclarevoidoption{lang}{english}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warning}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Notes:!}
-  \renewcommand*\fxwarningindexname{**b@Warnings:!}
-  \renewcommand*\fxerrorindexname{**c@Errors:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{english}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warning}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Notes:!}%
+  \renewcommand*\fxwarningindexname{**b@Warnings:!}%
+  \renewcommand*\fxerrorindexname{**c@Errors:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{List of Corrections}}
-\@fxdeclarevoidoption{lang}{french}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Attention}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Erreur}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Notes:!}
-  \renewcommand*\fxwarningindexname{**b@Avertissements:!}
-  \renewcommand*\fxerrorindexname{**c@Erreurs:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{french}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Attention}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Erreur}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Notes:!}%
+  \renewcommand*\fxwarningindexname{**b@Avertissements:!}%
+  \renewcommand*\fxerrorindexname{**c@Erreurs:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Liste des Corrections}}
-\@fxdeclarevoidoption{lang}{francais}{\ExecuteOptionsX[fx]<lang>{french}}
-\@fxdeclarevoidoption{lang}{spanish}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Aviso}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Notas:!}
-  \renewcommand*\fxwarningindexname{**b@Avisos:!}
-  \renewcommand*\fxerrorindexname{**c@Errores:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{francais}{\setkeys[fx]{lang}{french}}
+\@fxdefinevoidkey{lang}{spanish}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Aviso}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Error}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Notas:!}%
+  \renewcommand*\fxwarningindexname{**b@Avisos:!}%
+  \renewcommand*\fxerrorindexname{**c@Errores:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
-\@fxdeclarevoidoption{lang}{italian}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Avviso}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Errore}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Note:!}
-  \renewcommand*\fxwarningindexname{**b@Avvisi:!}
-  \renewcommand*\fxerrorindexname{**c@Errori:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{italian}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Avviso}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Errore}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Note:!}%
+  \renewcommand*\fxwarningindexname{**b@Avvisi:!}%
+  \renewcommand*\fxerrorindexname{**c@Errori:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Corrigenda}}
-\@fxdeclarevoidoption{lang}{german}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Anm}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warnung}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fehler}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Anmerkungen:!}
-  \renewcommand*\fxwarningindexname{**b@Warnungen:!}
-  \renewcommand*\fxerrorindexname{**c@Fehler:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{german}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Anm}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warnung}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fehler}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Anmerkungen:!}%
+  \renewcommand*\fxwarningindexname{**b@Warnungen:!}%
+  \renewcommand*\fxerrorindexname{**c@Fehler:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
-\@fxdeclarevoidoption{lang}{ngerman}{%
-  \ExecuteOptionsX[fx]<lang>{german}}
-\@fxdeclarevoidoption{lang}{danish}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Advarsel}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fejl}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Noter:!}
-  \renewcommand*\fxwarningindexname{**b@Advarsler:!}
-  \renewcommand*\fxerrorindexname{**c@Fejl:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{ngerman}{\setkeys[fx]{lang}{german}}
+\@fxdefinevoidkey{lang}{danish}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Advarsel}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Fejl}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Noter:!}%
+  \renewcommand*\fxwarningindexname{**b@Advarsler:!}%
+  \renewcommand*\fxerrorindexname{**c@Fejl:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Rettelser}}
-\@fxdeclarevoidoption{lang}{croatian}{%
-  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Poruka}
-  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Upozorenje}
-  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Gre\v ska}
-  \renewcommand*\fxfatalprefix{\fixmelogo}
-  \renewcommand*\fixmeindexname{\fixmelogo}
-  \renewcommand*\fxnoteindexname{**a@Poruke:!}
-  \renewcommand*\fxwarningindexname{**b@Upozorenja:!}
-  \renewcommand*\fxerrorindexname{**c@Greske:!}
-  \renewcommand*\fxfatalindexname{}
+\@fxdefinevoidkey{lang}{croatian}{%
+  \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Poruka}%
+  \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Upozorenje}%
+  \renewcommand*\fxerrorprefix{\fixmelogo\nobreakspace Gre\v ska}%
+  \renewcommand*\fxfatalprefix{\fixmelogo}%
+  \renewcommand*\fixmeindexname{\fixmelogo}%
+  \renewcommand*\fxnoteindexname{**a@Poruke:!}%
+  \renewcommand*\fxwarningindexname{**b@Upozorenja:!}%
+  \renewcommand*\fxerrorindexname{**c@Greske:!}%
+  \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Popis korekcija}}
 
 %    \end{macrocode}
@@ -1352,53 +1351,51 @@
 %   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
-\@fxdeclarevoidoption{ltx}{final}{
-  \let\@@fx@\@@fx@final
-  \let\@@@fxfatal\@@@fxfatal@final
-  \let\@fxenvbegin\@fxenvbegin@final
-  \let\@fxenvend\@fxenvend@final
-  \let\listoffixmes\listoffixmes@final
-}
+\@fxdefinevoidkey{ltx}{final}{%
+  \let\@@fx@\@@fx@final%
+  \let\@@@fxfatal\@@@fxfatal@final%
+  \let\@fxenvbegin\@fxenvbegin@final%
+  \let\@fxenvend\@fxenvend@final%
+  \let\listoffixmes\listoffixmes@final}
 
-\@fxdeclarevoidoption{ltx}{draft}{
-  \@ifclassloaded{article}{
-    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
-    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}{
-    \@ifclassloaded{report}{
-      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@report
-      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@report}{
-      \@ifclassloaded{book}{
-	\let\@listoffixmes@pretoc\@listoffixmes@pretoc@book
-	\let\@listoffixmes@posttoc\@listoffixmes@posttoc@book}{
-	\@ifclassloaded{scrartcl}{
-	  \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrartcl
-	  \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrartcl}{
-	  \@ifclassloaded{scrreprt}{
-	    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrreprt
-	    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrreprt}{
-	    \@ifclassloaded{scrbook}{
-	      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrbook
-	      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrbook}{
-	      \@ifclassloaded{amsbook}{
-		\let\listoffixmes@draft\listoffixmes@draft@ams}{
-		\@ifclassloaded{amsart}{
-		  \let\listoffixmes@draft\listoffixmes@draft@ams}{
+\@fxdefinevoidkey{ltx}{draft}{%
+  \@ifclassloaded{article}{%
+    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article%
+    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}{%
+    \@ifclassloaded{report}{%
+      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@report%
+      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@report}{%
+      \@ifclassloaded{book}{%
+	\let\@listoffixmes@pretoc\@listoffixmes@pretoc@book%
+	\let\@listoffixmes@posttoc\@listoffixmes@posttoc@book}{%
+	\@ifclassloaded{scrartcl}{%
+	  \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrartcl%
+	  \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrartcl}{%
+	  \@ifclassloaded{scrreprt}{%
+	    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrreprt%
+	    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrreprt}{%
+	    \@ifclassloaded{scrbook}{%
+	      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrbook%
+	      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrbook}{%
+	      \@ifclassloaded{amsbook}{%
+		\let\listoffixmes@draft\listoffixmes@draft@ams}{%
+		\@ifclassloaded{amsart}{%
+		  \let\listoffixmes@draft\listoffixmes@draft@ams}{%
 		  %% Use the article layout by default.
-		  \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article
-		  \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}
-	      }
-	    }
-	  }
-	}
-      }
-    }
-  }
-  \let\@@fx@\@@fx@draft
-  \let\@@@fxfatal\@@@fxfatal@draft
-  \let\@fxenvbegin\@fxenvbegin@draft
-  \let\@fxenvend\@fxenvend@draft
-  \let\listoffixmes\listoffixmes@draft
-}
+		  \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article%
+		  \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}%
+              }%
+	    }%
+	  }%
+	}%
+      }%
+    }%
+  }%
+  \let\@@fx@\@@fx@draft%
+  \let\@@@fxfatal\@@@fxfatal@draft%
+  \let\@fxenvbegin\@fxenvbegin@draft%
+  \let\@fxenvend\@fxenvend@draft%
+  \let\listoffixmes\listoffixmes@draft}
 
 %    \end{macrocode}
 %
