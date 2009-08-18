@@ -97,3 +97,7 @@ text, but doesn't show comments
 * Provide a collection of themes as separate source files, redefining existing
   (or adding user) layouts. See marginnote, pdfcomment, the todonotes package
   etc. 
+
+* silent option does not shut up the summary. See if we want that, and if we
+would like to add values to this option (like silent={log,tty,summary,all}
+etc. 
