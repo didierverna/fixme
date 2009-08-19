@@ -1137,7 +1137,8 @@
 % \begin{macro}{\@fxlayout}
 %   \marg{type}\marg{note}\\
 %   Dispatch all active layouts. Note that we start with the footnote layout,
-%   so that it is sticked properly to the preceding text if active.
+%   so that it is sticked properly to the preceding text if active. Next we
+%   handle marginal layouts so that it is also close to the text to fix.
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
   \@fxhandleinnerfallback%
