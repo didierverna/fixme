@@ -98,6 +98,10 @@ text, but doesn't show comments
   (or adding user) layouts. See marginnote, pdfcomment, the todonotes package
   etc. 
 
+=> En fait,  Étudier la possibilité pour l'utilisateur de fournir ses propres
+   layouts, pas seulement le UserLayout. Ce serait encore mieux pour
+   marginnote, mparhack etc. 
+
 * silent option does not shut up the summary. See if we want that, and if we
 would like to add values to this option (like silent={log,tty,summary,all}
 etc. 
@@ -106,3 +110,4 @@ etc.
 
 * Après mise à jour de la doc de 4.0, revoir ltxpkg pour l'indexation et les
 labels. 
+
