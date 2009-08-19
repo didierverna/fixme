@@ -103,3 +103,6 @@ would like to add values to this option (like silent={log,tty,summary,all}
 etc. 
 
 * make innerfallback a choice key
+
+* Après mise à jour de la doc de 4.0, revoir ltxpkg pour l'indexation et les
+labels. 
