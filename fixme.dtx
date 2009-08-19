@@ -60,6 +60,7 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %
+% \newcommand\subsubsubsection[1]{\paragraph{#1:}}
 % \newcommand\version{4.0}
 % \newcommand\releasedate{2009/08/18}
 % \newcommand\packagecopyright{Copyright \copyright{} 1998, 1999, 2000, 2001,
@@ -456,107 +457,129 @@
 %
 % \subsection{Utilities}
 % \begin{macro}{\@fxcsstring}
+%   \marg{name}\\
 %   Stringify a control sequence name:
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxcsstring[1]{\expandafter\string\csname#1\endcsname}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxpkgwarning}
-%   \begin{macro}{\@fxpkgerror}
-%     \fixme{} package warnings or errors:
-%   \end{macro}
 % \end{macro}
+% \begin{macro}{\@fxpkgwarning}
+%   \marg{msg}\\
+%   Issue a \fixme{} warning:
 %    \begin{macrocode}
 \newcommand\@fxpkgwarning[1]{\PackageWarning{FiXme}{#1}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxpkgerror}
+%   \marg{shortmsg}\marg{longmsg}\\
+%   Issue a \fixme{} error:
+%    \begin{macrocode}
 \newcommand\@fxpkgerror[2]{\PackageError{FiXme}{#1}{#2}}
 
 %    \end{macrocode}
+% \end{macro}
 % \subsubsection{\texttt{xkeyval} related}
 % \begin{macro}{\@fxdeclarelegacyoption}
+%   \marg{name}\\
 %   A ``legacy option'' is a package option that is not used anymore.
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeclarelegacyoption[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \@fxpkgwarning{'#1' is a legacy option that has no effect anymore,}}}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxdeclarelegacybooloption}
+%   \marg{name}\\
 %   A ``legacy boolean option'' is a legacy |opt| option and its |noopt|
 %   counterpart. Note that we don't really ensure the boolean status of these
 %   options anymore.
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxdeclarelegacybooloption[1]{%
   \@fxdeclarelegacyoption{#1}
   \@fxdeclarelegacyoption{no#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxvoidkeyerror}
-%   \begin{macro}{\@fxdefinevoidkey}
-%     A \fixme{} ``void key'' is an \texttt{xkeyval} key that doesn't expect
-%     any argument.
-%   \end{macro}
 % \end{macro}
+% \begin{macro}{\@fxvoidkeyerror}
+%   \marg{key}\marg{value}\\
+%   Issue a \fixme{} error about a void key misuse (see below):
 %    \begin{macrocode}
 \newcommand\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
     You have given the key '#1' the argument '#2' but it takes
     none.\MessageBreak
     Type X to quit, fix that key and re-run LaTeX.\MessageBreak}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxdefinevoidkey}
+%   \marg{family}\marg{name}\marg{func}\\
+%   A \fixme{} ``void key'' is an \texttt{xkeyval} key that doesn't expect
+%   any argument.
+%    \begin{macrocode}
 \newcommand\@fxdefinevoidkey[3]{%
   \define@key[fx]{#1}{#2}[]{%
     \ifthenelse{\equal{##1}{}}{#3}{\@fxvoidkeyerror{#2}{##1}}}}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
+%   \marg{family}\marg{name}\\
 %   A \fixme{} ``boolkey'' is like an \texttt{xkeyval} one, with the addition
 %   that for every such \texttt{key}, there is a |nokey| void key
-%   counterpart.\par
-% \end{macro}
+%   counterpart.
 %    \begin{macrocode}
 \newcommand\@fxdefineboolkey[2]{%
   \define@boolkey[fx]{#1}{#2}[true]{}
   \@fxdefinevoidkey{#1}{no#2}{\@nameuse{fx@#1@#2}{false}}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdeclarecmdoptkey}
-%   A \fixme{} ``cmdkey'' is just like an \texttt{xkeyval} one:
 % \end{macro}
+% \begin{macro}{\@fxdeclarecmdkey}
+%   \oarg{default}\marg{family}\marg{name}\\
+%   A \fixme{} ``cmdkey'' is just like an \texttt{xkeyval} one (except that
+%   there is no \meta{function} argument):
 %    \begin{macrocode}
 \newcommand\@fxdefinecmdkey[3][]{\define@cmdkey[fx]{#2}{#3}[#1]{}}
 
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsubsection{Backward compatibility related}
-% \begin{macro}{\@fxnewlegacycmd}
-%   A ``legacy command'' is an old macro taking one argument and that has no
-%   effect anymore. Note: this is currently not used anywhere.
-% \end{macro}
-%    \begin{macrocode}
-\newcommand\@fxnewlegacycmd[1]{%
-  \expandafter\newcommand\csname#1\endcsname[1]{%
-    \@fxpkgwarning{%
-      \@fxcsstring{#1} is a legacy command that has no effect anymore,}}}
-
-%    \end{macrocode}
-% \begin{macro}{\@fxnewlegacycmswarning}
-%   \begin{macro}{\@fxnewlegacyrenewable}
-%     A ``legacy renewable [command]'' is a legacy command that might be
-%     renew'ed by the user instead of being used directly. Here is what we do:
-%     \begin{enumerate}
-%     \item \cs{newcommand} it and \cs{let} it be \cs{empty},
-%     \item \cs{AtBeginDocument}, check if it has been redefined (that is, if
-%       it is not \cs{empty} anymore),
-%     \item and if so, issue a legacy warning.
-%     \end{enumerate}
-%   \end{macro}
-% \end{macro}
+% \begin{macro}{\@fxlegacycmdwarning}
+%   \marg{name}\\
+%   Issue a \fixme{} warning about a legacy command (see below):
 %    \begin{macrocode}
 \newcommand\@fxlegacycmdwarning[1]{%
   \@fxpkgwarning{%
     \@fxcsstring{#1} is a legacy command that is not used anymore,}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxnewlegacycmd}
+%   \marg{name}\\
+%   A ``legacy command'' is an old command taking one argument and that has no
+%   effect anymore. Note: currently unused.
+%    \begin{macrocode}
+%% \newcommand\@fxnewlegacycmd[1]{%
+%%   \expandafter\newcommand\csname#1\endcsname[1]{\@fxlegacycmdwarning{#1}}
+%%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxnewlegacyrenewable}
+%   \marg{name}\\
+%   A ``legacy renewable [command]'' is a legacy command that might be
+%   renew'ed by the user instead of being used directly. Here is what we do:
+%   \begin{enumerate}
+%   \item \cs{newcommand} it and \cs{let} it be \cs{empty},
+%   \item \cs{AtBeginDocument}, check if it has been redefined (that is, if
+%     it is not \cs{empty} anymore),
+%   \item and if so, issue a legacy command warning.
+%   \end{enumerate}
+%    \begin{macrocode}
 \newcommand\@fxnewlegacyrenewable[1]{%
   \expandafter\newcommand\csname#1\endcsname{}
   \expandafter\let\csname#1\endcsname\empty
@@ -566,44 +589,55 @@
     \fi}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdeprecatedcmdwarning}
-%   \begin{macro}{\@fxnewdeprecatedcmd}
-%     A ``deprecated command'' is a user-level macro that has been deprecated
-%     in favor of a new one. Users might call these commands, but are not
-%     supposed to redefine them. Hence, their definition is just a call to the
-%     new version.
-%   \end{macro}
 % \end{macro}
+% \begin{macro}{\@fxdeprecatedcmdwarning}
+%   \marg{old}\marg{new}\\
+%   Issue a \fixme{} warning about a deprecated command (see below):
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
     \@fxcsstring{#1} is deprecated; please use \@fxcsstring{#2} instead,}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxnewdeprecatedcmd}
+%   \marg{old}\marg{new}\\
+%   A ``deprecated command'' is a user-level command that has been deprecated
+%   in favor of a new one. Users might call these commands, but are not
+%   supposed to redefine them. Hence, their definition is just a call to the
+%   new version.
+%    \begin{macrocode}
 \newcommand\@fxnewdeprecatedcmd[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedcmdwarning{#1}{#2}%
     \@nameuse{#2}}}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxprefixdeprecatecmd}
+%   \oarg{prefix}\marg{name}\\
 %   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated commands:
-% \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxprefixdeprecatecmd[2][]{%
-  \@fxnewdeprecatedcmd{#1fixme#2}{#1fx#2}}
+\newcommand\@fxprefixdeprecatecmd[2][]{\@fxnewdeprecatedcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdeprecatedenvwarning}
-%   \begin{macro}{\@fxnewdeprecatedenv}
-%     A ``deprecated environment'' is defined similarly to a deprecated
-%     command (see above).
-%   \end{macro}
 % \end{macro}
+% \begin{macro}{\@fxdeprecatedenvwarning}
+%   \marg{old}\marg{new}
+%   Issue a \fixme{} warning about a deprecated environment (see below):
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
     The '#1' environment is deprecated; please use '#2' instead,}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxnewdeprecatedenv}
+%   \marg{old}\marg{new}\\
+%   A ``deprecated environment'' is defined similarly to a deprecated command.
+%    \begin{macrocode}
 \newcommand\@fxnewdeprecatedenv[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedenvwarning{#1}{#2}%
@@ -611,7 +645,9 @@
   \@namedef{end#1}{\@nameuse{end#2}}}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxnewdeprecatedrenewable}
+%   \marg{old}\marg{new}\\
 %   A ``deprecated renewable [command]'' is a deprecated command that is
 %   likely to be renew'ed by the user. There are several possibilities to
 %   implement this. One is to maintain the use of the older version in the
@@ -628,7 +664,6 @@
 %   \end{enumerate}
 %   Note that we don't need to know the macro's prototype, because
 %   \cs{renewcommand} asks for it all over again.
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnewdeprecatedrenewable[2]{%
   \expandafter\newcommand\csname#1\endcsname{}
@@ -640,36 +675,34 @@
     \fi}}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxprefixdeprecaterenewable}
+%   \oarg{prefix}\marg{name}\\
 %   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated renewable commands:
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxprefixdeprecaterenewable[2][]{%
   \@fxnewdeprecatedrenewable{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
-% \subsection{List macros}
-% \begin{macro}{\l@fixme}
-%   \begin{macro}{\listoffixmes}
-%     \begin{macro}{\listoffixmes@final}
-%       \begin{macro}{\listoffixmes@draft}
-%         Lists are output in a document class dependant fashion. Classes
-%         currently recognized are |article|, |report|, |book| and their
-%         koma-script replacements.\par
-%         In order to prevent the List of Fixme's heading from being generated
-%         when there are no fixmes, a test on the existence of the lox file is
-%         performed. There's a slight bug left however: after removing the last
-%         fixme, one ends up with an empty lox file, so the heading still
-%         appear. Previously, this was done by checking if some fixmes were
-%         given, but that was buggy: the list of fixme's could not appear
-%         before the first fixme note\ldots I should try to detect whether the
-%         file is empty.
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
 % \end{macro}
+% \subsection{List macros}
+% \DescribeMacro{\l@fixme}
+% \DescribeMacro{\listoffixmes}
+% \DescribeMacro{\listoffixmes@final}
+% \DescribeMacro{\listoffixmes@draft}
+% Lists are output in a document class dependant fashion. Classes currently
+% recognized are |article|, |report|, |book| and their koma-script
+% replacements.\par
+% In order to prevent the List of Fixme's heading from being generated when
+% there are no \fixme{} notes, a test on the existence of the \texttt{lox}
+% file is performed. There's a slight bug left however: after removing the
+% last fixme{} note, one ends up with an empty \texttt{lox} file, so the
+% heading still appears. Previously, this was done by checking if some
+% \fixme{} notes were given, but that was buggy: the List of Fixme's could not
+% appear before the first fixme note\ldots I should try to detect whether the
+% file is empty.
 %    \begin{macrocode}
 \let\l@fixme\l@figure
 \newcommand\listoffixmes{}
@@ -682,6 +715,7 @@
     \@starttoc{lox}}}
 
 %    \end{macrocode}
+% \DescribeMacro{\listoffixmes@draft@ams}
 % The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea of
 % redefining the \cs{@starttoc} command to take two arguments. Therefore, I
 % need to provide a specific version of the \cs{listoffixmes} macro:
@@ -689,36 +723,30 @@
 \def\listoffixmes@draft@ams{\@starttoc{lox}\listfixmename}
 
 %    \end{macrocode}
-% \begin{macro}{\listfixmename}
-%   In order to redefine the list title, users have to call \cs{renewcommand}.
-%   I don't like this much: it would be cleaner to provide a real command
-%   that redefines the title internally. However, I'll stick with the
-%   current scheme because it is consistent with the rest of \LaTeXe's lists.
-% \end{macro}
+% \DescribeMacro{\listfixmename}
+% In order to redefine the list title, users have to call \cs{renewcommand}.
+% I don't like this much: it would be cleaner to provide a real command
+% that redefines the title internally. However, I'll stick with the
+% current scheme because it is consistent with the rest of \LaTeXe's lists.
 %    \begin{macrocode}
 \newcommand*\listfixmename{}
 
 %    \end{macrocode}
 %
 % \subsubsection{Standard classes}
-% \begin{macro}{\listoffixmes@pretoc@article}
-%   \begin{macro}{\listoffixmes@posttoc@article}
-%     \textbf{|article| version:}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\listoffixmes@pretoc@article}
+% \DescribeMacro{\listoffixmes@posttoc@article}
+% \textbf{|article| version:}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@article{%
   \section*{\listfixmename%
-    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
-  }
+    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
 \def\@listoffixmes@posttoc@article{}
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@pretoc@report}
-%   \begin{macro}{\listoffixmes@posttoc@report}
-%     \textbf{|report| version:}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\listoffixmes@pretoc@report}
+% \DescribeMacro{\listoffixmes@posttoc@report}
+% \textbf{|report| version:}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@report{%
   \if@twocolumn
@@ -732,11 +760,9 @@
 \def\@listoffixmes@posttoc@report{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@pretoc@book}
-%   \begin{macro}{\listoffixmes@posttoc@book}
-%     \textbf{|book| version:}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\listoffixmes@pretoc@book}
+% \DescribeMacro{\listoffixmes@posttoc@book}
+% \textbf{|book| version:}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@book{%
   \if@twocolumn
@@ -752,21 +778,18 @@
 %    \end{macrocode}
 %
 % \subsubsection{koma-script classes}
-% \begin{macro}{\lox@heading}
-%   The code below (version 3.3) mimics KOMA-Script version 2006/07/30 v2.95b.
-%   Older versions (using chapter*) are no longer supported because it is
-%   simpler that way, but if some people complain, I'll  have to
-%   conditionalize on the KOMA-Script version, which would be a PITA.
-% \end{macro}
+% \DescribeMacro{\lox@heading}
+% The code below (version 3.3) mimics KOMA-Script version 2006/07/30 v2.95b.
+% Older versions (using chapter*) are no longer supported because it is
+% simpler that way, but if some people complain, I'll  have to conditionalize
+% on the KOMA-Script version, which would be a PITA.
 %    \begin{macrocode}
 \newcommand*\lox@heading{\float@listhead{\listfixmename}}
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@pretoc@scrartcl}
-%   \begin{macro}{\listoffixmes@posttoc@scrartcl}
-%     \textbf{|scrartcl| version:}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\listoffixmes@pretoc@scrartcl}
+% \DescribeMacro{\listoffixmes@posttoc@scrartcl}
+% \textbf{|scrartcl| version:}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@scrartcl{%
   \begingroup%
@@ -778,11 +801,9 @@
   }
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@pretoc@scrreprt}
-%   \begin{macro}{\listoffixmes@posttoc@scrreprt}
-%     \textbf{|scrreprt| version:}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\listoffixmes@pretoc@scrreprt}
+% \DescribeMacro{\listoffixmes@posttoc@scrreprt}
+% \textbf{|scrreprt| version:}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@scrreprt{%
   \begingroup%
@@ -800,11 +821,9 @@
   }
 
 %    \end{macrocode}
-% \begin{macro}{\listoffixmes@pretoc@scrbook}
-%   \begin{macro}{\listoffixmes@posttoc@scrbook}
-%     \textbf{|scrbook| version:}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\listoffixmes@pretoc@scrbook}
+% \DescribeMacro{\listoffixmes@posttoc@scrbook}
+% \textbf{|scrbook| version:}
 %    \begin{macrocode}
 \def\@listoffixmes@pretoc@scrbook{%
   \begingroup%
@@ -826,60 +845,76 @@
 % \subsection{Layout}
 % \subsubsection{Layout macros}
 % \begin{macro}{\@fxlayoutrename}
+%   \marg{name}\\
 %   As of version 4, layout macros have been renamed from \cs{FX*} to
 %   \cs{FXLayout*}. Older versions remain for backward compatibility.
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxlayoutrename[1]{%
   \@fxnewdeprecatedrenewable{FX#1}{FXLayout#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\FXLayoutMargin}
-%   \begin{macro}{\FXLayoutMarginCLue}
-%     \begin{macro}{\FXLayoutInline}
-%       \begin{macro}{\FXLayoutFootnote}
-%         \textbf{Textual output:}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
 % \end{macro}
+%
+% \subsubsubsection{Textual output}
+% \begin{macro}{\FXLayoutMargin}
+%   \marg{prefix}\marg{note}
 %    \begin{macrocode}
 \newcommand\FXLayoutMargin[2]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
     \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXLayoutMarginCLue}
+%   \marg{prefix}
+%    \begin{macrocode}
 \newcommand\FXLayoutMarginClue[1]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}!]{%
     \footnotesize\raggedright\textbf{#1}!}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXLayoutInline}
+%   \marg{prefix}\marg{note}
+%    \begin{macrocode}
 \newcommand\FXLayoutInline[2]{%
   \textbf{#1}: \emph{#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXLayoutFootnote}
+%   \marg{prefix}\marg{note}
+%    \begin{macrocode}
 \newcommand\FXLayoutFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 
+%    \end{macrocode}
+%   \end{macro}
+% Note that neither \cs{FXLayoutUser} nor the deprecated version \cs{FXUser}
+% are defined here. Requesting the |user| layout without defining one or the
+% other would produce an error, which is the expected behavior.
+%    \begin{macrocode}
 \@fxlayoutrename{Margin}
 \@fxlayoutrename{MarginClue}
 \@fxlayoutrename{Inline}
 \@fxlayoutrename{Footnote}
 
 %    \end{macrocode}
-% Note that neither \cs{FXLayoutUser} nor the deprecated version \cs{FXUser}
-% are defined here. Requesting the |user| layout without defining one or the
-% other would produce an error, which is the expected behavior.
 %
+% \subsubsubsection{Index output}
 % \begin{macro}{\fixmeindexname}
-%   \begin{macro}{\FXLayoutIndex}
-%     \textbf{Index output:}\par
-%     The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
-%     well.
-%   \end{macro}
-% \end{macro}
+%   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
+%   well.
 %    \begin{macrocode}
 \newcommand*\fixmeindexname{}
-\newcommand\FXLayoutIndex[1]{%
-  \index{***@\fixmeindexname:!#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXLayoutIndex}
+%   \marg{note}
+%    \begin{macrocode}
+\newcommand\FXLayoutIndex[1]{\index{***@\fixmeindexname:!#1}}
 
 \@fxlayoutrename{Index}
 
 %    \end{macrocode}
+% \end{macro}
 % The following macros are unused since version 2.2 (at the time of which,
 % layout and logging were the same thing), but kept here anyway to avoid
 % breaking compilation of older documents (renewing these commands).
@@ -928,23 +963,20 @@
 % \subsection{Logging}
 % \subsubsection{Logging macros}
 % \begin{macro}{\@fxlogrename}
+%   \marg{name}\\
 %   As of version 4, logging macros have been renamed from \cs{FX*} to
 %   \cs{FXLog*}. Older versions remain for backward compatibility.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxlogrename[1]{%
-  \@fxnewdeprecatedrenewable{FX#1}{FXLog#1}}
+\newcommand\@fxlogrename[1]{\@fxnewdeprecatedrenewable{FX#1}{FXLog#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\FXLogNote}
 %   \begin{macro}{\FXLogWarning}
 %     \begin{macro}{\FXLogerror}
 %       \begin{macro}{\FXLogFatal}
+%         \marg{msg}\\
 %         Logging includes both log file and terminal output.
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\FXLogNote[1]{%
   \GenericInfo{%
@@ -963,20 +995,24 @@
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Fatal Error: '#1'}}
 
+%    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%    \begin{macrocode}
 \@fxlogrename{Note}
 \@fxlogrename{Warning}
 \@fxlogrename{Error}
 \@fxlogrename{Fatal}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxlogcs@note}
-%   \begin{macro}{\@fxlogcs@warning}
-%     \begin{macro}{\@fxlogcs@fatal}
-%       In order for the generic dispatch to be able to call the logging
-%       macros, we need a translation mechanism:
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\@fxlogcs@note}
+% \DescribeMacro{\@fxlogcs@warning}
+% \DescribeMacro{\@fxlogcs@fatal}
+% In order for the generic dispatch to be able to call the logging
+% macros, we need an easier translation mechanism from the note type to the
+% actual command name:
 %    \begin{macrocode}
 \let\@fxlogcs@note\FXLogNote
 \let\@fxlogcs@warning\FXLogWarning
@@ -995,25 +1031,25 @@
 % As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}.
 % Older versions remain for backward compatibility.
 % \begin{macro}{\@fxcounterrename}
+%   \marg{name}\\
 %   |fixme*| counters have also been renamed to |fx*|. Older versions of
 %   \cs{the*} macros remain for backward compatibility (not the counters
 %   themselves, but that should be ok since users are not supposed to mess up
 %   with them).
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
 
 %    \end{macrocode}
-% \begin{macro}{\thefixmecount}
-%   |fixmecount| maintains the total of all notes, regardless of their level.
 % \end{macro}
+% \DescribeMacro{\thefixmecount}
+% |fixmecount| maintains the total of all notes, regardless of their level.
 %    \begin{macrocode}
 \newcounter{fixmecount}
 
 %    \end{macrocode}
 % \begin{macro}{\@fxnoteparameters}
+%   \marg{type}\\
 %   The following macro creates all required note parameters:
-% \end{macro}
 %    \begin{macrocode}
 \newcommand\@fxnoteparameters[1]{%
   \newcounter{fx#1count}
@@ -1025,13 +1061,11 @@
   \@fxprefixdeprecaterenewable{#1indexname}}
 
 %    \end{macrocode}
-% \begin{macro}{\thefx*count}
-%   \begin{macro}{\fx*prefix}
-%     \begin{macro}{\fx*indexname}
-%       And we use it for all note types:
-%     \end{macro}
-%   \end{macro}
 % \end{macro}
+% \DescribeMacro{\thefx*count}
+% \DescribeMacro{\fx*prefix}
+% \DescribeMacro{\fx*indexname}
+% And we use it for all note types:
 %    \begin{macrocode}
 \@fxnoteparameters{note}
 \@fxnoteparameters{warning}
@@ -1042,11 +1076,10 @@
 %
 % \subsubsection{Layout dispatch}
 % \begin{macro}{\@fxinnerfallbackcmd}
-%   \begin{macro}{\@fxhandleinnerfallback}
-%     Automatic disabling of the \texttt{margin} and \texttt{marginclue}
-%     layouts when \TeX{} is in \texttt{inner} mode.
-%   \end{macro}
-% \end{macro}
+%   \marg{name}\\
+%   \DescribeMacro{\@fxhandleinnerfallback}
+%   Automatic disabling of the \texttt{margin} and \texttt{marginclue}
+%   layouts when \TeX{} is in \texttt{inner} mode:
 %    \begin{macrocode}
 \def\@fxinnerfallbackcmd#1{%
   \@nameuse{fx@layout@#1}}
@@ -1060,10 +1093,11 @@
   \fi}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxlayout}
+%   \marg{type}\marg{note}\\
 %   Dispatch all active layouts. Note that we start with the footnote layout,
 %   so that it is sticked properly to the preceding text if active.
-% \end{macro}
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
   \@fxhandleinnerfallback%
@@ -1078,17 +1112,13 @@
   \iffx@layout@index\FXLayoutIndex{\@fxtempb\@fxtempc: #2}\fi}
 
 %    \end{macrocode}
-% \subsubsection{Non fatal notes}
-% \begin{macro}{\@@fx@final}
-%   \begin{macro}{\@@fx@draft}
-%     \begin{macro}{\@@fx}
-%       \begin{macro}{\@fx}
-%         The generic mechanism below applies only to \fixme{} notes, warnings
-%         and errors. Fatal notes are handled in the next section.
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
 % \end{macro}
+% \subsubsection{Non fatal notes}
+% The generic mechanism below applies only to \fixme{} notes, warnings and
+% errors. Fatal notes are handled in the next section.\\
+% \DescribeMacro{\@@fx@final}
+% \DescribeMacro{\@@fx@draft}
+% \marg{type}\marg{note}
 %    \begin{macrocode}
 \def\@@fx@final#1#2{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
@@ -1097,11 +1127,19 @@
 \def\@@fx@draft#1#2{%
   \@fxlayout{#1}{#2}%
   \@@fx@final{#1}{#2}}
-
+%    \end{macrocode}
+% \begin{macro}{\@@fx}
+%   \marg{type}\marg{note}
+%    \begin{macrocode}
 \def\@@fx#1#2{%
   \stepcounter{fixmecount}%
   \stepcounter{fx#1count}%
   \@@fx@{#1}{#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fx}
+%   \marg{type}\oarg{options}\marg{note}
+%    \begin{macrocode}
 \def\@fx#1[#2]#3{%
   \begingroup%
   \setkeys[fx]{layout,log,lang,ltx}{#2}%
@@ -1109,12 +1147,11 @@
   \endgroup}
 
 %    \end{macrocode}
-% \begin{macro}{\fxnote}
-%   \begin{macro}{\fxwarning}
-%     \begin{macro}{\fxerror}
-%     \end{macro}
-%   \end{macro}
 % \end{macro}
+% \DescribeMacro{\fxnote}
+% \DescribeMacro{\fxwarning}
+% \DescribeMacro{\fxerror}
+% \oarg{options}\marg{note}
 %    \begin{macrocode}
 \DeclareRobustCommand\fxnote{\@ifnextchar[%]
   {\@fx{note}}{\@@fx{note}}}
@@ -1125,14 +1162,14 @@
 
 %    \end{macrocode}
 %
-%    \subsubsection{Fatal notes}
+% \subsubsection{Fatal notes}
 % Fatal notes can't be handled in the same generic way as the others for two
 % reasons: backward compatibility problems, and the fact that their behavior
 % differs in \texttt{final} mode.\par
-% The \cs{FiXme*} macros are kept only to preserve backward compatibility.
-% They are used by fatal notes only and are made to call the new versions by
-% default. \cs{FiXmeUser} is treated a bit differently though; see
-% comment in the Finale's ``Backward Compatibility'' section.
+% The \cs{FiXme*} macros below are kept only to preserve backward
+% compatibility. They are used by fatal notes only and are made to call the
+% new versions by default. \cs{FiXmeUser} is treated a bit differently though;
+% see comment in the Finale's ``Backward Compatibility'' section.
 %    \begin{macrocode}
 \newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
 \newcommand\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
@@ -1144,12 +1181,11 @@
 \newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
-% \begin{macro}{\@@@fxfatal@final}
-%   \begin{macro}{\@@@fxfatal@draft}
-%     Note that we start with the footnote layout, so that it is sticked
-%     properly to the preceding text if active.
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\@@@fxfatal@final}
+% \DescribeMacro{\@@@fxfatal@draft}
+% \marg{note}\\
+% Note that we start with the footnote layout, so that it is sticked
+% properly to the preceding text if active.
 %    \begin{macrocode}
 \def\@@@fxfatal@final#1{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
@@ -1173,37 +1209,45 @@
 
 %    \end{macrocode}
 % \begin{macro}{\@@fxfatal}
-%   \begin{macro}{\@fxfatal}
-%     \begin{macro}{\fxfatal}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
+%   \marg{note}
 %    \begin{macrocode}
 \def\@@fxfatal#1{%
   \stepcounter{fixmecount}%
   \stepcounter{fxfatalcount}%
   \@@@fxfatal{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxfatal}
+%   \oarg{options}\marg{note}
+%    \begin{macrocode}
 \def\@fxfatal[#1]#2{%
   \begingroup%
   \setkeys[fx]{layout,log,lang,ltx}{#1}%
   \@@fxfatal{#2}%
   \endgroup}
+%    \end{macrocode}
+% \end{macro}
+%     \begin{macro}{\fxfatal}
+%       \oarg{options}\marg{note}
+%    \begin{macrocode}
 \DeclareRobustCommand\fxfatal{\@ifnextchar[%]
   {\@fxfatal}{\@@fxfatal}}
 
 \@fxnewdeprecatedcmd{fixme}{fxfatal}
 
 %    \end{macrocode}
-%
+% \end{macro}
 % \subsection{\fixme{} environments}
 % \subsubsection{Layout macros}
 % \begin{macro}{\FXEnvBegin}
-%   \begin{macro}{\FXEnvEnd}
-%   \end{macro}
-% \end{macro}
+%   \marg{prefix}
 %    \begin{macrocode}
 \newcommand\FXEnvBegin[1]{\begin{quotation}
     \textbf{#1:}}
+%    \end{macrocode}
+% \end{macro}
+% \DescribeMacro{\FXEnvEnd}
+%    \begin{macrocode}
 \newcommand\FXEnvEnd{\end{quotation}}
 
 %    \end{macrocode}
@@ -1213,29 +1257,31 @@
 % In |final| mode, |verbatim|'s \texttt{comment} environment is used to
 % suppress output. Note that contrary to the macro version, we don't need to
 % define the \texttt{fxfatal} environment in a specialized way because the
-% fatal error will be triggered by the call to \cs{fxfatal} anyway.
-% \begin{macro}{\@fxenvbegin@final}
-%   \begin{macro}{\@fxenvend@final}
-%     \begin{macro}{\@fxenvbegin@draft}
-%       \begin{macro}{\@fxenvend@draft}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
+% fatal error will be triggered by the call to \cs{fxfatal} anyway.\\
+% \DescribeMacro{\@fxenvbegin@final}
+% \DescribeMacro{\@fxenvbegin@draft}
+% \marg{type}\marg{summary}
 %    \begin{macrocode}
 \def\@fxenvbegin@final#1#2{%
   \@nameuse{#1}{#2}%
   \comment}
-\def\@fxenvend@final{\endcomment}
-
 \def\@fxenvbegin@draft#1#2{%
   \@nameuse{#1}[noinline]{#2}%
   \FXEnvBegin{\@nameuse{#1prefix}}}
+
+%    \end{macrocode}
+% \DescribeMacro{\@fxenvend@final}
+% \DescribeMacro{\@fxenvend@draft}
+%    \begin{macrocode}
+\def\@fxenvend@final{\endcomment}
 \def\@fxenvend@draft{\FXEnvEnd}
 
 %    \end{macrocode}
 %
 % \subsubsection{User-level environments}
+% \begin{macro}{\@fxdefineenvironment}
+%   \marg{type}\\
+%   This command defines \fixme{} environments in a generic way:
 %    \begin{macrocode}
 \newcommand\@fxdefineenvironment[1]{%
   \newenvironment{anfx#1}[2][]{%
@@ -1245,6 +1291,10 @@
     \@fxenvend%
     \endgroup}}
 
+%    \end{macrocode}
+% \end{macro}
+% And we use it to create the user level interface:
+%    \begin{macrocode}
 \@fxdefineenvironment{note}
 \@fxdefineenvironment{warning}
 \@fxdefineenvironment{error}
@@ -1339,21 +1389,15 @@
 %    \end{macrocode}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\@@fx@}
-%   \begin{macro}{\@@@fxfatal}
-%     \begin{macro}{\@fxenvbegin}
-%       \begin{macro}{\@fxenvend}
-%         \begin{macro}{\listoffixmes}
-%           \begin{macro}{\@listoffixmes@pretoc}
-%             \begin{macro}{\@listoffixmes@posttoc}
-%               Select draft or final versions of internal macros:
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
+% \DescribeMacro{\@@fx@}
+% \DescribeMacro{\@@@fxfatal}
+% \DescribeMacro{\@fxenvbegin}
+% \DescribeMacro{\@fxenvend}
+% \DescribeMacro{\listoffixmes}
+% \DescribeMacro{\@listoffixmes@pretoc}
+% \DescribeMacro{\@listoffixmes@posttoc}
+% Select draft or final versions of internal macros, some of them also
+% depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@fx@\@@fx@final%
@@ -1422,6 +1466,7 @@
 %
 % \subsubsection{The \cs{fxsetup} macro}
 % \begin{macro}{\fxsetup}
+%   \marg{options}\\
 %   The inevitable setup macro, extremely impressive yet as trivial as can be
 %   with the \texttt{xkeyval} package\ldots
 % \end{macro}
