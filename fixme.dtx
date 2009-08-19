@@ -937,14 +937,18 @@
 
 %    \end{macrocode}
 % \end{macro}
-% The following macros are unused since version 2.2 (at the time of which,
-% layout and logging were the same thing), but kept here anyway to avoid
-% breaking compilation of older documents (renewing these commands).
+% \begin{macro}{\FiXmeInfo}
+%   \begin{macro}{\FiXmeWarning}
+%     The following macros are unused since version 2.2 (at the time of which,
+%     layout and logging were the same thing), but kept here anyway to avoid
+%     breaking compilation of older documents (renewing these commands).
 %    \begin{macrocode}
 \@fxnewlegacyrenewable{FiXmeInfo}
 \@fxnewlegacyrenewable{FiXmeWarning}
 
 %    \end{macrocode}
+%   \end{macro}
+% \end{macro}
 %
 % \subsubsection{Layout options}
 % As of version 4, these options are implemented as |xkeyval| keys, and
@@ -1207,10 +1211,16 @@
 % Fatal notes can't be handled in the same generic way as the others for two
 % reasons: backward compatibility problems, and the fact that their behavior
 % differs in \texttt{final} mode.\par
-% The \cs{FiXme*} macros below are kept only to preserve backward
-% compatibility. They are used by fatal notes only and are made to call the
-% new versions by default. \cs{FiXmeUser} is treated a bit differently though;
-% see comment in the Finale's ``Backward Compatibility'' section.
+% \begin{macro}{\FiXmeInline}
+%   \begin{macro}{\FiXmeMargin}
+%     \begin{macro}{\FiXmeFootnote}
+%       \begin{macro}{\FiXmeUser}
+%         \begin{macro}{\FiXmeIndex}
+%           The \cs{FiXme*} macros below are kept only to preserve backward
+%           compatibility. They are used by fatal notes only and are made to
+%           call the new versions by default. \cs{FiXmeUser} is treated a bit
+%           differently though; see comment in the Finale's ``Backward
+%           Compatibility'' section.
 %    \begin{macrocode}
 \newcommand\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
 \newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
@@ -1222,6 +1232,11 @@
 \newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
+%         \end{macro}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 % \begin{macro}{\@@@fxfatal@final}
 %   \begin{macro}{\@@@fxfatal@draft}
 %     \marg{note}\\
