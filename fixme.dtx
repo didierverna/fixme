@@ -1112,13 +1112,6 @@
 % \end{macro}
 %
 % \subsubsection{Layout dispatch}
-% \begin{macro}{\@fxinnerfallbackcmd}
-%   \marg{name}\\
-%    \begin{macrocode}
-\def\@fxinnerfallbackcmd#1{%
-  \@nameuse{fx@layout@#1}}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\@fxhandleinnerfallback}
 %   Automatic disabling of the \texttt{margin} and \texttt{marginclue}
 %   layouts when \TeX{} is in \texttt{inner} mode:
@@ -1128,7 +1121,7 @@
     \fx@layout@marginclue{false}%
     \iffx@layout@margin%
       \fx@layout@margin{false}%
-      \@fxinnerfallbackcmd{\cmdfx@layout@innerfallback}{true}%
+      \@nameuse{fx@layout@\cmdfx@layout@innerfallback}{true}%
     \fi%
   \fi}
 
