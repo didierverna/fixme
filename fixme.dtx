@@ -1329,11 +1329,11 @@
 %     \marg{type}\marg{summary}
 %    \begin{macrocode}
 \def\@fxenvbegin@final#1#2{%
-  \@nameuse{#1}{#2}%
+  \@nameuse{fx#1}{#2}%
   \comment}
 \def\@fxenvbegin@draft#1#2{%
-  \@nameuse{#1}[noinline]{#2}%
-  \FXEnvBegin{\@nameuse{#1prefix}}}
+  \@nameuse{fx#1}[noinline]{#2}%
+  \FXEnvBegin{\@nameuse{fx#1prefix}}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1357,7 +1357,7 @@
   \newenvironment{anfx#1}[2][]{%
     \begingroup%
     \setkeys[fx]{layout,log,lang,ltx}{##1}%
-    \@fxenvbegin{fx#1}{##2}}{%
+    \@fxenvbegin{#1}{##2}}{%
     \@fxenvend%
     \endgroup}}
 
