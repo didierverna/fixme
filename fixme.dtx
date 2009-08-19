@@ -536,14 +536,14 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
-%   \marg{family}\marg{name}\\
-%   A \fixme{} ``boolkey'' is like an \texttt{xkeyval} one, with the addition
-%   that for every such \texttt{key}, there is a \texttt{nokey} void key
-%   counterpart.
+%   \oarg{func}\marg{family}\marg{name}\\
+%   A \fixme{} ``boolean key'' is like an \texttt{xkeyval} one, with the
+%   addition that for every such \texttt{key}, there is a \texttt{nokey} void
+%   key counterpart.
 %    \begin{macrocode}
-\newcommand\@fxdefineboolkey[2]{%
-  \define@boolkey[fx]{#1}{#2}[true]{}
-  \@fxdefinevoidkey{#1}{no#2}{\@nameuse{fx@#1@#2}{false}}}
+\newcommand\@fxdefineboolkey[3][]{%
+  \define@boolkey[fx]{#2}{#3}[true]{#1}
+  \@fxdefinevoidkey{#2}{no#3}{\@nameuse{fx@#2@#3}{false}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -958,22 +958,18 @@
 % the \texttt{xkeyval} key macro to handle this.
 %    \begin{macrocode}
 \@fxdefineboolkey{layout}{inline}
-
-\define@boolkey[fx]{layout}{margin}[true]{%
+\@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{Marginal notes requested; turning marginal clues off,}%
-    \fx@layout@marginclue{false}}}
-\@fxdefinevoidkey{layout}{nomargin}{\fx@layout@margin{false}}
-
+    \fx@layout@marginclue{false}}]{%
+    layout}{margin}
 \@fxdefineboolkey{layout}{footnote}
 \@fxdefineboolkey{layout}{user}
-
-\define@boolkey[fx]{layout}{marginclue}[true]{%
+\@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{Marginal clues requested; turning marginal notes off,}%
-    \fx@layout@margin{false}}}
-\@fxdefinevoidkey{layout}{nomarginclue}{\fx@layout@marginclue{false}}
-
+    \fx@layout@margin{false}}]{%
+    layout}{marginclue}
 \@fxdefineboolkey{layout}{index}
 
 \@fxdefinecmdkey[inline]{layout}{innerfallback}
