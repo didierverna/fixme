@@ -1147,37 +1147,37 @@
 % \subsubsection{Non fatal notes}
 % The generic mechanism below applies only to \fixme{} notes, warnings and
 % errors. Fatal notes are handled in the next section.
-% \begin{macro}{\@@fx@final}
-%   \begin{macro}{\@@fx@draft}
+% \begin{macro}{\@@@fxnote@final}
+%   \begin{macro}{\@@@fxnote@draft}
 %     \marg{type}\marg{note}
 %    \begin{macrocode}
-\def\@@fx@final#1#2{%
+\def\@@@fxnote@final#1#2{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
   \addcontentsline{lox}{fixme}{%
     \expandafter\protect\@nameuse{fx#1prefix}: #2}}
-\def\@@fx@draft#1#2{%
+\def\@@@fxnote@draft#1#2{%
   \@fxlayout{#1}{#2}%
-  \@@fx@final{#1}{#2}}
+  \@@@fxnote@final{#1}{#2}}
 
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
-% \begin{macro}{\@@fx}
+% \begin{macro}{\@@fxnote}
 %   \marg{type}\marg{note}
 %    \begin{macrocode}
-\def\@@fx#1#2{%
+\def\@@fxnote#1#2{%
   \stepcounter{fixmecount}%
   \stepcounter{fx#1count}%
-  \@@fx@{#1}{#2}}
+  \@@@fxnote{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fx}
+% \begin{macro}{\@fxnote}
 %   \marg{type}\oarg{options}\marg{note}
 %    \begin{macrocode}
-\def\@fx#1[#2]#3{%
+\def\@fxnote#1[#2]#3{%
   \begingroup%
   \setkeys[fx]{layout,log,lang,ltx}{#2}%
-  \@@fx{#1}{#3}%
+  \@@fxnote{#1}{#3}%
   \endgroup}
 
 %    \end{macrocode}
@@ -1188,11 +1188,11 @@
 %       \oarg{options}\marg{note}
 %    \begin{macrocode}
 \DeclareRobustCommand\fxnote{\@ifnextchar[%]
-  {\@fx{note}}{\@@fx{note}}}
+  {\@fxnote{note}}{\@@fxnote{note}}}
 \DeclareRobustCommand\fxwarning{\@ifnextchar[%]
-  {\@fx{warning}}{\@@fx{warning}}}
+  {\@fxnote{warning}}{\@@fxnote{warning}}}
 \DeclareRobustCommand\fxerror{\@ifnextchar[%]
-  {\@fx{error}}{\@@fx{error}}}
+  {\@fxnote{error}}{\@@fxnote{error}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -1449,7 +1449,7 @@
 %    \end{macrocode}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\@@fx@}
+% \begin{macro}{\@@@fxnote}
 %   \begin{macro}{\@@@fxfatal}
 %     \begin{macro}{\@fxenvbegin}
 %       \begin{macro}{\@fxenvend}
@@ -1460,7 +1460,7 @@
 %               them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
-  \let\@@fx@\@@fx@final%
+  \let\@@@fxnote\@@@fxnote@final%
   \let\@@@fxfatal\@@@fxfatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
@@ -1499,7 +1499,7 @@
       }%
     }%
   }%
-  \let\@@fx@\@@fx@draft%
+  \let\@@@fxnote\@@@fxnote@draft%
   \let\@@@fxfatal\@@@fxfatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
