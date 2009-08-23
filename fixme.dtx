@@ -1190,14 +1190,14 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\thefixmecount}
+% \begin{counter}{fixmecount}
 %   \texttt{fixmecount} maintains the total of all notes, regardless of their
 %   level.
 %    \begin{macrocode}
 \newcounter{fixmecount}
 
 %    \end{macrocode}
-% \end{macro}
+% \end{counter}
 % \begin{macro}{\@fxnoteparameters}
 %   \marg{type}\\
 %   The following macro creates all required note parameters:
@@ -1213,10 +1213,13 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\thefx*count}
-%   \begin{macro}{\fx*prefix}
-%     \begin{macro}{\fx*indexname}
-%       And we use it for all note types:
+% \begin{counter}{fx*count}
+%   \begin{macro}{\thefixme*count}
+%     \begin{macro}{\fx*prefix}
+%       \begin{macro}{\fixme*prefix}
+%         \begin{macro}{\fx*indexname}
+%           \begin{macro}{\fixme*indexname}
+%             And we use it for all note types:
 %    \begin{macrocode}
 \@fxnoteparameters{note}
 \@fxnoteparameters{warning}
@@ -1224,9 +1227,12 @@
 \@fxnoteparameters{fatal}
 
 %    \end{macrocode}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
-% \end{macro}
+% \end{counter}
 %
 % \subsubsection{Layout dispatch}
 % \begin{macro}{\@fxhandleinnerfallback}

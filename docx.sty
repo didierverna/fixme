@@ -29,19 +29,28 @@
 
 \@ifundefined{PrintOptionName}{%
   \def\PrintOptionName#1{\strut\MacroFont\string#1\ }}{}
-
-\def\option{\begingroup
-  \catcode`\\12
-  \MakePrivateLetters\@pti@n}
+\@ifundefined{PrintCounterName}{%
+  \def\PrintCounterName#1{\strut\MacroFont\string#1\ }}{}
 
 \def\SpecialMainOptionIndex#1{%
   \@bsphack%
   \special@index{%
     #1\actualchar{\string\ttfamily\space#1} (option)\encapchar main}%
   \special@index{%
-    options:\levelchar#1\actualchar{\string\ttfamily\space#1}\encapchar main}%
+    options:\levelchar#1\actualchar%
+    {\string\ttfamily\space#1}\encapchar main}%
+  \@esphack}
+\def\SpecialMainCounterIndex#1{%
+  \@bsphack%
+  \special@index{%
+    #1\actualchar{\string\ttfamily\space#1} (counter)\encapchar main}%
+  \special@index{%
+    counters:\levelchar#1\actualchar%
+    {\string\ttfamily\space#1}\encapchar main}%
   \@esphack}
 
+%% #### FIXME: I should factor this out so that it works for options and
+%% #### counters as well.
 %% In doc.sty, the macro and environment environments go through the \m@cro@
 %% command which implements specific parts by testing a boolean condition as
 %% its first argument. This mechanism is not extensible, so I have to hack
@@ -71,7 +80,41 @@
   \SpecialMainOptionIndex{#1}\nobreak
   \global\advance\c@CodelineNo\m@ne
   \ignorespaces}
+\def\option{\begingroup
+  \catcode`\\12
+  \MakePrivateLetters\@pti@n}
 \let\endoption\endtrivlist
+
+
+\long\def\c@unt@r#1{%
+  \endgroup%
+  \topsep\MacroTopsep\trivlist
+  \def\makelabel##1{\llap{##1}}%
+  \if@inlabel
+    \let\@tempa\@empty
+    \count@\macro@cnt
+    \loop\ifnum\count@>\z@
+      \edef\@tempa{\@tempa\hbox{\strut}}\advance\count@\m@ne%
+    \repeat
+    \edef\makelabel##1{%
+      \llap{\vtop to\baselineskip
+	{\@tempa\hbox{##1}\vss}}}%
+    \advance\macro@cnt\@ne
+  \else
+    \macro@cnt\@ne
+  \fi
+  \edef\@tempa{%
+    \noexpand\item[\noexpand\PrintCounterName{\string#1}]}%
+  \@tempa
+  \global\advance\c@CodelineNo\@ne
+  \SpecialMainCounterIndex{#1}\nobreak
+  \global\advance\c@CodelineNo\m@ne
+  \ignorespaces}
+\def\counter{\begingroup
+  \catcode`\\12
+  \MakePrivateLetters\c@unt@r}
+\let\endcounter\endtrivlist
+
 
 \@ifundefined{PrintDescribeOption}{%
   \def\PrintDescribeOption#1{\strut\MacroFont#1\ }}{}
@@ -86,5 +129,19 @@
 \def\DescribeOption{%
   \leavevmode\@bsphack\begingroup\MakePrivateLetters
   \Describe@Option}
+
+\@ifundefined{PrintDescribeCounter}{%
+  \def\PrintDescribeCounter#1{\strut\MacroFont#1\ }}{}
+\def\SpecialCounterIndex#1{\@bsphack
+  \index{#1\actualchar{\protect\ttfamily#1}
+    (counter)\encapchar usage}%
+  \index{counters:\levelchar#1\actualchar{\protect\ttfamily#1}\encapchar
+    usage}\@esphack}
+\def\Describe@Counter#1{\endgroup
+  \marginpar{\raggedleft\PrintDescribeCounter{#1}}%
+  \SpecialCounterIndex{#1}\@esphack\ignorespaces}
+\def\DescribeCounter{%
+  \leavevmode\@bsphack\begingroup\MakePrivateLetters
+  \Describe@Counter}
 
 %%% docx.sty ends here
