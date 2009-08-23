@@ -1389,16 +1389,29 @@
 
 %    \end{macrocode}
 % \end{macro}
-% And we use it to create the user level interface:
+% \begin{environment}{anfxnote}
+%   \begin{environment}{anfxwarning}
+%     \begin{environment}{anfxerror}
+%       \begin{environment}{anfxfatal}
+%         And we use it to create the user level interface:
 %    \begin{macrocode}
 \@fxdefineenvironment{note}
 \@fxdefineenvironment{warning}
 \@fxdefineenvironment{error}
 \@fxdefineenvironment{fatal}
 
+%    \end{macrocode}
+%       \end{environment}
+%     \end{environment}
+%   \end{environment}
+% \end{environment}
+% \begin{environment}{fixme}
+%   The \texttt{afixme} environment is deprecated:
+%    \begin{macrocode}
 \@fxnewdeprecatedenv{afixme}{anfxfatal}
 
 %    \end{macrocode}
+% \end{environment}
 %
 % \subsection{Internationalization}
 %    \begin{macrocode}
