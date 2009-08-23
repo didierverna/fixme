@@ -1041,7 +1041,6 @@
 %     \mbox{}
 %    \begin{macrocode}
 \@fxdefinecmdkey{layout}{innerfallback}{inline}
-\fx@layout@innerfallback{inline}
 
 %    \end{macrocode}
 % \end{option}
@@ -1713,17 +1712,19 @@
 %
 % \subsection{Finale}
 % \subsubsection{Options Processing}
-% Put us in \texttt{english} and \texttt{final} mode, and enable marginal
-% notes. Note that as documented, marginal notes are incompatible with the ACM
-% SIG classes. Initially, I thought I would detect these classes and issue
-% an error if marginal layout (or clue) is active. However, I changed my mind,
-% because nothing prevents somebody to write a new class on top of these ones
-% and authorize \cs{marginpar} back again. Normally these classes issue an
-% error if \cs{marginpar} is used. However, the 2.3 / June 2007 versions are
-% buggy and the error actually triggers a stack overflow in \LaTeX\ldots
-% (patch submitted). Oh boy, these classes are a mess.
+% Put us in \texttt{english} and \texttt{final} mode, enable marginalnotes and
+% set the inner fallback to inline. Note that as documented, marginal notes
+% are incompatible with the ACM SIG classes. Initially, I thought I would
+% detect these classes and issue an error if marginal layout (or clue) is
+% active. However, I changed my mind, because nothing prevents somebody to
+% write a new class on top of these ones and authorize \cs{marginpar} back
+% again. Normally these classes issue an error if \cs{marginpar} is used.
+% However, the 2.3 / June 2007 versions are buggy and the error actually
+% triggers a stack overflow in \LaTeX\ldots (patch submitted). Oh boy, these
+% classes are a mess.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<layout,log,lang,ltx>{final,english,nosilent,margin}
+\ExecuteOptionsX[fx]<layout,log,lang,ltx>{%
+  final,english,nosilent,margin,innerfallback=inline}
 \ProcessOptionsX*[fx]<layout,log,lang,legacy,ltx>
 
 %    \end{macrocode}
