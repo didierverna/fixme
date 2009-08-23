@@ -548,11 +548,10 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdeclarecmdkey}
-%   \oarg{default}\marg{family}\marg{name}\\
-%   A \fixme{} ``cmdkey'' is just like an \texttt{xkeyval} one (except that
-%   there is no \meta{function} argument):
+%   \oarg{function}\marg{family}\marg{name}\marg{default}\\
+%   A \fixme{} ``cmdkey'' is just like an \texttt{xkeyval} one:
 %    \begin{macrocode}
-\newcommand\@fxdefinecmdkey[3][]{\define@cmdkey[fx]{#2}{#3}[#1]{}}
+\newcommand\@fxdefinecmdkey[4][]{\define@cmdkey[fx]{#2}{#3}[#4]{#1}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -952,6 +951,7 @@
 % \end{macro}
 %
 % \subsubsection{Layout options}
+% \subsubsubsection{Individual options}
 % As of version 4, these options are implemented as \texttt{xkeyval} keys, and
 % are available both as package and macro options. The \texttt{margin} and
 % \texttt{marginclue} layouts are mutually exclusive, so we have to redefine
@@ -972,7 +972,7 @@
     layout}{marginclue}
 \@fxdefineboolkey{layout}{index}
 
-\@fxdefinecmdkey[inline]{layout}{innerfallback}
+\@fxdefinecmdkey{layout}{innerfallback}{inline}
 \fx@layout@innerfallback{inline}
 
 %    \end{macrocode}
@@ -983,6 +983,35 @@
 \@fxdeclarelegacybooloption{info}
 \@fxdeclarelegacybooloption{warning}
 
+%    \end{macrocode}
+%
+% \subsubsubsection{Global options}
+% \begin{macro}{\@fxlayouts}
+%   Maintains the list of available layouts:
+%    \begin{macrocode}
+\newcommand\@fxlayouts{inline,margin,footnote,user,marginclue,index}
+%    \end{macrocode}
+% \end{macro}
+% The \texttt{morelayout} option adds to the existing layout configuration.
+% Note that we don't use the key macros directly to set the individual
+% layouts, but instead we use \cs{setkeys}. That way, it is possible to
+% disable a layout by using the \texttt{no}\meta{layout} option form. For
+% example, |morelayout={inline,nomargin}| will work.
+%    \begin{macrocode}
+\@fxdefinecmdkey[%
+  \@for\@fxlt:=#1\do{\setkeys[fx]{layout}{\@fxlt}}]{%
+  layout}{morelayout}{}
+%    \end{macrocode}
+% The \texttt{layout} option lets the user specify exactly which ones she
+% wants to use. It works by first deactivating all layouts, and then
+% activating the provided ones. Contrary to \texttt{morelayouts}, it is not
+% possible to use the \texttt{no}\meta{layout} form but it would not make any
+% sense anyway.
+%    \begin{macrocode}
+\@fxdefinecmdkey[%
+  \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
+  \@for\@fxlt:=#1\do{\@nameuse{fx@layout@\@fxlt}{true}}]{%
+  layout}{layout}{}
 %    \end{macrocode}
 %
 % \subsection{Logging}
@@ -1051,6 +1080,13 @@
 % \subsubsection{Logging options}
 %    \begin{macrocode}
 \@fxdefineboolkey{log}{silent}
+
+%    \end{macrocode}
+%
+% \subsection{Listing}
+%    \begin{macrocode}
+\newcommand\@fxaddcontentsline[3]{%
+  \addcontentsline{#1}{#2}{#3}}
 
 %    \end{macrocode}
 %
