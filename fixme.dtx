@@ -702,22 +702,26 @@
 % \subsection{List macros}
 % \begin{macro}{\l@fixme}
 %   \begin{macro}{\listoffixmes}
-%     \begin{macro}{\lox@final}
-%       \begin{macro}{\lox@draft}
-%         Lists are output in a document class dependant fashion. Classes
-%         currently recognized are \texttt{article}, \texttt{report},
-%         \texttt{book} and their \komascript{} replacements.\par
-%         In order to prevent the List of Fixme's heading from being generated
-%         when there are no \fixme{} notes, a test on the existence of the
-%         \texttt{lox} file is performed. There's a slight bug left however:
-%         after removing the last fixme{} note, one ends up with an empty
-%         \texttt{lox} file, so the heading still appears. Previously, this
-%         was done by checking if some \fixme{} notes were given, but that was
-%         buggy: the List of Fixme's could not appear before the first fixme
-%         note\ldots I should try to detect whether the file is empty.
+%     Lists are output in a document class dependant fashion. Classes
+%     currently recognized are \texttt{article}, \texttt{report},
+%     \texttt{book} and their \komascript{} replacements.
 %    \begin{macrocode}
 \let\l@fixme\l@figure
 \newcommand\listoffixmes{}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+% \begin{macro}{\lox@final}
+%   \begin{macro}{\lox@draft}
+%     In order to prevent the List of Fixme's heading from being generated
+%     when there are no \fixme{} notes, a test on the existence of the
+%     \texttt{lox} file is performed. There's a slight bug left however:
+%     after removing the last fixme{} note, one ends up with an empty
+%     \texttt{lox} file, so the heading still appears. Previously, this
+%     was done by checking if some \fixme{} notes were given, but that was
+%     buggy: the List of Fixme's could not appear before the first fixme
+%     note\ldots I should try to detect whether the file is empty.
+%    \begin{macrocode}
 \def\lox@final{}
 \def\lox@draft{%
   \IfFileExists{\jobname .lox}{%
@@ -726,8 +730,6 @@
     \@lox@psttc}{%
     \@starttoc{lox}}}
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
 %   \end{macro}
 % \end{macro}
 % \begin{macro}{\lox@draft@ams}
@@ -1503,7 +1505,7 @@
 %     \end{environment}
 %   \end{environment}
 % \end{environment}
-% \begin{environment}{fixme}
+% \begin{environment}{afixme}
 %   The \texttt{afixme} environment is deprecated:
 %    \begin{macrocode}
 \@fxnewdeprecatedenv{afixme}{anfxfatal}
