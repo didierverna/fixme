@@ -61,21 +61,25 @@
 %%   Grave accent  \`     Left brace    \{     Vertical bar  \|
 %%   Right brace   \}     Tilde         \~}
 %
+% \MakeShortVerb{\|}
+%
 % \makeatletter
 % \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}{%
 %     -3.25ex\@plus -1ex \@minus -.2ex}{%
 %     1.5ex \@plus .2ex}{%
 %     \normalfont\normalsize\bfseries}}
 % \makeatother
-% \newcommand\komascript{\textsc{Koma}-Script}
 % \newcommand\subsubsubsection[1]{\paragraph{#1:}}
+%
+% \newcommand\komascript{\textsc{Koma}-Script}
+% \newcommand\auctex{AUC-\TeX}
+%
 % \newcommand\version{4.0}
 % \newcommand\releasedate{2009/08/23}
 % \newcommand\packagecopyright{%
 %   Copyright \copyright{} 1998--2002, 2004--2007, 2009 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}}
-% \newcommand\auctex{AUC-\TeX}
-% \MakeShortVerb{\|}
+%
 % \date\today
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
 %   in your documents\thanks{This document describes \fixme{} \version,
@@ -97,6 +101,7 @@
 %   terms of the LPPL license.
 % \end{abstract}
 %
+% \tableofcontents
 %
 % \section{Description}
 % With \fixme, you can insert different kinds of notes in your documents,
