@@ -1,0 +1,90 @@
+%%% docx.sty --- Extensions to doc.sty
+
+%% Copyright (C) 2009 Didier Verna
+
+%% Author:        Didier Verna <didier@lrde.epita.fr>
+%% Maintainer:    Didier Verna <didier@lrde.epita.fr>
+%% Created:       Sun Aug 23 16:06:54 2009
+%% Last Revision: Sun Aug 23 16:09:58 2009
+
+%% This file is part of FiXme.
+
+%% FiXme may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.1
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%% http://www.latex-project.org/lppl.txt
+%% and version 1.1 or later is part of all distributions of LaTeX
+%% version 1999/06/01 or later.
+
+%% FiXme consists of the files listed in the file `README'.
+
+
+%%% Commentary:
+
+%% Contents management by FCM version 0.1.
+
+
+%%% Code:
+
+\@ifundefined{PrintOptionName}{%
+  \def\PrintOptionName#1{\strut\MacroFont\string#1\ }}{}
+
+\def\option{\begingroup
+  \catcode`\\12
+  \MakePrivateLetters\@pti@n}
+
+\def\SpecialMainOptionIndex#1{%
+  \@bsphack%
+  \special@index{%
+    #1\actualchar{\string\ttfamily\space#1}(option)\encapchar main}%
+  \special@index{%
+    options:\levelchar#1\actualchar{\string\ttfamily\space#1}\encapchar main}%
+  \@esphack}
+
+%% In doc.sty, the macro and environment environments go through the \m@cro@
+%% command which implements specific parts by testing a boolean condition as
+%% its first argument. This mechanism is not extensible, so I have to hack
+%% away a specific version for package options, only which looks pretty much
+%% like the original one:
+\long\def\@pti@n#1{%
+  \endgroup%
+  \topsep\MacroTopsep\trivlist
+  \def\makelabel##1{\llap{##1}}%
+  \if@inlabel
+    \let\@tempa\@empty
+    \count@\macro@cnt
+    \loop\ifnum\count@>\z@
+      \edef\@tempa{\@tempa\hbox{\strut}}\advance\count@\m@ne%
+    \repeat
+    \edef\makelabel##1{%
+      \llap{\vtop to\baselineskip
+	{\@tempa\hbox{##1}\vss}}}%
+    \advance\macro@cnt\@ne
+  \else
+    \macro@cnt\@ne
+  \fi
+  \edef\@tempa{%
+    \noexpand\item[\noexpand\PrintOptionName{\string#1}]}%
+  \@tempa
+  \global\advance\c@CodelineNo\@ne
+  \SpecialMainOptionIndex{#1}\nobreak
+  \global\advance\c@CodelineNo\m@ne
+  \ignorespaces}
+\let\endoption\endtrivlist
+
+\@ifundefined{PrintDescribeOption}{%
+  \def\PrintDescribeOption#1{\strut\MacroFont#1\ }}{}
+\def\SpecialOptionIndex#1{\@bsphack
+  \index{#1\actualchar{\protect\ttfamily#1}
+    (option)\encapchar usage}%
+  \index{options:\levelchar#1\actualchar{\protect\ttfamily#1}\encapchar
+    usage}\@esphack}
+\def\Describe@Option#1{\endgroup
+  \marginpar{\raggedleft\PrintDescribeOption{#1}}%
+  \SpecialOptionIndex{#1}\@esphack\ignorespaces}
+\def\DescribeOption{%
+  \leavevmode\@bsphack\begingroup\MakePrivateLetters
+  \Describe@Option}
+
+%%% docx.sty ends here
