@@ -490,25 +490,25 @@
 %    \end{macrocode}
 % \end{macro}
 % \subsubsection{\texttt{xkeyval} related}
-% \begin{macro}{\@fxdeclarelegacyoption}
+% \begin{macro}{\@fxdeclarelegacyopt}
 %   \marg{name}\\
 %   A ``legacy option'' is a package option that is not used anymore.
 %    \begin{macrocode}
-\newcommand\@fxdeclarelegacyoption[1]{%
+\newcommand\@fxdeclarelegacyopt[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \@fxpkgwarning{'#1' is a legacy option that has no effect anymore,}}}
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxdeclarelegacybooloption}
+% \begin{macro}{\@fxdeclarelegacyboolopt}
 %   \marg{name}\\
 %   A ``legacy boolean option'' is a legacy option \texttt{opt} and its
 %   \texttt{noopt} counterpart. Note that we don't really (need to) ensure the
 %   boolean status of these options anymore.
 %    \begin{macrocode}
-\newcommand\@fxdeclarelegacybooloption[1]{%
-  \@fxdeclarelegacyoption{#1}
-  \@fxdeclarelegacyoption{no#1}}
+\newcommand\@fxdeclarelegacyboolopt[1]{%
+  \@fxdeclarelegacyopt{#1}
+  \@fxdeclarelegacyopt{no#1}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -577,9 +577,9 @@
 %%   \expandafter\newcommand\csname#1\endcsname[1]{\@fxlegacycmdwarning{#1}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxnewlegacyrenewable}
+% \begin{macro}{\@fxnewlegacyrcmd}
 %   \marg{name}\\
-%   A ``legacy renewable [command]'' is a legacy command that might be
+%   A ``legacy renewable command'' is a legacy command that might be
 %   renew'ed by the user instead of being used directly. Here is what we do:
 %   \begin{enumerate}
 %   \item \cs{newcommand} it and \cs{let} it be \cs{empty},
@@ -588,7 +588,7 @@
 %   \item and if so, issue a legacy command warning.
 %   \end{enumerate}
 %    \begin{macrocode}
-\newcommand\@fxnewlegacyrenewable[1]{%
+\newcommand\@fxnewlegacyrcmd[1]{%
   \expandafter\newcommand\csname#1\endcsname{}
   \expandafter\let\csname#1\endcsname\empty
   \AtBeginDocument{%
@@ -654,9 +654,9 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxnewdeprecatedrenewable}
+% \begin{macro}{\@fxnewdeprecatedrcmd}
 %   \marg{old}\marg{new}\\
-%   A ``deprecated renewable [command]'' is a deprecated command that is
+%   A ``deprecated renewable command'' is a deprecated command that is
 %   likely to be renew'ed by the user. There are several possibilities to
 %   implement this. One is to maintain the use of the older version in the
 %   core of \fixme{}, and make it just call the new one by default. That way,
@@ -673,7 +673,7 @@
 %   Note that we don't need to know the macro's prototype, because
 %   \cs{renewcommand} asks for it all over again.
 %    \begin{macrocode}
-\newcommand\@fxnewdeprecatedrenewable[2]{%
+\newcommand\@fxnewdeprecatedrcmd[2]{%
   \expandafter\newcommand\csname#1\endcsname{}
   \expandafter\let\csname#1\endcsname\empty
   \AtBeginDocument{%
@@ -683,22 +683,22 @@
     \fi}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxprefixdeprecaterenewable}
+% \begin{macro}{\@fxprefixdeprecatercmd}
 %   \oarg{prefix}\marg{name}\\
 %   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated renewable commands:
 %    \begin{macrocode}
-\newcommand\@fxprefixdeprecaterenewable[2][]{%
-  \@fxnewdeprecatedrenewable{#1fixme#2}{#1fx#2}}
+\newcommand\@fxprefixdeprecatercmd[2][]{%
+  \@fxnewdeprecatedrcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
 % \end{macro}
 % \subsection{List macros}
 % \begin{macro}{\l@fixme}
 %   \begin{macro}{\listoffixmes}
-%     \begin{macro}{\listoffixmes@final}
-%       \begin{macro}{\listoffixmes@draft}
+%     \begin{macro}{\lox@final}
+%       \begin{macro}{\lox@draft}
 %         Lists are output in a document class dependant fashion. Classes
 %         currently recognized are \texttt{article}, \texttt{report},
 %         \texttt{book} and their \komascript{} replacements.\par
@@ -713,24 +713,24 @@
 %    \begin{macrocode}
 \let\l@fixme\l@figure
 \newcommand\listoffixmes{}
-\def\listoffixmes@final{}
-\def\listoffixmes@draft{%
+\def\lox@final{}
+\def\lox@draft{%
   \IfFileExists{\jobname .lox}{%
-    \@listoffixmes@pretoc%
+    \@lox@prtc%
     \@starttoc{lox}%
-    \@listoffixmes@posttoc}{%
+    \@lox@psttc}{%
     \@starttoc{lox}}}
 %    \end{macrocode}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
-% \begin{macro}{\listoffixmes@draft@ams}
+% \begin{macro}{\lox@draft@ams}
 %   The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea
 %   of redefining the \cs{@starttoc} command to take two arguments. Therefore,
 %   I need to provide a specific version of the \cs{listoffixmes} macro:
 %    \begin{macrocode}
-\def\listoffixmes@draft@ams{\@starttoc{lox}\listfixmename}
+\def\lox@draft@ams{\@starttoc{lox}\listfixmename}
 
 %    \end{macrocode}
 % \end{macro}
@@ -747,24 +747,24 @@
 %
 % \subsubsection{Standard classes}
 % \subsubsubsection{\texttt{article} version}
-% \begin{macro}{\listoffixmes@pretoc@article}
-%   \begin{macro}{\listoffixmes@posttoc@article}
+% \begin{macro}{\lox@prtc@article}
+%   \begin{macro}{\lox@psttc@article}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@listoffixmes@pretoc@article{%
+\def\@lox@prtc@article{%
   \section*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
-\def\@listoffixmes@posttoc@article{}
+\def\@lox@psttc@article{}
 
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
 % \subsubsubsection{\texttt{report} version}
-% \begin{macro}{\listoffixmes@pretoc@report}
-%   \begin{macro}{\listoffixmes@posttoc@report}
+% \begin{macro}{\lox@prtc@report}
+%   \begin{macro}{\lox@psttc@report}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@listoffixmes@pretoc@report{%
+\def\@lox@prtc@report{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
@@ -773,17 +773,17 @@
   \chapter*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
-\def\@listoffixmes@posttoc@report{\if@restonecol\twocolumn\fi}
+\def\@lox@psttc@report{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
 % \subsubsubsection{\texttt{book} version}
-% \begin{macro}{\listoffixmes@pretoc@book}
-%   \begin{macro}{\listoffixmes@posttoc@book}
+% \begin{macro}{\lox@prtc@book}
+%   \begin{macro}{\lox@psttc@book}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@listoffixmes@pretoc@book{%
+\def\@lox@prtc@book{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
@@ -792,7 +792,7 @@
   \chapter*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
   }
-\def\@listoffixmes@posttoc@book{\if@restonecol\twocolumn\fi}
+\def\@lox@psttc@book{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -811,16 +811,16 @@
 %    \end{macrocode}
 %  \end{macro}
 %  \subsubsubsection{\texttt{scrartcl} version}
-%  \begin{macro}{\listoffixmes@pretoc@scrartcl}
-%    \begin{macro}{\listoffixmes@posttoc@scrartcl}
+%  \begin{macro}{\lox@prtc@scrartcl}
+%    \begin{macro}{\lox@psttc@scrartcl}
 %      \mbox{}
 %    \begin{macrocode}
-\def\@listoffixmes@pretoc@scrartcl{%
+\def\@lox@prtc@scrartcl{%
   \begingroup%
     \lox@heading%
     \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
   }
-\def\@listoffixmes@posttoc@scrartcl{%
+\def\@lox@psttc@scrartcl{%
   \endgroup
   }
 
@@ -828,11 +828,11 @@
 %  \end{macro}
 % \end{macro}
 % \subsubsubsection{\texttt{scrreprt} version}
-% \begin{macro}{\listoffixmes@pretoc@scrreprt}
-%   \begin{macro}{\listoffixmes@posttoc@scrreprt}
+% \begin{macro}{\lox@prtc@scrreprt}
+%   \begin{macro}{\lox@psttc@scrreprt}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@listoffixmes@pretoc@scrreprt{%
+\def\@lox@prtc@scrreprt{%
   \begingroup%
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -842,7 +842,7 @@
     \lox@heading%
     \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
   }
-\def\@listoffixmes@posttoc@scrreprt{%
+\def\@lox@psttc@scrreprt{%
     \if@restonecol\twocolumn\fi
   \endgroup
   }
@@ -851,11 +851,11 @@
 %  \end{macro}
 % \end{macro}
 % \subsubsubsection{\texttt{scrbook} version}
-% \begin{macro}{\listoffixmes@pretoc@scrbook}
-%   \begin{macro}{\listoffixmes@posttoc@scrbook}
+% \begin{macro}{\lox@prtc@scrbook}
+%   \begin{macro}{\lox@psttc@scrbook}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@listoffixmes@pretoc@scrbook{%
+\def\@lox@prtc@scrbook{%
   \begingroup%
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -865,7 +865,7 @@
     \lox@heading%
     \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
 }
-\def\@listoffixmes@posttoc@scrbook{%
+\def\@lox@psttc@scrbook{%
     \if@restonecol\twocolumn\fi
   \endgroup
 }
@@ -882,7 +882,7 @@
 %   \cs{FXLayout*}. Older versions remain for backward compatibility.
 %    \begin{macrocode}
 \newcommand\@fxlayoutrename[1]{%
-  \@fxnewdeprecatedrenewable{FX#1}{FXLayout#1}}
+  \@fxnewdeprecatedrcmd{FX#1}{FXLayout#1}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -960,8 +960,8 @@
 %     layout and logging were the same thing), but kept here anyway to avoid
 %     breaking compilation of older documents (renewing these commands).
 %    \begin{macrocode}
-\@fxnewlegacyrenewable{FiXmeInfo}
-\@fxnewlegacyrenewable{FiXmeWarning}
+\@fxnewlegacyrcmd{FiXmeInfo}
+\@fxnewlegacyrcmd{FiXmeWarning}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1045,8 +1045,8 @@
 %   \begin{option}{warning}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdeclarelegacybooloption{info}
-\@fxdeclarelegacybooloption{warning}
+\@fxdeclarelegacyboolopt{info}
+\@fxdeclarelegacyboolopt{warning}
 
 %    \end{macrocode}
 %  \end{option}
@@ -1093,7 +1093,7 @@
 %   \cs{FXLog*}. Older versions remain for backward compatibility.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxlogrename[1]{\@fxnewdeprecatedrenewable{FX#1}{FXLog#1}}
+\newcommand\@fxlogrename[1]{\@fxnewdeprecatedrcmd{FX#1}{FXLog#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\FXLogNote}
@@ -1208,8 +1208,8 @@
   \expandafter\newcommand\expandafter*\csname fx#1indexname\endcsname{}
 
   \@fxcounterrename{#1}
-  \@fxprefixdeprecaterenewable{#1prefix}
-  \@fxprefixdeprecaterenewable{#1indexname}}
+  \@fxprefixdeprecatercmd{#1prefix}
+  \@fxprefixdeprecatercmd{#1indexname}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1639,8 +1639,8 @@
 %     \begin{macro}{\@fxenvbegin}
 %       \begin{macro}{\@fxenvend}
 %         \begin{macro}{\listoffixmes}
-%           \begin{macro}{\@listoffixmes@pretoc}
-%             \begin{macro}{\@listoffixmes@posttoc}
+%           \begin{macro}{\@lox@prtc}
+%             \begin{macro}{\@lox@psttc}
 %               \begin{option}{final}
 %                   Select draft or final versions of internal macros, some of
 %                   them also depending on the document class:
@@ -1650,37 +1650,37 @@
   \let\@@@fxfatal\@@@fxfatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
-  \let\listoffixmes\listoffixmes@final}
+  \let\listoffixmes\lox@final}
 %    \end{macrocode}
 %               \end{option}
 %               \begin{option}{draft}
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{draft}{%
   \@ifclassloaded{article}{%
-    \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article%
-    \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}{%
+    \let\@lox@prtc\@lox@prtc@article%
+    \let\@lox@psttc\@lox@psttc@article}{%
     \@ifclassloaded{report}{%
-      \let\@listoffixmes@pretoc\@listoffixmes@pretoc@report%
-      \let\@listoffixmes@posttoc\@listoffixmes@posttoc@report}{%
+      \let\@lox@prtc\@lox@prtc@report%
+      \let\@lox@psttc\@lox@psttc@report}{%
       \@ifclassloaded{book}{%
-        \let\@listoffixmes@pretoc\@listoffixmes@pretoc@book%
-        \let\@listoffixmes@posttoc\@listoffixmes@posttoc@book}{%
+        \let\@lox@prtc\@lox@prtc@book%
+        \let\@lox@psttc\@lox@psttc@book}{%
         \@ifclassloaded{scrartcl}{%
-          \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrartcl%
-          \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrartcl}{%
+          \let\@lox@prtc\@lox@prtc@scrartcl%
+          \let\@lox@psttc\@lox@psttc@scrartcl}{%
           \@ifclassloaded{scrreprt}{%
-            \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrreprt%
-            \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrreprt}{%
+            \let\@lox@prtc\@lox@prtc@scrreprt%
+            \let\@lox@psttc\@lox@psttc@scrreprt}{%
             \@ifclassloaded{scrbook}{%
-              \let\@listoffixmes@pretoc\@listoffixmes@pretoc@scrbook%
-              \let\@listoffixmes@posttoc\@listoffixmes@posttoc@scrbook}{%
+              \let\@lox@prtc\@lox@prtc@scrbook%
+              \let\@lox@psttc\@lox@psttc@scrbook}{%
               \@ifclassloaded{amsbook}{%
-                \let\listoffixmes@draft\listoffixmes@draft@ams}{%
+                \let\lox@draft\lox@draft@ams}{%
                 \@ifclassloaded{amsart}{%
-                  \let\listoffixmes@draft\listoffixmes@draft@ams}{%
+                  \let\lox@draft\lox@draft@ams}{%
                   %% Use the article layout by default.
-                  \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article%
-                  \let\@listoffixmes@posttoc\@listoffixmes@posttoc@article}%
+                  \let\@lox@prtc\@lox@prtc@article%
+                  \let\@lox@psttc\@lox@psttc@article}%
               }%
             }%
           }%
@@ -1692,7 +1692,7 @@
   \let\@@@fxfatal\@@@fxfatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
-  \let\listoffixmes\listoffixmes@draft}
+  \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
 %               \end{option}
