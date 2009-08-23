@@ -916,6 +916,11 @@
 % Note that neither \cs{FXLayoutUser} nor the deprecated version \cs{FXUser}
 % are defined here. Requesting the \texttt{user} layout without defining one
 % or the other would produce an error, which is the expected behavior.
+% \begin{macro}{FXInline}
+%   \begin{macro}{FXMargin}
+%     \begin{macro}{FXFootnote}
+%       \begin{macro}{FXMarginClue}
+%         Deprecated versions:
 %    \begin{macrocode}
 \@fxlayoutrename{Inline}
 \@fxlayoutrename{Margin}
@@ -923,6 +928,10 @@
 \@fxlayoutrename{MarginClue}
 
 %    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 %
 % \subsubsubsection{Index output}
 % \begin{macro}{\fixmeindexname}
@@ -936,6 +945,11 @@
 %   \marg{note}
 %    \begin{macrocode}
 \newcommand\FXLayoutIndex[1]{\index{***@\fixmeindexname:!#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{FXIndex}
+%   Deprecated version:
+%    \begin{macrocode}
 \@fxlayoutrename{Index}
 
 %    \end{macrocode}
@@ -1111,6 +1125,11 @@
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
+% \begin{macro}{FXNote}
+%   \begin{macro}{FXWarning}
+%     \begin{macro}{FXError}
+%       \begin{macro}{FXFatal}
+%         Deprecated versions:
 %    \begin{macrocode}
 \@fxlogrename{Note}
 \@fxlogrename{Warning}
@@ -1118,6 +1137,10 @@
 \@fxlogrename{Fatal}
 
 %    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 % \begin{macro}{\@fxlogcs@note}
 %   \begin{macro}{\@fxlogcs@warning}
 %     \begin{macro}{\@fxlogcs@fatal}
