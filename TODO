@@ -111,3 +111,6 @@ etc.
 * Après mise à jour de la doc de 4.0, revoir ltxpkg pour l'indexation et les
 labels. 
 
+
+* Extend doc/ltxdoc to index package/macro options as well 
+  option environment / \DescribeOption would be welcome
