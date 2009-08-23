@@ -32,6 +32,7 @@
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
+\usepackage{docx}
 % \OnlyDescription
 \CodelineIndex
 % \RecordChanges
@@ -156,8 +157,8 @@
 % default, \fixme{} environments are typeset in a \texttt{quotation} one.
 %
 % \subsection{Controlling the behavior of \fixme\label{sec:behavior}}
-% \DescribeEnv{final}
-% \DescribeEnv{draft}
+% \DescribeOption{final}
+% \DescribeOption{draft}
 % The global behavior of the package is controlled via the two standard
 % options \texttt{final} and \texttt{draft}. These options are usually given
 % to \cs{documentclass} which in turn passes them to all packages.\par
@@ -183,11 +184,11 @@
 % \fixme{} notes can appear in several forms (that can be combined) in your
 % document.
 % \subsubsection{Global layout}
-% \DescribeEnv{inline}
-% \DescribeEnv{margin}
-% \DescribeEnv{marginclue}
-% \DescribeEnv{footnote}
-% \DescribeEnv{index}
+% \DescribeOption{inline}
+% \DescribeOption{margin}
+% \DescribeOption{marginclue}
+% \DescribeOption{footnote}
+% \DescribeOption{index}
 % The layout forms currently supported are: inline (directly in the text),
 % marginal notes, marginal clues (see below), footnotes, and index entries. To
 % activate a particular layout globally (that is, for the whole document), use
@@ -240,8 +241,8 @@
 % another layout for \fixme{}, and also avoid using marginal clues\ldots
 %
 % \subsection{Controlling the notes logging}
-% \DescribeEnv{silent}
-% \DescribeEnv{nosilent}
+% \DescribeOption{silent}
+% \DescribeOption{nosilent}
 % As well as being displayed in the document itself, all \fixme{} notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
 % log file while the others are also displayed on the terminal output.\par
@@ -308,7 +309,7 @@
 % take the note itself as mandatory argument.
 %
 % \subsection{Fancy fruit salad layout}
-% \DescribeEnv{user}
+% \DescribeOption{user}
 % \DescribeMacro{\FXUser}
 % If, for some totally unjustified reason, you are not happy with the
 % available layouts, you have the ability to define your own: pass the
@@ -320,15 +321,15 @@
 % of the note insertion commands.
 %
 % \subsection{Internationalization}
-% \DescribeEnv{english}
-% \DescribeEnv{french}
-% \DescribeEnv{francais}
-% \DescribeEnv{spanish}
-% \DescribeEnv{italian}
-% \DescribeEnv{german}
-% \DescribeEnv{ngerman}
-% \DescribeEnv{danish}
-% \DescribeEnv{croatian}
+% \DescribeOption{english}
+% \DescribeOption{french}
+% \DescribeOption{francais}
+% \DescribeOption{spanish}
+% \DescribeOption{italian}
+% \DescribeOption{german}
+% \DescribeOption{ngerman}
+% \DescribeOption{danish}
+% \DescribeOption{croatian}
 % \fixme{} currently supports English, French, Spanish, Italian, German,
 % Danish and Croatian. You can select the language you want to use by passing
 % the corresponding option (these options are usually given directly to
@@ -441,7 +442,7 @@
 % \StopEventually{\par Well, I think that's it. Enjoy using \fixme{}!
 %   \vfill\hfill\small \packagecopyright{}.}
 %
-% \section{The Code}
+% \section{Implementation}
 % \subsection{Preamble}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
@@ -958,34 +959,84 @@
 % are available both as package and macro options. The \texttt{margin} and
 % \texttt{marginclue} layouts are mutually exclusive, so we have to redefine
 % the \texttt{xkeyval} key macro to handle this.
+% \begin{option}{inline}
+%   \begin{option}{noinline}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdefineboolkey{layout}{inline}
+%    \end{macrocode}
+%   \end{option}
+% \end{option}
+% \begin{option}{margin}
+%   \begin{option}{nomargin}
+%     \mbox{}
+%    \begin{macrocode}
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{Marginal notes requested; turning marginal clues off,}%
     \fx@layout@marginclue{false}}]{%
     layout}{margin}
+%    \end{macrocode}
+%   \end{option}
+% \end{option}
+% \begin{option}{footnote}
+%   \begin{option}{nofootnote}
+%     \mbox{}
+%    \begin{macrocode}
 \@fxdefineboolkey{layout}{footnote}
+%    \end{macrocode}
+%   \end{option}
+% \end{option}
+% \begin{option}{user}
+%   \begin{option}{nouser}
+%     \mbox{}
+%    \begin{macrocode}
 \@fxdefineboolkey{layout}{user}
+%    \end{macrocode}
+%   \end{option}
+% \end{option}
+% \begin{option}{marginclue}
+%   \begin{option}{nomarginclue}
+%     \mbox{}
+%    \begin{macrocode}
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{Marginal clues requested; turning marginal notes off,}%
     \fx@layout@margin{false}}]{%
     layout}{marginclue}
+%    \end{macrocode}
+%   \end{option}
+% \end{option}
+% \begin{option}{index}
+%   \begin{option}{noindex}
+%     \mbox{}
+%    \begin{macrocode}
 \@fxdefineboolkey{layout}{index}
 
+%    \end{macrocode}
+%   \end{option}
+% \end{option}
+% \begin{option}{innerfallback}
+%     \mbox{}
+%    \begin{macrocode}
 \@fxdefinecmdkey{layout}{innerfallback}{inline}
 \fx@layout@innerfallback{inline}
 
 %    \end{macrocode}
+% \end{option}
 % The following options are unused since version 2.2 (at the time of which,
 % layout and logging were the same thing), but kept here anyway to avoid
 % breaking compilation of older documents.
+% \begin{option}{info}
+%   \begin{option}{warning}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdeclarelegacybooloption{info}
 \@fxdeclarelegacybooloption{warning}
 
 %    \end{macrocode}
+%  \end{option}
+% \end{option}
 %
 % \subsubsubsection{Global options}
 % \begin{macro}{\@fxlayouts}
@@ -994,27 +1045,31 @@
 \newcommand\@fxlayouts{inline,margin,footnote,user,marginclue,index}
 %    \end{macrocode}
 % \end{macro}
-% The \texttt{morelayout} option adds to the existing layout configuration.
-% Note that we don't use the key macros directly to set the individual
-% layouts, but instead we use \cs{setkeys}. That way, it is possible to
-% disable a layout by using the \texttt{no}\meta{layout} option form. For
-% example, |morelayout={inline,nomargin}| will work.
+% \begin{option}{morelayout}
+%   The \texttt{morelayout} option adds to the existing layout configuration.
+%   Note that we don't use the key macros directly to set the individual
+%   layouts, but instead we use \cs{setkeys}. That way, it is possible to
+%   disable a layout by using the \texttt{no}\meta{layout} option form. For
+%   example, |morelayout={inline,nomargin}| will work.
 %    \begin{macrocode}
 \@fxdefinecmdkey[%
   \@for\@fxlt:=#1\do{\setkeys[fx]{layout}{\@fxlt}}]{%
   layout}{morelayout}{}
 %    \end{macrocode}
-% The \texttt{layout} option lets the user specify exactly which ones she
-% wants to use. It works by first deactivating all layouts, and then
-% activating the provided ones. Contrary to \texttt{morelayouts}, it is not
-% possible to use the \texttt{no}\meta{layout} form but it would not make any
-% sense anyway.
+% \end{option}
+% \begin{option}{layout}
+%   The \texttt{layout} option lets the user specify exactly which ones she
+%   wants to use. It works by first deactivating all layouts, and then
+%   activating the provided ones. Contrary to \texttt{morelayouts}, it is not
+%   possible to use the \texttt{no}\meta{layout} form but it would not make
+%   any sense anyway.
 %    \begin{macrocode}
 \@fxdefinecmdkey[%
   \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
   \@for\@fxlt:=#1\do{\@nameuse{fx@layout@\@fxlt}{true}}]{%
   layout}{layout}{}
 %    \end{macrocode}
+% \end{option}
 %
 % \subsection{Logging}
 % \subsubsection{Logging macros}
@@ -1080,10 +1135,15 @@
 % \end{macro}
 %
 % \subsubsection{Logging options}
+% \begin{option}{silent}
+%   \begin{option}{nosilent}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdefineboolkey{log}{silent}
 
 %    \end{macrocode}
+%   \end{option}
+% \end{option}
 %
 % \subsection{Listing}
 %    \begin{macrocode}
@@ -1418,6 +1478,8 @@
 % \end{environment}
 %
 % \subsection{Internationalization}
+% \begin{option}{english}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{english}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}%
@@ -1430,6 +1492,11 @@
   \renewcommand*\fxerrorindexname{**c@Errors:!}%
   \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{List of Corrections}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{french}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{french}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}%
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Attention}%
@@ -1441,7 +1508,17 @@
   \renewcommand*\fxerrorindexname{**c@Erreurs:!}%
   \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Liste des Corrections}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{francais}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{francais}{\setkeys[fx]{lang}{french}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{spanish}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{spanish}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}%
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Aviso}%
@@ -1453,6 +1530,11 @@
   \renewcommand*\fxerrorindexname{**c@Errores:!}%
   \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{italian}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{italian}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Nota}%
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Avviso}%
@@ -1464,6 +1546,11 @@
   \renewcommand*\fxerrorindexname{**c@Errori:!}%
   \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Corrigenda}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{german}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{german}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Anm}%
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Warnung}%
@@ -1475,7 +1562,17 @@
   \renewcommand*\fxerrorindexname{**c@Fehler:!}%
   \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{ngerman}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{ngerman}{\setkeys[fx]{lang}{german}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{danish}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{danish}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Note}%
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Advarsel}%
@@ -1487,6 +1584,11 @@
   \renewcommand*\fxerrorindexname{**c@Fejl:!}%
   \renewcommand*\fxfatalindexname{}%
   \renewcommand*{\listfixmename}{Rettelser}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{croatian}
+%   \mbox{}
+%    \begin{macrocode}
 \@fxdefinevoidkey{lang}{croatian}{%
   \renewcommand*\fxnoteprefix{\fixmelogo\nobreakspace Poruka}%
   \renewcommand*\fxwarningprefix{\fixmelogo\nobreakspace Upozorenje}%
@@ -1500,6 +1602,7 @@
   \renewcommand*{\listfixmename}{Popis korekcija}}
 
 %    \end{macrocode}
+% \end{option}
 %
 % \subsection{Document status processing}
 % \begin{macro}{\@@@fxnote}
@@ -1509,8 +1612,9 @@
 %         \begin{macro}{\listoffixmes}
 %           \begin{macro}{\@listoffixmes@pretoc}
 %             \begin{macro}{\@listoffixmes@posttoc}
-%               Select draft or final versions of internal macros, some of
-%               them also depending on the document class:
+%               \begin{option}{final}
+%                   Select draft or final versions of internal macros, some of
+%                   them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@@fxnote\@@@fxnote@final%
@@ -1518,7 +1622,10 @@
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\listoffixmes\listoffixmes@final}
-
+%    \end{macrocode}
+%               \end{option}
+%               \begin{option}{draft}
+%    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{draft}{%
   \@ifclassloaded{article}{%
     \let\@listoffixmes@pretoc\@listoffixmes@pretoc@article%
@@ -1559,13 +1666,14 @@
   \let\listoffixmes\listoffixmes@draft}
 
 %    \end{macrocode}
+%               \end{option}
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
-%   \end{macro}
+% \end{macro}
 %
 % \subsection{Finale}
 % \subsubsection{Options Processing}
@@ -1588,12 +1696,13 @@
 % \begin{macro}{\fxsetup}
 %   \marg{options}\\
 %   The inevitable setup macro, extremely impressive yet as trivial as can be
-%   with the \texttt{xkeyval} package\ldots
-% \end{macro}
+%   with the \texttt{xkeyval} package\ldots All families are allowed except
+%   for the ``legacy'' one.
 %    \begin{macrocode}
 \newcommand\fxsetup[1]{\setkeys[fx]{layout,log,lang,ltx}{#1}}
 
 %    \end{macrocode}
+% \end{macro}
 %
 % \subsubsection{User layout backward compatibility tweaks}
 % User layout Backward compatibility is not as simple as the rest of the
