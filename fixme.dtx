@@ -496,6 +496,12 @@
 %    \end{macrocode}
 % \end{macro}
 % \subsubsection{\texttt{xkeyval} related}
+% \begin{macro}{\@fxdefinekey}
+%   \marg{family}\marg{key}\oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\@fxdefinekey{\define@key[fx]}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxsetkeys}
 %   \marg{families}\oarg{na}\marg{keys}
 %    \begin{macrocode}
@@ -1073,25 +1079,29 @@
 % \end{macro}
 % \begin{option}{morelayout}
 %   The \texttt{morelayout} option adds to the existing layout configuration.
-%   Note that we don't use the key macros directly to set the individual
-%   layouts, but instead we use \cs{setkeys}. That way, it is possible to
-%   disable a layout by using the \texttt{no}\meta{layout} option form. For
-%   example, |morelayout={inline,nomargin}| will work.
+%   The implementation is trivial, as it simply boils down to calling
+%   \cs{setkeys} on its argument. There are several advantages in doing this.
+%   \begin{enumerate}
+%   \item It is possible to disable a layout by using the
+%     \texttt{no}\meta{layout} form. For example,
+%     |morelayout={inline,nomargin}| will work.
+%   \item A wrong layout name (for instance, misspelled) will trigger an
+%   \texttt{xkeyval} error.
+%   \end{enumerate}
 %    \begin{macrocode}
-\@fxdefinecmdkey{layout}{morelayout}{%
-  \@for\@fxlt:=#1\do{\@fxsetkeys{layout}{\@fxlt}}}
+\@fxdefinekey{layout}{morelayout}{\@fxsetkeys{layout}{#1}}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{layout}
 %   The \texttt{layout} option lets the user specify exactly which ones she
-%   wants to use. It works by first deactivating all layouts, and then
-%   activating the provided ones. Contrary to \texttt{morelayouts}, it is not
-%   possible to use the \texttt{no}\meta{layout} form but it would not make
-%   any sense anyway.
+%   wants to use. Not very difficult to implement either: it works by first
+%   deactivating all layouts, and then activating the provided ones as before.
+%   Note that the use of the \texttt{no}\meta{layout} form is valid but has no
+%   effect.
 %    \begin{macrocode}
-\@fxdefinecmdkey{layout}{layout}{%
+\@fxdefinekey{layout}{layout}{%
   \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
-  \@for\@fxlt:=#1\do{\@nameuse{fx@layout@\@fxlt}{true}}}
+  \@fxsetkeys{layout}{#1}}
 %    \end{macrocode}
 % \end{option}
 %
