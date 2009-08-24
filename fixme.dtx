@@ -495,6 +495,13 @@
 %    \end{macrocode}
 % \end{macro}
 % \subsubsection{\texttt{xkeyval} related}
+% \begin{macro}{\@fxsetkeys}
+%   \oarg{na}\marg{families}\marg{keys}
+%    \begin{macrocode}
+\newcommand\@fxsetkeys[3][]{%
+  \setkeys[fx]{#2}[#1]{#3}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxdeclarelegacyopt}
 %   \marg{name}\\
 %   A ``legacy option'' is a package option that is not used anymore.
@@ -1073,7 +1080,7 @@
 %   example, |morelayout={inline,nomargin}| will work.
 %    \begin{macrocode}
 \@fxdefinecmdkey[%
-  \@for\@fxlt:=#1\do{\setkeys[fx]{layout}{\@fxlt}}]{%
+  \@for\@fxlt:=#1\do{\@fxsetkeys{layout}{\@fxlt}}]{%
   layout}{morelayout}{}
 %    \end{macrocode}
 % \end{option}
@@ -1309,7 +1316,7 @@
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
   \begingroup%
-  \setkeys[fx]{layout,log,lang,ltx}{#2}%
+  \@fxsetkeys{layout,log,lang,ltx}{#2}%
   \@@fxnote{#1}{#3}%
   \endgroup}
 
@@ -1405,7 +1412,7 @@
 %    \begin{macrocode}
 \def\@fxfatal[#1]#2{%
   \begingroup%
-  \setkeys[fx]{layout,log,lang,ltx}{#1}%
+  \@fxsetkeys{layout,log,lang,ltx}{#1}%
   \@@fxfatal{#2}%
   \endgroup}
 
@@ -1481,7 +1488,7 @@
 \newcommand\@fxdefineenvironment[1]{%
   \newenvironment{anfx#1}[2][]{%
     \begingroup%
-    \setkeys[fx]{layout,log,lang,ltx}{##1}%
+    \@fxsetkeys{layout,log,lang,ltx}{##1}%
     \@fxenvbegin{#1}{##2}}{%
     \@fxenvend%
     \endgroup}}
@@ -1548,7 +1555,7 @@
 % \begin{option}{francais}
 %   \mbox{}
 %    \begin{macrocode}
-\@fxdefinevoidkey{lang}{francais}{\setkeys[fx]{lang}{french}}
+\@fxdefinevoidkey{lang}{francais}{\@fxsetkeys{lang}{french}}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{spanish}
@@ -1602,7 +1609,7 @@
 % \begin{option}{ngerman}
 %   \mbox{}
 %    \begin{macrocode}
-\@fxdefinevoidkey{lang}{ngerman}{\setkeys[fx]{lang}{german}}
+\@fxdefinevoidkey{lang}{ngerman}{\@fxsetkeys{lang}{german}}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{danish}
@@ -1736,7 +1743,7 @@
 %   with the \texttt{xkeyval} package\ldots All families are allowed except
 %   for the ``legacy'' one.
 %    \begin{macrocode}
-\newcommand\fxsetup[1]{\setkeys[fx]{layout,log,lang,ltx}{#1}}
+\newcommand\fxsetup[1]{\@fxsetkeys{layout,log,lang,ltx}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
