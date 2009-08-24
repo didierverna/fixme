@@ -514,7 +514,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeclarelegacyopt[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
-    \@fxpkgwarning{'#1' is a legacy option that has no effect anymore,}}}
+    \@fxpkgwarning{%
+      '#1' is a legacy option that has no effect anymore\MessageBreak}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -582,7 +583,8 @@
 %    \begin{macrocode}
 \newcommand\@fxlegacycmdwarning[1]{%
   \@fxpkgwarning{%
-    \@fxcsstring{#1} is a legacy command that is not used anymore,}}
+    \@fxcsstring{#1} is a legacy command that is not used
+    anymore\MessageBreak}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewlegacycmd}
@@ -623,8 +625,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
-    \@fxcsstring{#1} is deprecated;\MessageBreak
-    please use \@fxcsstring{#2} instead,}}
+    \@fxcsstring{#1} is deprecated;
+    please use \@fxcsstring{#2} instead\MessageBreak}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewdeprecatedcmd}
@@ -657,8 +659,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
-    The '#1' environment is deprecated;\MessageBreak
-    please use '#2' instead,}}
+    The '#1' environment is deprecated;
+    please use '#2' instead\MessageBreak}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewdeprecatedenv}
@@ -1008,7 +1010,8 @@
 %    \begin{macrocode}
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
-    \@fxpkgwarning{Marginal notes requested; turning marginal clues off,}%
+    \@fxpkgwarning{%
+      Marginal notes requested; turning marginal clues off \MessageBreak}%
     \fx@layout@marginclue{false}}]{%
     layout}{margin}
 %    \end{macrocode}
@@ -1036,8 +1039,8 @@
 %    \begin{macrocode}
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
-    \@fxpkgwarning{Marginal clues requested;\MessageBreak
-      turning marginal notes off,}%
+    \@fxpkgwarning{%
+      Marginal clues requested; turning marginal notes off\MessageBreak}%
     \fx@layout@margin{false}}]{%
     layout}{marginclue}
 %    \end{macrocode}
