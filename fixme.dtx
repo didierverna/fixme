@@ -1286,7 +1286,7 @@
 %    \begin{macrocode}
 \def\@@@fxnote@final#1#2{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
-  \addcontentsline{lox}{fixme}{%
+  \@fxaddcontentsline{lox}{fixme}{%
     \expandafter\protect\@nameuse{fx#1prefix}: #2}}
 \def\@@@fxnote@draft#1#2{%
   \@fxlayout{#1}{#2}%
@@ -1386,7 +1386,7 @@
     \FiXmeIndex{\fxfatalindexname\thefxfatalcount: #1}%
   \fi%
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \addcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
+  \@fxaddcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
 
 %    \end{macrocode}
 %   \end{macro}
