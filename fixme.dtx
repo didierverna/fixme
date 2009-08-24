@@ -623,7 +623,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
-    \@fxcsstring{#1} is deprecated; please use \@fxcsstring{#2} instead,}}
+    \@fxcsstring{#1} is deprecated;\MessageBreak
+    please use \@fxcsstring{#2} instead,}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewdeprecatedcmd}
@@ -656,7 +657,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
-    The '#1' environment is deprecated; please use '#2' instead,}}
+    The '#1' environment is deprecated;\MessageBreak
+    please use '#2' instead,}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewdeprecatedenv}
@@ -1034,7 +1036,8 @@
 %    \begin{macrocode}
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
-    \@fxpkgwarning{Marginal clues requested; turning marginal notes off,}%
+    \@fxpkgwarning{Marginal clues requested;\MessageBreak
+      turning marginal notes off,}%
     \fx@layout@margin{false}}]{%
     layout}{marginclue}
 %    \end{macrocode}
