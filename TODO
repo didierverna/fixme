@@ -105,11 +105,3 @@ text, but doesn't show comments
 * silent option does not shut up the summary. See if we want that, and if we
 would like to add values to this option (like silent={log,tty,summary,all}
 etc. 
-
-* Be more protective about the innerfallback and layout/morelayout options
-  Ensure that the layout actually exists.
-  - note that \csname bla\endcsname (or \@nameuse) does not break if the macro
-    is undefined,
-  - we should could use choicekeys for the options, but the alternatives
-    parameter doesn't seem to be dynamic which is boring and will break if I
-    add the possibility for a user to define her own layouts.
