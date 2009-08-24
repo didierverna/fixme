@@ -481,18 +481,14 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxpkginfo}
-%   \marg{msg}\\
-%   Issue a \fixme package info:
+%   \begin{macro}{\@fxpkgwarning}
+%     \marg{msg}\\
+%   Issue a \fixme package info or warning:
 %    \begin{macrocode}
 \newcommand\@fxpkginfo{\PackageInfo{FiXme}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxpkgwarning}
-%   \marg{msg}\\
-%   Issue a \fixme package warning:
-%    \begin{macrocode}
 \newcommand\@fxpkgwarning{\PackageWarning{FiXme}}
 %    \end{macrocode}
+%   \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxpkgerror}
 %   \marg{shortmsg}\marg{longmsg}\\
