@@ -49,14 +49,12 @@
     {\string\ttfamily\space#1}\encapchar main}%
   \@esphack}
 
-%% #### FIXME: I should factor this out so that it works for options and
-%% #### counters as well.
 %% In doc.sty, the macro and environment environments go through the \m@cro@
 %% command which implements specific parts by testing a boolean condition as
 %% its first argument. This mechanism is not extensible, so I have to hack
-%% away a specific version for package options, only which looks pretty much
-%% like the original one:
-\long\def\@pti@n#1{%
+%% away a specific version for options and counters, only which looks pretty
+%% much like the original one:
+\long\def\m@cro@docx#1#2{%
   \endgroup%
   \topsep\MacroTopsep\trivlist
   \def\makelabel##1{\llap{##1}}%
@@ -74,46 +72,23 @@
     \macro@cnt\@ne
   \fi
   \edef\@tempa{%
-    \noexpand\item[\noexpand\PrintOptionName{\string#1}]}%
+    \noexpand\item[%
+      \expandafter\noexpand\csname Print#1Name\endcsname{\string#2}]}%
   \@tempa
   \global\advance\c@CodelineNo\@ne
-  \SpecialMainOptionIndex{#1}\nobreak
+  \@nameuse{SpecialMain#1Index}{#2}\nobreak
   \global\advance\c@CodelineNo\m@ne
   \ignorespaces}
-\def\option{\begingroup
-  \catcode`\\12
-  \MakePrivateLetters\@pti@n}
-\let\endoption\endtrivlist
 
-
-\long\def\c@unt@r#1{%
-  \endgroup%
-  \topsep\MacroTopsep\trivlist
-  \def\makelabel##1{\llap{##1}}%
-  \if@inlabel
-    \let\@tempa\@empty
-    \count@\macro@cnt
-    \loop\ifnum\count@>\z@
-      \edef\@tempa{\@tempa\hbox{\strut}}\advance\count@\m@ne%
-    \repeat
-    \edef\makelabel##1{%
-      \llap{\vtop to\baselineskip
-	{\@tempa\hbox{##1}\vss}}}%
-    \advance\macro@cnt\@ne
-  \else
-    \macro@cnt\@ne
-  \fi
-  \edef\@tempa{%
-    \noexpand\item[\noexpand\PrintCounterName{\string#1}]}%
-  \@tempa
-  \global\advance\c@CodelineNo\@ne
-  \SpecialMainCounterIndex{#1}\nobreak
-  \global\advance\c@CodelineNo\m@ne
-  \ignorespaces}
 \def\counter{\begingroup
   \catcode`\\12
-  \MakePrivateLetters\c@unt@r}
+  \MakePrivateLetters\m@cro@docx{Counter}}
 \let\endcounter\endtrivlist
+
+\def\option{\begingroup
+  \catcode`\\12
+  \MakePrivateLetters\m@cro@docx{Option}}
+\let\endoption\endtrivlist
 
 
 \@ifundefined{PrintDescribeOption}{%
