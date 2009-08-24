@@ -480,6 +480,13 @@
 
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxpkginfo}
+%   \marg{msg}\\
+%   Issue a \fixme package info:
+%    \begin{macrocode}
+\newcommand\@fxpkginfo{\PackageInfo{FiXme}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxpkgwarning}
 %   \marg{msg}\\
 %   Issue a \fixme package warning:
@@ -1267,8 +1274,16 @@
 %    \begin{macrocode}
 \def\@fxhandleinnerfallback{%
   \ifinner%
-    \fx@layout@marginclue{false}%
+    \iffx@layout@marginclue%
+      \@fxpkginfo{%
+        inner mode detected;\MessageBreak
+        turning margin clues off}
+      \fx@layout@marginclue{false}%
+    \fi
     \iffx@layout@margin%
+      \@fxpkginfo{%
+        inner mode detected;\MessageBreak
+        falling back to '\cmdfx@layout@innerfallback' layout}
       \fx@layout@margin{false}%
       \@nameuse{fx@layout@\cmdfx@layout@innerfallback}{true}%
     \fi%
