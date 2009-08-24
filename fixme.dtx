@@ -515,7 +515,7 @@
 \newcommand\@fxdeclarelegacyopt[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \@fxpkgwarning{%
-      '#1' is a legacy option that has no effect anymore\MessageBreak}}}
+      '#1' is a legacy option that has no effect anymore}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -583,8 +583,7 @@
 %    \begin{macrocode}
 \newcommand\@fxlegacycmdwarning[1]{%
   \@fxpkgwarning{%
-    \@fxcsstring{#1} is a legacy command that is not used
-    anymore\MessageBreak}}
+    \@fxcsstring{#1} is a legacy command that is not used anymore}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewlegacycmd}
@@ -625,8 +624,7 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
-    \@fxcsstring{#1} is deprecated;
-    please use \@fxcsstring{#2} instead\MessageBreak}}
+    \@fxcsstring{#1} is deprecated; please use \@fxcsstring{#2} instead}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewdeprecatedcmd}
@@ -659,8 +657,8 @@
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
-    The '#1' environment is deprecated;
-    please use '#2' instead\MessageBreak}}
+    The '#1' environment is deprecated;\MessageBreak
+    please use '#2' instead}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnewdeprecatedenv}
@@ -1011,7 +1009,8 @@
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
-      Marginal notes requested; turning marginal clues off \MessageBreak}%
+      Marginal notes requested;\MessageBreak
+      turning marginal clues off}%
     \fx@layout@marginclue{false}}]{%
     layout}{margin}
 %    \end{macrocode}
@@ -1040,7 +1039,8 @@
 \@fxdefineboolkey[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
-      Marginal clues requested; turning marginal notes off\MessageBreak}%
+      Marginal clues requested;\MessageBreak
+      turning marginal notes off}%
     \fx@layout@margin{false}}]{%
     layout}{marginclue}
 %    \end{macrocode}
