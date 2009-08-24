@@ -1269,8 +1269,11 @@
 %
 % \subsubsection{Layout dispatch}
 % \begin{macro}{\@fxhandleinnerfallback}
-%   Automatic disabling of the \texttt{margin} and \texttt{marginclue}
-%   layouts when \TeX{} is in \texttt{inner} mode:
+%   Handles the case where \TeX{} is in inner mode. We need to disable margin
+%   clues, and use the inner fallback layout instead of the margin one. Note
+%   that just as in the case of the \texttt{layout} and
+%   \texttt{morelayout}options, we use \texttt{xkeyval}'s \cs{setkeys} to
+%   activate the inner fallback, which gives us some error checking gratis.
 %    \begin{macrocode}
 \def\@fxhandleinnerfallback{%
   \ifinner%
@@ -1285,7 +1288,7 @@
         inner mode detected;\MessageBreak
         falling back to '\cmdfx@layout@innerfallback' layout}
       \fx@layout@margin{false}%
-      \@nameuse{fx@layout@\cmdfx@layout@innerfallback}{true}%
+      \@fxsetkeys{layout}{\cmdfx@layout@innerfallback}%
     \fi%
   \fi}
 
