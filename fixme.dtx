@@ -32,6 +32,7 @@
 %
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
+\usepackage{xspace}
 \usepackage{docx}
 % \OnlyDescription
 \CodelineIndex
@@ -71,18 +72,18 @@
 % \makeatother
 % \newcommand\subsubsubsection[1]{\paragraph{#1:}}
 %
-% \newcommand\komascript{\textsc{Koma}-Script}
-% \newcommand\auctex{AUC-\TeX}
+% \newcommand\komascript{\textsc{Koma}-Script\xspace}
+% \newcommand\auctex{AUC-\TeX\xspace}
 %
 % \newcommand\version{4.0}
 % \newcommand\releasedate{2009/08/24}
 % \newcommand\packagecopyright{%
 %   Copyright \copyright{} 1998--2002, 2004--2007, 2009 Didier Verna}
-% \newcommand\fixme{\textsf{FiXme}}
+% \newcommand\fixme{\textsf{FiXme}\xspace}
 %
 % \date\today
 % \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
-%   in your documents\thanks{This document describes \fixme{} \version,
+%   in your documents\thanks{This document describes \fixme \version,
 %     release date \releasedate.}}
 % \author{Didier Verna\\
 %   \texttt{mailto:didier@lrde.epita.fr}\\
@@ -96,8 +97,8 @@
 %   such cases, you probably want to stick clues about which parts need to be
 %   ``fixed'', where they are located, and what needs to be done. This is what
 %   I call ``fixme notes''. The purpose of this package is to provide you with
-%   convenient ways to insert \fixme{} notes in your documents.\par
-%   The \fixme{} package is \packagecopyright{}, and distributed under the
+%   convenient ways to insert \fixme notes in your documents.\par
+%   The \fixme package is \packagecopyright{}, and distributed under the
 %   terms of the LPPL license.
 % \end{abstract}
 %
@@ -107,12 +108,12 @@
 % With \fixme, you can insert different kinds of notes in your documents,
 % ranging from simple not-so-important notices to critical stuff that must
 % absolutely be fixed in the final version.\par
-% \fixme{} gives you full control on the layout of these notes: they can be
+% \fixme gives you full control on the layout of these notes: they can be
 % displayed inline (directly in the text), as marginal paragraphs (the
 % default), as footnotes and even as index entries. All these possibilities
-% can be mixed together. Additionally, you can summarize all \fixme{} notes in
+% can be mixed together. Additionally, you can summarize all \fixme notes in
 % a ``list of fixme's''.\par
-% \fixme{} notes are also recorded in the log file, and (depending on their
+% \fixme notes are also recorded in the log file, and (depending on their
 % importance level) some of them are displayed on the terminal during
 % compilation. A final summary is also created at the end of the compilation
 % process.\par
@@ -133,14 +134,14 @@
 % \subsection{Inserting notes}
 % \subsubsection{Macros}
 % \DescribeMacro{\fixme}
-% The main command for inserting a \fixme{} note in your document is the
+% The main command for inserting a \fixme note in your document is the
 % \cs{fixme} macro. It takes the note to insert as its mandatory argument.
 % Notes inserted via this command are considered fatal to your document's
 % final processing (see section \ref{sec:behavior}).\par
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
 % \DescribeMacro{\fxerror}
-% As of version 2.0, \fixme{} provides three new macros that insert
+% As of version 2.0, \fixme provides three new macros that insert
 % meta-comments about the document, rather than real fixmes. These
 % comments have three different importance levels: note, warning and (non
 % critical) error. The corresponding macros obey the same syntax as \cs{fixme}.
@@ -151,15 +152,15 @@
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{afixme}
-% As of version 3.0, \fixme{} provides environments for inserting longer
+% As of version 3.0, \fixme provides environments for inserting longer
 % notes. These environments take one optional argument (should be short,
 % perhaps a summary of the note) that will be used in the list of fixme's and
 % in the index if required.\par
-% The \fixme{} environments behave exactly the same way as their macro
+% The \fixme environments behave exactly the same way as their macro
 % counterpart, except for the layout (see section \ref{sec:layout}): as they
 % are meant for longer notes, the layout is always \texttt{inline}. The
 % \texttt{index} and \texttt{marginclue} layouts are still honored however. By
-% default, \fixme{} environments are typeset in a \texttt{quotation} one.
+% default, \fixme environments are typeset in a \texttt{quotation} one.
 %
 % \subsection{Controlling the behavior of \fixme\label{sec:behavior}}
 % \DescribeOption{final}
@@ -179,14 +180,14 @@
 % This will help you track down forgotten important caveats in your document.
 % Let me say it again: final documents can only have notes, warnings, and (non
 % critical) errors left. Well, if, for some reason, you really want to compile
-% in \texttt{final} mode with critical \fixme{} notes left behind, you always
-% have the possibility to pass the \texttt{draft} option to \fixme{}
+% in \texttt{final} mode with critical \fixme notes left behind, you always
+% have the possibility to pass the \texttt{draft} option to \fixme
 % directly\ldots\par
 % The \texttt{final} mode has been chosen as the default because \LaTeXe{}
 % itself behaves this way.\par
 %
 % \subsection{Controlling the notes layout\label{sec:layout}}
-% \fixme{} notes can appear in several forms (that can be combined) in your
+% \fixme notes can appear in several forms (that can be combined) in your
 % document.
 % \subsubsection{Global layout}
 % \DescribeOption{inline}
@@ -202,15 +203,15 @@
 % Each layout option has a counterpart that deactivates it. The counterpart
 % option has the same name, prefixed with \texttt{no}. For instance, if you
 % don't want marginal notes, use the \texttt{nomargin} option.\par
-% Finally, note that \fixme{} environments behave in a special way: they are
+% Finally, note that \fixme environments behave in a special way: they are
 % always typeset \texttt{inline}, regardless of your layout settings (they
 % respect your wish for index and marginal clues though).\par
 %
 % \subsubsection{Marginal Clues}
 % Sometimes, marginal notes are too narrow for what you want to put in them,
 % so you would switch to an inline or a footnote layout. But then, it is more
-% difficult to keep track of the \fixme{} note's location on the page.\par
-% As of version 3.2, \fixme{} provides a special layout called ``marginal
+% difficult to keep track of the \fixme note's location on the page.\par
+% As of version 3.2, \fixme provides a special layout called ``marginal
 % clue'' to help locating the notes: a marginal clue does not display the
 % note's contents, but only an indication that there is a note at that place.
 % So you have to use another layout form (typically inline or footnote) in
@@ -224,14 +225,14 @@
 % \DescribeMacro{\fxnote[]}
 % \DescribeMacro{\fxwarning[]}
 % \DescribeMacro{\fxerror[]}
-% As of version 3.0, \fixme{} provides a way to change the selected layout(s)
+% As of version 3.0, \fixme provides a way to change the selected layout(s)
 % on a per-note basis: each note insertion command takes an optional first
 % argument that overrides the global layout. This argument consists of one or
 % more layout options (\texttt{inline}, \texttt{margin}, \texttt{marginclue},
 % \texttt{footnote} and \texttt{index}) separated by commas. Remember that
 % local layouts \emph{override} the global ones; they don't add to it.\par
 % On what occasion would one want to modify the layout for a particular note?
-% Here is a typical situation: suppose you have a document in which \fixme{}
+% Here is a typical situation: suppose you have a document in which \fixme
 % notes are typeset as margin paragraphs (this is the default). You would not
 % be able to put a note in a figure, because floats can't be nested in
 % \LaTeX{} (margin paragraphs are floats). In such a case, you would rather
@@ -239,16 +240,16 @@
 % |\fixme[inline]{blah}|.\par
 %
 % \subsubsection{Class compatibility}
-% By default, \fixme{} is set to use marginal notes. You should know that this
+% By default, \fixme is set to use marginal notes. You should know that this
 % is known to cause problems with at least the ACM SIG classes:
 % \texttt{acm\_proc\_article-sp} and \texttt{sig-alternate}. These classes
 % forbid the use of \cs{marginpar}, so if you use them, you should choose
-% another layout for \fixme{}, and also avoid using marginal clues\ldots
+% another layout for \fixme, and also avoid using marginal clues\ldots
 %
 % \subsection{Controlling the notes logging}
 % \DescribeOption{silent}
 % \DescribeOption{nosilent}
-% As well as being displayed in the document itself, all \fixme{} notes are
+% As well as being displayed in the document itself, all \fixme notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
 % log file while the others are also displayed on the terminal output.\par
 % You have the ability to suppress all kind of logging by using the
@@ -257,13 +258,13 @@
 %
 % \subsection{List of \fixme's}
 % \DescribeMacro{\listoffixmes}
-% \fixme{} remembers where you put \fixme{} notes in a toc-like file whose
+% \fixme remembers where you put \fixme notes in a toc-like file whose
 % extension is \texttt{lox}. The \cs{listoffixmes} macro generates the list of
-% all \fixme{} notes in a manner similar to that of the ``list of figures''
+% all \fixme notes in a manner similar to that of the ``list of figures''
 % for instance. A standard layout is automatically used for the `article',
-% `report', `book' classes and their \komascript{} replacements. If another
+% `report', `book' classes and their \komascript replacements. If another
 % class is used, the `article' layout is selected. Also, note that if no
-% \fixme{} note remain in the document, this macro doesn't generate an empty
+% \fixme note remain in the document, this macro doesn't generate an empty
 % list, but rather stays silent. It also stays silent in \texttt{final} mode,
 % regardless of the presence of remaining notes.
 %
@@ -273,8 +274,8 @@
 % \subsubsection{Macros}
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
 % parts: a ``prefix'' which depends on the note level, and the note
-% itself. The prefix is one of ``\fixme{} note:'', ``\fixme{} warning:'',
-% ``\fixme{} error:''  or simply ``\fixme{}:'', and appears in bold. The note
+% itself. The prefix is one of ``\fixme note:'', ``\fixme warning:'',
+% ``\fixme error:''  or simply ``\fixme:'', and appears in bold. The note
 % itself appears emphasized.
 % \DescribeMacro{\FXInline}
 % \DescribeMacro{\FXMargin}
@@ -287,18 +288,18 @@
 % above. Its layout is controlled by the macro \cs{FXMarginClue} which takes
 % the prefix as its only mandatory argument.
 % \DescribeMacro{\FXIndex}
-% The \cs{FXIndex} macro is used for the \texttt{index} layout. All \fixme{}
-% index entries appear under the ``\fixme{}'' key in the symbols section.
+% The \cs{FXIndex} macro is used for the \texttt{index} layout. All \fixme
+% index entries appear under the ``\fixme'' key in the symbols section.
 % There are 4 subcategories under this key, as many as there are note levels.
 % By default, only the first 3 of them are used though (fatal errors do not
-% appear under a subkey, but directly under the \fixme{} key). The notes are
+% appear under a subkey, but directly under the \fixme key). The notes are
 % numbered in the index.\par
 %
 % \subsubsection{Environments}
 % \DescribeMacro{\FXEnvBegin}
 % \DescribeMacro{\FXEnvEnd}
-% The optional argument of \fixme{} environments is always typeset according
-% to the \texttt{inline} layout described above. By default, \fixme{} uses a
+% The optional argument of \fixme environments is always typeset according
+% to the \texttt{inline} layout described above. By default, \fixme uses a
 % \texttt{quotation} for displaying the environments'contents. If you want to
 % change that, you can redefine the macros \cs{FXEnvBegin} and \cs{FXEnvEnd}
 % that open and close the environments.
@@ -335,13 +336,13 @@
 % \DescribeOption{ngerman}
 % \DescribeOption{danish}
 % \DescribeOption{croatian}
-% \fixme{} currently supports English, French, Spanish, Italian, German,
+% \fixme currently supports English, French, Spanish, Italian, German,
 % Danish and Croatian. You can select the language you want to use by passing
 % the corresponding option (these options are usually given directly to
 % \cs{documentclass} which in turn passes them to all packages). The
 % \texttt{french} and \texttt{francais} options are synonyms. The
 % \texttt{german} and \texttt{ngerman} options are currently equivalent.\par
-% If you want a finer grain on the language-dependent parts of \fixme{}, the
+% If you want a finer grain on the language-dependent parts of \fixme, the
 % following macros are provided and can be redefined.\par
 % \DescribeMacro{\fixmenoteprefix}
 % \DescribeMacro{\fixmewarningprefix}
@@ -355,11 +356,11 @@
 % \DescribeMacro{\fixmewarningindexname}
 % \DescribeMacro{\fixmeerrorindexname}
 % \DescribeMacro{\fixmefatalindexname}
-% The macro \cs{fixmeindexname} defines the main \fixme{} index key. The other
+% The macro \cs{fixmeindexname} defines the main \fixme index key. The other
 % ones define the different index subkeys for each note level. Please note that
 % an empty name for a subkey means that you don't actually want a subcategory
 % (that's the case by default for fatal errors). The corresponding notes will
-% then appear directly under the main \fixme{} key. For that reason, a non
+% then appear directly under the main \fixme key. For that reason, a non
 % empty subkey must end with an exclamation mark.\par
 % \DescribeMacro{\listfixmename}
 % \cs{listfixmename} defines the title for the ``list of fixmes'' section.
@@ -370,20 +371,20 @@
 % ^^A \DescribeMacro{\thefixmewarningcount}
 % ^^A \DescribeMacro{\thefixmeerrorcount}
 % ^^A \DescribeMacro{\thefixmefatalcount}
-% ^^A As of \fixme{} version 2.0, four counters are provided. They count
-% ^^A respectively the total number of \fixme{} notes, and the number of
-% ^^A level-specific ones. At the end of processing, a \fixme{} usage summary
+% ^^A As of \fixme version 2.0, four counters are provided. They count
+% ^^A respectively the total number of \fixme notes, and the number of
+% ^^A level-specific ones. At the end of processing, a \fixme usage summary
 % ^^A is displayed and logged.
 %
 %
-% \section{\auctex{} support}
-% \auctex{} is a powerful major mode for editing \TeX{} documents in
+% \section{\auctex support}
+% \auctex is a powerful major mode for editing \TeX{} documents in
 % \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
-% completion of macro names once they are known. \fixme{} supports \auctex{}
-% by providing a style file named \texttt{fixme.el} which contains \auctex{}
+% completion of macro names once they are known. \fixme supports \auctex
+% by providing a style file named \texttt{fixme.el} which contains \auctex
 % definitions for the relevant macros. This file should be installed in a
-% place where \auctex{} can find it (usually in a subdirectory of your
-% \LaTeX{} styles directory). Please refer to the \auctex{} documentation for
+% place where \auctex can find it (usually in a subdirectory of your
+% \LaTeX{} styles directory). Please refer to the \auctex documentation for
 % more information on this.
 %
 % \section{Changes}
@@ -397,13 +398,13 @@
 %   Heavy internals refactoring.
 % \item[v3.4] \cs{fixme}, \cs{fxerror}, \cs{fxwarning} and \cs{fxnote} are now
 %   robust, thanks to Will Robertson.\\
-%   Fix incompatibility with \komascript{} classes version of \cs{@starttoc}
+%   Fix incompatibility with \komascript classes version of \cs{@starttoc}
 %   when the lox file is inexistent, reported by Philipp Stephani.
 % \item[v3.3] Document incompatibility between marginal layout and the ACM
 %   SIG classes, reported by Jochen Wuttke.\\
 %   Honor \texttt{twoside} option in marginal layout, suggested by Jens
 %   Remus.\\
-%   Support for \komascript{} classes version 2006/07/30 v2.95b, suggested by
+%   Support for \komascript classes version 2006/07/30 v2.95b, suggested by
 %   Jens Remus.\\
 %   Documentation improvements suggested by Brian van den Broek.\\
 %   Fix incompatibility with \texttt{amsart} reported by Lars Madsen:
@@ -431,20 +432,20 @@
 %   conflicts with Babel in Spanish environments.\\
 %   Fix bug reported by Knut Lickert: index entries were unconditionally built.
 % \item[v2.0] New feature: note levels.\\
-%   New feature: \fixme{} note counters and usage summary.\\
+%   New feature: \fixme note counters and usage summary.\\
 %   Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|.\\
 %   Support for Spanish thanks to Agust\'in Mart\'in |<agusmba@terra.es>|
 % \item[v1.5] New appearance option: \texttt{inline}.
-% \item[v1.4] Support for the \komascript{} classes.\\
+% \item[v1.4] Support for the \komascript classes.\\
 %   Fix bug reported by Ulf Jaenicke-Roessler: the \cs{listoffixmes} command
-%   didn't work when called before the first \fixme{} note.
+%   didn't work when called before the first \fixme note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri
 %   |<murri@phc.unipi.it>|.
 % \item[v1.2] Support for German thanks to Harald Harders
 %   |<h.harders@tu-bs.de>|.
 % \end{itemize}
 %
-% \StopEventually{\par Well, I think that's it. Enjoy using \fixme{}!
+% \StopEventually{\par Well, I think that's it. Enjoy using \fixme!
 %   \vfill\hfill\small \packagecopyright{}.}
 %
 % \section{Implementation}
@@ -456,7 +457,7 @@
 
 %    \end{macrocode}
 % \begin{macro}{\fixmelogo}
-%   The \fixme{} logo:
+%   The \fixme logo:
 %    \begin{macrocode}
 \newcommand*\fixmelogo{\textsf{FiXme}}
 
@@ -481,14 +482,14 @@
 % \end{macro}
 % \begin{macro}{\@fxpkgwarning}
 %   \marg{msg}\\
-%   Issue a \fixme{} package warning:
+%   Issue a \fixme package warning:
 %    \begin{macrocode}
 \newcommand\@fxpkgwarning[1]{\PackageWarning{FiXme}{#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxpkgerror}
 %   \marg{shortmsg}\marg{longmsg}\\
-%   Issue a \fixme{} package error:
+%   Issue a \fixme package error:
 %    \begin{macrocode}
 \newcommand\@fxpkgerror[2]{\PackageError{FiXme}{#1}{#2}}
 
@@ -526,7 +527,7 @@
 % \end{macro}
 % \begin{macro}{\@fxvoidkeyerror}
 %   \marg{key}\marg{value}\\
-%   Issue a \fixme{} error about a void key misuse (see below):
+%   Issue a \fixme error about a void key misuse (see below):
 %    \begin{macrocode}
 \newcommand\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
@@ -537,7 +538,7 @@
 % \end{macro}
 % \begin{macro}{\@fxdefinevoidkey}
 %   \marg{family}\marg{name}\marg{func}\\
-%   A \fixme{} ``void key'' is an \texttt{xkeyval} key that doesn't expect any
+%   A \fixme ``void key'' is an \texttt{xkeyval} key that doesn't expect any
 %   argument.
 %    \begin{macrocode}
 \newcommand\@fxdefinevoidkey[3]{%
@@ -550,7 +551,7 @@
 % \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
 %   \oarg{func}\marg{family}\marg{name}\\
-%   A \fixme{} ``boolean key'' is like an \texttt{xkeyval} one, with the
+%   A \fixme ``boolean key'' is like an \texttt{xkeyval} one, with the
 %   addition that for every such \texttt{key}, there is a \texttt{nokey} void
 %   key counterpart.
 %    \begin{macrocode}
@@ -562,7 +563,7 @@
 % \end{macro}
 % \begin{macro}{\@fxdeclarecmdkey}
 %   \oarg{function}\marg{family}\marg{name}\marg{default}\\
-%   A \fixme{} ``cmdkey'' is just like an \texttt{xkeyval} one:
+%   A \fixme ``cmdkey'' is just like an \texttt{xkeyval} one:
 %    \begin{macrocode}
 \newcommand\@fxdefinecmdkey[4][]{\define@cmdkey[fx]{#2}{#3}[#4]{#1}}
 
@@ -573,7 +574,7 @@
 % \subsubsubsection{Legacy commands}
 % \begin{macro}{\@fxlegacycmdwarning}
 %   \marg{name}\\
-%   Issue a \fixme{} warning about a legacy command (see below):
+%   Issue a \fixme warning about a legacy command (see below):
 %    \begin{macrocode}
 \newcommand\@fxlegacycmdwarning[1]{%
   \@fxpkgwarning{%
@@ -614,7 +615,7 @@
 % \subsubsubsection{Deprecated commands}
 % \begin{macro}{\@fxdeprecatedcmdwarning}
 %   \marg{old}\marg{new}\\
-%   Issue a \fixme{} warning about a deprecated command (see below):
+%   Issue a \fixme warning about a deprecated command (see below):
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
@@ -636,7 +637,7 @@
 % \end{macro}
 % \begin{macro}{\@fxprefixdeprecatecmd}
 %   \oarg{prefix}\marg{name}\\
-%   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
+%   Since version 4 of \fixme comes with a lot of \texttt{fixme} to
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated commands:
 %    \begin{macrocode}
@@ -647,7 +648,7 @@
 % \end{macro}
 % \begin{macro}{\@fxdeprecatedenvwarning}
 %   \marg{old}\marg{new}\\
-%   Issue a \fixme{} warning about a deprecated environment (see below):
+%   Issue a \fixme warning about a deprecated environment (see below):
 %    \begin{macrocode}
 \newcommand\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
@@ -671,9 +672,9 @@
 %   A ``deprecated renewable command'' is a deprecated command that is
 %   likely to be renew'ed by the user. There are several possibilities to
 %   implement this. One is to maintain the use of the older version in the
-%   core of \fixme{}, and make it just call the new one by default. That way,
+%   core of \fixme, and make it just call the new one by default. That way,
 %   if the user redefines the older one, it will work out of the box. However,
-%   I prefer that the core of \fixme{} always use the newest API if possible,
+%   I prefer that the core of \fixme always use the newest API if possible,
 %   so the chosen solution is as follows:
 %   \begin{enumerate}
 %   \item \cs{newcommand} the old one and \cs{let} it be \cs{empty},
@@ -697,7 +698,7 @@
 % \end{macro}
 % \begin{macro}{\@fxprefixdeprecatercmd}
 %   \oarg{prefix}\marg{name}\\
-%   Since version 4 of \fixme{} comes with a lot of \texttt{fixme} to
+%   Since version 4 of \fixme comes with a lot of \texttt{fixme} to
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated renewable commands:
 %    \begin{macrocode}
@@ -711,7 +712,7 @@
 %   \begin{macro}{\listoffixmes}
 %     Lists are output in a document class dependant fashion. Classes
 %     currently recognized are \texttt{article}, \texttt{report},
-%     \texttt{book} and their \komascript{} replacements.
+%     \texttt{book} and their \komascript replacements.
 %    \begin{macrocode}
 \let\l@fixme\l@figure
 \newcommand\listoffixmes{}
@@ -721,11 +722,11 @@
 % \begin{macro}{\lox@final}
 %   \begin{macro}{\lox@draft}
 %     In order to prevent the List of Fixme's heading from being generated
-%     when there are no \fixme{} notes, a test on the existence of the
+%     when there are no \fixme notes, a test on the existence of the
 %     \texttt{lox} file is performed. There's a slight bug left however:
-%     after removing the last fixme{} note, one ends up with an empty
+%     after removing the last fixme note, one ends up with an empty
 %     \texttt{lox} file, so the heading still appears. Previously, this
-%     was done by checking if some \fixme{} notes were given, but that was
+%     was done by checking if some \fixme notes were given, but that was
 %     buggy: the List of Fixme's could not appear before the first fixme
 %     note\ldots I should try to detect whether the file is empty.
 %    \begin{macrocode}
@@ -812,11 +813,11 @@
 %  \end{macro}
 % \end{macro}
 %
-% \subsubsection{\komascript{} classes}
-% The code below (version 3.3) mimics \komascript{} version 2006/07/30 v2.95b.
+% \subsubsection{\komascript classes}
+% The code below (version 3.3) mimics \komascript version 2006/07/30 v2.95b.
 % Older versions (using chapter*) are no longer supported because it is
 % simpler that way, but if some people complain, I'll  have to conditionalize
-% on the \komascript{} version, which would be a \textsc{pita}.
+% on the \komascript version, which would be a \textsc{pita}.
 % \begin{macro}{\lox@heading}
 %   \mbox{}
 %    \begin{macrocode}
@@ -1188,7 +1189,7 @@
 
 %    \end{macrocode}
 %
-% \subsection{\fixme{} notes}
+% \subsection{\fixme notes}
 % \subsubsection{Note parameters}
 % As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}.
 % Older versions remain for backward compatibility.
@@ -1285,7 +1286,7 @@
 % \end{macro}
 %
 % \subsubsection{Non fatal notes}
-% The generic mechanism below applies only to \fixme{} notes, warnings and
+% The generic mechanism below applies only to \fixme notes, warnings and
 % errors. Fatal notes are handled in the next section.
 % \begin{macro}{\@@@fxnote@final}
 %   \begin{macro}{\@@@fxnote@draft}
@@ -1429,7 +1430,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{\fixme{} environments}
+% \subsection{\fixme environments}
 % \subsubsection{Layout macros}
 % \begin{macro}{\FXEnvBegin}
 %   \marg{prefix}
@@ -1447,7 +1448,7 @@
 % \end{macro}
 %
 % \subsubsection{\texttt{final} and \texttt{draft} versions}
-% \fixme{} environments are always laid out inline. The environment's summary
+% \fixme environments are always laid out inline. The environment's summary
 % is laid out by the corresponding macro, but the \texttt{inline} layout is
 % disabled (this is as easy as appending \texttt{noinline} at the end of the
 % options list). In \texttt{final} mode, \texttt{verbatim}'s \texttt{comment}
@@ -1483,7 +1484,7 @@
 % \subsubsection{User-level environments}
 % \begin{macro}{\@fxdefineenvironment}
 %   \marg{type}\\
-%   This command defines \fixme{} environments in a generic way:
+%   This command defines \fixme environments in a generic way:
 %    \begin{macrocode}
 \newcommand\@fxdefineenvironment[1]{%
   \newenvironment{anfx#1}[2][]{%
@@ -1769,7 +1770,7 @@
       \fi}}}
 
 %    \end{macrocode}
-% \subsubsection{\fixme{} summary}
+% \subsubsection{\fixme summary}
 % Finally, output a summary giving the number of fixme notes at the end of the
 % compilation:
 %    \begin{macrocode}
