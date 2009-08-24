@@ -484,23 +484,22 @@
 %   \marg{msg}\\
 %   Issue a \fixme package warning:
 %    \begin{macrocode}
-\newcommand\@fxpkgwarning[1]{\PackageWarning{FiXme}{#1}}
+\newcommand\@fxpkgwarning{\PackageWarning{FiXme}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxpkgerror}
 %   \marg{shortmsg}\marg{longmsg}\\
 %   Issue a \fixme package error:
 %    \begin{macrocode}
-\newcommand\@fxpkgerror[2]{\PackageError{FiXme}{#1}{#2}}
+\newcommand\@fxpkgerror{\PackageError{FiXme}}
 
 %    \end{macrocode}
 % \end{macro}
 % \subsubsection{\texttt{xkeyval} related}
 % \begin{macro}{\@fxsetkeys}
-%   \oarg{na}\marg{families}\marg{keys}
+%   \marg{families}\oarg{na}\marg{keys}
 %    \begin{macrocode}
-\newcommand\@fxsetkeys[3][]{%
-  \setkeys[fx]{#2}[#1]{#3}}
+\newcommand\@fxsetkeys{\setkeys[fx]}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdeclarelegacyopt}
@@ -562,10 +561,9 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdeclarecmdkey}
-%   \oarg{function}\marg{family}\marg{name}\marg{default}\\
-%   A \fixme ``cmdkey'' is just like an \texttt{xkeyval} one:
+%   \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}\\
 %    \begin{macrocode}
-\newcommand\@fxdefinecmdkey[4][]{\define@cmdkey[fx]{#2}{#3}[#4]{#1}}
+\newcommand\@fxdefinecmdkey{\define@cmdkey[fx]}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1048,7 +1046,7 @@
 % \begin{option}{innerfallback}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefinecmdkey{layout}{innerfallback}{inline}
+\@fxdefinecmdkey{layout}{innerfallback}[inline]{}
 
 %    \end{macrocode}
 % \end{option}
@@ -1080,9 +1078,8 @@
 %   disable a layout by using the \texttt{no}\meta{layout} option form. For
 %   example, |morelayout={inline,nomargin}| will work.
 %    \begin{macrocode}
-\@fxdefinecmdkey[%
-  \@for\@fxlt:=#1\do{\@fxsetkeys{layout}{\@fxlt}}]{%
-  layout}{morelayout}{}
+\@fxdefinecmdkey{layout}{morelayout}{%
+  \@for\@fxlt:=#1\do{\@fxsetkeys{layout}{\@fxlt}}}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{layout}
@@ -1092,10 +1089,9 @@
 %   possible to use the \texttt{no}\meta{layout} form but it would not make
 %   any sense anyway.
 %    \begin{macrocode}
-\@fxdefinecmdkey[%
+\@fxdefinecmdkey{layout}{layout}{%
   \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
-  \@for\@fxlt:=#1\do{\@nameuse{fx@layout@\@fxlt}{true}}]{%
-  layout}{layout}{}
+  \@for\@fxlt:=#1\do{\@nameuse{fx@layout@\@fxlt}{true}}}
 %    \end{macrocode}
 % \end{option}
 %
