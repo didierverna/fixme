@@ -15,7 +15,7 @@
 
 ### Code:
 
-TEXMFDIR = ${HOME}/Library/texmf
+TEXMFDIR = ${HOME}/.texmf
 
 
 ### Makefile.inc ends here
