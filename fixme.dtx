@@ -1405,7 +1405,7 @@
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
   \begingroup%
-  \@fxsetkeys{layout,log,lang,ltx}{#2}%
+  \@fxsetkeys{ltx,lang,lox,log,layout}{#2}%
   \@@fxnote{#1}{#3}%
   \endgroup}
 
@@ -1513,7 +1513,7 @@
 %    \begin{macrocode}
 \def\@fxfatal[#1]#2{%
   \begingroup%
-  \@fxsetkeys{layout,log,lang,ltx}{#1}%
+  \@fxsetkeys{ltx,lang,lox,log,layout}{#1}%
   \@@fxfatal{#2}%
   \endgroup}
 
@@ -1592,7 +1592,7 @@
 \newcommand\@fxdefineenvironment[1]{%
   \newenvironment{anfx#1}[2][]{%
     \begingroup%
-    \@fxsetkeys{layout,log,lang,ltx}{##1}%
+    \@fxsetkeys{ltx,lang,lox,log,layout}{##1}%
     \@fxenvbegin{#1}{##2}}{%
     \@fxenvend%
     \endgroup}}
@@ -1852,7 +1852,7 @@
 %   with the \texttt{xkeyval} package\ldots All families are allowed except
 %   for the ``legacy'' one.
 %    \begin{macrocode}
-\newcommand\fxsetup[1]{\@fxsetkeys{layout,log,lang,ltx}{#1}}
+\newcommand\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
