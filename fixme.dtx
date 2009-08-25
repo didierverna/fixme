@@ -511,6 +511,12 @@
 \newcommand\@fxsetkeys{\setkeys[fx]}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxpresetkeys}
+%   \marg{families}\marg{head keys}\marg{tail keys}
+%    \begin{macrocode}
+\newcommand\@fxpresetkeys{\presetkeys[fx]}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxdeclarelegacyopt}
 %   \marg{name}\\
 %   A ``legacy option'' is a package option that is not used anymore.
@@ -784,11 +790,9 @@
 %   documented in the user manual.
 %    \begin{macrocode}
 \newcommand\fxaddcontentsline[1]{%
-  \ifx\cmdfx@lox@area\empty%
-    \addcontentsline{lox}{fixme}{#1}%
-  \else%
-    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@lox@area}}%
-  \fi}
+  \ifthenelse{\equal{\cmdfx@lox@area}{thepage}}{%
+    \addcontentsline{lox}{fixme}{#1}}{%
+    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@lox@area}}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1377,35 +1381,29 @@
 % \subsubsection{Non fatal notes}
 % The generic mechanism below applies only to \fixme notes, warnings and
 % errors. Fatal notes are handled in the next section.
-% \begin{macro}{\@@@fxnote@final}
-%   \begin{macro}{\@@@fxnote@draft}
+% \begin{macro}{\@@fxnote@final}
+%   \begin{macro}{\@@fxnote@draft}
 %     \marg{type}\marg{note}
 %    \begin{macrocode}
-\def\@@@fxnote@final#1#2{%
+\def\@@fxnote@final#1#2{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
   \fxaddcontentsline{\expandafter\protect\@nameuse{fx#1prefix}: #2}}
-\def\@@@fxnote@draft#1#2{%
+\def\@@fxnote@draft#1#2{%
   \@fxlayout{#1}{#2}%
-  \@@@fxnote@final{#1}{#2}}
+  \@@fxnote@final{#1}{#2}}
 
 %    \end{macrocode}
 %  \end{macro}
-% \end{macro}
-% \begin{macro}{\@@fxnote}
-%   \marg{type}\marg{note}
-%    \begin{macrocode}
-\def\@@fxnote#1#2{%
-  \stepcounter{fixmecount}%
-  \stepcounter{fx#1count}%
-  \@@@fxnote{#1}{#2}}
-%    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnote}
 %   \marg{type}\oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
   \begingroup%
+  \@fxpresetkeys{lox}{area=thepage}{}%
   \@fxsetkeys{ltx,lang,lox,log,layout}{#2}%
+  \stepcounter{fixmecount}%
+  \stepcounter{fx#1count}%
   \@@fxnote{#1}{#3}%
   \endgroup}
 
@@ -1419,21 +1417,21 @@
 \DeclareRobustCommand\fxnote{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxfnote{note}}{\@@fxfnote{note}}}{%
+    {\@fxfnote{note}}{\@fxfnote{note}[]}}{%
     \@ifnextchar[%]
-    {\@fxnote{note}}{\@@fxnote{note}}}}
+    {\@fxnote{note}}{\@fxnote{note}[]}}}
 \DeclareRobustCommand\fxwarning{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxfnote{warning}}{\@@fxfnote{warning}}}{%
+    {\@fxfnote{warning}}{\@fxfnote{warning}[]}}{%
     \@ifnextchar[%]
-    {\@fxnote{warning}}{\@@fxnote{warning}}}}
+    {\@fxnote{warning}}{\@fxnote{warning}[]}}}
 \DeclareRobustCommand\fxerror{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxfnote{error}}{\@@fxfnote{error}}}{%
+    {\@fxfnote{error}}{\@fxfnote{error}[]}}{%
     \@ifnextchar[%]
-    {\@fxnote{error}}{\@@fxnote{error}}}}
+    {\@fxnote{error}}{\@fxnote{error}[]}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -1470,20 +1468,20 @@
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
-% \begin{macro}{\@@@fxfatal@final}
-%   \begin{macro}{\@@@fxfatal@draft}
+% \begin{macro}{\@@fxfatal@final}
+%   \begin{macro}{\@@fxfatal@draft}
 %     \marg{note}\\
 %     Note that we start with the footnote layout, so that it is sticked
 %     properly to the preceding text if active.
 %    \begin{macrocode}
-\def\@@@fxfatal@final#1{%
+\def\@@fxfatal@final#1{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
     You are currently processing in final mode,\MessageBreak
     but you still have some FiXme fatal errors left behind.\MessageBreak
     Type X to quit, fix your document (or switch back to draft
     mode),\MessageBreak
     and rerun LaTeX.}}
-\def\@@@fxfatal@draft#1{%
+\def\@@fxfatal@draft#1{%
   \@fxhandleinnerfallback%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
@@ -1499,21 +1497,15 @@
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
-% \begin{macro}{\@@fxfatal}
-%   \marg{note}
-%    \begin{macrocode}
-\def\@@fxfatal#1{%
-  \stepcounter{fixmecount}%
-  \stepcounter{fxfatalcount}%
-  \@@@fxfatal{#1}}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\@fxfatal}
 %   \oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxfatal[#1]#2{%
   \begingroup%
+  \@fxpresetkeys{lox}{area=thepage}{}%
   \@fxsetkeys{ltx,lang,lox,log,layout}{#1}%
+  \stepcounter{fixmecount}%
+  \stepcounter{fxfatalcount}%
   \@@fxfatal{#2}%
   \endgroup}
 
@@ -1525,9 +1517,9 @@
 \DeclareRobustCommand\fxfatal{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxffatal}{\@@fxffatal}}{%
+    {\@fxffatal}{\@fxffatal[]}}{%
     \@ifnextchar[%]
-    {\@fxfatal}{\@@fxfatal}}}
+    {\@fxfatal}{\@fxfatal[]}}}
 \@fxnewdeprecatedcmd{fixme}{fxfatal}
 
 %    \end{macrocode}
@@ -1751,8 +1743,8 @@
 % \end{option}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\@@@fxnote}
-%   \begin{macro}{\@@@fxfatal}
+% \begin{macro}{\@@fxnote}
+%   \begin{macro}{\@@fxfatal}
 %     \begin{macro}{\@fxenvbegin}
 %       \begin{macro}{\@fxenvend}
 %         \begin{macro}{\listoffixmes}
@@ -1763,8 +1755,8 @@
 %                   them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
-  \let\@@@fxnote\@@@fxnote@final%
-  \let\@@@fxfatal\@@@fxfatal@final%
+  \let\@@fxnote\@@fxnote@final%
+  \let\@@fxfatal\@@fxfatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\listoffixmes\lox@final}
@@ -1805,8 +1797,8 @@
       }%
     }%
   }%
-  \let\@@@fxnote\@@@fxnote@draft%
-  \let\@@@fxfatal\@@@fxfatal@draft%
+  \let\@@fxnote\@@fxnote@draft%
+  \let\@@fxfatal\@@fxfatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
   \let\listoffixmes\lox@draft}
