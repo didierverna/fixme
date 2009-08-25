@@ -1396,7 +1396,9 @@
 %  \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxnote}
-%   \marg{type}\oarg{options}\marg{note}
+%   \marg{type}\oarg{options}\marg{note}\\
+%   Whatever the current default area is, local notes always use the page
+%   number by default, unless explicitely set otherwise by a user option.
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
   \begingroup%
@@ -1498,7 +1500,9 @@
 %   \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxfatal}
-%   \oarg{options}\marg{note}
+%   \oarg{options}\marg{note}\\
+%   Whatever the current default area is, local notes always use the page
+%   number by default, unless explicitely set otherwise by a user option.
 %    \begin{macrocode}
 \def\@fxfatal[#1]#2{%
   \begingroup%
