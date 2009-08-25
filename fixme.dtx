@@ -716,48 +716,84 @@
 
 %    \end{macrocode}
 % \end{macro}
+%
 % \subsection{List macros}
+% \subsubsection{Contents lines}
 % \begin{macro}{\l@fixme}
-%   \begin{macro}{\listoffixmes}
-%     Lists are output in a document class dependant fashion. Classes
-%     currently recognized are \texttt{article}, \texttt{report},
-%     \texttt{book} and their \komascript replacements.
+%   We use the same layout as for the list of figures.
 %    \begin{macrocode}
 \let\l@fixme\l@figure
-\newcommand\listoffixmes{}
 %    \end{macrocode}
-%   \end{macro}
 % \end{macro}
-% \begin{macro}{\lox@final}
-%   \begin{macro}{\lox@draft}
-%     In order to prevent the List of Fixme's heading from being generated
-%     when there are no \fixme notes, a test on the existence of the
-%     \texttt{lox} file is performed. There's a slight bug left however:
-%     after removing the last fixme note, one ends up with an empty
-%     \texttt{lox} file, so the heading still appears. Previously, this
-%     was done by checking if some \fixme notes were given, but that was
-%     buggy: the List of Fixme's could not appear before the first fixme
-%     note\ldots I should try to detect whether the file is empty.
+% \begin{option}{area}
+%   A \fixme note's ``area'' may replace the page number in the list of
+%   fixmes.
 %    \begin{macrocode}
-\def\lox@final{}
-\def\lox@draft{%
-  \IfFileExists{\jobname .lox}{%
-    \@lox@prtc%
-    \@starttoc{lox}%
-    \@lox@psttc}{%
-    \@starttoc{lox}}}
+\@fxdefinecmdkey{lox}{area}{}
 %    \end{macrocode}
-%   \end{macro}
-% \end{macro}
-% \begin{macro}{\lox@draft@ams}
-%   The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea
-%   of redefining the \cs{@starttoc} command to take two arguments. Therefore,
-%   I need to provide a specific version of the \cs{listoffixmes} macro:
+% \end{option}
+% \begin{macro}{\@fxdottedtocline}
+%   \marg{tocdepth}\marg{indent}\marg{numwidth}\marg{contents}\marg{location}\\
+%   This macro is copied almost verbatim from \LaTeX{}'s core. The intent is
+%   to do a similar layout, but replacing the last argument, normally a page
+%   number, by arbitrary text. The original macro defines a restricted width
+%   to typeset the page number which is much too short for us, so we just let
+%   the \meta{location} text take all the space it needs.
 %    \begin{macrocode}
-\def\lox@draft@ams{\@starttoc{lox}\listfixmename}
+\def\@fxdottedtocline#1#2#3#4#5{%
+  \ifnum #1>\c@tocdepth \else
+    \vskip \z@ \@plus.2\p@
+    {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
+     \parindent #2\relax\@afterindenttrue
+     \interlinepenalty\@M
+     \leavevmode
+     \@tempdima #3\relax
+     \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+     {#4}\nobreak
+     \leaders\hbox{$\m@th
+        \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+        mu$}\hfill
+     \nobreak
+     #5\par}%
+  \fi}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fxcontentsline}
+%   \marg{contents}\marg{area}\\
+%   Similar to \LaTeX{}'s \cs{contentsline} macro, but temporarily bind
+%   \cs{@dottedtocline} to our own version. The nice thing about this
+%   implementation is that we can still use \cs{l@fixme} (remember that it is
+%   bound to \cs{l@figure}) without exactly knowing what its definition is.
+%   Note that this macro is at the user level because \cs{contentsline} is,
+%   but it is not currently documented in the user manual.
+%    \begin{macrocode}
+\newcommand\fxcontentsline[2]{%
+  \begingroup%
+  \let\@dottedtocline\@fxdottedtocline%
+  \l@fixme{#1}{#2}%
+  \endgroup}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fxaddcontentsline}
+%   \marg{contents}\\
+%   Wrapper around \LaTeX{}'s \cs{addcontentsline} macro to handle the
+%   \texttt{area} option. If a specific area is provided, we can't use the
+%   normal \cs{addcontentsline} macro for reasons explained above, so we use
+%   our own version of \cs{contentsline} instead. Note that this macro is at
+%   the user level because \cs{addcontentsline} is, but it is not currently
+%   documented in the user manual.
+%    \begin{macrocode}
+\newcommand\fxaddcontentsline[1]{%
+  \ifx\cmdfx@lox@area\empty%
+    \addcontentsline{lox}{fixme}{#1}%
+  \else%
+    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@lox@area}}%
+  \fi}
 
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsection{List title}
 % \begin{macro}{\listfixmename}
 %   In order to redefine the list title, users have to call \cs{renewcommand}.
 %   I don't like this much: it would be cleaner to provide a real command
@@ -769,7 +805,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Standard classes}
+% \subsubsection{List headers}
+% Lists are output in a document class dependant fashion. Classes
+% currently recognized are \texttt{article}, \texttt{report},
+% \texttt{book} and their \komascript replacements.
 % \subsubsubsection{\texttt{article} version}
 % \begin{macro}{\@lox@prtc@article}
 %   \begin{macro}{\@lox@psttc@article}
@@ -822,7 +861,6 @@
 %  \end{macro}
 % \end{macro}
 %
-% \subsubsection{\komascript classes}
 % The code below (version 3.3) mimics \komascript version 2006/07/30 v2.95b.
 % Older versions (using chapter*) are no longer supported because it is
 % simpler that way, but if some people complain, I'll  have to conditionalize
@@ -896,6 +934,38 @@
 
 %    \end{macrocode}
 %  \end{macro}
+% \end{macro}
+%
+% \subsubsection{Generic implementation}
+% \begin{macro}{\lox@final}
+%   \begin{macro}{\lox@draft}
+%     In order to prevent the List of Fixme's heading from being generated
+%     when there are no \fixme notes, a test on the existence of the
+%     \texttt{lox} file is performed. There's a slight bug left however:
+%     after removing the last fixme note, one ends up with an empty
+%     \texttt{lox} file, so the heading still appears. Previously, this
+%     was done by checking if some \fixme notes were given, but that was
+%     buggy: the List of Fixme's could not appear before the first fixme
+%     note\ldots I should try to detect whether the file is empty.
+%    \begin{macrocode}
+\def\lox@final{}
+\def\lox@draft{%
+  \IfFileExists{\jobname .lox}{%
+    \@lox@prtc%
+    \@starttoc{lox}%
+    \@lox@psttc}{%
+    \@starttoc{lox}}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+% \begin{macro}{\lox@draft@ams}
+%   The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea
+%   of redefining the \cs{@starttoc} command to take two arguments. Therefore,
+%   I need to provide a specific version of the \cs{listoffixmes} macro:
+%    \begin{macrocode}
+\def\lox@draft@ams{\@starttoc{lox}\listfixmename}
+
+%    \end{macrocode}
 % \end{macro}
 %
 % \subsection{Layout}
@@ -1197,13 +1267,6 @@
 %   \end{option}
 % \end{option}
 %
-% \subsection{Listing}
-%    \begin{macrocode}
-\newcommand\@fxaddcontentsline[3]{%
-  \addcontentsline{#1}{#2}{#3}}
-
-%    \end{macrocode}
-%
 % \subsection{\fixme notes}
 % \subsubsection{Note parameters}
 % As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}.
@@ -1320,8 +1383,7 @@
 %    \begin{macrocode}
 \def\@@@fxnote@final#1#2{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
-  \@fxaddcontentsline{lox}{fixme}{%
-    \expandafter\protect\@nameuse{fx#1prefix}: #2}}
+  \fxaddcontentsline{\expandafter\protect\@nameuse{fx#1prefix}: #2}}
 \def\@@@fxnote@draft#1#2{%
   \@fxlayout{#1}{#2}%
   \@@@fxnote@final{#1}{#2}}
@@ -1354,12 +1416,24 @@
 %     \begin{macro}{\fxerror}
 %       \oarg{options}\marg{note}
 %    \begin{macrocode}
-\DeclareRobustCommand\fxnote{\@ifnextchar[%]
-  {\@fxnote{note}}{\@@fxnote{note}}}
-\DeclareRobustCommand\fxwarning{\@ifnextchar[%]
-  {\@fxnote{warning}}{\@@fxnote{warning}}}
-\DeclareRobustCommand\fxerror{\@ifnextchar[%]
-  {\@fxnote{error}}{\@@fxnote{error}}}
+\DeclareRobustCommand\fxnote{%
+  \@ifstar{%
+    \@ifnextchar[%]
+    {\@fxfnote{note}}{\@@fxfnote{note}}}{%
+    \@ifnextchar[%]
+    {\@fxnote{note}}{\@@fxnote{note}}}}
+\DeclareRobustCommand\fxwarning{%
+  \@ifstar{%
+    \@ifnextchar[%]
+    {\@fxfnote{warning}}{\@@fxfnote{warning}}}{%
+    \@ifnextchar[%]
+    {\@fxnote{warning}}{\@@fxnote{warning}}}}
+\DeclareRobustCommand\fxerror{%
+  \@ifstar{%
+    \@ifnextchar[%]
+    {\@fxfnote{error}}{\@@fxfnote{error}}}{%
+    \@ifnextchar[%]
+    {\@fxnote{error}}{\@@fxnote{error}}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -1420,7 +1494,7 @@
     \FiXmeIndex{\fxfatalindexname\thefxfatalcount: #1}%
   \fi%
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \@fxaddcontentsline{lox}{fixme}{\protect\fxfatalprefix: #1}}
+  \fxaddcontentsline{\protect\fxfatalprefix: #1}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1448,9 +1522,12 @@
 % \begin{macro}{\fxfatal}
 %   \oarg{options}\marg{note}
 %    \begin{macrocode}
-\DeclareRobustCommand\fxfatal{\@ifnextchar[%]
-  {\@fxfatal}{\@@fxfatal}}
-
+\DeclareRobustCommand\fxfatal{%
+  \@ifstar{%
+    \@ifnextchar[%]
+    {\@fxffatal}{\@@fxffatal}}{%
+    \@ifnextchar[%]
+    {\@fxfatal}{\@@fxfatal}}}
 \@fxnewdeprecatedcmd{fixme}{fxfatal}
 
 %    \end{macrocode}
@@ -1746,20 +1823,25 @@
 %
 % \subsection{Finale}
 % \subsubsection{Options Processing}
-% Put us in \texttt{english} and \texttt{final} mode, enable marginalnotes and
-% set the inner fallback to inline. Note that as documented, marginal notes
-% are incompatible with the ACM SIG classes. Initially, I thought I would
-% detect these classes and issue an error if marginal layout (or clue) is
-% active. However, I changed my mind, because nothing prevents somebody to
-% write a new class on top of these ones and authorize \cs{marginpar} back
-% again. Normally these classes issue an error if \cs{marginpar} is used.
-% However, the 2.3 / June 2007 versions are buggy and the error actually
-% triggers a stack overflow in \LaTeX\ldots (patch submitted). Oh boy, these
-% classes are a mess.
+% Put us in \texttt{english} and \texttt{final} mode, set initial area to
+% ``global'', enable marginal notes and set the inner fallback to inline.
+% Note that as documented, marginal notes are incompatible with the ACM SIG
+% classes. Initially, I thought I would detect these classes and issue an
+% error if marginal layout (or clue) is active. However, I changed my mind,
+% because nothing prevents somebody to write a new class on top of these ones
+% and authorize \cs{marginpar} back again. Normally these classes issue an
+% error if \cs{marginpar} is used. However, the 2.3 / June 2007 versions are
+% buggy and the error actually triggers a stack overflow in \LaTeX\ldots
+% (patch submitted). Oh boy, these classes are a mess.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<layout,log,lang,ltx>{%
-  final,english,nosilent,margin,innerfallback=inline}
-\ProcessOptionsX*[fx]<layout,log,lang,legacy,ltx>
+\ExecuteOptionsX[fx]<ltx,lang,lox,log,layout>{%
+  final,english,nosilent,area=global,layout=margin,innerfallback=inline}
+%    \end{macrocode}
+% Be sure to process the \texttt{lox} family after the \texttt{lang} one, as
+% the default area might get a different name from a user option. We don't
+% want to override it with our language setting.
+%    \begin{macrocode}
+\ProcessOptionsX*[fx]<ltx,legacy,lang,lox,log,layout>
 
 %    \end{macrocode}
 %
