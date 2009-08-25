@@ -1382,7 +1382,7 @@
 % The generic mechanism below applies only to \fixme notes, warnings and
 % errors. Fatal notes are handled in the next section.
 %
-% \subsubsubsection{Standard notes}
+% \subsubsubsection{Low-level implementation}
 % \begin{macro}{\@@fxnote@final}
 %   \begin{macro}{\@@fxnote@draft}
 %     \marg{type}\marg{note}
@@ -1414,25 +1414,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsubsection{Floating notes}
-% \begin{macro}{\@fxfnote}
-%   \marg{type}\oarg{options}\marg{note}\\
-%   ^^A #### FIXME: since we do listoffixmes, we should see about the index.
-%   Since floating notes are not typeset at all, we don't process the layout
-%   family. Also, note that there is no need to distinguish a \texttt{draft}
-%   and and \texttt{final} version, for the exact same reason.
-%    \begin{macrocode}
-\def\@fxfnote#1[#2]#3{%
-  \begingroup%
-  \@fxsetkeys{ltx,lang,lox,log}{#2}%
-  \stepcounter{fixmecount}%
-  \stepcounter{fx#1count}%
-  \@@fxnote@final{#1}{#3}%
-  \endgroup}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsubsubsection{User-level interface}
 % \begin{macro}{\fxnote}
 %   \begin{macro}{\fxwarning}
@@ -1442,19 +1423,19 @@
 \DeclareRobustCommand\fxnote{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxfnote{note}}{\@fxfnote{note}[]}}{%
+    {\@fxsnote{note}}{\@fxsnote{note}[]}}{%
     \@ifnextchar[%]
     {\@fxnote{note}}{\@fxnote{note}[]}}}
 \DeclareRobustCommand\fxwarning{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxfnote{warning}}{\@fxfnote{warning}[]}}{%
+    {\@fxsnote{warning}}{\@fxsnote{warning}[]}}{%
     \@ifnextchar[%]
     {\@fxnote{warning}}{\@fxnote{warning}[]}}}
 \DeclareRobustCommand\fxerror{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxfnote{error}}{\@fxfnote{error}[]}}{%
+    {\@fxsnote{error}}{\@fxsnote{error}[]}}{%
     \@ifnextchar[%]
     {\@fxnote{error}}{\@fxnote{error}[]}}}
 
@@ -1494,7 +1475,7 @@
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsubsection{Standard notes}
+% \subsubsubsection{Low-level implementation}
 % \begin{macro}{\@@fxfatal@final}
 %   \begin{macro}{\@@fxfatal@draft}
 %     \marg{note}\\
@@ -1541,39 +1522,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsubsection{Floating notes}
-% \begin{macro}{\@@fxffatal@final}
-%   \begin{macro}{\@@fxffatal@draft}
-%     \marg{note}\\
-%     Contrary to the other notes, we need to distinguish a \texttt{draft} and
-%     \texttt{final} version, for fatal ones; they need to abort the
-%     compilation in \texttt{final} mode.
-%    \begin{macrocode}
-\let\@@fxffatal@final\@@fxfatal@final
-\def\@@fxffatal@draft#1{%
-  \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \fxaddcontentsline{\protect\fxfatalprefix: #1}}
-
-%    \end{macrocode}
-%   \end{macro}
-% \end{macro}
-% \begin{macro}{\@fxffatal}
-%   \oarg{options}\marg{note}\\
-%   ^^A #### FIXME: since we do listoffixmes, we should see about the index.
-%   Since floating notes are not typeset at all, we don't process the layout
-%   family.
-%    \begin{macrocode}
-\def\@fxffatal[#1]#2{%
-  \begingroup%
-  \@fxsetkeys{ltx,lang,lox,log}{#1}%
-  \stepcounter{fixmecount}%
-  \stepcounter{fxfatalcount}%
-  \@@fxffatal{#2}%
-  \endgroup}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsubsubsection{User-level interface}
 % \begin{macro}{\fxfatal}
 %   \oarg{options}\marg{note}
@@ -1581,7 +1529,7 @@
 \DeclareRobustCommand\fxfatal{%
   \@ifstar{%
     \@ifnextchar[%]
-    {\@fxffatal}{\@fxffatal[]}}{%
+    {\@fxsfatal}{\@fxsfatal[]}}{%
     \@ifnextchar[%]
     {\@fxfatal}{\@fxfatal[]}}}
 \@fxnewdeprecatedcmd{fixme}{fxfatal}
@@ -1817,7 +1765,6 @@
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@fxnote\@@fxnote@final%
   \let\@@fxfatal\@@fxfatal@final%
-  \let\@@fxffatal\@@fxffatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\listoffixmes\lox@final}
@@ -1860,7 +1807,6 @@
   }%
   \let\@@fxnote\@@fxnote@draft%
   \let\@@fxfatal\@@fxfatal@draft%
-  \let\@@fxffatal\@@fxffatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
   \let\listoffixmes\lox@draft}
