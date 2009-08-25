@@ -1493,6 +1493,8 @@
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
+%
+% \subsubsubsection{Standard notes}
 % \begin{macro}{\@@fxfatal@final}
 %   \begin{macro}{\@@fxfatal@draft}
 %     \marg{note}\\
@@ -1538,6 +1540,41 @@
 
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsubsection{Floating notes}
+% \begin{macro}{\@@fxffatal@final}
+%   \begin{macro}{\@@fxffatal@draft}
+%     \marg{note}\\
+%     Contrary to the other notes, we need to distinguish a \texttt{draft} and
+%     \texttt{final} version, for fatal ones; they need to abort the
+%     compilation in \texttt{final} mode.
+%    \begin{macrocode}
+\let\@@fxffatal@final\@@fxfatal@final
+\def\@@fxffatal@draft#1{%
+  \iffx@log@silent\else\FXLogFatal{#1}\fi%
+  \fxaddcontentsline{\protect\fxfatalprefix: #1}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxffatal}
+%   \oarg{options}\marg{note}\\
+%   ^^A #### FIXME: since we do listoffixmes, we should see about the index.
+%   Since floating notes are not typeset at all, we don't process the layout
+%   family.
+%    \begin{macrocode}
+\def\@fxffatal[#1]#2{%
+  \begingroup%
+  \@fxsetkeys{ltx,lang,lox,log}{#1}%
+  \stepcounter{fixmecount}%
+  \stepcounter{fxfatalcount}%
+  \@@fxffatal{#2}%
+  \endgroup}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsubsection{User-level interface}
 % \begin{macro}{\fxfatal}
 %   \oarg{options}\marg{note}
 %    \begin{macrocode}
@@ -1767,24 +1804,26 @@
 % \subsection{Document status processing}
 % \begin{macro}{\@@fxnote}
 %   \begin{macro}{\@@fxfatal}
-%     \begin{macro}{\@fxenvbegin}
-%       \begin{macro}{\@fxenvend}
-%         \begin{macro}{\listoffixmes}
-%           \begin{macro}{\@lox@prtc}
-%             \begin{macro}{\@lox@psttc}
-%               \begin{option}{final}
+%     \begin{macro}{\@@fxffatal}
+%       \begin{macro}{\@fxenvbegin}
+%         \begin{macro}{\@fxenvend}
+%           \begin{macro}{\listoffixmes}
+%             \begin{macro}{\@lox@prtc}
+%               \begin{macro}{\@lox@psttc}
+%                 \begin{option}{final}
 %                   Select draft or final versions of internal macros, some of
 %                   them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@fxnote\@@fxnote@final%
   \let\@@fxfatal\@@fxfatal@final%
+  \let\@@fxffatal\@@fxffatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\listoffixmes\lox@final}
 %    \end{macrocode}
-%               \end{option}
-%               \begin{option}{draft}
+%                 \end{option}
+%                 \begin{option}{draft}
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{draft}{%
   \@ifclassloaded{article}{%
@@ -1821,12 +1860,14 @@
   }%
   \let\@@fxnote\@@fxnote@draft%
   \let\@@fxfatal\@@fxfatal@draft%
+  \let\@@fxffatal\@@fxffatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
   \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
-%               \end{option}
+%                 \end{option}
+%               \end{macro}
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
