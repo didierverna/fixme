@@ -1557,13 +1557,13 @@
 % \cs{fxfatal} anyway.\\
 % \begin{macro}{\@fxenvbegin@final}
 %   \begin{macro}{\@fxenvbegin@draft}
-%     \marg{type}\marg{summary}
+%     \marg{type}\marg{options}\marg{summary}
 %    \begin{macrocode}
-\def\@fxenvbegin@final#1#2{%
-  \@nameuse{fx#1}{#2}%
+\def\@fxenvbegin@final#1#2#3{%
+  \@nameuse{fx#1}[#2]{#3}%
   \comment}
-\def\@fxenvbegin@draft#1#2{%
-  \@nameuse{fx#1}[noinline]{#2}%
+\def\@fxenvbegin@draft#1#2#3{%
+  \@nameuse{fx#1}[#2,noinline]{#3}%
   \FXEnvBegin{\@nameuse{fx#1prefix}}}
 
 %    \end{macrocode}
@@ -1586,12 +1586,7 @@
 %   This command defines \fixme environments in a generic way:
 %    \begin{macrocode}
 \newcommand\@fxdefineenvironment[1]{%
-  \newenvironment{anfx#1}[2][]{%
-    \begingroup%
-    \@fxsetkeys{ltx,lang,lox,log,layout}{##1}%
-    \@fxenvbegin{#1}{##2}}{%
-    \@fxenvend%
-    \endgroup}}
+  \newenvironment{anfx#1}[2][]{\@fxenvbegin{#1}{##1}{##2}}{\@fxenvend}}
 
 %    \end{macrocode}
 % \end{macro}
