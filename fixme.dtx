@@ -1427,8 +1427,8 @@
   \@fxsetkeys{ltx,lang,lox,log}{#2}%
   \stepcounter{fixmecount}%
   \stepcounter{fx#1count}%
-  \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#3}\fi%
-  \fxaddcontentsline{\expandafter\protect\@nameuse{fx#1prefix}: #3}}
+  \@@fxnote@final{#1}{#3}%
+  \endgroup}
 
 %    \end{macrocode}
 % \end{macro}
