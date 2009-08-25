@@ -1381,6 +1381,8 @@
 % \subsubsection{Non fatal notes}
 % The generic mechanism below applies only to \fixme notes, warnings and
 % errors. Fatal notes are handled in the next section.
+%
+% \subsubsubsection{Standard notes}
 % \begin{macro}{\@@fxnote@final}
 %   \begin{macro}{\@@fxnote@draft}
 %     \marg{type}\marg{note}
@@ -1411,6 +1413,27 @@
 
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsubsection{Floating notes}
+% \begin{macro}{\@fxfnote}
+%   \marg{type}\oarg{options}\marg{note}\\
+%   ^^A #### FIXME: since we do listoffixmes, we should see about the index.
+%   Since floating notes are not typeset at all, we don't process the layout
+%   family. Also, note that there is no need to distinguish a \texttt{draft}
+%   and and \texttt{final} version, for the exact same reason.
+%    \begin{macrocode}
+\def\@fxfnote#1[#2]#3{%
+  \begingroup%
+  \@fxsetkeys{ltx,lang,lox,log}{#2}%
+  \stepcounter{fixmecount}%
+  \stepcounter{fx#1count}%
+  \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#3}\fi%
+  \fxaddcontentsline{\expandafter\protect\@nameuse{fx#1prefix}: #3}}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsubsection{User-level interface}
 % \begin{macro}{\fxnote}
 %   \begin{macro}{\fxwarning}
 %     \begin{macro}{\fxerror}
