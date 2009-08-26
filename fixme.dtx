@@ -1171,10 +1171,10 @@
 %    \end{macrocode}
 %   \end{option}
 % \end{option}
-% \begin{option}{innerfallback}
+% \begin{option}{innerlayout}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefinecmdkey{layout}{innerfallback}{}
+\@fxdefinecmdkey{layout}{innerlayout}{}
 
 %    \end{macrocode}
 % \end{option}
@@ -1373,14 +1373,16 @@
 % \end{counter}
 %
 % \subsubsection{Layout dispatch\label{sec:code:layoutdispatch}}
-% \begin{macro}{\@fxhandleinnerfallback}
-%   Handles the case where \TeX{} is in inner mode. We need to disable margin
-%   clues, and use the inner fallback layout instead of the margin one. Note
-%   that just as in the case of the \texttt{layout} and \texttt{morelayout}
-%   options, we use \texttt{xkeyval}'s \cs{setkeys} to activate the inner
-%   fallback, which gives us some error checking gratis.
+% \begin{macro}{\@fxhandleinnermode}
+%   Handles the case where \TeX{} is in inner mode. We use the alternate
+%   layout provided by the \texttt{innerlayout} option, and we make sure to
+%   disable both the \texttt{margin} and \texttt{marginclue} layout forms.
+%   This is done by appending \texttt{nomargin} and \texttt{nomarginclue} to
+%   the inner layout value (this also renders nasty user settings harmless).
+%   Before that, we provide some informative message if risky layout forms
+%   were active.
 %    \begin{macrocode}
-\def\@fxhandleinnerfallback{%
+\def\@fxhandleinnermode{%
   \ifinner%
     \iffx@layout@marginclue%
       \@fxpkginfo{%
@@ -1391,11 +1393,11 @@
     \iffx@layout@margin%
       \@fxpkginfo{%
         inner mode detected;\MessageBreak
-        falling back to '\cmdfx@layout@innerfallback' layout}
+        falling back to '\cmdfx@layout@innerlayout' layout}
       \fx@layout@margin{false}%
     \fi%
     \expandafter\@fxsetlayoutkeys\expandafter{%
-      \cmdfx@layout@innerfallback,nomargin,nomarginclue}%
+      \cmdfx@layout@innerlayout,nomargin,nomarginclue}%
   \fi}
 
 %    \end{macrocode}
@@ -1407,7 +1409,7 @@
 %   handle marginal layouts so that it is also close to the text to fix.
 %    \begin{macrocode}
 \def\@fxlayout#1#2{%
-  \@fxhandleinnerfallback%
+  \@fxhandleinnermode%
   \def\@fxtempa{\@nameuse{fx#1prefix}}%
   \def\@fxtempb{\@nameuse{fx#1indexname}}%
   \def\@fxtempc{\@nameuse{thefx#1count}}%
@@ -1532,7 +1534,7 @@
     mode),\MessageBreak
     and rerun LaTeX.}}
 \def\@@fxfatal@draft#1{%
-  \@fxhandleinnerfallback%
+  \@fxhandleinnermode%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
   \iffx@layout@marginclue\FXLayoutMarginClue{\fxfatalprefix}\fi%
@@ -1868,7 +1870,7 @@
 %
 % \subsubsection{Options Processing}
 % Put us in \texttt{english} and \texttt{final} mode, set initial area to
-% ``global'', enable marginal notes and set the inner fallback to inline.
+% ``global'', enable marginal notes and set the inner layout to inline.
 % Note that as documented, marginal notes are incompatible with the ACM SIG
 % classes. Initially, I thought I would detect these classes and issue an
 % error if marginal layout (or clue) is active. However, I changed my mind,
@@ -1879,7 +1881,11 @@
 % (patch submitted). Oh boy, these classes are a mess.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<ltx,lang,lox,log,layout>{%
-  final,english,nosilent,area=global,layout=margin,innerfallback=inline}
+  final,%
+  english,%
+  nosilent,%
+  area=global,%
+  layout=margin,innerlayout={layout=inline}}
 %    \end{macrocode}
 % Be sure to process the \texttt{lox} family after the \texttt{lang} one, as
 % the default area might get a different name from a user option. We don't
