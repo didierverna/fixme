@@ -22,7 +22,7 @@ FiXme consists of the files listed in the file `README'.
 =============
 ** New feature: floating notes (not specific to any portion of text)
 suggested by Rasmus Villemoes.
-** New feature: automatically avoid margin layout when not in outer par mode
+** New feature: alternate layout autoswitch for inner mode
 suggested by Will Robertson.
 ** New feature: key/value argument syntax in the whole user interface
 ** New command: \fxsetup
