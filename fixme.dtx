@@ -76,7 +76,7 @@
 % \newcommand\auctex{AUC-\TeX\xspace}
 %
 % \newcommand\version{4.0}
-% \newcommand\releasedate{2009/08/25}
+% \newcommand\releasedate{2009/08/26}
 % \newcommand\packagecopyright{%
 %   Copyright \copyright{} 1998--2002, 2004--2007, 2009 Didier Verna}
 % \newcommand\fixme{\textsf{FiXme}\xspace}
@@ -452,8 +452,15 @@
 % \subsection{Preamble}
 %    \begin{macrocode}
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fixme}[2009/08/25 v4.0
+\ProvidesPackage{fixme}[2009/08/26 v4.0
                         Insert fixme notes in your documents]
+
+%    \end{macrocode}
+% Some required packages:
+%    \begin{macrocode}
+\RequirePackage{ifthen}
+\RequirePackage{verbatim}
+\RequirePackage{xkeyval}[2006/11/18]
 
 %    \end{macrocode}
 % \begin{macro}{\fixmelogo}
@@ -463,13 +470,6 @@
 
 %    \end{macrocode}
 % \end{macro}
-% Some required packages:
-%    \begin{macrocode}
-\RequirePackage{ifthen}
-\RequirePackage{verbatim}
-\RequirePackage{xkeyval}[2006/11/18]
-
-%    \end{macrocode}
 %
 % \subsection{Utilities}
 % \begin{macro}{\@fxcsstring}
@@ -723,24 +723,27 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsection{Preliminary stuff}
+% \begin{option}{area}
+%   A \fixme note's ``area'' may replace the page number in the list of
+%   fixmes or in the index (see sections \ref{sec:contentsline} and
+%   \ref{sec:layoutmacros}).
+%    \begin{macrocode}
+\@fxdefinecmdkey{lox}{area}{}
+%    \end{macrocode}
+% \end{option}
+%
 % \subsection{List macros}
-% \subsubsection{Contents lines}
+% \subsubsection{Contents lines\label{sec:contentsline}}
 % \begin{macro}{\l@fixme}
 %   We use the same layout as for the list of figures.
 %    \begin{macrocode}
 \let\l@fixme\l@figure
 %    \end{macrocode}
 % \end{macro}
-% \begin{option}{area}
-%   A \fixme note's ``area'' may replace the page number in the list of
-%   fixmes.
-%    \begin{macrocode}
-\@fxdefinecmdkey{lox}{area}{}
-%    \end{macrocode}
-% \end{option}
 % \begin{macro}{\@fxdottedtocline}
 %   \marg{tocdepth}\marg{indent}\marg{numwidth}\marg{contents}\marg{location}\\
-%   This macro is copied almost verbatim from \LaTeX{}'s core. The intent is
+%   This macro is copied almost verbatim from \LaTeX's core. The intent is
 %   to do a similar layout, but replacing the last argument, normally a page
 %   number, by arbitrary text. The original macro defines a restricted width
 %   to typeset the page number which is much too short for us, so we just let
@@ -766,7 +769,7 @@
 % \end{macro}
 % \begin{macro}{\fxcontentsline}
 %   \marg{contents}\marg{area}\\
-%   Similar to \LaTeX{}'s \cs{contentsline} macro, but temporarily bind
+%   Similar to \LaTeX's \cs{contentsline} macro, but temporarily bind
 %   \cs{@dottedtocline} to our own version. The nice thing about this
 %   implementation is that we can still use \cs{l@fixme} (remember that it is
 %   bound to \cs{l@figure}) without exactly knowing what its definition is.
@@ -782,7 +785,7 @@
 % \end{macro}
 % \begin{macro}{\fxaddcontentsline}
 %   \marg{contents}\\
-%   Wrapper around \LaTeX{}'s \cs{addcontentsline} macro to handle the
+%   Wrapper around \LaTeX's \cs{addcontentsline} macro to handle the
 %   \texttt{area} option. If a specific area is provided, we can't use the
 %   normal \cs{addcontentsline} macro for reasons explained above, so we use
 %   our own version of \cs{contentsline} instead. Note that this macro is at
@@ -973,7 +976,7 @@
 % \end{macro}
 %
 % \subsection{Layout}
-% \subsubsection{Layout macros}
+% \subsubsection{Layout macros\label{sec:layoutmacros}}
 % \begin{macro}{\@fxlayoutrename}
 %   \marg{name}\\
 %   As of version 4, layout macros have been renamed from \cs{FX*} to
@@ -1012,8 +1015,10 @@
 %    \end{macrocode}
 % \end{macro}
 % Note that neither \cs{FXLayoutUser} nor the deprecated version \cs{FXUser}
-% are defined here. Requesting the \texttt{user} layout without defining one
-% or the other would produce an error, which is the expected behavior.
+% are defined here (see section \ref{sec:userlayout} for backward
+% compatibility concerns). Requesting the \texttt{user} layout without
+% defining one or the other would produce an error, which is the expected
+% behavior.
 % \begin{macro}{FXInline}
 %   \begin{macro}{FXMargin}
 %     \begin{macro}{FXFootnote}
@@ -1081,9 +1086,9 @@
 %
 % \subsubsection{Layout options}
 % \subsubsubsection{Individual options}
-% As of version 4, these options are implemented as \texttt{xkeyval} keys, and
-% are available both as package and macro options. The \texttt{margin} and
-% \texttt{marginclue} layouts are mutually exclusive, so we have to redefine
+% As of version 4, these options are reimplemented with \texttt{xkeyval}. The
+% \texttt{margin} and \texttt{marginclue} layouts are mutually exclusive,
+% hence the non empty \meta{function} argument.
 % the \texttt{xkeyval} key macro to handle this.
 % \begin{option}{inline}
 %   \begin{option}{noinline}
@@ -1261,9 +1266,11 @@
 % \begin{macro}{\@fxlogcs@note}
 %   \begin{macro}{\@fxlogcs@warning}
 %     \begin{macro}{\@fxlogcs@fatal}
-%       In order for the generic dispatch to be able to call the logging
-%       macros, we need an easier translation mechanism from the note type to
-%       the actual command name:
+%       In order for the generic note dispatcher to be able to call the
+%       logging macros (see section \ref{sec:nonfatalnotes}), we need an
+%       easier translation mechanism from the note type to the actual command
+%       name. This, however, is unnecessary for fatal notes because they are
+%       implemented in a specialized way (see section \ref{sec:fatalnotes}).
 %    \begin{macrocode}
 \let\@fxlogcs@note\FXLogNote
 \let\@fxlogcs@warning\FXLogWarning
@@ -1348,9 +1355,9 @@
 % \begin{macro}{\@fxhandleinnerfallback}
 %   Handles the case where \TeX{} is in inner mode. We need to disable margin
 %   clues, and use the inner fallback layout instead of the margin one. Note
-%   that just as in the case of the \texttt{layout} and
-%   \texttt{morelayout}options, we use \texttt{xkeyval}'s \cs{setkeys} to
-%   activate the inner fallback, which gives us some error checking gratis.
+%   that just as in the case of the \texttt{layout} and \texttt{morelayout}
+%   options, we use \texttt{xkeyval}'s \cs{setkeys} to activate the inner
+%   fallback, which gives us some error checking gratis.
 %    \begin{macrocode}
 \def\@fxhandleinnerfallback{%
   \ifinner%
@@ -1392,7 +1399,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Non fatal notes}
+% \subsubsection{Non fatal notes\label{sec:nonfatalnotes}}
 % The generic mechanism below applies only to \fixme notes, warnings and
 % errors. Fatal notes are handled in the next section.
 %
@@ -1461,7 +1468,7 @@
 % \subsubsection{Fatal notes}
 % Fatal notes can't be handled in the same generic way as the others for two
 % reasons: backward compatibility problems, and the fact that their behavior
-% differs in \texttt{final} mode.\par
+% differs from that of the others in \texttt{final} mode.\par
 % \begin{macro}{\FiXmeInline}
 %   \begin{macro}{\FiXmeMargin}
 %     \begin{macro}{\FiXmeFootnote}
@@ -1470,8 +1477,7 @@
 %           The \cs{FiXme*} macros below are kept only to preserve backward
 %           compatibility. They are used by fatal notes only and are made to
 %           call the new versions by default. \cs{FiXmeUser} is treated a bit
-%           differently though; see comment in the Finale's ``Backward
-%           Compatibility'' section.
+%           differently though (see section \ref{sec:userlayout}).
 %    \begin{macrocode}
 \newcommand\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
 \newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
@@ -1489,7 +1495,7 @@
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsubsection{Low-level implementation}
+% \subsubsubsection{Low-level implementation\label{sec:fatalnotes}}
 % \begin{macro}{\@@fxfatal@final}
 %   \begin{macro}{\@@fxfatal@draft}
 %     \marg{note}\\
@@ -1766,13 +1772,13 @@
 % \subsection{Document status processing}
 % \begin{macro}{\@@fxnote}
 %   \begin{macro}{\@@fxfatal}
-%     \begin{macro}{\@@fxffatal}
-%       \begin{macro}{\@fxenvbegin}
-%         \begin{macro}{\@fxenvend}
-%           \begin{macro}{\listoffixmes}
-%             \begin{macro}{\@lox@prtc}
-%               \begin{macro}{\@lox@psttc}
-%                 \begin{option}{final}
+%     \begin{macro}{\@fxenvbegin}
+%       \begin{macro}{\@fxenvend}
+%         \begin{macro}{\listoffixmes}
+%           \begin{macro}{\@lox@prtc}
+%             \begin{macro}{\@lox@psttc}
+%               \begin{option}{final}
+%                 \begin{option}{draft}
 %                   Select draft or final versions of internal macros, some of
 %                   them also depending on the document class:
 %    \begin{macrocode}
@@ -1782,10 +1788,6 @@
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\listoffixmes\lox@final}
-%    \end{macrocode}
-%                 \end{option}
-%                 \begin{option}{draft}
-%    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{draft}{%
   \@ifclassloaded{article}{%
     \let\@lox@prtc\@lox@prtc@article%
@@ -1827,7 +1829,7 @@
 
 %    \end{macrocode}
 %                 \end{option}
-%               \end{macro}
+%               \end{option}
 %             \end{macro}
 %           \end{macro}
 %         \end{macro}
@@ -1872,7 +1874,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{User layout backward compatibility tweaks}
+% \subsubsection{User layout backward compatibility
+%   tweaks\label{sec:userlayout}}
 % User layout Backward compatibility is not as simple as the rest of the
 % interface, because users of version 1 were instructed to \cs{renewcommand}
 % \cs{FiXmeUser} (which is specific to fatal notes), whereas they were
