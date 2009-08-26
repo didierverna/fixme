@@ -147,7 +147,7 @@
 % understood by the note insertion commands or environments. The effect is
 % then local to that particular command.
 %
-% \subsection{Inserting notes}
+% \subsection{Inserting \fixme notes}
 % \subsubsection{Macros}
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
@@ -173,8 +173,8 @@
 % of the long note) and behave in exactly the same way as their macro
 % counterpart. The layout policy is a bit different though (see section
 % \ref{sec:manual:layout} on page \pageref{sec:manual:layout}): the long note
-% (the environment's contents) will always appear \texttt{inline}, and the
-% \meta{summary} will be obey all active layouts except \texttt{inline}.
+% (the environment's contents) will always appear inline, and the
+% \meta{summary} will obey all active layout forms except for the inline one.
 %
 % \subsection{Controlling the behavior of \fixme\label{sec:manual:behavior}}
 % \DescribeOption{final}
@@ -202,63 +202,132 @@
 % fatal) errors left. Of course, this is not completely true: remember that
 % these options are understood locally by all the note insertion commands and
 % environments, so even in \texttt{final} mode, you can use something like
-% this: |\fxfatal[draft]{bla bla}|.
+% this:
+% \begin{verbatim}
+% \fxfatal[draft]{bla bla}
+% \end{verbatim}
 %
-% By default, \fixme is in \texttt{final} mode because \LaTeX{} itself behaves
-% that way.\par
+% By default, \fixme is in \texttt{final} mode (\LaTeX{} itself behaves that
+% way).
 %
-% \subsection{Controlling the notes layout\label{sec:code:layout}}
-% \fixme notes can appear in several forms (that can be combined) in your
-% document.
-% \subsubsection{Global layout}
+% \subsection{Controlling the layout of \fixme notes\label{sec:manual:layout}}
+% \fixme notes can appear in several forms in your document. Each of these
+% forms can be individually selected, or they can be combined together. This
+% section describes the available layout forms and their possible combination.
+%
+% \subsubsection{Available layout forms}
+% The layout forms currently supported are: inline (directly in the text),
+% marginal notes (the default), footnotes, index entries and (as of version
+% 3.2) marginal clues.\footnote{\fixme notes also appear in a ``list of
+%   fixmes'', see section \ref{sec:manual:listoffixmes} on page
+%   \pageref{sec:manual:listoffixmes}.} While most of these layout forms
+% should be self-explanatory, the marginal clues deserve a bit more
+% explanation.
+%
+% \subsubsubsection{Marginal Clues}
+% If your preferred layout form is inline or say, footnote, it might be
+% somewhat difficult to localize the \fixme note on the page, especially its
+% vertical position. That's where marginal clues come into play. A marginal
+% clue does not display the \fixme note's contents, but only an indication
+% that there is such a note at that (vertical) position. So you have to use
+% another layout form (again, typically inline or footnote) in order to get
+% the actual note's contents.
+%
+% Obviously, the margin and margin clue forms are mutually exclusive, so if
+% you try to activate both, only the most recently activated one will be
+% enabled (and you'll get a notice in the log file and on the terminal).
+%
+% \subsubsection{Individual control}
 % \DescribeOption{inline}
 % \DescribeOption{margin}
 % \DescribeOption{marginclue}
 % \DescribeOption{footnote}
 % \DescribeOption{index}
-% The layout forms currently supported are: inline (directly in the text),
-% marginal notes, marginal clues (see below), footnotes, and index entries. To
-% activate a particular layout globally (that is, for the whole document), use
-% the corresponding package option. By default, only the \texttt{margin}
-% layout is active.\par
-% Each layout option has a counterpart that deactivates it. The counterpart
-% option has the same name, prefixed with \texttt{no}. For instance, if you
-% don't want marginal notes, use the \texttt{nomargin} option.\par
-% Finally, note that \fixme environments behave in a special way: they are
-% always typeset \texttt{inline}, regardless of your layout settings (they
-% respect your wish for index and marginal clues though).\par
+% For each layout form, there is a corresponding boolean option. These options
+% are understood by the package itself, the \cs{fxsetup} command and also
+% locally by every note insertion command or environment.
 %
-% \subsubsection{Marginal Clues}
-% Sometimes, marginal notes are too narrow for what you want to put in them,
-% so you would switch to an inline or a footnote layout. But then, it is more
-% difficult to keep track of the \fixme note's location on the page.\par
-% As of version 3.2, \fixme provides a special layout called ``marginal
-% clue'' to help locating the notes: a marginal clue does not display the
-% note's contents, but only an indication that there is a note at that place.
-% So you have to use another layout form (typically inline or footnote) in
-% order to get the actual contents.\par
-% Obviously, \texttt{margin} and \texttt{marginclue} are mutually exclusive.
-% If you try to activate both, only the most recently activated form will be
-% enabled (and you'll get a notice in the compilation log).
+% To activate a layout form, use the option directly or give it a value of
+% \texttt{true}. For instance, these two forms are equivalent:
+% \begin{verbatim}
+% \fxnote[margin]{note...}
+% \fxnote[margin=true]{note...}
+% \end{verbatim}
 %
-% \subsubsection{Local Layout}
-% \DescribeMacro{\fixme[]}
-% \DescribeMacro{\fxnote[]}
-% \DescribeMacro{\fxwarning[]}
-% \DescribeMacro{\fxerror[]}
-% As of version 3.0, \fixme provides a way to change the selected layout(s)
-% on a per-note basis: each note insertion command takes an optional first
-% argument that overrides the global layout. This argument consists of one or
-% more layout options (\texttt{inline}, \texttt{margin}, \texttt{marginclue},
-% \texttt{footnote} and \texttt{index}) separated by commas. Remember that
-% local layouts \emph{override} the global ones; they don't add to it.\par
-% On what occasion would one want to modify the layout for a particular note?
-% Here is a typical situation: suppose you have a document in which \fixme
-% notes are typeset as margin paragraphs (this is the default). You would not
-% be able to put a note in a figure, because floats can't be nested in
-% \LaTeX{} (margin paragraphs are floats). In such a case, you would rather
-% inline the note, which can be done with something like
-% |\fixme[inline]{blah}|.\par
+% \DescribeOption{noinline}
+% \DescribeOption{nomargin}
+% \DescribeOption{nomarginclue}
+% \DescribeOption{nofootnote}
+% \DescribeOption{noindex}
+% For convenience, each layout option has a counterpart that deactivates the
+% corresponding layout form. The counterpart option has the same name,
+% prefixed with \texttt{no}. Again, these options are understood by the
+% package itself, the \cs{fxsetup} command and also locally by every note
+% insertion command or environment. For instance, these two forms are
+% equivalent:
+% \begin{verbatim}
+% \fxsetup{margin=false}
+% \fxsetup{nomargin}
+% \end{verbatim}
+%
+% \subsubsection{Global control}
+% \DescribeOption{layout}
+% \DescribeOption{morelayout}
+% As of version 4.0, an even more convenient way to specify the required
+% layout is to use the \texttt{layout} and \texttt{morelayout} options. In
+% fact, the use of individual control is considered more or less deprecated.
+% Both of these options take a comma-separated list of the individual options
+% described above (this includes the \texttt{no}\meta{option} form as well).
+%
+% While the \texttt{morelayout} options \emph{adds} to the existing layout
+% configuration, the \texttt{layout} one completely overrides it. For
+% instance, knowing that by default, only the \texttt{margin} layout form is
+% active, the following forms are all equivalent:
+% \begin{verbatim}
+% \usepackage[nomargin,inline,index]{fixme}
+% \usepackage[margin=false,inline=true,index=true]{fixme}
+% \usepackage[morelayout={nomargin,inline,index}]{fixme}
+% \usepackage[layout={inline,index}]{fixme}
+% \end{verbatim}
+%
+% Again, these two options are understood by the package itself, the
+% \cs{fxsetup} command and also locally by every note insertion command or
+% environment.
+%
+% \subsubsection{Inner layout}
+% There might be various reasons for you to change the layout locally for one
+% particular note. As of version 4.0, one frequent reason (described below)
+% can be handled automatically by \fixme.
+%
+% Remember that the default layout is to use margin paragraphs. One drawback
+% is that you can't insert \fixme notes in a figure (or its caption for
+% instance) because floats can't be nested in \LaTeX, and margin paragraphs
+% are floats. If you try to do so, you will get a cryptic ``Not in outer par
+% mode'' error message.
+%
+% \DescribeOption{innerlayout}
+% Fortunately, this situation can be detected automatically. As of version
+% 4.0, \fixme provides an option named \texttt{innerlayout} that allows you
+% to specify an alternate layout setting to use when \TeX{} is in \emph{inner}
+% mode. In addition to that, \fixme automatically disables the \texttt{margin}
+% and \texttt{marginclue} forms.
+%
+% Using \texttt{innerlayout} is not as trivial as it may seem: it
+% \emph{really} is an alternate layout configuration, and as such, you can use
+% any combination you like of individual options, or you can even use the
+% \texttt{layout} and \texttt{morelayout} options. This means that your
+% alternate layout can either \emph{add} to the existing one, or
+% \emph{override} it.
+%
+% By default, the \fixme inner layout is set to just \texttt{inline}. This can
+% be simulated by the following call:
+% \begin{verbatim}
+% \usepackage[layout=margin,innerlayout={layout=inline}]{fixme}
+% \end{verbatim}
+% Try to understand why the following gives a different result:
+% \begin{verbatim}
+% \usepackage[layout=margin,innerlayout=inline]{fixme}
+% \end{verbatim}
 %
 % \subsubsection{Class compatibility}
 % By default, \fixme is set to use marginal notes. You should know that this
