@@ -89,3 +89,6 @@ text, but doesn't show comments
 * silent option does not shut up the summary. See if we want that, and if we
 would like to add values to this option (like silent={log,tty,summary,all}
 etc. 
+
+* If babel is loaded, follow the language automatically (very neat !). Should
+  be trivial to do; have a look at \selectlanguage.
