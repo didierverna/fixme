@@ -1384,18 +1384,14 @@
 %    \begin{macrocode}
 \def\@fxhandleinnermode{%
   \ifinner%
-    \iffx@layout@marginclue%
+    \ifthenelse{\boolean{fx@layout@margin}}{%
       \@fxpkginfo{%
         inner mode detected;\MessageBreak
-        turning margin clues off}
-      \fx@layout@marginclue{false}%
-    \fi
-    \iffx@layout@margin%
-      \@fxpkginfo{%
-        inner mode detected;\MessageBreak
-        falling back to '\cmdfx@layout@innerlayout' layout}
-      \fx@layout@margin{false}%
-    \fi%
+        turning margin layout form off}}{%
+      \ifthenelse{\boolean{fx@layout@marginclue}}{%
+        \@fxpkginfo{%
+          inner mode detected;\MessageBreak
+          turning marginclue layout form off}}{}}%
     \expandafter\@fxsetlayoutkeys\expandafter{%
       \cmdfx@layout@innerlayout,nomargin,nomarginclue}%
   \fi}
