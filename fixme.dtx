@@ -1766,12 +1766,10 @@
 %     \begin{macro}{\@fxenvbegin}
 %       \begin{macro}{\@fxenvend}
 %         \begin{macro}{\listoffixmes}
-%           \begin{macro}{\@lox@prtc}
-%             \begin{macro}{\@lox@psttc}
-%               \begin{option}{final}
-%                 \begin{option}{draft}
-%                   Select draft or final versions of internal macros, some of
-%                   them also depending on the document class:
+%           \begin{option}{final}
+%             \begin{option}{draft}
+%               Select draft or final versions of internal macros, some of
+%               them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@fxnote\@@fxnote@final%
@@ -1780,38 +1778,6 @@
   \let\@fxenvend\@fxenvend@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{ltx}{draft}{%
-  \@ifclassloaded{article}{%
-    \let\@lox@prtc\@lox@prtc@article%
-    \let\@lox@psttc\@lox@psttc@article}{%
-    \@ifclassloaded{report}{%
-      \let\@lox@prtc\@lox@prtc@report%
-      \let\@lox@psttc\@lox@psttc@report}{%
-      \@ifclassloaded{book}{%
-        \let\@lox@prtc\@lox@prtc@book%
-        \let\@lox@psttc\@lox@psttc@book}{%
-        \@ifclassloaded{scrartcl}{%
-          \let\@lox@prtc\@lox@prtc@scrartcl%
-          \let\@lox@psttc\@lox@psttc@scrartcl}{%
-          \@ifclassloaded{scrreprt}{%
-            \let\@lox@prtc\@lox@prtc@scrreprt%
-            \let\@lox@psttc\@lox@psttc@scrreprt}{%
-            \@ifclassloaded{scrbook}{%
-              \let\@lox@prtc\@lox@prtc@scrbook%
-              \let\@lox@psttc\@lox@psttc@scrbook}{%
-              \@ifclassloaded{amsbook}{%
-                \let\lox@draft\lox@draft@ams}{%
-                \@ifclassloaded{amsart}{%
-                  \let\lox@draft\lox@draft@ams}{%
-                  %% Use the article layout by default.
-                  \let\@lox@prtc\@lox@prtc@article%
-                  \let\@lox@psttc\@lox@psttc@article}%
-              }%
-            }%
-          }%
-        }%
-      }%
-    }%
-  }%
   \let\@@fxnote\@@fxnote@draft%
   \let\@@fxfatal\@@fxfatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
@@ -1819,10 +1785,8 @@
   \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
-%                 \end{option}
-%               \end{option}
-%             \end{macro}
-%           \end{macro}
+%             \end{option}
+%           \end{option}
 %         \end{macro}
 %       \end{macro}
 %     \end{macro}
@@ -1830,6 +1794,47 @@
 % \end{macro}
 %
 % \subsection{Finale}
+% \subsubsection{Class-dependent settings}
+% Currently, our class dependencies only matter in draft mode, so one could
+% argue that it is not optimal to handle this here. However, it would be
+% incorrect to do it in the \texttt{draft} option code because this option can
+% be switched at any point in the document (remember that it is understood
+% even by the note insertion commands and environments) and the stuff below
+% should only be executed once. Besides, \cs{@ifclassloaded} is an
+% \cs{@onlypreamble} macro\ldots
+% \begin{macro}{\@lox@prtc}
+%   \begin{macro}{\@lox@psttc}
+%    \begin{macrocode}
+\@ifclassloaded{article}{%
+  \let\@lox@prtc\@lox@prtc@article%
+  \let\@lox@psttc\@lox@psttc@article}{%
+  \@ifclassloaded{report}{%
+    \let\@lox@prtc\@lox@prtc@report%
+    \let\@lox@psttc\@lox@psttc@report}{%
+    \@ifclassloaded{book}{%
+      \let\@lox@prtc\@lox@prtc@book%
+      \let\@lox@psttc\@lox@psttc@book}{%
+      \@ifclassloaded{scrartcl}{%
+        \let\@lox@prtc\@lox@prtc@scrartcl%
+        \let\@lox@psttc\@lox@psttc@scrartcl}{%
+        \@ifclassloaded{scrreprt}{%
+          \let\@lox@prtc\@lox@prtc@scrreprt%
+          \let\@lox@psttc\@lox@psttc@scrreprt}{%
+          \@ifclassloaded{scrbook}{%
+            \let\@lox@prtc\@lox@prtc@scrbook%
+            \let\@lox@psttc\@lox@psttc@scrbook}{%
+            \@ifclassloaded{amsbook}{%
+              \let\lox@draft\lox@draft@ams}{%
+              \@ifclassloaded{amsart}{%
+                \let\lox@draft\lox@draft@ams}{%
+                %% Use the article layout by default.
+                \let\@lox@prtc\@lox@prtc@article%
+                \let\@lox@psttc\@lox@psttc@article}}}}}}}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
 % \subsubsection{Options Processing}
 % Put us in \texttt{english} and \texttt{final} mode, set initial area to
 % ``global'', enable marginal notes and set the inner fallback to inline.
