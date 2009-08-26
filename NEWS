@@ -20,9 +20,12 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 4.0
 =============
-** Support for key/value argument syntax in user interface
-** Automatically avoid margin layout when not in outer par mode
+** New feature: floating notes (not specific to any portion of text)
+suggested by Rasmus Villemoes.
+** New feature: automatically avoid margin layout when not in outer par mode
 suggested by Will Robertson.
+** New feature: key/value argument syntax in the whole user interface
+** New command: \fxsetup
 ** Homogenize log and console messages
 ** Heavy internals refactoring
 
