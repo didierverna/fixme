@@ -125,66 +125,87 @@
 %
 %
 % \section{Using \fixme}
-% First of all, please note that the \texttt{ifthen} and \texttt{verbatim}
-% packages are required. You don't have to load them explicitly though. As
-% long as \LaTeXe{} can locate them, they will be used automatically.\par
-% To use \fixme, simply say |\usepackage[|\meta{options}|]{fixme}| in the
-% preamble of your document.
+% \subsection{Requirements}
+% In order to work properly, \fixme requires the presence of some \LaTeX{}
+% packages. You don't have to load them explicitly though. As long as
+% \LaTeX{} can locate them, they will be used automatically. \fixme currently
+% depends on \texttt{xspace}, \texttt{ifthen}, \texttt{verbatim} and
+% \texttt{xkeyval} no older than release date 2006/11/18.
+%
+% \subsection{Loading the package}
+% In order to load \fixme, simply say |\usepackage[|\meta{options}|]{fixme}|
+% in the preamble of your document. There is an important number of options
+% that you can use in order to customize \fixme's default behavior. These
+% options will be discussed when appropriate.\\
+% \DescribeMacro{\fxsetup}\marg{options}\\
+% Another way of customizing \fixme's default behavior is to use the
+% \cs{fxsetup} command. \cs{fxsetup} understands the same options as the
+% package itself and can be used in the preamble as well as in the document's
+% body.
+%
+% Finally, note that unless specified otherwise, all package options are also
+% understood by the note insertion commands or environments. The effect is
+% then local to that particular command.
 %
 % \subsection{Inserting notes}
 % \subsubsection{Macros}
-% \DescribeMacro{\fixme}
-% The main command for inserting a \fixme note in your document is the
-% \cs{fixme} macro. It takes the note to insert as its mandatory argument.
-% Notes inserted via this command are considered fatal to your document's
-% final processing (see section \ref{sec:code:behavior}).\par
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
 % \DescribeMacro{\fxerror}
-% As of version 2.0, \fixme provides three new macros that insert
-% meta-comments about the document, rather than real fixmes. These
-% comments have three different importance levels: note, warning and (non
-% critical) error. The corresponding macros obey the same syntax as \cs{fixme}.
-% However, none of the notes inserted via these macros are fatal.
+% \DescribeMacro{\fxfatal}\oarg{options}\marg{note}\\
+% \fixme provides four note insertion commands corresponding to different
+% levels of importance (notes, warnings, errors and fatal errors).
+% \cs{fxfatal} is a bit different from the other ones, as will be explained in
+% section \ref{sec:manual:behavior} on page \pageref{sec:manual:behavior}.
 %
 % \subsubsection{Environments}
 % \DescribeEnv{anfxnote}
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
-% \DescribeEnv{afixme}
-% As of version 3.0, \fixme provides environments for inserting longer
-% notes. These environments take one optional argument (should be short,
-% perhaps a summary of the note) that will be used in the list of fixme's and
-% in the index if required.\par
-% The \fixme environments behave exactly the same way as their macro
-% counterpart, except for the layout (see section \ref{sec:code:layout}): as they
-% are meant for longer notes, the layout is always \texttt{inline}. The
-% \texttt{index} and \texttt{marginclue} layouts are still honored however. By
-% default, \fixme environments are typeset in a \texttt{quotation} one.
+% \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
+% While \fixme notes are usually meant to be short, there might be times when
+% a longer comment is appropriate. As of version 3.0, \fixme provides four
+% environments for inserting such longer notes\footnote{\textbf{Warning: as of
+% version 4.0, the environments interface has changed and is \emph{not}
+% backward-compatible.}}.
 %
-% \subsection{Controlling the behavior of \fixme\label{sec:code:behavior}}
+% \fixme environments take one mandatory argument (meant to be a short summary
+% of the long note) and behave in exactly the same way as their macro
+% counterpart. The layout policy is a bit different though (see section
+% \ref{sec:manual:layout} on page \pageref{sec:manual:layout}): the long note
+% (the environment's contents) will always appear \texttt{inline}, and the
+% \meta{summary} will be obey all active layouts except \texttt{inline}.
+%
+% \subsection{Controlling the behavior of \fixme\label{sec:manual:behavior}}
 % \DescribeOption{final}
 % \DescribeOption{draft}
-% The global behavior of the package is controlled via the two standard
-% options \texttt{final} and \texttt{draft}. These options are usually given
-% to \cs{documentclass} which in turn passes them to all packages.\par
-% In \texttt{draft} mode, the notes are recorded in the log file, and
-% appear in the text as specified by the layout settings (see section
-% \ref{sec:code:layout}). Additionally, warnings, errors and fatal errors are also
-% displayed on the terminal.\par
-% In final mode, non fatal notes (those generated by the \cs{fx*} commands or
-% by the \texttt{anfx*} environments) are still logged, but they're not
-% typeset. On the other hand, any remaining fatal note (generated by the
-% \cs{fixme} command or the \texttt{afixme} environment) will throw a \LaTeX{}
-% error and thus interrupt or abort compilation with an informative message.
-% This will help you track down forgotten important caveats in your document.
-% Let me say it again: final documents can only have notes, warnings, and (non
-% critical) errors left. Well, if, for some reason, you really want to compile
-% in \texttt{final} mode with critical \fixme notes left behind, you always
-% have the possibility to pass the \texttt{draft} option to \fixme
-% directly\ldots\par
-% The \texttt{final} mode has been chosen as the default because \LaTeXe{}
-% itself behaves this way.\par
+% The behavior of \fixme is controlled by the two standard options
+% \texttt{final} and \texttt{draft}. These options are usually given to
+% \cs{documentclass} which in turn passes them to all packages. In addition,
+% you can also use them as an option to \cs{usepackage}, in the call to
+% \cs{fxsetup}, and even to the note insertion commands and environments.
+%
+% In \texttt{draft} mode, \fixme notes are recorded in the log file and appear
+% in the document as specified by the layout settings (see section
+% \ref{sec:manual:layout}). Additionally, warnings, errors and fatal errors
+% are also displayed on the terminal.
+%
+% In final mode, non fatal notes (those generated by \cs{fxnote},
+% \cs{fxwarning}, \cs{fxerror} and their corresponding environments) are still
+% logged, but they're not typeset. On the other hand, fatal notes (those
+% generated by the \cs{fxfatal} command and the \texttt{anfxfatal}
+% environment) will throw a \LaTeX{} error and thus interrupt or abort
+% compilation with an informative message. This will help you track down
+% forgotten important caveats in your document.
+%
+% Let me rephrase: final documents can only have notes, warnings, and (non
+% fatal) errors left. Of course, this is not completely true: remember that
+% these options are understood locally by all the note insertion commands and
+% environments, so even in \texttt{final} mode, you can use something like
+% this: |\fxfatal[draft]{bla bla}|.
+%
+% By default, \fixme is in \texttt{final} mode because \LaTeX{} itself behaves
+% that way.\par
 %
 % \subsection{Controlling the notes layout\label{sec:code:layout}}
 % \fixme notes can appear in several forms (that can be combined) in your
@@ -795,7 +816,7 @@
 %   In order to redefine the list title, users have to call \cs{renewcommand}.
 %   I don't like this much: it would be cleaner to provide a real command
 %   that redefines the title internally. However, I'll stick with the
-%   current scheme because it is consistent with the rest of \LaTeXe's lists.
+%   current scheme because it is consistent with the rest of \LaTeX's lists.
 %    \begin{macrocode}
 \newcommand*\listfixmename{}
 
