@@ -319,8 +319,9 @@
 % alternate layout can either \emph{add} to the existing one, or
 % \emph{override} it.
 %
-% By default, the \fixme inner layout is set to just \texttt{inline}. This can
-% be simulated by the following call:
+% Here are a couple of examples to clarify things a little. By default, the
+% \fixme inner layout is set to just \texttt{inline}. This can be simulated by
+% the following call:
 % \begin{verbatim}
 % \usepackage[layout=margin,innerlayout={layout=inline}]{fixme}
 % \end{verbatim}
@@ -329,11 +330,19 @@
 % \usepackage[layout=margin,innerlayout=inline]{fixme}
 % \end{verbatim}
 %
+% And finally, here's another hint that you should try to understand: if you
+% have set \fixme to use a safe layout globally (for instance, \texttt{inline}
+% and \texttt{index}), and you want to use the same layout in inner mode, then
+% you should provide an \emph{empty} inner layout, like this:
+% \begin{verbatim}
+% \fxsetup[layout={inline,index},innerlayout=]{fixme}
+% \end{verbatim}
+%
 % \subsubsection{Class compatibility}
-% By default, \fixme is set to use marginal notes. You should know that this
-% is known to cause problems with at least the ACM SIG classes:
+% As you know, \fixme is set to use marginal notes by default. This is known
+% to cause problems with at least the ACM \textsc{Sig} classes:
 % \texttt{acm\_proc\_article-sp} and \texttt{sig-alternate}. These classes
-% forbid the use of \cs{marginpar}, so if you use them, you should choose
+% forbid the use of \cs{marginpar}, so if you use them, don't forget to choose
 % another layout for \fixme, and also avoid using marginal clues\ldots
 %
 % \subsection{Controlling the notes logging}
