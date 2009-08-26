@@ -1,12 +1,13 @@
 ;;; fixme.el --- AUC-TeX style file for FiXme
 
-;; Copyright (C) 2000, 2002, 2004, 2006 Didier Verna.
+;; Copyright (C) 2000, 2002, 2004, 2006, 2009 Didier Verna.
 
 ;; Author:        Didier Verna <didier@lrde.epita.fr>
 ;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ;; Created:       Tue Apr 18 14:49:29 2000
-;; Last Revision: Tue Oct 19 18:07:27 2004
+;; Last Revision: Wed Aug 26 13:30:10 2009
 ;; Keywords:      tex abbrev data
+
 
 ;; This file is part of FiXme.
 
@@ -23,7 +24,8 @@
 
 ;;; Commentary:
 
-;; Contents management by FCM version 0.1-b2.
+;; Contents management by FCM version 0.1.
+
 
 
 ;;; Code:
@@ -32,60 +34,51 @@
   (function
    (lambda ()
      (TeX-add-symbols
+      ;; Commands		Deprecated / Obsolete / Legacy versions
       '("fixmelogo")
 
       '("listoffixmes")
       '("listfixmename")
 
-      '("FXInline")
-      '("FXMargin")
-      '("FXMarginClue")
-      '("FXFootnote")
-      '("FXUser")
+      '("FXLayoutInline")	'("FXInline")		'("FiXmeInline")
+      '("FXLayoutMargin")	'("FXMargin")		'("FiXmeMargin")
+      '("FXLayoutMarginClue")	'("FXMarginClue")
+      '("FXLayoutFootnote")	'("FXFootnote")		'("FiXmeFootnote")
+      '("FXLayoutUser")		'("FXUser")		'("FiXmeUser")
       '("fixmeindexname")
-      '("FXIndex")
+      '("FXLayoutIndex")	'("FXIndex")		'("FiXmeIndex")
 
-      '("FXNote")
-      '("FXWarning")
-      '("FXError")
-      '("FXFatal")
+      '("FXLogNote")		'("FXNote")		'("FiXmeInfo")
+      '("FXLogWarning")		'("FXWarning")		'("FiXmeWarning")
+      '("FXLogError")		'("FXError")
+      '("FXLogFatal")		'("FXFatal")
 
-      '("fixmenoteprefix")
-      '("fixmenoteindexname")
-      '("fixmewarningprefix")
-      '("fixmewarningindexname")
-      '("fixmeerrorprefix")
-      '("fixmeerrorindexname")
-      '("fixmefatalprefix")
-      '("fixmefatalindexname")
+      '("fxnoteprefix")		'("fixmenoteprefix")
+      '("fxnoteindexname")	'("fixmenoteindexname")
+      '("fxwarningprefix")	'("fixmewarningprefix")
+      '("fxwarningindexname")	'("fixmewarningindexname")
+      '("fxerrorprefix")	'("fixmeerrorprefix")
+      '("fxerrorindexname")	'("fixmeerrorindexname")
+      '("fxfatalprefix")	'("fixmefatalprefix")
+      '("fxfatalindexname")	'("fixmefatalindexname")
 
       '("thefixmecount")
-      '("thefixmenotecount")
-      '("thefixmewarningcount")
-      '("thefixmeerrorcount")
-      '("thefixmefatalcount")
+      '("thefxnotecount")	'("thefixmenotecount")
+      '("thefxwarningcount")	'("thefixmewarningcount")
+      '("thefxerrorcount")	'("thefixmeerrorcount")
+      '("thefxfatalcount")	'("thefixmefatalcount")
 
       '("fxnote" [ "Layout" ] "Note")
       '("fxwarning" [ "Layout" ] "Warning")
       '("fxerror" [ "Layout" ] "Error")
-      '("fixme" [ "Layout" ] "FiXme")
+      '("fxfatal" [ "Layout" ] "Fatal")	'("fixme" [ "Layout" ] "FiXme"))
 
-      ;; Obsolete stuff:
-      '("FiXmeInline")
-      '("FiXmeMargin")
-      '("FiXmeFootnote")
-      '("FiXmeIndex")
-      '("FiXmeInfo")
-      '("FiXmeWarning")
-      '("FiXmeUser")
-      )
      (LaTeX-add-environments
+      ;; Environments		Deprecated / Obsolete / Legacy versions
       '("anfxnote")
       '("anfxwarning")
       '("anfxerror")
-      '("afixme")
-      )
-     )))
+      '("anfxfatal")		'("afixme")))))
 
 
 
