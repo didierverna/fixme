@@ -1032,6 +1032,20 @@
 % \end{macro}
 %
 % \subsubsubsection{Index output}
+% \begin{macro}{\@wrindex}
+%   \marg{contents}\\
+%   A replacement for \LaTeX's standard \cs{@wrindex} command to deal with the
+%   \texttt{area} option. When given, it is supposed to replace the page
+%   number, just as in the list of fixmes.
+%    \begin{macrocode}
+\def\@wrindex#1{%
+  \ifthenelse{\equal{\cmdfx@lox@area}{thepage}}{%
+    \protected@write\@indexfile{}{\string\indexentry{#1}{\thepage}}}{%
+    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@lox@area}}}
+  \endgroup
+  \@esphack}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\fixmeindexname}
 %   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
 %   well.
