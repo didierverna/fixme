@@ -987,6 +987,15 @@
 % \end{macro}
 %
 % \subsection{Layout}
+% \begin{macro}{\@fxsetlayoutkeys}
+%   \marg{keys}\\
+%   This macro would probably be overkill if we did not need to
+%   \cs{expandafter} it at some point (see section
+%   \ref{sec:code:layoutdispatch} on page \pageref{sec:code:layoutdispatch}).
+%    \begin{macrocode}
+\def\@fxsetlayoutkeys{\@fxsetkeys{layout}}
+%    \end{macrocode}
+% \end{macro}
 % \subsubsection{Layout macros\label{sec:code:layoutmacros}}
 % \begin{macro}{\@fxlayoutrename}
 %   \marg{name}\\
@@ -1202,7 +1211,7 @@
 %   \texttt{xkeyval} error.
 %   \end{enumerate}
 %    \begin{macrocode}
-\@fxdefinekey{layout}{morelayout}{\@fxsetkeys{layout}{#1}}
+\@fxdefinekey{layout}{morelayout}{\@fxsetlayoutkeys{#1}}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{layout}
@@ -1214,7 +1223,7 @@
 %    \begin{macrocode}
 \@fxdefinekey{layout}{layout}{%
   \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
-  \@fxsetkeys{layout}{#1}}
+  \@fxsetlayoutkeys{#1}}
 %    \end{macrocode}
 % \end{option}
 %
@@ -1363,7 +1372,7 @@
 %   \end{macro}
 % \end{counter}
 %
-% \subsubsection{Layout dispatch}
+% \subsubsection{Layout dispatch\label{sec:code:layoutdispatch}}
 % \begin{macro}{\@fxhandleinnerfallback}
 %   Handles the case where \TeX{} is in inner mode. We need to disable margin
 %   clues, and use the inner fallback layout instead of the margin one. Note
@@ -1384,8 +1393,9 @@
         inner mode detected;\MessageBreak
         falling back to '\cmdfx@layout@innerfallback' layout}
       \fx@layout@margin{false}%
-      \@fxsetkeys{layout}{\cmdfx@layout@innerfallback}%
     \fi%
+    \expandafter\@fxsetlayoutkeys\expandafter{%
+      \cmdfx@layout@innerfallback,nomargin,nomarginclue}%
   \fi}
 
 %    \end{macrocode}
