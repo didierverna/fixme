@@ -82,5 +82,3 @@ text, but doesn't show comments
    layouts, pas seulement le UserLayout. Ce serait encore mieux pour
    marginnote, mparhack etc. 
 
-* If babel is loaded, follow the language automatically (very neat !). Should
-  be trivial to do; have a look at \selectlanguage.
