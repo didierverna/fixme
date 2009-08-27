@@ -1578,13 +1578,10 @@
 %  \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxnote}
-%   \marg{type}\oarg{options}\marg{note}\\
-%   Whatever the current default area is, local notes always use the page
-%   number by default, unless explicitely set otherwise by a user option.
+%   \marg{type}\oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
   \begingroup%
-  \@fxpresetkeys{lox}{area=thepage}{}%
   \@fxsetkeys{ltx,lang,lox,log,layout}{#2}%
   \stepcounter{fixmecount}%
   \stepcounter{fx#1count}%
@@ -1685,13 +1682,10 @@
 %   \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxfatal}
-%   \oarg{options}\marg{note}\\
-%   Whatever the current default area is, local notes always use the page
-%   number by default, unless explicitely set otherwise by a user option.
+%   \oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxfatal[#1]#2{%
   \begingroup%
-  \@fxpresetkeys{lox}{area=thepage}{}%
   \@fxsetkeys{ltx,lang,lox,log,layout}{#1}%
   \stepcounter{fixmecount}%
   \stepcounter{fxfatalcount}%
@@ -1970,6 +1964,15 @@
 % even by the note insertion commands and environments) and the stuff below
 % should only be executed once. Besides, \cs{@ifclassloaded} is an
 % \cs{@onlypreamble} macro\ldots
+%
+% Note that as documented, marginal notes are incompatible with the ACM SIG
+% classes. Initially, I thought I would detect these classes and issue an
+% error if marginal layout (or clue) is active. However, I changed my mind,
+% because nothing prevents somebody to write a new class on top of these ones
+% and authorize \cs{marginpar} back again. Normally these classes issue an
+% error if \cs{marginpar} is used. However, the 2.3 / June 2007 versions are
+% buggy and the error actually triggers a stack overflow in \LaTeX\ldots
+% (patch submitted). Oh boy, these classes are a mess.
 % \begin{macro}{\@lox@prtc}
 %   \begin{macro}{\@lox@psttc}
 %    \begin{macrocode}
@@ -2004,23 +2007,17 @@
 % \end{macro}
 %
 % \subsubsection{Options Processing}
-% Put us in \texttt{english} and \texttt{final} mode, set initial area to
-% ``global'', enable marginal notes and set the inner layout to inline.
-% Note that as documented, marginal notes are incompatible with the ACM SIG
-% classes. Initially, I thought I would detect these classes and issue an
-% error if marginal layout (or clue) is active. However, I changed my mind,
-% because nothing prevents somebody to write a new class on top of these ones
-% and authorize \cs{marginpar} back again. Normally these classes issue an
-% error if \cs{marginpar} is used. However, the 2.3 / June 2007 versions are
-% buggy and the error actually triggers a stack overflow in \LaTeX\ldots
-% (patch submitted). Oh boy, these classes are a mess.
+% Put us in \texttt{english} and \texttt{final} mode, set default area to
+% \texttt{thepage}, enable marginal notes and set inner layout to
+% \texttt{inline}.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<ltx,lang,lox,log,layout>{%
   final,%
   english,%
   nosilent,%
-  area=global,%
-  layout=margin,innerlayout={layout=inline}}
+  area=thepage,%
+  layout=margin,%
+  innerlayout={layout=inline}}
 %    \end{macrocode}
 % Be sure to process the \texttt{lox} family after the \texttt{lang} one, as
 % the default area might get a different name from a user option. We don't
