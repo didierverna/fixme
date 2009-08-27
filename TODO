@@ -72,8 +72,6 @@ text, but doesn't show comments
   1/ either by adding fxlog*prefix macros (dependent on the language)
   2/ or by finding a way to adapt fx*prefix macros for tty output (?!)
 
-* Find out why the footnote which is not sticked to the text
-
 * Provide a collection of themes as separate source files, redefining existing
   (or adding user) layouts. See marginnote, pdfcomment, the todonotes package
   etc. 
@@ -81,4 +79,3 @@ text, but doesn't show comments
 => En fait,  Étudier la possibilité pour l'utilisateur de fournir ses propres
    layouts, pas seulement le UserLayout. Ce serait encore mieux pour
    marginnote, mparhack etc. 
-
