@@ -622,7 +622,7 @@
 % \begin{macro}{\fixmelogo}
 %   The \fixme logo:
 %    \begin{macrocode}
-\newcommand*\fixmelogo{\textsf{FiXme}}
+\newcommand\fixmelogo{\textsf{FiXme}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -632,7 +632,7 @@
 %   \marg{name}\\
 %   Stringify a control sequence name:
 %    \begin{macrocode}
-\newcommand\@fxcsstring[1]{\expandafter\string\csname#1\endcsname}
+\newcommand*\@fxcsstring[1]{\expandafter\string\csname#1\endcsname}
 
 %    \end{macrocode}
 % \end{macro}
@@ -677,7 +677,7 @@
 %   \marg{name}\\
 %   A ``legacy option'' is a package option that is not used anymore.
 %    \begin{macrocode}
-\newcommand\@fxdeclarelegacyopt[1]{%
+\newcommand*\@fxdeclarelegacyopt[1]{%
   \DeclareOptionX[fx]<legacy>{#1}{%
     \@fxpkgwarning{%
       '#1' is a legacy option that has no effect anymore}}}
@@ -690,7 +690,7 @@
 %   \texttt{noopt} counterpart. Note that we don't really (need to) ensure the
 %   boolean status of these options anymore.
 %    \begin{macrocode}
-\newcommand\@fxdeclarelegacyboolopt[1]{%
+\newcommand*\@fxdeclarelegacyboolopt[1]{%
   \@fxdeclarelegacyopt{#1}
   \@fxdeclarelegacyopt{no#1}}
 
@@ -700,7 +700,7 @@
 %   \marg{key}\marg{value}\\
 %   Issue a \fixme error about a void key misuse (see below):
 %    \begin{macrocode}
-\newcommand\@fxvoidkeyerror[2]{%
+\newcommand*\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
     You have given the key '#1' the argument '#2' but it takes
     none.\MessageBreak
@@ -712,7 +712,7 @@
 %   A \fixme ``void key'' is an \texttt{xkeyval} key that doesn't expect any
 %   argument.
 %    \begin{macrocode}
-\newcommand\@fxdefinevoidkey[3]{%
+\newcommand*\@fxdefinevoidkey[3]{%
   \define@key[fx]{#1}{#2}[]{%
     \ifthenelse{\equal{##1}{}}{%
       #3}{%
@@ -726,7 +726,7 @@
 %   addition that for every such \texttt{key}, there is a \texttt{nokey} void
 %   key counterpart.
 %    \begin{macrocode}
-\newcommand\@fxdefineboolkey[3][]{%
+\newcommand*\@fxdefineboolkey[3][]{%
   \define@boolkey[fx]{#2}{#3}[true]{#1}
   \@fxdefinevoidkey{#2}{no#3}{\@nameuse{fx@#2@#3}{false}}}
 
@@ -746,7 +746,7 @@
 %   \marg{name}\\
 %   Issue a \fixme warning about a legacy command (see below):
 %    \begin{macrocode}
-\newcommand\@fxlegacycmdwarning[1]{%
+\newcommand*\@fxlegacycmdwarning[1]{%
   \@fxpkgwarning{%
     \@fxcsstring{#1} is a legacy command that is not used anymore}}
 %    \end{macrocode}
@@ -771,7 +771,7 @@
 %   \item and if so, issue a legacy command warning.
 %   \end{enumerate}
 %    \begin{macrocode}
-\newcommand\@fxnewlegacyrcmd[1]{%
+\newcommand*\@fxnewlegacyrcmd[1]{%
   \expandafter\newcommand\csname#1\endcsname{}
   \expandafter\let\csname#1\endcsname\empty
   \AtBeginDocument{%
@@ -787,7 +787,7 @@
 %   \marg{old}\marg{new}\\
 %   Issue a \fixme warning about a deprecated command (see below):
 %    \begin{macrocode}
-\newcommand\@fxdeprecatedcmdwarning[2]{%
+\newcommand*\@fxdeprecatedcmdwarning[2]{%
   \@fxpkgwarning{%
     \@fxcsstring{#1} is deprecated; please use \@fxcsstring{#2} instead}}
 %    \end{macrocode}
@@ -799,7 +799,7 @@
 %   supposed to redefine them. Hence, their definition is just a call to the
 %   new version.
 %    \begin{macrocode}
-\newcommand\@fxnewdeprecatedcmd[2]{%
+\newcommand*\@fxnewdeprecatedcmd[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedcmdwarning{#1}{#2}%
     \@nameuse{#2}}}
@@ -811,7 +811,7 @@
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated commands:
 %    \begin{macrocode}
-\newcommand\@fxprefixdeprecatecmd[2][]{%
+\newcommand*\@fxprefixdeprecatecmd[2][]{%
   \@fxnewdeprecatedcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
@@ -820,7 +820,7 @@
 %   \marg{old}\marg{new}\\
 %   Issue a \fixme warning about a deprecated environment (see below):
 %    \begin{macrocode}
-\newcommand\@fxdeprecatedenvwarning[2]{%
+\newcommand*\@fxdeprecatedenvwarning[2]{%
   \@fxpkgwarning{%
     the '#1' environment is deprecated;\MessageBreak
     please use '#2' instead}}
@@ -830,7 +830,7 @@
 %   \marg{old}\marg{new}\\
 %   A ``deprecated environment'' is defined similarly to a deprecated command.
 %    \begin{macrocode}
-\newcommand\@fxnewdeprecatedenv[2]{%
+\newcommand*\@fxnewdeprecatedenv[2]{%
   \@namedef{#1}{%
     \@fxdeprecatedenvwarning{#1}{#2}%
     \@nameuse{#2}}
@@ -857,7 +857,7 @@
 %   Note that we don't need to know the macro's prototype, because
 %   \cs{renewcommand} asks for it all over again.
 %    \begin{macrocode}
-\newcommand\@fxnewdeprecatedrcmd[2]{%
+\newcommand*\@fxnewdeprecatedrcmd[2]{%
   \expandafter\newcommand\csname#1\endcsname{}
   \expandafter\let\csname#1\endcsname\empty
   \AtBeginDocument{%
@@ -873,7 +873,7 @@
 %   \texttt{fx} prefix changes, we have a special macro to do this for
 %   deprecated renewable commands:
 %    \begin{macrocode}
-\newcommand\@fxprefixdeprecatercmd[2][]{%
+\newcommand*\@fxprefixdeprecatercmd[2][]{%
   \@fxnewdeprecatedrcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
@@ -905,7 +905,7 @@
 %   to typeset the page number which is much too short for us, so we just let
 %   the \meta{location} text take all the space it needs.
 %    \begin{macrocode}
-\def\@fxdottedtocline#1#2#3#4#5{%
+\newcommand*\@fxdottedtocline[5]{%
   \ifnum #1>\c@tocdepth \else
     \vskip \z@ \@plus.2\p@
     {\leftskip #2\relax \rightskip \@tocrmarg \parfillskip -\rightskip
@@ -932,7 +932,7 @@
 %   Note that this macro is at the user level because \cs{contentsline} is,
 %   but it is not currently documented in the user manual.
 %    \begin{macrocode}
-\newcommand\fxcontentsline[2]{%
+\newcommand*\fxcontentsline[2]{%
   \begingroup%
   \let\@dottedtocline\@fxdottedtocline%
   \l@fixme{#1}{#2}%
@@ -948,7 +948,7 @@
 %   the user level because \cs{addcontentsline} is, but it is not currently
 %   documented in the user manual.
 %    \begin{macrocode}
-\newcommand\fxaddcontentsline[1]{%
+\newcommand*\fxaddcontentsline[1]{%
   \ifthenelse{\equal{\cmdfx@lox@area}{thepage}}{%
     \addcontentsline{lox}{fixme}{#1}}{%
     \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@lox@area}}}}
@@ -963,7 +963,7 @@
 %   that redefines the title internally. However, I'll stick with the
 %   current scheme because it is consistent with the rest of \LaTeX's lists.
 %    \begin{macrocode}
-\newcommand*\listfixmename{}
+\newcommand\listfixmename{}
 
 %    \end{macrocode}
 % \end{macro}
@@ -977,10 +977,10 @@
 %   \begin{macro}{\@lox@psttc@article}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@lox@prtc@article{%
+\newcommand\@lox@prtc@article{%
   \section*{\listfixmename%
     \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
-\def\@lox@psttc@article{}
+\let\@lox@psttc@article\relax
 
 %    \end{macrocode}
 %  \end{macro}
@@ -990,16 +990,15 @@
 %   \begin{macro}{\@lox@psttc@report}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@lox@prtc@report{%
+\newcommand\@lox@prtc@report{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
     \@restonecolfalse
   \fi
   \chapter*{\listfixmename%
-    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
-  }
-\def\@lox@psttc@report{\if@restonecol\twocolumn\fi}
+    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
+\newcommand\@lox@psttc@report{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1009,16 +1008,15 @@
 %   \begin{macro}{\@lox@psttc@book}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@lox@prtc@book{%
+\newcommand\@lox@prtc@book{%
   \if@twocolumn
     \@restonecoltrue\onecolumn
   \else
     \@restonecolfalse
   \fi
   \chapter*{\listfixmename%
-    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}%
-  }
-\def\@lox@psttc@book{\if@restonecol\twocolumn\fi}
+    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
+\newcommand\@lox@psttc@book{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1031,7 +1029,7 @@
 % \begin{macro}{\lox@heading}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\lox@heading{\float@listhead{\listfixmename}}
+\newcommand\lox@heading{\float@listhead{\listfixmename}}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1040,14 +1038,11 @@
 %    \begin{macro}{\@lox@psttc@scrartcl}
 %      \mbox{}
 %    \begin{macrocode}
-\def\@lox@prtc@scrartcl{%
+\newcommand\@lox@prtc@scrartcl{%
   \begingroup%
     \lox@heading%
-    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
-  }
-\def\@lox@psttc@scrartcl{%
-  \endgroup
-  }
+    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative}
+\let\@lox@psttc@scrartcl\endgroup
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1057,7 +1052,7 @@
 %   \begin{macro}{\@lox@psttc@scrreprt}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@lox@prtc@scrreprt{%
+\newcommand\@lox@prtc@scrreprt{%
   \begingroup%
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -1065,12 +1060,10 @@
       \@restonecolfalse
     \fi
     \lox@heading%
-    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
-  }
-\def\@lox@psttc@scrreprt{%
+    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative}
+\newcommand\@lox@psttc@scrreprt{%
     \if@restonecol\twocolumn\fi
-  \endgroup
-  }
+  \endgroup}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1080,7 +1073,7 @@
 %   \begin{macro}{\@lox@psttc@scrbook}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@lox@prtc@scrbook{%
+\newcommand\@lox@prtc@scrbook{%
   \begingroup%
     \if@twocolumn
       \@restonecoltrue\onecolumn
@@ -1088,12 +1081,10 @@
       \@restonecolfalse
     \fi
     \lox@heading%
-    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative
-}
-\def\@lox@psttc@scrbook{%
+    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative}
+\newcommand\@lox@psttc@scrbook{%
     \if@restonecol\twocolumn\fi
-  \endgroup
-}
+  \endgroup}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1111,8 +1102,8 @@
 %     buggy: the List of Fixme's could not appear before the first fixme
 %     note\ldots I should try to detect whether the file is empty.
 %    \begin{macrocode}
-\def\lox@final{}
-\def\lox@draft{%
+\let\lox@final\relax
+\newcommand\lox@draft{%
   \IfFileExists{\jobname .lox}{%
     \@lox@prtc%
     \@starttoc{lox}%
@@ -1126,7 +1117,7 @@
 %   of redefining the \cs{@starttoc} command to take two arguments. Therefore,
 %   I need to provide a specific version of the \cs{listoffixmes} macro:
 %    \begin{macrocode}
-\def\lox@draft@ams{\@starttoc{lox}\listfixmename}
+\newcommand\lox@draft@ams{\@starttoc{lox}\listfixmename}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1138,7 +1129,7 @@
 %   \cs{expandafter} it at some point (see section
 %   \sectionref{sec:code:layoutdispatch}).
 %    \begin{macrocode}
-\def\@fxsetlayoutkeys{\@fxsetkeys{layout}}
+\newcommand\@fxsetlayoutkeys{\@fxsetkeys{layout}}
 %    \end{macrocode}
 % \end{macro}
 % \subsubsection{Layout macros\label{sec:code:layoutmacros}}
@@ -1147,8 +1138,7 @@
 %   As of version 4, layout macros have been renamed from \cs{FX*} to
 %   \cs{FXLayout*}. Older versions remain for backward compatibility.
 %    \begin{macrocode}
-\newcommand\@fxlayoutrename[1]{%
-  \@fxnewdeprecatedrcmd{FX#1}{FXLayout#1}}
+\newcommand*\@fxlayoutrename[1]{\@fxnewdeprecatedrcmd{FX#1}{FXLayout#1}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1159,12 +1149,12 @@
 %     \begin{macro}{\FXLayoutFootnote}
 %       \marg{prefix}\marg{note}
 %    \begin{macrocode}
-\newcommand\FXLayoutInline[2]{%
+\newcommand*\FXLayoutInline[2]{%
   \textbf{#1}: \emph{#2}}
-\newcommand\FXLayoutMargin[2]{%
+\newcommand*\FXLayoutMargin[2]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
     \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
-\newcommand\FXLayoutFootnote[2]{%
+\newcommand*\FXLayoutFootnote[2]{%
   \footnote{\textbf{#1}: \emph{#2}}}
 %    \end{macrocode}
 %     \end{macro}
@@ -1173,7 +1163,7 @@
 % \begin{macro}{\FXLayoutMarginCLue}
 %   \marg{prefix}
 %    \begin{macrocode}
-\newcommand\FXLayoutMarginClue[1]{%
+\newcommand*\FXLayoutMarginClue[1]{%
   \marginpar[\footnotesize\raggedleft\textbf{#1}!]{%
     \footnotesize\raggedright\textbf{#1}!}}
 
@@ -1220,13 +1210,13 @@
 %   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
 %   well.
 %    \begin{macrocode}
-\newcommand*\fixmeindexname{}
+\newcommand\fixmeindexname{}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXLayoutIndex}
 %   \marg{note}
 %    \begin{macrocode}
-\newcommand\FXLayoutIndex[1]{\index{***@\fixmeindexname:!#1}}
+\newcommand*\FXLayoutIndex[1]{\index{***@\fixmeindexname:!#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{FXIndex}
@@ -1341,7 +1331,7 @@
 % \begin{macro}{\@fxlayouts}
 %   Maintains the list of available layouts:
 %    \begin{macrocode}
-\newcommand\@fxlayouts{inline,margin,footnote,user,marginclue,index}
+\newcommand*\@fxlayouts{inline,margin,footnote,user,marginclue,index}
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{morelayout}
@@ -1380,7 +1370,7 @@
 %   \cs{FXLog*}. Older versions remain for backward compatibility.
 % \end{macro}
 %    \begin{macrocode}
-\newcommand\@fxlogrename[1]{\@fxnewdeprecatedrcmd{FX#1}{FXLog#1}}
+\newcommand*\@fxlogrename[1]{\@fxnewdeprecatedrcmd{FX#1}{FXLog#1}}
 
 %    \end{macrocode}
 % \begin{macro}{\FXLogNote}
@@ -1390,19 +1380,19 @@
 %         \marg{msg}\\
 %         Logging includes both log file and terminal output.
 %    \begin{macrocode}
-\newcommand\FXLogNote[1]{%
+\newcommand*\FXLogNote[1]{%
   \GenericInfo{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Note: '#1'}}
-\newcommand\FXLogWarning[1]{%
+\newcommand*\FXLogWarning[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Warning: '#1'}}
-\newcommand\FXLogError[1]{%
+\newcommand*\FXLogError[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Error: '#1'}}
-\newcommand\FXLogFatal[1]{%
+\newcommand*\FXLogFatal[1]{%
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Fatal Error: '#1'}}
@@ -1469,7 +1459,7 @@
 %   counters themselves, but that should be ok since users are not supposed to
 %   mess up with them).
 %    \begin{macrocode}
-\newcommand\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
+\newcommand*\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1485,7 +1475,7 @@
 %   \marg{type}\\
 %   The following macro creates all required note parameters:
 %    \begin{macrocode}
-\newcommand\@fxnoteparameters[1]{%
+\newcommand*\@fxnoteparameters[1]{%
   \newcounter{fx#1count}
   \expandafter\newcommand\expandafter*\csname fx#1prefix\endcsname{}
   \expandafter\newcommand\expandafter*\csname fx#1indexname\endcsname{}
@@ -1527,7 +1517,7 @@
 %   Before that, we provide some informative message if risky layout forms
 %   were active.
 %    \begin{macrocode}
-\def\@fxhandleinnermode{%
+\newcommand\@fxhandleinnermode{%
   \ifinner%
     \ifthenelse{\boolean{fx@layout@margin}}{%
       \@fxpkginfo{%
@@ -1549,7 +1539,7 @@
 %   so that it is sticked properly to the preceding text if active. Next we
 %   handle marginal layouts so that it is also close to the text to fix.
 %    \begin{macrocode}
-\def\@fxlayout#1#2{%
+\newcommand*\@fxlayout[2]{%
   \@fxhandleinnermode%
   \def\@fxtempa{\@nameuse{fx#1prefix}}%
   \def\@fxtempb{\@nameuse{fx#1indexname}}%
@@ -1568,15 +1558,15 @@
 % The generic mechanism below applies only to \fixme notes, warnings and
 % errors. Fatal notes are handled in the next section.
 %
-% \subsubsubsection{Low-level implementation}
+% \subsubsubsection{Standard notes}
 % \begin{macro}{\@@fxnote@final}
 %   \begin{macro}{\@@fxnote@draft}
 %     \marg{type}\marg{note}
 %    \begin{macrocode}
-\def\@@fxnote@final#1#2{%
+\newcommand*\@@fxnote@final[2]{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
   \fxaddcontentsline{\expandafter\protect\@nameuse{fx#1prefix}: #2}}
-\def\@@fxnote@draft#1#2{%
+\newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
   \@@fxnote@final{#1}{#2}}
 
@@ -1636,19 +1626,20 @@
 %     \begin{macro}{\FiXmeFootnote}
 %       \begin{macro}{\FiXmeUser}
 %         \begin{macro}{\FiXmeIndex}
+%           \marg{note}\\
 %           The \cs{FiXme*} macros below are kept only to preserve backward
 %           compatibility. They are used by fatal notes only and are made to
 %           call the new versions by default. \cs{FiXmeUser} is treated a bit
 %           differently though (see section \sectionref{sec:code:userlayout}).
 %    \begin{macrocode}
-\newcommand\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
-\newcommand\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
-\newcommand\FiXmeFootnote[1]{\FXLayoutFootnote{\fxfatalprefix}{#1}}
+\newcommand*\FiXmeInline[1]{\FXLayoutInline{\fxfatalprefix}{#1}}
+\newcommand*\FiXmeMargin[1]{\FXLayoutMargin{\fxfatalprefix}{#1}}
+\newcommand*\FiXmeFootnote[1]{\FXLayoutFootnote{\fxfatalprefix}{#1}}
 
-\newcommand\FiXmeUser[1]{}
+\newcommand*\FiXmeUser[1]{}
 \let\FiXmeUser\empty
 
-\newcommand\FiXmeIndex[1]{\FXLayoutIndex{#1}}
+\newcommand*\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
 %         \end{macro}
@@ -1664,14 +1655,14 @@
 %     Note that we start with the footnote layout, so that it is sticked
 %     properly to the preceding text if active.
 %    \begin{macrocode}
-\def\@@fxfatal@final#1{%
+\newcommand*\@@fxfatal@final[1]{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
     You are currently processing in final mode,\MessageBreak
     but you still have some FiXme fatal errors left behind.\MessageBreak
     Type X to quit, fix your document (or switch back to draft
     mode),\MessageBreak
     and rerun LaTeX.}}
-\def\@@fxfatal@draft#1{%
+\newcommand*\@@fxfatal@draft[1]{%
   \@fxhandleinnermode%
   \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
   \iffx@layout@margin\FiXmeMargin{#1}\fi%
@@ -1690,7 +1681,7 @@
 % \begin{macro}{\@fxfatal}
 %   \oarg{options}\marg{note}
 %    \begin{macrocode}
-\def\@fxfatal[#1]#2{%
+\newcommand*\@fxfatal[2][]{%
   \begingroup%
   \@fxsetkeys{ltx,lang,lox,log,layout}{#1}%
   \stepcounter{fixmecount}%
@@ -1721,7 +1712,7 @@
 % \begin{macro}{\FXEnvBegin}
 %   \marg{prefix}
 %    \begin{macrocode}
-\newcommand\FXEnvBegin[1]{\begin{quotation}
+\newcommand*\FXEnvBegin[1]{\begin{quotation}
     \textbf{#1:}}
 %    \end{macrocode}
 % \end{macro}
@@ -1746,10 +1737,10 @@
 %   \begin{macro}{\@fxenvbegin@draft}
 %     \marg{type}\marg{options}\marg{summary}
 %    \begin{macrocode}
-\def\@fxenvbegin@final#1#2#3{%
+\newcommand*\@fxenvbegin@final[3]{%
   \@nameuse{fx#1}[#2]{#3}%
   \comment}
-\def\@fxenvbegin@draft#1#2#3{%
+\newcommand*\@fxenvbegin@draft[3]{%
   \@nameuse{fx#1}[#2,noinline]{#3}%
   \FXEnvBegin{\@nameuse{fx#1prefix}}}
 
@@ -1760,8 +1751,8 @@
 %   \begin{macro}{\@fxenvend@draft}
 %     \mbox{}
 %    \begin{macrocode}
-\def\@fxenvend@final{\endcomment}
-\def\@fxenvend@draft{\FXEnvEnd}
+\let\@fxenvend@final\endcomment
+\let\@fxenvend@draft\FXEnvEnd
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1772,7 +1763,7 @@
 %   \marg{type}\\
 %   This command defines \fixme environments in a generic way:
 %    \begin{macrocode}
-\newcommand\@fxdefineenvironment[1]{%
+\newcommand*\@fxdefineenvironment[1]{%
   \newenvironment{anfx#1}[2][]{\@fxenvbegin{#1}{##1}{##2}}{\@fxenvend}}
 
 %    \end{macrocode}
@@ -2040,7 +2031,7 @@
 %   with the \texttt{xkeyval} package\ldots All families are allowed except
 %   for the ``legacy'' one.
 %    \begin{macrocode}
-\newcommand\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout}{#1}}
+\newcommand*\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
