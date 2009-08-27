@@ -396,6 +396,40 @@
 % silent. It also stays silent in \texttt{final} mode, regardless of the
 % presence of remaining notes.
 %
+% \subsection{Floating \fixme notes}
+% At some point, people suggested that it would be nice to have global \fixme
+% notes, not related to any portion of the text in particular. Such notes
+% could be general comments about the whole document, and could even be issued
+% in the preamble for instance. This is what I call ``floating'' \fixme notes.
+%
+% Originally, I started writing a new set of commands to do just that, but
+% with the flexibility that \fixme version 4 provides, I quickly realized that
+% such commands were an unnecessary addition.
+%
+% Since floating notes are not supposed to relate to any part of the text,
+% they should not be typeset anywhere in it. This is especially true if you
+% want to put some of them in the document's preamble. However, even a
+% preamble \fixme note can be recorded and displayed in the index or in the
+% list of fixmes. And it turns out that you can specify all that with the
+% layout options described in section \sectionref{sec:manual:layout}.
+%
+% \DescribeOption{area}
+% The only slight problem that remains in the page number, which normally
+% appears in the list of fixmes and in the index: if you choose to reference a
+% floating \fixme note that way, the page number is likely to be completely
+% meaningless. To compensate, \fixme 4 provides an option named ``area''. When
+% provided, the given value will replace the page number in both the index and
+% the list of fixmes. The area can be anything you like, but should remain
+% quite short. By default, \texttt{area} is set the special value
+% \texttt{thepage}, which as you guessed means to use the page number.
+%
+% Here is an example of a floating note that would typically appear in the
+% document's preamble:
+% \begin{verbatim}
+% \usepackage{hyperref}
+% \fxfatal[layout=index,area=hyperref]{Fill in PDF fields (title etc.)}
+% \end{verbatim}
+%
 % \section{Customizing \fixme}
 % \subsection{Customizing the notes layout}
 % \subsubsection{Macros}
