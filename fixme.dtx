@@ -431,61 +431,66 @@
 % \end{verbatim}
 %
 % \section{Customizing \fixme}
-% \subsection{Customizing the notes layout}
-% \subsubsection{Macros}
+% \subsection{Customizing the \fixme notes layout}
+% \subsubsection{Commands}
+% The actual typesetting of \fixme notes is done by the commands described
+% below. If you want to change their behavior, you can \cs{renewcommand}
+% them.\\
+% \DescribeMacro{\FXLayoutInline}
+% \DescribeMacro{\FXLayoutMargin}
+% \DescribeMacro{\FXLayoutFootnote}
+% \marg{prefix}\marg{note}\\
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
-% parts: a ``prefix'' which depends on the note level, and the note
-% itself. The prefix is one of ``\fixme note:'', ``\fixme warning:'',
+% parts: a ``prefix'' which depends on the note level, and the note itself.
+% By default, the prefix is one of ``\fixme note:'', ``\fixme warning:'',
 % ``\fixme error:''  or simply ``\fixme:'', and appears in bold. The note
-% itself appears emphasized.
-% \DescribeMacro{\FXInline}
-% \DescribeMacro{\FXMargin}
-% \DescribeMacro{\FXFootnote}
-% These layouts are implemented thanks to the corresponding \cs{FX*} macros
-% that you can redefine if you wish. Each such macro takes two mandatory
-% arguments: the prefix and the note, in that order.\par
-% \DescribeMacro{\FXMarginCLue}
+% itself appears emphasized.\\
+% \DescribeMacro{\FXayoutMarginCLue}
+% \marg{prefix}\\
 % The special \texttt{marginclue} layout only outputs the prefix mentioned
-% above. Its layout is controlled by the macro \cs{FXMarginClue} which takes
-% the prefix as its only mandatory argument.
-% \DescribeMacro{\FXIndex}
-% The \cs{FXIndex} macro is used for the \texttt{index} layout. All \fixme
-% index entries appear under the ``\fixme'' key in the symbols section.
-% There are 4 subcategories under this key, as many as there are note levels.
-% By default, only the first 3 of them are used though (fatal errors do not
-% appear under a subkey, but directly under the \fixme key). The notes are
-% numbered in the index.\par
+% above.\\
+% \DescribeMacro{\FXLayoutIndex}
+% \marg{note}\\
+% All \fixme index entries appear under the ``\fixme'' key in the symbols
+% section. There are 4 subcategories under this key, as many as there are note
+% levels. By default, only the first 3 of them are used though (fatal errors
+% do not appear under a subkey, but directly under the \fixme key). The notes
+% are numbered in the index.\par
 %
 % \subsubsection{Environments}
+% The actual typesetting of \fixme environments is done by the commands
+% described below. If you want to change their behavior, you can
+% \cs{renewcommand} them.\\
 % \DescribeMacro{\FXEnvBegin}
+% \marg{prefix}\\
+% Remember that a \fixme environment's summary is typeset by the corresponding
+% layout command, as describe above. By default, \fixme uses a
+% \texttt{quotation} environment to typeset the longer note, and the prefix
+% appears in bold.\\
 % \DescribeMacro{\FXEnvEnd}
-% The optional argument of \fixme environments is always typeset according
-% to the \texttt{inline} layout described above. By default, \fixme uses a
-% \texttt{quotation} for displaying the environments'contents. If you want to
-% change that, you can redefine the macros \cs{FXEnvBegin} and \cs{FXEnvEnd}
-% that open and close the environments.
+% This macro closes the \texttt{quotation} by default.
 %
-% \subsection{Customizing the notes logging}
-% \DescribeMacro{\FXNote}
-% \DescribeMacro{\FXWarning}
-% \DescribeMacro{\FXError}
-% \DescribeMacro{\FXFatal}
-% If you want a finer control on logging, you can redefine the commands used
-% to implement it. These commands (on the left) are the ones used by
-% \cs{fxnote}, \cs{fxwarning}, \cs{fxerror} and \cs{fixme} respectively. They
-% take the note itself as mandatory argument.
+% \subsection{Customizing the \fixme notes logging}
+% The actual logging of \fixme notes is done by the commands described
+% below. If you want to change their behavior, you can \cs{renewcommand}
+% them.\\
+% \DescribeMacro{\FXLogNote}
+% \DescribeMacro{\FXLogWarning}
+% \DescribeMacro{\FXLogError}
+% \DescribeMacro{\FXLogFatal}
+% \marg{note}\\
+% By default, simple notes are recorded in the log file only, and the others
+% also appear on the terminal during compilation.
 %
 % \subsection{Fancy fruit salad layout}
 % \DescribeOption{user}
-% \DescribeMacro{\FXUser}
 % If, for some totally unjustified reason, you are not happy with the
-% available layouts, you have the ability to define your own: pass the
-% \texttt{user} option to the package (it also has its \texttt{nouser}
-% counterpart), and define an \cs{FXUser} macro in the following manner:\\
-% |\newcommand{\FXUser}[2]{|\meta{fancy fruit salad layout job}|}|\\ The
-% arguments are the prefix, and the note itself, in that order.\par
-% Note that the \texttt{user} option can also be used in the optional argument
-% of the note insertion commands.
+% available layouts, you have the ability to define your own: a special layout
+% form is accessible through the boolean \texttt{user} layout option.\\
+% \DescribeMacro{\FXLayoutUser}
+% \marg{prefix}\marg{note}\\
+% If you plan on using it, you must then implement the formatting by
+% \cs{newcommand}'ing the corresponding macro.
 %
 % \subsection{Internationalization}
 % \DescribeOption{english}
@@ -498,25 +503,26 @@
 % \DescribeOption{danish}
 % \DescribeOption{croatian}
 % \fixme currently supports English, French, Spanish, Italian, German,
-% Danish and Croatian. You can select the language you want to use by passing
-% the corresponding option (these options are usually given directly to
-% \cs{documentclass} which in turn passes them to all packages). The
-% \texttt{french} and \texttt{francais} options are synonyms. The
-% \texttt{german} and \texttt{ngerman} options are currently equivalent.\par
-% If you want a finer grain on the language-dependent parts of \fixme, the
-% following macros are provided and can be redefined.\par
-% \DescribeMacro{\fixmenoteprefix}
-% \DescribeMacro{\fixmewarningprefix}
-% \DescribeMacro{\fixmeerrorprefix}
-% \DescribeMacro{\fixmefatalprefix}
+% Danish and Croatian. At any point in the document, you can select or change
+% the language you want to use by passing the corresponding option to
+% \cs{documentclass}, \cs{usepackage}, \cs{fxsetup} or any \fixme note
+% insertion command or environment. The \texttt{french} and \texttt{francais}
+% options are synonyms. The \texttt{german} and \texttt{ngerman} options are
+% currently equivalent.\par If you want a finer grain on the
+% language-dependent parts of \fixme, the following macros are provided and
+% can be redefined.\par
+% \DescribeMacro{\fxnoteprefix}
+% \DescribeMacro{\fxwarningprefix}
+% \DescribeMacro{\fxerrorprefix}
+% \DescribeMacro{\fxfatalprefix}
 % \DescribeMacro{\fixmelogo}
-% The \cs{fixme*prefix} macros define the prefix for the four different note
+% The \cs{fx*prefix} macros define the prefix for the four different note
 % levels. They make intensive use of the macro \cs{fixmelogo} ;-)\par
 % \DescribeMacro{\fixmeindexname}
-% \DescribeMacro{\fixmenoteindexname}
-% \DescribeMacro{\fixmewarningindexname}
-% \DescribeMacro{\fixmeerrorindexname}
-% \DescribeMacro{\fixmefatalindexname}
+% \DescribeMacro{\fxnoteindexname}
+% \DescribeMacro{\fxwarningindexname}
+% \DescribeMacro{\fxerrorindexname}
+% \DescribeMacro{\fxfatalindexname}
 % The macro \cs{fixmeindexname} defines the main \fixme index key. The other
 % ones define the different index subkeys for each note level. Please note that
 % an empty name for a subkey means that you don't actually want a subcategory
