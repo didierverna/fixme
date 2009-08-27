@@ -369,28 +369,32 @@
 % these classes, don't forget to choose another layout for \fixme, and also
 % avoid using marginal clues.
 %
-% \subsection{Controlling the notes logging}
-% \DescribeOption{silent}
-% \DescribeOption{nosilent}
+% \subsection{Controlling the logging of \fixme notes}
 % As well as being displayed in the document itself, all \fixme notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
-% log file while the others are also displayed on the terminal output.\par
-% You have the ability to suppress all kind of logging by using the
-% \texttt{silent} option. By default, the behavior is that of
-% \texttt{nosilent}.
+% log file while the others are also displayed on the terminal output during
+% compilation.\par
+% \DescribeOption{silent}
+% \DescribeOption{nosilent}
+% You have the ability to suppress logging altogether by using the
+% \texttt{silent} option. This option is understood by the package itself, the
+% \cs{fxsetup} macro and all note insertion commands and environments. Just as
+% individual layout options, \texttt{silent} is a boolean option, so all those
+% forms are possible: \texttt{silent}, equivalent to \texttt{silent=true}, and
+% \texttt{nosilent}, equivalent to \texttt{silent=false} (the default).
 %
 % \subsection{List of \fixme's}
 % \DescribeMacro{\listoffixmes}
 % \fixme remembers where you put \fixme notes in a toc-like file whose
 % extension is \texttt{lox}. The \cs{listoffixmes} macro generates the list of
 % all \fixme notes in a manner similar to that of the ``list of figures''
-% for instance. A standard layout is automatically used for the `article',
-% `report', `book' classes and their \komascript replacements. If another
-% class is used, the `article' layout is selected. Also, note that if no
-% \fixme note remain in the document, this macro doesn't generate an empty
-% list, but rather stays silent. It also stays silent in \texttt{final} mode,
-% regardless of the presence of remaining notes.
-%
+% for instance. A standard layout is automatically selected for the
+% \texttt{article}, \texttt{report}, \texttt{book} classes and their
+% \komascript replacements. If another class is used, the \texttt{article}
+% layout is selected. Also, note that if no \fixme note remain in the
+% document, this macro doesn't generate an empty list, but rather stays
+% silent. It also stays silent in \texttt{final} mode, regardless of the
+% presence of remaining notes.
 %
 % \section{Customizing \fixme}
 % \subsection{Customizing the notes layout}
