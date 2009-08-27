@@ -10,8 +10,6 @@ the index because of special caracters (! etc). Also, maybe mention in the doc
 problems with commands like \footenotesize going into the index, and the use
 of \protect.
 
-* parler de mparhack dans la doc
-
 * Voir PGF/TikZ example: Todo notes| fauskes.net
   http://www.fauskes.net/pgftikzexamples/todo-notes/
 
