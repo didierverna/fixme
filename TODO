@@ -82,3 +82,5 @@ text, but doesn't show comments
 
 * Revoir les cas de noexpand/expandafter, à simplifier avec \let\foo\relax
 pour éviter l'expansion
+
+* See about issuing warnings if FiXmeInline and friends are \renewcommand'ed. 
