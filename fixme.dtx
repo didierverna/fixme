@@ -1536,51 +1536,41 @@
 % \begin{macro}{\fxprefix}
 %   \marg{typename}\\
 %   As of version 4, prefix construction has been homogenized through this
-%   macro, rendering the former \cs{fixme*prefix} ones obsolete. Normally, we
-%   would use \cs{@fxnewdeprecatedrcmd} to implement this, but it is not
-%   possible in that case, because there is not a one-to-one correspondance
-%   between a deprecated macro and the superseding one, so step 3 of the
-%   deprecation machanism is impossible. So here is what we do:
-%   \begin{enumerate}
-%   \item keep the old ones in the core of \fixme,
-%   \item predefine them to \cs{empty}
-%   \item \cs{AtBeginDocument}, check if they have been \cs{renewcommand}'ed
-%     (not \cs{empty} anymore), and if so, issue a deprecation warning,
-%   \item otherwise, define them to call the new interface.
-%   \end{enumerate}
+%   macro, rendering the former \cs{fixme*prefix} ones obsolete.
 %    \begin{macrocode}
 \newcommand*\fxprefix[1]{\fixmelogo{} #1}
+%    \end{macrocode}
+% \end{macro}
+% Normally, we would use \cs{@fxnewdeprecatedrcmd} to implement this, but it
+% is not possible in that case, because there is not a one-to-one
+% correspondance between a deprecated macro and the superseding one, so step 3
+% of the deprecation machanism is impossible. So here is what we do:
+% \begin{enumerate}
+% \item keep the old ones in the core of \fixme (too bad),
+% \item predefine them to \cs{empty},
+% \item \cs{AtBeginDocument}, check if they have been \cs{renewcommand}'ed
+%   (not \cs{empty} anymore), and if so, issue a deprecation warning,
+% \item otherwise, define them to call the new interface.
+% \end{enumerate}
+% \begin{macro}{\@fxdeprecateprefixcmd}
+%   \marg{type}\\
+%   This is implemented by the macro below:
+%    \begin{macrocode}
+\newcommand*\@fxdeprecateprefixcmd[1]{
+  \expandafter\newcommand\expandafter*\csname fixme#1prefix\endcsname{}
+  \expandafter\let\csname fixme#1prefix\endcsname\empty
+  \AtBeginDocument{%
+    \expandafter\ifx\csname fixme#1prefix\endcsname\empty%
+      \expandafter\renewcommand\expandafter*\csname fixme#1prefix\endcsname{%
+        \fxprefix{\@nameuse{fx#1name}}}%
+    \else%
+      \@fxdeprecatedcmdwarning{fixme#1prefix}{fx#1name}%
+    \fi}}
 
-\newcommand*\fixmenoteprefix{}
-\let\fixmenoteprefix\empty
-\newcommand*\fixmewarningprefix{}
-\let\fixmewarningprefix\empty
-\newcommand*\fixmeerrorprefix{}
-\let\fixmeerrorprefix\empty
-\newcommand*\fixmefatalprefix{}
-\let\fixmefatalprefix\empty
-
-\AtBeginDocument{%
-  \ifx\fixmenoteprefix\empty%
-    \renewcommand*\fixmenoteprefix{\fxprefix{\fxnotename}}%
-  \else%
-    \@fxdeprecatedcmdwarning{fixmenoteprefix}{fxnotename}%
-  \fi%
-  \ifx\fixmewarningprefix\empty%
-    \renewcommand*\fixmewarningprefix{\fxprefix{\fxwarningname}}%
-  \else%
-    \@fxdeprecatedcmdwarning{fixmewarningprefix}{fxwarningname}%
-  \fi%
-  \ifx\fixmeerrorprefix\empty%
-    \renewcommand*\fixmeerrorprefix{\fxprefix{\fxerrorname}}%
-  \else%
-    \@fxdeprecatedcmdwarning{fixmeerrorprefix}{fxerrorname}%
-  \fi%
-  \ifx\fixmefatalprefix\empty%
-    \renewcommand*\fixmefatalprefix{\fxprefix{\fxfatalname}}%
-  \else%
-    \@fxdeprecatedcmdwarning{fixmefatalprefix}{fxfatalname}%
-  \fi}
+\@fxdeprecateprefixcmd{note}
+\@fxdeprecateprefixcmd{warning}
+\@fxdeprecateprefixcmd{error}
+\@fxdeprecateprefixcmd{fatal}
 
 %    \end{macrocode}
 % \end{macro}
