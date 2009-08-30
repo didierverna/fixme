@@ -1675,28 +1675,46 @@
 % \begin{macro}{\FiXmeInline}
 %   \begin{macro}{\FiXmeMargin}
 %     \begin{macro}{\FiXmeFootnote}
-%       \begin{macro}{\FiXmeUser}
-%         \begin{macro}{\FiXmeIndex}
-%           \marg{note}\\
-%           The \cs{FiXme*} macros below are kept only to preserve backward
-%           compatibility. They are used by fatal notes only and are made to
-%           call the new versions by default. \cs{FiXmeUser} is treated a bit
-%           differently though (see section \sectionref{sec:code:userlayout}).
+%       \begin{macro}{\FiXmeIndex}
+%         \marg{note}\\
+%         The \cs{FiXme*} macros below are kept only to preserve backward
+%         compatibility. They are used by fatal notes only and are made to
+%         call the new versions by default.
 %    \begin{macrocode}
 \newcommand*\FiXmeInline[1]{\FXLayoutInline{\fixmefatalprefix}{#1}}
 \newcommand*\FiXmeMargin[1]{\FXLayoutMargin{\fixmefatalprefix}{#1}}
 \newcommand*\FiXmeFootnote[1]{\FXLayoutFootnote{\fixmefatalprefix}{#1}}
-
-\newcommand*\FiXmeUser[1]{}
-\let\FiXmeUser\empty
-
 \newcommand*\FiXmeIndex[1]{\FXLayoutIndex{#1}}
 
 %    \end{macrocode}
-%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
+% \end{macro}
+% \begin{macro}{\FiXmeUser}
+%   \cs{FiXmeUser} is treated a bit differently though: user layout Backward
+%   compatibility is not as simple as the rest of the interface, because users
+%   of version 1 were instructed to \cs{renewcommand} \cs{FiXmeUser} (which is
+%   specific to fatal notes), whereas they were instructed to \cs{newcommand}
+%   \cs{FXUser} (which is now deprecated in favor of \cs{FXLayoutUser})\ldots
+%   oh boy, what a mess.
+%    \begin{macrocode}
+\newcommand*\FiXmeUser[1]{}
+\let\FiXmeUser\empty
+\AtBeginDocument{%
+  \ifthenelse{\NOT\isundefined{\FXLayoutUser}}{%
+    \renewcommand\FiXmeUser[1]{\FXLayoutUser{\fixmefatalprefix}{#1}}}{%
+    \ifthenelse{\NOT\isundefined{\FXUser}}{%
+      \@fxdeprecatedcmdwarning{FXUser}{FXLayoutUser}%
+      \newcommand\FXLayoutUser[2]{\FXUser{#1}{#2}}%
+      \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}}{%
+      \ifx\FiXmeUser\empty%
+        \renewcommand\FiXmeUser[1]{}%
+      \else%
+        \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}%
+      \fi}}}
+
+%    \end{macrocode}
 % \end{macro}
 %
 % \subsubsubsection{Low-level implementation\label{sec:code:fatalnotes}}
@@ -2087,28 +2105,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{User layout backward compatibility
-%   tweaks\label{sec:code:userlayout}}
-% User layout Backward compatibility is not as simple as the rest of the
-% interface, because users of version 1 were instructed to \cs{renewcommand}
-% \cs{FiXmeUser} (which is specific to fatal notes), whereas they were
-% instructed to \cs{newcommand} \cs{FXUser} (which is now deprecated in favor
-% of \cs{FXLayoutUser})\ldots oh boy, what a mess.
-%    \begin{macrocode}
-\AtBeginDocument{%
-  \ifthenelse{\NOT\isundefined{\FXLayoutUser}}{%
-    \renewcommand\FiXmeUser[1]{\FXLayoutUser{\fixmefatalprefix}{#1}}}{%
-    \ifthenelse{\NOT\isundefined{\FXUser}}{%
-      \@fxdeprecatedcmdwarning{FXUser}{FXLayoutUser}%
-      \newcommand\FXLayoutUser[2]{\FXUser{#1}{#2}}%
-      \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}}{%
-      \ifx\FiXmeUser\empty%
-        \renewcommand\FiXmeUser[1]{}%
-      \else%
-        \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}%
-      \fi}}}
-
-%    \end{macrocode}
 % \subsubsection{\fixme summary}
 % Finally, output a summary giving the number of fixme notes at the end of the
 % compilation:
