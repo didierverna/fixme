@@ -101,7 +101,7 @@
 %   such cases, you probably want to stick clues about which parts need to be
 %   ``fixed'', where they are located, and what needs to be done. This is what
 %   I call ``fixme notes''. The purpose of this package is to provide you with
-%   convenient ways to insert \fixme notes in your documents.\par
+%   convenient ways to insert such notes in your documents.\par
 %   The \fixme package is \packagecopyright{}, and distributed under the
 %   terms of the LPPL license.
 % \end{abstract}
@@ -139,10 +139,10 @@
 % \subsection{Loading the package}
 % In order to load \fixme, simply say |\usepackage[|\meta{options}|]{fixme}|
 % in the preamble of your document. There is an important number of options
-% that you can use in order to customize \fixme's default behavior. These
-% options will be discussed when appropriate.\\
+% that you can use in order to customize \fixme's default or glabal behavior.
+% These options will be discussed when appropriate.\\
 % \DescribeMacro{\fxsetup}\marg{options}\\
-% Another way of customizing \fixme's default behavior is to use the
+% Another way of customizing \fixme's global behavior is to use the
 % \cs{fxsetup} command. \cs{fxsetup} understands the same options as the
 % package itself and can be used in the preamble as well as in the document's
 % body.
@@ -160,25 +160,36 @@
 % \fixme provides four note insertion commands corresponding to different
 % levels of importance (notes, warnings, errors and fatal errors).
 % \cs{fxfatal} is a bit different from the other ones, as will be explained in
-% section \sectionref{sec:manual:behavior}.
+% section \sectionref{sec:manual:behavior}.\par
+% \DescribeMacro{\fixme}
+% As of version 4, the \cs{fixme} command is a synonym for \cs{fxfatal} and is
+% considered deprecated.\par
+% \fixme notes are meant to be short: consider that they are likely to go in
+% the list of fixmes and in the index for instance. If you feel the need for
+% writing longer comments, the environments described in the next section
+% might come in handy.
 %
 % \subsubsection{Environments}
+% \emph{\textbf{Warning:} as of version 4.0, the environments interface has
+%   changed and is \emph{not} backward-compatible.}\\
 % \DescribeEnv{anfxnote}
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
-% While \fixme notes are usually meant to be short, there might be times when
-% a longer comment is appropriate. As of version 3.0, \fixme provides four
-% environments for inserting such longer notes\footnote{\textbf{Warning: as of
-% version 4.0, the environments interface has changed and is \emph{not}
-% backward-compatible.}}.
+% As of version 3.0, \fixme provides four environments for inserting longer
+% notes, if you feel that a short one is inappropriate.
 %
 % \fixme environments take one mandatory argument (meant to be a short summary
 % of the long note) and behave in exactly the same way as their macro
 % counterpart. The layout policy is a bit different though (see section
 % \sectionref{sec:manual:layout}): the long note (the environment's contents)
 % will always appear inline, and the \meta{summary} will obey all active
-% layout forms except for the inline one.
+% layout forms except for the inline one, just as if it had been passed to one
+% of the \fixme note insertion commands described in the previous section.
+%
+% \DescribeEnv{afixme}
+% As of version 4, the \texttt{afixme} environement is a synonym for
+% \texttt{anfxfatal}, and is considered deprecated.
 %
 % \subsection{Controlling the behavior of \fixme\label{sec:manual:behavior}}
 % \DescribeOption{final}
@@ -223,11 +234,10 @@
 % The layout forms currently supported are: inline (directly in the text),
 % marginal notes (the default), footnotes, index entries and (as of version
 % 3.2) marginal clues.\footnote{\fixme notes also appear in a ``list of
-%   fixmes'', see section \sectionref{sec:manual:listoffixmes}.} While most of
+%   fixmes'', see section \sectionref{sec:manual:lox}.} While most of
 %   these layout forms should be self-explanatory, the marginal clues deserve
 %   a bit more explanation.
 %
-% \subsubsubsection{Marginal Clues}
 % If your preferred layout form is inline or say, footnote, it might be
 % somewhat difficult to localize the \fixme note on the page, especially its
 % vertical position. That's where marginal clues come into play. A marginal
@@ -282,7 +292,7 @@
 % Both of these options take a comma-separated list of the individual options
 % described above (this includes the \texttt{no}\meta{option} form as well).
 %
-% While the \texttt{morelayout} options \emph{adds} to the existing layout
+% While the \texttt{morelayout} options \emph{adds} to the current layout
 % configuration, the \texttt{layout} one completely overrides it. For
 % instance, knowing that by default, only the \texttt{margin} layout form is
 % active, the following forms are all equivalent:
@@ -300,7 +310,7 @@
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
 % particular note (see section \sectionref{sec:manual:othercommonproblems} for
-% some of them).As of version 4.0, one frequent reason (described below) can
+% some of them). As of version 4.0, one frequent reason (described below) can
 % be handled automatically by \fixme.
 %
 % Remember that the default layout is to use margin paragraphs. Unfortunately,
@@ -383,7 +393,7 @@
 % forms are possible: \texttt{silent}, equivalent to \texttt{silent=true}, and
 % \texttt{nosilent}, equivalent to \texttt{silent=false} (the default).
 %
-% \subsection{List of \fixme's}
+% \subsection{List of \fixme's\label{sec:manual:lox}}
 % \DescribeMacro{\listoffixmes}
 % \fixme remembers where you put \fixme notes in a toc-like file whose
 % extension is \texttt{lox}. The \cs{listoffixmes} macro generates the list of
