@@ -654,6 +654,7 @@
 
 %    \end{macrocode}
 % \end{macro}
+%
 % \subsubsection{\texttt{xkeyval} related}
 % \begin{macro}{\@fxdefinekey}
 %   \marg{family}\marg{key}\oarg{default}\marg{function}
@@ -736,146 +737,6 @@
 %   \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}\\
 %    \begin{macrocode}
 \newcommand\@fxdefinecmdkey{\define@cmdkey[fx]}
-
-%    \end{macrocode}
-% \end{macro}
-%
-% \subsubsection{Backward compatibility related}
-% \subsubsubsection{Legacy commands}
-% \begin{macro}{\@fxlegacycmdwarning}
-%   \marg{name}\\
-%   Issue a \fixme warning about a legacy command (see below):
-%    \begin{macrocode}
-\newcommand*\@fxlegacycmdwarning[1]{%
-  \@fxpkgwarning{%
-    \@fxcsstring{#1} is a legacy command that is not used anymore}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxnewlegacycmd}
-%   \marg{name}\\
-%   A ``legacy command'' is an old command taking one argument and that has no
-%   effect anymore. Note: currently unused.
-%    \begin{macrocode}
-%% \newcommand\@fxnewlegacycmd[1]{%
-%%   \expandafter\newcommand\csname#1\endcsname[1]{\@fxlegacycmdwarning{#1}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxnewlegacyrcmd}
-%   \marg{name}\\
-%   A ``legacy renewable command'' is a legacy command that might be
-%   renew'ed by the user instead of being used directly. Here is what we do:
-%   \begin{enumerate}
-%   \item \cs{newcommand} it and \cs{let} it be \cs{empty},
-%   \item \cs{AtBeginDocument}, check if it has been redefined (that is, if
-%     it is not \cs{empty} anymore),
-%   \item and if so, issue a legacy command warning.
-%   \end{enumerate}
-%    \begin{macrocode}
-\newcommand*\@fxnewlegacyrcmd[1]{%
-  \expandafter\newcommand\csname#1\endcsname{}
-  \expandafter\let\csname#1\endcsname\empty
-  \AtBeginDocument{%
-    \expandafter\ifx\csname#1\endcsname\empty\else%
-      \@fxlegacycmdwarning{#1}
-    \fi}}
-
-%    \end{macrocode}
-% \end{macro}
-%
-% \subsubsubsection{Deprecated commands}
-% \begin{macro}{\@fxdeprecatedcmdwarning}
-%   \marg{old}\marg{new}\\
-%   Issue a \fixme warning about a deprecated command (see below):
-%    \begin{macrocode}
-\newcommand*\@fxdeprecatedcmdwarning[2]{%
-  \@fxpkgwarning{%
-    \@fxcsstring{#1} is deprecated;\MessageBreak
-    please use \@fxcsstring{#2} instead}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxnewdeprecatedcmd}
-%   \marg{old}\marg{new}\\
-%   A ``deprecated command'' is a user-level command that has been deprecated
-%   in favor of a new one. Users might call these commands, but are not
-%   supposed to redefine them. Hence, their definition is just a call to the
-%   new version.
-%    \begin{macrocode}
-\newcommand*\@fxnewdeprecatedcmd[2]{%
-  \@namedef{#1}{%
-    \@fxdeprecatedcmdwarning{#1}{#2}%
-    \@nameuse{#2}}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxprefixdeprecatecmd}
-%   \oarg{prefix}\marg{name}\\
-%   Since version 4 of \fixme comes with a lot of \texttt{fixme} to
-%   \texttt{fx} prefix changes, we have a special macro to do this for
-%   deprecated commands:
-%    \begin{macrocode}
-\newcommand*\@fxprefixdeprecatecmd[2][]{%
-  \@fxnewdeprecatedcmd{#1fixme#2}{#1fx#2}}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxdeprecatedenvwarning}
-%   \marg{old}\marg{new}\\
-%   Issue a \fixme warning about a deprecated environment (see below):
-%    \begin{macrocode}
-\newcommand*\@fxdeprecatedenvwarning[2]{%
-  \@fxpkgwarning{%
-    the '#1' environment is deprecated;\MessageBreak
-    please use '#2' instead}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxnewdeprecatedenv}
-%   \marg{old}\marg{new}\\
-%   A ``deprecated environment'' is defined similarly to a deprecated command.
-%    \begin{macrocode}
-\newcommand*\@fxnewdeprecatedenv[2]{%
-  \@namedef{#1}{%
-    \@fxdeprecatedenvwarning{#1}{#2}%
-    \@nameuse{#2}}
-  \@namedef{end#1}{\@nameuse{end#2}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxnewdeprecatedrcmd}
-%   \marg{old}\marg{new}\\
-%   A ``deprecated renewable command'' is a deprecated command that is
-%   likely to be renew'ed by the user. There are several possibilities to
-%   implement this. One is to maintain the use of the older version in the
-%   core of \fixme, and make it just call the new one by default. That way,
-%   if the user redefines the older one, it will work out of the box. However,
-%   I prefer that the core of \fixme always use the newest API if possible,
-%   so the chosen solution is as follows:
-%   \begin{enumerate}
-%   \item \cs{newcommand} the old one and \cs{let} it be \cs{empty},
-%   \item \cs{AtBeginDocument}, check if the old command has been redefined
-%     (that is, if it is not \cs{empty} anymore),
-%   \item and if so, issue a deprecation warning and redefine the new one to
-%     call the old one.
-%   \end{enumerate}
-%   Note that we don't need to know the macro's prototype, because
-%   \cs{renewcommand} asks for it all over again.
-%    \begin{macrocode}
-\newcommand*\@fxnewdeprecatedrcmd[2]{%
-  \expandafter\newcommand\csname#1\endcsname{}
-  \expandafter\let\csname#1\endcsname\empty
-  \AtBeginDocument{%
-    \expandafter\ifx\csname#1\endcsname\empty\else%
-      \@fxdeprecatedcmdwarning{#1}{#2}%
-      \@namedef{#2}{\@nameuse{#1}}
-    \fi}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxprefixdeprecatercmd}
-%   \oarg{prefix}\marg{name}\\
-%   Since version 4 of \fixme comes with a lot of \texttt{fixme} to
-%   \texttt{fx} prefix changes, we have a special macro to do this for
-%   deprecated renewable commands:
-%    \begin{macrocode}
-\newcommand*\@fxprefixdeprecatercmd[2][]{%
-  \@fxnewdeprecatedrcmd{#1fixme#2}{#1fx#2}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1133,17 +994,8 @@
 \newcommand\@fxsetlayoutkeys{\@fxsetkeys{layout}}
 %    \end{macrocode}
 % \end{macro}
-% \subsubsection{Layout macros\label{sec:code:layoutmacros}}
-% \begin{macro}{\@fxlayoutrename}
-%   \marg{name}\\
-%   As of version 4, layout macros have been renamed from \cs{FX*} to
-%   \cs{FXLayout*}. Older versions remain for backward compatibility.
-%    \begin{macrocode}
-\newcommand*\@fxlayoutrename[1]{\@fxnewdeprecatedrcmd{FX#1}{FXLayout#1}}
-
-%    \end{macrocode}
-% \end{macro}
 %
+% \subsubsection{Layout macros\label{sec:code:layoutmacros}}
 % \subsubsubsection{Textual output}
 % \begin{macro}{\FXLayoutInline}
 %   \begin{macro}{\FXLayoutMargin}
@@ -1170,27 +1022,9 @@
 
 %    \end{macrocode}
 % \end{macro}
-% Note that neither \cs{FXLayoutUser} nor the deprecated version \cs{FXUser}
-% are defined here (see section \sectionref{sec:code:userlayout} for backward
-% compatibility concerns). Requesting the \texttt{user} layout without
-% defining one or the other would produce an error, which is the expected
-% behavior.
-% \begin{macro}{FXInline}
-%   \begin{macro}{FXMargin}
-%     \begin{macro}{FXFootnote}
-%       \begin{macro}{FXMarginClue}
-%         Deprecated versions:
-%    \begin{macrocode}
-\@fxlayoutrename{Inline}
-\@fxlayoutrename{Margin}
-\@fxlayoutrename{Footnote}
-\@fxlayoutrename{MarginClue}
-
-%    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
+% Note that \cs{FXLayoutUser} is not defined here. Requesting the
+% \texttt{user} layout without defining one or the other would produce an
+% error, which is the expected behavior.
 %
 % \subsubsubsection{Index output}
 % \begin{macro}{\@wrindex}
@@ -1219,25 +1053,6 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[1]{\index{***@\fixmeindexname:!#1}}
 %    \end{macrocode}
-% \end{macro}
-% \begin{macro}{FXIndex}
-%   Deprecated version:
-%    \begin{macrocode}
-\@fxlayoutrename{Index}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FiXmeInfo}
-%   \begin{macro}{\FiXmeWarning}
-%     The following macros are unused since version 2.2 (at the time of which,
-%     layout and logging were the same thing), but kept here anyway to avoid
-%     breaking compilation of older documents (renewing these commands).
-%    \begin{macrocode}
-\@fxnewlegacyrcmd{FiXmeInfo}
-\@fxnewlegacyrcmd{FiXmeWarning}
-
-%    \end{macrocode}
-%   \end{macro}
 % \end{macro}
 %
 % \subsubsection{Layout options}
@@ -1314,19 +1129,6 @@
 
 %    \end{macrocode}
 % \end{option}
-% The following options are unused since version 2.2 (at the time of which,
-% layout and logging were the same thing), but kept here anyway to avoid
-% breaking compilation of older documents.
-% \begin{option}{info}
-%   \begin{option}{warning}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdeclarelegacyboolopt{info}
-\@fxdeclarelegacyboolopt{warning}
-
-%    \end{macrocode}
-%  \end{option}
-% \end{option}
 %
 % \subsubsubsection{Global options}
 % \begin{macro}{\@fxlayouts}
@@ -1365,15 +1167,6 @@
 %
 % \subsection{Logging}
 % \subsubsection{Logging macros}
-% \begin{macro}{\@fxlogrename}
-%   \marg{name}\\
-%   As of version 4, logging macros have been renamed from \cs{FX*} to
-%   \cs{FXLog*}. Older versions remain for backward compatibility.
-% \end{macro}
-%    \begin{macrocode}
-\newcommand*\@fxlogrename[1]{\@fxnewdeprecatedrcmd{FX#1}{FXLog#1}}
-
-%    \end{macrocode}
 % \begin{macro}{\FXLogNote}
 %   \begin{macro}{\FXLogWarning}
 %     \begin{macro}{\FXLogerror}
@@ -1397,22 +1190,6 @@
   \GenericWarning{%
     (FiXme)\@spaces\@spaces\@spaces\@spaces}{%
     FiXme Fatal Error: '#1'}}
-
-%    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-% \begin{macro}{FXNote}
-%   \begin{macro}{FXWarning}
-%     \begin{macro}{FXError}
-%       \begin{macro}{FXFatal}
-%         Deprecated versions:
-%    \begin{macrocode}
-\@fxlogrename{Note}
-\@fxlogrename{Warning}
-\@fxlogrename{Error}
-\@fxlogrename{Fatal}
 
 %    \end{macrocode}
 %       \end{macro}
@@ -1451,19 +1228,6 @@
 %
 % \subsection{\fixme notes}
 % \subsubsection{Note parameters}
-% As of version 4, the \cs{fixme*} commands have been renamed to \cs{fx*}.
-% Older versions remain for backward compatibility.
-% \begin{macro}{\@fxcounterrename}
-%   \marg{name}\\
-%   \texttt{fixme*} counters have also been renamed to \texttt{fx*}. Older
-%   versions of \cs{the*} macros remain for backward compatibility (not the
-%   counters themselves, but that should be ok since users are not supposed to
-%   mess up with them).
-%    \begin{macrocode}
-\newcommand*\@fxcounterrename[1]{\@fxprefixdeprecatecmd[the]{#1count}}
-
-%    \end{macrocode}
-% \end{macro}
 % \begin{counter}{fixmecount}
 %   \texttt{fixmecount} maintains the total of all notes, regardless of their
 %   level.
@@ -1475,21 +1239,16 @@
 % \begin{macro}{\@fxnoteparameters}
 %   \marg{type}\\
 %   The following macro creates all required note parameters. This currently
-%   comprises the note counter, name and index name. Backward compatibility
-%   on the counter and index name is also ensured automatically.
+%   comprises the note counter, name and index name.
 %    \begin{macrocode}
 \newcommand*\@fxnoteparameters[1]{%
   \newcounter{fx#1count}
   \expandafter\newcommand\expandafter*\csname fx#1name\endcsname{}
-  \expandafter\newcommand\expandafter*\csname fx#1indexname\endcsname{}
-
-  \@fxcounterrename{#1}
-  \@fxprefixdeprecatercmd{#1indexname}}
+  \expandafter\newcommand\expandafter*\csname fx#1indexname\endcsname{}}
 
 %    \end{macrocode}
 % \end{macro}
 % \begin{counter}{fx*count}
-%   \begin{macro}{\thefixme*count}
 %     \begin{macro}{\fx*name}
 %       \begin{macro}{\fx*indexname}
 %         \begin{macro}{\fixme*indexname}
@@ -1501,7 +1260,6 @@
 \@fxnoteparameters{fatal}
 
 %    \end{macrocode}
-%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -1536,42 +1294,9 @@
 % \begin{macro}{\fxprefix}
 %   \marg{typename}\\
 %   As of version 4, prefix construction has been homogenized through this
-%   macro, rendering the former \cs{fixme*prefix} ones obsolete.
+%   macro (which replaces the former \cs{fixme*prefix} ones).
 %    \begin{macrocode}
 \newcommand*\fxprefix[1]{\fixmelogo{} #1}
-%    \end{macrocode}
-% \end{macro}
-% Normally, we would use \cs{@fxnewdeprecatedrcmd} to implement this, but it
-% is not possible in that case, because there is not a one-to-one
-% correspondance between a deprecated macro and the superseding one, so step 3
-% of the deprecation machanism is impossible. So here is what we do:
-% \begin{enumerate}
-% \item keep the old ones in the core of \fixme (too bad),
-% \item predefine them to \cs{empty},
-% \item \cs{AtBeginDocument}, check if they have been \cs{renewcommand}'ed
-%   (not \cs{empty} anymore), and if so, issue a deprecation warning,
-% \item otherwise, define them to call the new interface.
-% \end{enumerate}
-% \begin{macro}{\@fxdeprecateprefixcmd}
-%   \marg{type}\\
-%   This is implemented by the macro below:
-%    \begin{macrocode}
-\newcommand*\@fxdeprecateprefixcmd[1]{
-  \expandafter\newcommand\expandafter*\csname fixme#1prefix\endcsname{}
-  \expandafter\let\csname fixme#1prefix\endcsname\empty
-  \AtBeginDocument{%
-    \expandafter\ifx\csname fixme#1prefix\endcsname\empty%
-      \expandafter\renewcommand\expandafter*\csname fixme#1prefix\endcsname{%
-        \fxprefix{\@nameuse{fx#1name}}}%
-    \else%
-      \@fxdeprecatedcmdwarning{fixme#1prefix}{fx#1name}%
-    \fi}}
-
-\@fxdeprecateprefixcmd{note}
-\@fxdeprecateprefixcmd{warning}
-\@fxdeprecateprefixcmd{error}
-\@fxdeprecateprefixcmd{fatal}
-
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout}
@@ -1582,7 +1307,7 @@
 %    \begin{macrocode}
 \newcommand*\@fxlayout[2]{%
   \@fxhandleinnermode%
-  \def\@fxtempa{\@nameuse{fixme#1prefix}}%
+  \def\@fxtempa{\fxprefix{\@nameuse{fx#1name}}}%
   \def\@fxtempb{\@nameuse{fx#1indexname}}%
   \def\@fxtempc{\@nameuse{thefx#1count}}%
   \iffx@layout@footnote\FXLayoutFootnote{\@fxtempa}{#2}\fi%
@@ -1606,7 +1331,7 @@
 %    \begin{macrocode}
 \newcommand*\@@fxnote@final[2]{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
-  \fxaddcontentsline{\@nameuse{fixme#1prefix}: #2}}
+  \fxaddcontentsline{\fxprefix{\@nameuse{fx#1name}}: #2}}
 \newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
   \@@fxnote@final{#1}{#2}}
@@ -1659,60 +1384,13 @@
 % \end{macro}
 %
 % \subsubsection{Fatal notes}
-% Fatal notes can't be handled in the same generic way as the others for two
-% reasons: backward compatibility problems, and the fact that their behavior
-% differs from that of the others in \texttt{final} mode.\par
-% \begin{macro}{\FiXmeInline}
-%   \begin{macro}{\FiXmeMargin}
-%     \begin{macro}{\FiXmeFootnote}
-%       \begin{macro}{\FiXmeIndex}
-%         \marg{note}\\
-%         The \cs{FiXme*} macros below are kept only to preserve backward
-%         compatibility. They are used by fatal notes only and are made to
-%         call the new versions by default.
-%    \begin{macrocode}
-\newcommand*\FiXmeInline[1]{\FXLayoutInline{\fixmefatalprefix}{#1}}
-\newcommand*\FiXmeMargin[1]{\FXLayoutMargin{\fixmefatalprefix}{#1}}
-\newcommand*\FiXmeFootnote[1]{\FXLayoutFootnote{\fixmefatalprefix}{#1}}
-\newcommand*\FiXmeIndex[1]{\FXLayoutIndex{#1}}
-
-%    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-% \begin{macro}{\FiXmeUser}
-%   \cs{FiXmeUser} is treated a bit differently though: user layout Backward
-%   compatibility is not as simple as the rest of the interface, because users
-%   of version 1 were instructed to \cs{renewcommand} \cs{FiXmeUser} (which is
-%   specific to fatal notes), whereas they were instructed to \cs{newcommand}
-%   \cs{FXUser} (which is now deprecated in favor of \cs{FXLayoutUser})\ldots
-%   oh boy, what a mess.
-%    \begin{macrocode}
-\newcommand*\FiXmeUser[1]{}
-\let\FiXmeUser\empty
-\AtBeginDocument{%
-  \ifthenelse{\NOT\isundefined{\FXLayoutUser}}{%
-    \renewcommand\FiXmeUser[1]{\FXLayoutUser{\fixmefatalprefix}{#1}}}{%
-    \ifthenelse{\NOT\isundefined{\FXUser}}{%
-      \@fxdeprecatedcmdwarning{FXUser}{FXLayoutUser}%
-      \newcommand\FXLayoutUser[2]{\FXUser{#1}{#2}}%
-      \renewcommand\FiXmeUser[1]{\FXUser{\fixmefatalprefix}{#1}}}{%
-      \ifx\FiXmeUser\empty%
-        \renewcommand\FiXmeUser[1]{}%
-      \else%
-        \@fxdeprecatedcmdwarning{FiXmeUser}{FXLayoutUser}%
-      \fi}}}
-
-%    \end{macrocode}
-% \end{macro}
+% Fatal notes can't be handled in exactly the same generic way as the others
+% because their behavior differs in \texttt{final} mode.\par
 %
 % \subsubsubsection{Low-level implementation\label{sec:code:fatalnotes}}
 % \begin{macro}{\@@fxfatal@final}
 %   \begin{macro}{\@@fxfatal@draft}
 %     \marg{note}\\
-%     Note that we start with the footnote layout, so that it is sticked
-%     properly to the preceding text if active.
 %    \begin{macrocode}
 \newcommand*\@@fxfatal@final[1]{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
@@ -1722,17 +1400,9 @@
     mode),\MessageBreak
     and rerun LaTeX.}}
 \newcommand*\@@fxfatal@draft[1]{%
-  \@fxhandleinnermode%
-  \iffx@layout@footnote\FiXmeFootnote{#1}\fi%
-  \iffx@layout@margin\FiXmeMargin{#1}\fi%
-  \iffx@layout@marginclue\FXLayoutMarginClue{\fixmefatalprefix}\fi%
-  \iffx@layout@inline\FiXmeInline{#1}\fi%
-  \iffx@layout@user\FiXmeUser{#1}\fi%
-  \iffx@layout@index%
-    \FiXmeIndex{\fxfatalindexname\thefxfatalcount: #1}%
-  \fi%
+  \@fxlayout{fatal}{#1}%
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \fxaddcontentsline{\fixmefatalprefix: #1}}
+  \fxaddcontentsline{\fxprefix{\fxfatalname}: #1}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1761,8 +1431,17 @@
     {\@fxsfatal}{\@fxsfatal[]}}{%
     \@ifnextchar[%]
     {\@fxfatal}{\@fxfatal[]}}}
-\@fxnewdeprecatedcmd{fixme}{fxfatal}
 
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fixme}
+%   \oarg{options}\marg{note}
+%   Deprecate \cs{fixme}:
+%    \begin{macrocode}
+\DeclareRobustCommand\fixme{%
+  \@fxpkgwarning{\string\fixme\space is deprecated;\MessageBreak
+    please use \string\fxfatal\space instead}%
+  \fxfatal}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1801,7 +1480,7 @@
   \comment}
 \newcommand*\@fxenvbegin@draft[3]{%
   \@nameuse{fx#1}[#2,noinline]{#3}%
-  \FXEnvBegin{\@nameuse{fixme#1prefix}}}
+  \FXEnvBegin{\fxprefix{\@nameuse{fx#1name}}}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1844,10 +1523,13 @@
 %   \end{environment}
 % \end{environment}
 % \begin{environment}{afixme}
-%   The \texttt{afixme} environment is deprecated:
+%   Deprecate the \texttt{afixme} environment:
 %    \begin{macrocode}
-\@fxnewdeprecatedenv{afixme}{anfxfatal}
-
+\def\afixme{%
+  \@fxpkgwarning{The 'afixme' environment is deprecated;\MessageBreak
+    please use 'anfxfatal' instead}%
+  \anfxfatal}
+\let\endafixme\endanfxfatal
 %    \end{macrocode}
 % \end{environment}
 %
