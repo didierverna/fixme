@@ -1009,34 +1009,35 @@
 % \subsubsubsection{Textual output}
 % \begin{macro}{\FXLayoutInline}
 %   \begin{macro}{\FXLayoutMargin}
-%     \begin{macro}{\FXLayoutFootnote}
-%       \marg{prefix}\marg{note}
+%     \begin{macro}{\FXLayoutMarginCLue}
+%       \begin{macro}{\FXLayoutFootnote}
+%         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
-\newcommand*\FXLayoutInline[2]{%
-  \textbf{#1}: \emph{#2}}
-\newcommand*\FXLayoutMargin[2]{%
-  \marginpar[\footnotesize\raggedleft\textbf{#1}: \emph{#2}]{%
-    \footnotesize\raggedright\textbf{#1}: \emph{#2}}}
-\newcommand*\FXLayoutFootnote[2]{%
-  \footnote{\textbf{#1}: \emph{#2}}}
+\newcommand*\FXLayoutInline[3]{#2 \@nameuse{fx#1name}: #3}
+\newcommand*\FXLayoutMargin[3]{%
+  \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}: #3]{%
+    \footnotesize\raggedright#2 \@nameuse{fx#1name}: #3}}
+\newcommand*\FXLayoutMarginClue[3]{%
+  \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}!]{%
+    \footnotesize\raggedright#2 \@nameuse{fx#1name}!}}
+\newcommand*\FXLayoutFootnote[3]{\footnote{#2 \@nameuse{fx#1name}: #3}}
 %    \end{macrocode}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
-% \end{macro}
-% \begin{macro}{\FXLayoutMarginCLue}
-%   \marg{prefix}
-%    \begin{macrocode}
-\newcommand*\FXLayoutMarginClue[1]{%
-  \marginpar[\footnotesize\raggedleft\textbf{#1}!]{%
-    \footnotesize\raggedright\textbf{#1}!}}
-
-%    \end{macrocode}
 % \end{macro}
 % Note that \cs{FXLayoutUser} is not defined here. Requesting the
 % \texttt{user} layout without defining one or the other would produce an
 % error, which is the expected behavior.
 %
 % \subsubsubsection{Index output}
+% \begin{macro}{\fixmeindexname}
+%   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
+%   well.
+%    \begin{macrocode}
+\newcommand\fixmeindexname{}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@wrindex}
 %   \marg{contents}\\
 %   A replacement for \LaTeX's standard \cs{@wrindex} command to deal with the
@@ -1051,17 +1052,20 @@
   \@esphack}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\fixmeindexname}
-%   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
-%   well.
 %    \begin{macrocode}
-\newcommand\fixmeindexname{}
+\newcommand*\fxnotesubidx{**a}
+\newcommand*\fxwarningsubidx{**b}
+\newcommand*\fxerrorsubidx{**c}
+\newcommand*\fxfatalsubidx{}
 %    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\FXLayoutIndex}
-%   \marg{note}
+%   \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
-\newcommand*\FXLayoutIndex[1]{\index{***@\fixmeindexname:!#1}}
+\newcommand*\FXLayoutIndex[3]{%
+  \index{***@\fixmeindexname:%
+    !\@nameuse{fx#1subidx}@\@nameuse{fx#1sname}:%
+    !\@nameuse{thefx#1count}: #3}}
+
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1254,14 +1258,13 @@
 \newcommand*\@fxnoteparameters[1]{%
   \newcounter{fx#1count}
   \expandafter\newcommand\expandafter*\csname fx#1name\endcsname{}
-  \expandafter\newcommand\expandafter*\csname fx#1indexname\endcsname{}}
+  \expandafter\newcommand\expandafter*\csname fx#1sname\endcsname{}}
 
 %    \end{macrocode}
 % \end{macro}
 % \begin{counter}{fx*count}
 %     \begin{macro}{\fx*name}
-%       \begin{macro}{\fx*indexname}
-%         \begin{macro}{\fixme*indexname}
+%       \begin{macro}{\fx*sname}
 %           And we use it for all note types:
 %    \begin{macrocode}
 \@fxnoteparameters{note}
@@ -1270,7 +1273,6 @@
 \@fxnoteparameters{fatal}
 
 %    \end{macrocode}
-%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{counter}
@@ -1301,14 +1303,6 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\fxprefix}
-%   \marg{typename}\\
-%   As of version 4, prefix construction has been homogenized through this
-%   macro (which replaces the former \cs{fixme*prefix} ones).
-%    \begin{macrocode}
-\newcommand*\fxprefix[1]{\fixmelogo{} #1}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\@fxlayout}
 %   \marg{type}\marg{note}\\
 %   Dispatch all active layouts. Note that we start with the footnote layout,
@@ -1317,15 +1311,12 @@
 %    \begin{macrocode}
 \newcommand*\@fxlayout[2]{%
   \@fxhandleinnermode%
-  \def\@fxtempa{\fxprefix{\@nameuse{fx#1name}}}%
-  \def\@fxtempb{\@nameuse{fx#1indexname}}%
-  \def\@fxtempc{\@nameuse{thefx#1count}}%
-  \iffx@layout@footnote\FXLayoutFootnote{\@fxtempa}{#2}\fi%
-  \iffx@layout@margin\FXLayoutMargin{\@fxtempa}{#2}\fi%
-  \iffx@layout@marginclue\FXLayoutMarginClue{\@fxtempa}\fi%
-  \iffx@layout@inline\FXLayoutInline{\@fxtempa}{#2}\fi%
-  \iffx@layout@user\FXLayoutUser{\@fxtempa}{#2}\fi%
-  \iffx@layout@index\FXLayoutIndex{\@fxtempb\@fxtempc: #2}\fi}
+  \iffx@layout@footnote\FXLayoutFootnote{#1}{\fixmelogo}{#2}\fi%
+  \iffx@layout@margin\FXLayoutMargin{#1}{\fixmelogo}{#2}\fi%
+  \iffx@layout@marginclue\FXLayoutMarginClue{#1}{\fixmelogo}{#2}\fi%
+  \iffx@layout@inline\FXLayoutInline{#1}{\fixmelogo}{#2}\fi%
+  \iffx@layout@user\FXLayoutUser{#1}{\fixmelogo}{#2}\fi%
+  \iffx@layout@index\FXLayoutIndex{#1}{\fixmelogo}{#2}\fi}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1341,7 +1332,7 @@
 %    \begin{macrocode}
 \newcommand*\@@fxnote@final[2]{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
-  \fxaddcontentsline{\fxprefix{\@nameuse{fx#1name}}: #2}}
+  \fxaddcontentsline{\fixmelogo{ }\@nameuse{fx#1name}: #2}}
 \newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
   \@@fxnote@final{#1}{#2}}
@@ -1412,7 +1403,7 @@
 \newcommand*\@@fxfatal@draft[1]{%
   \@fxlayout{fatal}{#1}%
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \fxaddcontentsline{\fxprefix{\fxfatalname}: #1}}
+  \fxaddcontentsline{\fixmelogo{ }\fxfatalname: #1}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1458,10 +1449,9 @@
 % \subsection{\fixme environments}
 % \subsubsection{Layout macros}
 % \begin{macro}{\FXEnvBegin}
-%   \marg{prefix}
+%   \marg{type}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXEnvBegin[1]{\begin{quotation}
-    \textbf{#1:}}
+\newcommand*\FXEnvBegin[2]{\begin{quotation}#2 \@nameuse{fx#1name}: }
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXEnvEnd}
@@ -1490,7 +1480,7 @@
   \comment}
 \newcommand*\@fxenvbegin@draft[3]{%
   \@nameuse{fx#1}[#2,noinline]{#3}%
-  \FXEnvBegin{\fxprefix{\@nameuse{fx#1name}}}}
+  \FXEnvBegin{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1553,10 +1543,10 @@
   \renewcommand*\fxerrorname{Error}%
   \renewcommand*\fxfatalname{Fatal}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Notes:!}%
-  \renewcommand*\fxwarningindexname{**b@Warnings:!}%
-  \renewcommand*\fxerrorindexname{**c@Errors:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Notes}%
+  \renewcommand*\fxwarningsname{Warnings}%
+  \renewcommand*\fxerrorsname{Errors}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{List of Corrections}}
 %    \end{macrocode}
 % \end{option}
@@ -1569,10 +1559,10 @@
   \renewcommand*\fxerrorname{Erreur}%
   \renewcommand*\fxfatalname{Fatal}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Notes:!}%
-  \renewcommand*\fxwarningindexname{**b@Avertissements:!}%
-  \renewcommand*\fxerrorindexname{**c@Erreurs:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Notes}%
+  \renewcommand*\fxwarningsname{Avertissements}%
+  \renewcommand*\fxerrorsname{Erreurs}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{Liste des Corrections}}
 %    \end{macrocode}
 % \end{option}
@@ -1591,10 +1581,10 @@
   \renewcommand*\fxerrorname{Error}%
   \renewcommand*\fxfatalname{FIXME}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Notas:!}%
-  \renewcommand*\fxwarningindexname{**b@Avisos:!}%
-  \renewcommand*\fxerrorindexname{**c@Errores:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Notas}%
+  \renewcommand*\fxwarningsname{Avisos}%
+  \renewcommand*\fxerrorsname{Errores}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
 %    \end{macrocode}
 % \end{option}
@@ -1607,10 +1597,10 @@
   \renewcommand*\fxerrorname{Errore}%
   \renewcommand*\fxfatalname{FIXME}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Note:!}%
-  \renewcommand*\fxwarningindexname{**b@Avvisi:!}%
-  \renewcommand*\fxerrorindexname{**c@Errori:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Note}%
+  \renewcommand*\fxwarningsname{Avvisi}%
+  \renewcommand*\fxerrorsname{Errori}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{Corrigenda}}
 %    \end{macrocode}
 % \end{option}
@@ -1623,10 +1613,10 @@
   \renewcommand*\fxerrorname{Fehler}%
   \renewcommand*\fxfatalname{FIXME}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Anmerkungen:!}%
-  \renewcommand*\fxwarningindexname{**b@Warnungen:!}%
-  \renewcommand*\fxerrorindexname{**c@Fehler:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Anmerkungen}%
+  \renewcommand*\fxwarningsname{Warnungen}%
+  \renewcommand*\fxerrorsname{Fehler}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
 %    \end{macrocode}
 % \end{option}
@@ -1645,10 +1635,10 @@
   \renewcommand*\fxerrorname{Fejl}%
   \renewcommand*\fxfatalname{FIXME}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Noter:!}%
-  \renewcommand*\fxwarningindexname{**b@Advarsler:!}%
-  \renewcommand*\fxerrorindexname{**c@Fejl:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Noter}%
+  \renewcommand*\fxwarningsname{Advarsler}%
+  \renewcommand*\fxerrorsname{Fejl}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{Rettelser}}
 %    \end{macrocode}
 % \end{option}
@@ -1661,10 +1651,10 @@
   \renewcommand*\fxerrorname{Gre\v ska}%
   \renewcommand*\fxfatalname{FIXME}%
   \renewcommand*\fixmeindexname{\fixmelogo}%
-  \renewcommand*\fxnoteindexname{**a@Poruke:!}%
-  \renewcommand*\fxwarningindexname{**b@Upozorenja:!}%
-  \renewcommand*\fxerrorindexname{**c@Greske:!}%
-  \renewcommand*\fxfatalindexname{}%
+  \renewcommand*\fxnotesname{Poruke}%
+  \renewcommand*\fxwarningsname{Upozorenja}%
+  \renewcommand*\fxerrorsname{Greske}%
+  \renewcommand*\fxfatalsname{}%
   \renewcommand*{\listfixmename}{Popis korekcija}}
 
 %    \end{macrocode}
