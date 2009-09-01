@@ -1332,7 +1332,7 @@
 %    \begin{macrocode}
 \newcommand*\@@fxnote@final[2]{%
   \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
-  \fxaddcontentsline{\fixmelogo{ }\@nameuse{fx#1name}: #2}}
+  \fxaddcontentsline{\@nameuse{fx#1name}: #2}}
 \newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
   \@@fxnote@final{#1}{#2}}
@@ -1403,7 +1403,7 @@
 \newcommand*\@@fxfatal@draft[1]{%
   \@fxlayout{fatal}{#1}%
   \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \fxaddcontentsline{\fixmelogo{ }\fxfatalname: #1}}
+  \fxaddcontentsline{\fxfatalname: #1}}
 
 %    \end{macrocode}
 %   \end{macro}
