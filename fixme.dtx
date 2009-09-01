@@ -1015,13 +1015,17 @@
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{#2 \@nameuse{fx#1name}: #3}
+\let\@fx@layout@inline\FXLayoutInline
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}: #3]{%
     \footnotesize\raggedright#2 \@nameuse{fx#1name}: #3}}
+\let\@fx@layout@margin\FXLayoutMargin
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}!]{%
     \footnotesize\raggedright#2 \@nameuse{fx#1name}!}}
+\let\@fx@layout@marginclue\FXLayoutMarginClue
 \newcommand*\FXLayoutFootnote[3]{\footnote{#2 \@nameuse{fx#1name}: #3}}
+\let\@fx@layout@footnote\FXLayoutFootnote
 \newcommand*\FXLayoutContentsLine[3]{%
   \fxaddcontentsline{\@nameuse{fx#1name}: #3}}
 
@@ -1070,6 +1074,7 @@
   \index{***@\fixmeindexname:%
     !\@nameuse{fx#1subidx}@\@nameuse{fx#1sname}:%
     !\@nameuse{thefx#1count}: #3}}
+\let\@fx@layout@index\FXLayoutIndex
 
 %    \end{macrocode}
 % \end{macro}
@@ -1151,9 +1156,12 @@
 %
 % \subsubsubsection{Global options}
 % \begin{macro}{\@fxlayouts}
-%   Maintains the list of available layouts:
+%   This macro maintains the list of available layouts. Note that we start
+%   with the footnote layout, so that it is sticked properly to the preceding
+%   text if active. Next we handle marginal layouts so that it is also close
+%   to the text to fix.
 %    \begin{macrocode}
-\newcommand*\@fxlayouts{inline,margin,footnote,user,marginclue,index}
+\newcommand*\@fxlayouts{footnote,margin,marginclue,inline,user,index}
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{morelayout}
@@ -1310,18 +1318,14 @@
 % \end{macro}
 % \begin{macro}{\@fxlayout}
 %   \marg{type}\marg{note}\\
-%   Dispatch all active layouts. Note that we start with the footnote layout,
-%   so that it is sticked properly to the preceding text if active. Next we
-%   handle marginal layouts so that it is also close to the text to fix.
+%   Dispatch all active layouts.
 %    \begin{macrocode}
 \newcommand*\@fxlayout[2]{%
   \@fxhandleinnermode%
-  \iffx@layout@footnote\FXLayoutFootnote{#1}{\fixmelogo}{#2}\fi%
-  \iffx@layout@margin\FXLayoutMargin{#1}{\fixmelogo}{#2}\fi%
-  \iffx@layout@marginclue\FXLayoutMarginClue{#1}{\fixmelogo}{#2}\fi%
-  \iffx@layout@inline\FXLayoutInline{#1}{\fixmelogo}{#2}\fi%
-  \iffx@layout@user\FXLayoutUser{#1}{\fixmelogo}{#2}\fi%
-  \iffx@layout@index\FXLayoutIndex{#1}{\fixmelogo}{#2}\fi}
+  \@for\@fxlt:=\@fxlayouts\do{%
+    \@nameuse{iffx@layout@\@fxlt}%
+      \@nameuse{@fx@layout@\@fxlt}{#1}{\fixmelogo}{#2}%
+    \fi}}
 
 %    \end{macrocode}
 % \end{macro}
