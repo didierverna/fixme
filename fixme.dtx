@@ -1011,6 +1011,7 @@
 %   \begin{macro}{\FXLayoutMargin}
 %     \begin{macro}{\FXLayoutMarginCLue}
 %       \begin{macro}{\FXLayoutFootnote}
+%         \begin{macro}{\FXLayoutContentsLine}
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{#2 \@nameuse{fx#1name}: #3}
@@ -1021,7 +1022,11 @@
   \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}!]{%
     \footnotesize\raggedright#2 \@nameuse{fx#1name}!}}
 \newcommand*\FXLayoutFootnote[3]{\footnote{#2 \@nameuse{fx#1name}: #3}}
+\newcommand*\FXLayoutContentsLine[3]{%
+  \fxaddcontentsline{\@nameuse{fx#1name}: #3}}
+
 %    \end{macrocode}
+%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
@@ -1331,8 +1336,8 @@
 %     \marg{type}\marg{note}
 %    \begin{macrocode}
 \newcommand*\@@fxnote@final[2]{%
-  \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi%
-  \fxaddcontentsline{\@nameuse{fx#1name}: #2}}
+  \FXLayoutContentsLine{#1}{\fixmelogo}{#2}%
+  \iffx@log@silent\else\@nameuse{@fxlogcs@#1}{#2}\fi}
 \newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
   \@@fxnote@final{#1}{#2}}
@@ -1402,8 +1407,8 @@
     and rerun LaTeX.}}
 \newcommand*\@@fxfatal@draft[1]{%
   \@fxlayout{fatal}{#1}%
-  \iffx@log@silent\else\FXLogFatal{#1}\fi%
-  \fxaddcontentsline{\fxfatalname: #1}}
+  \FXLayoutContentsLine{fatal}{\fixmelogo}{#1}%
+  \iffx@log@silent\else\FXLogFatal{#1}\fi}
 
 %    \end{macrocode}
 %   \end{macro}
