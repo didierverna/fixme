@@ -1474,18 +1474,15 @@
 % \subsection{\fixme environments}
 % \subsubsection{Layout macros}
 % \begin{macro}{\FXEnvBegin}
-%   \marg{type}\marg{author}
+%   \begin{macro}{\FXEnvEnd}
+%     \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvBegin[2]{%
   \begin{quotation}\bfseries #2 \@nameuse{fx#1name}: \ignorespaces}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FXEnvEnd}
-%   \mbox{}
-%    \begin{macrocode}
-\newcommand\FXEnvEnd{\end{quotation}}
+\newcommand\FXEnvEnd[2]{\end{quotation}}
 
 %    \end{macrocode}
+%   \end{macro}
 % \end{macro}
 %
 % \subsubsection{Status-dependent implementation}
@@ -1513,10 +1510,10 @@
 % \end{macro}
 % \begin{macro}{\@fxenvend@final}
 %   \begin{macro}{\@fxenvend@draft}
-%     \mbox{}
+%     \marg{type}
 %    \begin{macrocode}
-\let\@fxenvend@final\endcomment
-\let\@fxenvend@draft\FXEnvEnd
+\newcommand*\@fxenvend@final[1]{\endcomment}
+\newcommand*\@fxenvend@draft[1]{\FXEnvEnd{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1528,7 +1525,9 @@
 %   This command defines \fixme environments in a generic way:
 %    \begin{macrocode}
 \newcommand*\@fxdefineenvironment[1]{%
-  \newenvironment{anfx#1}[2][]{\@fxenvbegin{#1}{##1}{##2}}{\@fxenvend}}
+  \newenvironment{anfx#1}[2][]{%
+    \@fxenvbegin{#1}{##1}{##2}}{%
+    \@fxenvend{#1}}}
 
 %    \end{macrocode}
 % \end{macro}
