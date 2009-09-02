@@ -1437,6 +1437,16 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsubsection{Starred version}
+% \begin{macro}{\@fxsnote}
+%   \oarg{options}\marg{note}\marg{text}
+%    \begin{macrocode}
+\newcommand\@fxsfatal[3][]{%
+  {\itshape #3}\@fxfatal[#1]{#2}}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsubsection{User-level interface}
 % \begin{macro}{\fxfatal}
 %   \oarg{options}\marg{note}
