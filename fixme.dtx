@@ -139,7 +139,7 @@
 % \subsection{Loading the package}
 % In order to load \fixme, simply say |\usepackage[|\meta{options}|]{fixme}|
 % in the preamble of your document. There is an important number of options
-% that you can use in order to customize \fixme's default or glabal behavior.
+% that you can use in order to customize \fixme's default or global behavior.
 % These options will be discussed when appropriate.\\
 % \DescribeMacro{\fxsetup}\marg{options}\\
 % Another way of customizing \fixme's global behavior is to use the
@@ -152,7 +152,7 @@
 % then local to that particular command.
 %
 % \subsection{Inserting \fixme notes}
-% \subsubsection{Macros}
+% \subsubsection{Commands}
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
 % \DescribeMacro{\fxerror}
@@ -176,11 +176,11 @@
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
-% As of version 3.0, \fixme provides four environments for inserting longer
-% notes, if you feel that a short one is inappropriate.
+% \fixme provides four environments for inserting longer notes, if you feel
+% that a short one is inappropriate.
 %
 % \fixme environments take one mandatory argument (meant to be a short summary
-% of the long note) and behave in exactly the same way as their macro
+% of the long note) and behave in exactly the same way as their command
 % counterpart. The layout policy is a bit different though (see section
 % \sectionref{sec:manual:layout}): the long note (the environment's contents)
 % will always appear inline, and the \meta{summary} will obey all active
@@ -197,7 +197,7 @@
 % The behavior of \fixme is controlled by the two standard options
 % \texttt{final} and \texttt{draft}. These options are usually given to
 % \cs{documentclass} which in turn passes them to all packages. In addition,
-% you can also use them as an option to \cs{usepackage}, in the call to
+% you can also use them as options to \cs{usepackage}, in the call to
 % \cs{fxsetup}, and even to the note insertion commands and environments.
 %
 % In \texttt{draft} mode, \fixme notes are recorded in the log file and appear
@@ -228,15 +228,15 @@
 % \subsection{Controlling the layout of \fixme notes\label{sec:manual:layout}}
 % \fixme notes can appear in several forms in your document. Each of these
 % forms can be individually selected, or they can be combined together. This
-% section describes the available layout forms and their possible combination.
+% section describes the built-in layout forms and their possible combination.
 %
-% \subsubsection{Available layout forms}
+% \subsubsection{Built-in layout forms}
 % The layout forms currently supported are: inline (directly in the text),
-% marginal notes (the default), footnotes, index entries and (as of version
-% 3.2) marginal clues.\footnote{\fixme notes also appear in a ``list of
-%   fixmes'', see section \sectionref{sec:manual:lox}.} While most of
-%   these layout forms should be self-explanatory, the marginal clues deserve
-%   a bit more explanation.
+% marginal notes (the default), footnotes, index entries and marginal
+% clues. \fixme notes may also appear in a ``list of fixmes'' (see section
+% \sectionref{sec:manual:lox}), but this is not really a layout form. While
+% most of these forms should be self-explanatory, marginal clues deserve a bit
+% more explanation.
 %
 % If your preferred layout form is inline or say, footnote, it might be
 % somewhat difficult to localize the \fixme note on the page, especially its
@@ -327,8 +327,8 @@
 %
 % Using \texttt{innerlayout} is not as trivial as it may seem: it
 % \emph{really} is an alternate layout configuration, and as such, you can use
-% any combination you like of individual options, or you can even use the
-% \texttt{layout} and \texttt{morelayout} options. This means that your
+% any combination you like of individual layout options, or you can even use
+% the \texttt{layout} and \texttt{morelayout} options. This means that your
 % alternate layout can either \emph{add} to the existing one, or
 % \emph{override} it. Here are some examples to clarify things a little. You
 % should try to understand them.
@@ -388,21 +388,22 @@
 % \DescribeOption{nosilent}
 % You have the ability to suppress logging altogether by using the
 % \texttt{silent} option. This option is understood by the package itself, the
-% \cs{fxsetup} macro and all note insertion commands and environments. Just as
-% individual layout options, \texttt{silent} is a boolean option, so all those
-% forms are possible: \texttt{silent}, equivalent to \texttt{silent=true}, and
-% \texttt{nosilent}, equivalent to \texttt{silent=false} (the default).
+% \cs{fxsetup} command and all note insertion commands and environments. Just
+% as individual layout options, \texttt{silent} is a boolean option, so all
+% those forms are possible: \texttt{silent}, equivalent to
+% \texttt{silent=true}, and \texttt{nosilent}, equivalent to
+% \texttt{silent=false} (the default).
 %
 % \subsection{List of \fixme's\label{sec:manual:lox}}
 % \DescribeMacro{\listoffixmes}
 % \fixme remembers where you put \fixme notes in a toc-like file whose
-% extension is \texttt{lox}. The \cs{listoffixmes} macro generates the list of
-% all \fixme notes in a manner similar to that of the ``list of figures''
+% extension is \texttt{lox}. The \cs{listoffixmes} command generates the list
+% of all \fixme notes in a manner similar to that of the ``list of figures''
 % for instance. A standard layout is automatically selected for the
 % \texttt{article}, \texttt{report}, \texttt{book} classes and their
 % \komascript replacements. If another class is used, the \texttt{article}
-% layout is selected. Also, note that if no \fixme note remain in the
-% document, this macro doesn't generate an empty list, but rather stays
+% layout is selected. Also, note that if thre is no \fixme note left in the
+% document, this command doesn't generate an empty list, but rather stays
 % silent. It also stays silent in \texttt{final} mode, regardless of the
 % presence of remaining notes.
 %
@@ -410,7 +411,7 @@
 % At some point, people suggested that it would be nice to have global \fixme
 % notes, not related to any portion of the text in particular. Such notes
 % could be general comments about the whole document, and could even be issued
-% in the preamble for instance. This is what I call ``floating'' \fixme notes.
+% in the preamble. This is what I call ``floating'' \fixme notes.
 %
 % Originally, I started writing a new set of commands to do just that, but
 % with the flexibility that \fixme version 4 provides, I quickly realized that
@@ -427,8 +428,8 @@
 % The only slight problem that remains in the page number, which normally
 % appears in the list of fixmes and in the index: if you choose to reference a
 % floating \fixme note that way, the page number is likely to be completely
-% meaningless. To compensate, \fixme 4 provides an option named ``area''. When
-% provided, the given value will replace the page number in both the index and
+% meaningless. To compensate, a new option named ``area'' is provided. When
+% used, the given value will replace the page number in both the index and
 % the list of fixmes. The area can be anything you like, but should remain
 % quite short. By default, \texttt{area} is set the special value
 % \texttt{thepage}, which as you guessed means to use the page number.
@@ -478,7 +479,7 @@
 % \texttt{quotation} environment to typeset the longer note, and the prefix
 % appears in bold.\\
 % \DescribeMacro{\FXEnvEnd}
-% This macro closes the \texttt{quotation} by default.
+% This command closes the \texttt{quotation} by default.
 %
 % \subsection{Customizing the \fixme notes logging}
 % The actual logging of \fixme notes is done by the commands described
@@ -491,16 +492,6 @@
 % \marg{note}\\
 % By default, simple notes are recorded in the log file only, and the others
 % also appear on the terminal during compilation.
-%
-% \subsection{Fancy fruit salad layout}
-% \DescribeOption{user}
-% If, for some totally unjustified reason, you are not happy with the
-% available layouts, you have the ability to define your own: a special layout
-% form is accessible through the boolean \texttt{user} layout option.\\
-% \DescribeMacro{\FXLayoutUser}
-% \marg{prefix}\marg{note}\\
-% If you plan on using it, you must then implement the formatting by
-% \cs{newcommand}'ing the corresponding macro.
 %
 % \subsection{Internationalization}
 % \DescribeOption{english}
@@ -519,21 +510,21 @@
 % insertion command or environment. The \texttt{french} and \texttt{francais}
 % options are synonyms. The \texttt{german} and \texttt{ngerman} options are
 % currently equivalent.\par If you want a finer grain on the
-% language-dependent parts of \fixme, the following macros are provided and
-% can be redefined.\par
+% language-dependent parts of \fixme, the following commands are provided and
+% can be renewed.\par
 % \DescribeMacro{\fxnotename}
 % \DescribeMacro{\fxwarningname}
 % \DescribeMacro{\fxerrorname}
 % \DescribeMacro{\fxfatalname}
 % \DescribeMacro{\fixmelogo}
-% The \cs{fx*name} macros define the name of the four different note levels.
-% They make intensive use of the macro \cs{fixmelogo} ;-)\par
+% The \cs{fx*name} commands define the name of the four different note levels.
+% They make intensive use of \cs{fixmelogo} ;-)\par
 % \DescribeMacro{\fixmeindexname}
 % \DescribeMacro{\fxnoteindexname}
 % \DescribeMacro{\fxwarningindexname}
 % \DescribeMacro{\fxerrorindexname}
 % \DescribeMacro{\fxfatalindexname}
-% The macro \cs{fixmeindexname} defines the main \fixme index key. The other
+% The command \cs{fixmeindexname} defines the main \fixme index key. The other
 % ones define the different index subkeys for each note level. Please note that
 % an empty name for a subkey means that you don't actually want a subcategory
 % (that's the case by default for fatal errors). The corresponding notes will
@@ -545,9 +536,9 @@
 % \section{\auctex support}
 % \auctex is a powerful major mode for editing \TeX{} documents in
 % \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
-% completion of macro names once they are known. \fixme supports \auctex
+% completion of command names once they are known. \fixme supports \auctex
 % by providing a style file named \texttt{fixme.el} which contains \auctex
-% definitions for the relevant macros. This file should be installed in a
+% definitions for the relevant commands. This file should be installed in a
 % place where \auctex can find it (usually in a subdirectory of your
 % \LaTeX{} styles directory). Please refer to the \auctex documentation for
 % more information on this.
