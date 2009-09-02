@@ -164,22 +164,32 @@
 % \DescribeMacro{\fixme}
 % As of version 4, the \cs{fixme} command is a synonym for \cs{fxfatal} and is
 % considered deprecated.\par
-% \fixme notes are meant to be short: consider that they are likely to go in
-% the list of fixmes and in the index for instance. If you feel the need for
-% writing longer comments, the environments described in the next section
-% might come in handy.
+%
+% \subsubsection{Targeted commands}
+% \DescribeMacro{\fxnote*}
+% \DescribeMacro{\fxwarning*}
+% \DescribeMacro{\fxerror*}
+% \DescribeMacro{\fxfatal*}\oarg{options}\marg{note}\marg{text}\\
+% Sometimes, you might not only want to issue a \fixme note, but also
+% highlight the relevant part of the text to which it applies. This is what I
+% call ``targeting'' the note. As of version 4, \fixme provides star'red
+% versions of its note insertion commands to do that. In star form, these
+% commands expect an additional mandatory argument containing the text to be
+% highlighted.
 %
 % \subsubsection{Environments}
 % \emph{\textbf{Warning:} as of version 4.0, the environments interface has
 %   changed and is \emph{not} backward-compatible.}\\
+% \fixme notes are meant to be short: consider that they are likely to go in
+% the list of fixmes and in the index for instance. If you feel the need for
+% writing longer comments, the environments described below might come in
+% handy.\\
 % \DescribeEnv{anfxnote}
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
-% \fixme provides four environments for inserting longer notes, if you feel
-% that a short one is inappropriate.
-%
-% \fixme environments take one mandatory argument (meant to be a short summary
+% \fixme provides four note environments; one for every note level. These
+% environments take one mandatory argument (meant to be a short summary
 % of the long note) and behave in exactly the same way as their command
 % counterpart. The layout policy is a bit different though (see section
 % \sectionref{sec:manual:layout}): the long note (the environment's contents)
@@ -1362,9 +1372,12 @@
 %
 % \subsubsubsection{User-level interface}
 % \begin{macro}{\fxnote}
-%   \begin{macro}{\fxwarning}
-%     \begin{macro}{\fxerror}
-%       \oarg{options}\marg{note}
+%   \begin{macro}{\fxnote*}
+%     \begin{macro}{\fxwarning}
+%       \begin{macro}{\fxwarning*}
+%         \begin{macro}{\fxerror}
+%           \begin{macro}{\fxerror*}
+%             \oarg{options}\marg{note}(\marg{text} for the starred versions)
 %    \begin{macrocode}
 \DeclareRobustCommand\fxnote{%
   \@ifstar{%
@@ -1386,6 +1399,9 @@
     {\@fxnote{error}}{\@fxnote{error}[]}}}
 
 %    \end{macrocode}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
@@ -1429,7 +1445,7 @@
 % \end{macro}
 %
 % \subsubsubsection{Starred version}
-% \begin{macro}{\@fxsnote}
+% \begin{macro}{\@fxsfatal}
 %   \oarg{options}\marg{note}\marg{text}
 %    \begin{macrocode}
 \newcommand\@fxsfatal[3][]{%
@@ -1440,7 +1456,8 @@
 %
 % \subsubsubsection{User-level interface}
 % \begin{macro}{\fxfatal}
-%   \oarg{options}\marg{note}
+%   \begin{macro}{\fxfatal*}
+%     \oarg{options}\marg{note}(\marg{text} for the starred version)
 %    \begin{macrocode}
 \DeclareRobustCommand\fxfatal{%
   \@ifstar{%
@@ -1450,6 +1467,7 @@
     {\@fxfatal}{\@fxfatal[]}}}
 
 %    \end{macrocode}
+%   \end{macro}
 % \end{macro}
 % \begin{macro}{\fixme}
 %   \oarg{options}\marg{note}\\
