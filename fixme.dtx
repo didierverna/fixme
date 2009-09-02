@@ -1092,7 +1092,7 @@
 %   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
 %   well.
 %    \begin{macrocode}
-\newcommand\fixmeindexname{}
+\newcommand\fixmeindexname{\fixmelogo}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@wrindex}
@@ -1553,14 +1553,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{english}{%
   \renewcommand*\fxnotename{Note}%
-  \renewcommand*\fxwarningname{Warning}%
-  \renewcommand*\fxerrorname{Error}%
-  \renewcommand*\fxfatalname{Fatal}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Notes}%
+  \renewcommand*\fxwarningname{Warning}%
   \renewcommand*\fxwarningsname{Warnings}%
+  \renewcommand*\fxerrorname{Error}%
   \renewcommand*\fxerrorsname{Errors}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{Fatal}%
+  \renewcommand*\fxfatalsname{Fatals}%
   \renewcommand*{\listfixmename}{List of Corrections}}
 %    \end{macrocode}
 % \end{option}
@@ -1569,14 +1568,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{french}{%
   \renewcommand*\fxnotename{Note}%
-  \renewcommand*\fxwarningname{Attention}%
-  \renewcommand*\fxerrorname{Erreur}%
-  \renewcommand*\fxfatalname{Fatal}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Notes}%
+  \renewcommand*\fxwarningname{Attention}%
   \renewcommand*\fxwarningsname{Avertissements}%
+  \renewcommand*\fxerrorname{Erreur}%
   \renewcommand*\fxerrorsname{Erreurs}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{Fatal}%
+  \renewcommand*\fxfatalsname{Fatales}%
   \renewcommand*{\listfixmename}{Liste des Corrections}}
 %    \end{macrocode}
 % \end{option}
@@ -1591,14 +1589,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{spanish}{%
   \renewcommand*\fxnotename{Nota}%
-  \renewcommand*\fxwarningname{Aviso}%
-  \renewcommand*\fxerrorname{Error}%
-  \renewcommand*\fxfatalname{FIXME}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Notas}%
+  \renewcommand*\fxwarningname{Aviso}%
   \renewcommand*\fxwarningsname{Avisos}%
+  \renewcommand*\fxerrorname{Error}%
   \renewcommand*\fxerrorsname{Errores}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{FIXME}%
+  \renewcommand*\fxfatalsname{FIXME}%
   \renewcommand*{\listfixmename}{Lista de Correcciones}}
 %    \end{macrocode}
 % \end{option}
@@ -1607,14 +1604,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{italian}{%
   \renewcommand*\fxnotename{Nota}%
-  \renewcommand*\fxwarningname{Avviso}%
-  \renewcommand*\fxerrorname{Errore}%
-  \renewcommand*\fxfatalname{FIXME}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Note}%
+  \renewcommand*\fxwarningname{Avviso}%
   \renewcommand*\fxwarningsname{Avvisi}%
+  \renewcommand*\fxerrorname{Errore}%
   \renewcommand*\fxerrorsname{Errori}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{FIXME}%
+  \renewcommand*\fxfatalsname{FIXME}%
   \renewcommand*{\listfixmename}{Corrigenda}}
 %    \end{macrocode}
 % \end{option}
@@ -1623,14 +1619,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{german}{%
   \renewcommand*\fxnotename{Anm}%
-  \renewcommand*\fxwarningname{Warnung}%
-  \renewcommand*\fxerrorname{Fehler}%
-  \renewcommand*\fxfatalname{FIXME}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Anmerkungen}%
+  \renewcommand*\fxwarningname{Warnung}%
   \renewcommand*\fxwarningsname{Warnungen}%
+  \renewcommand*\fxerrorname{Fehler}%
   \renewcommand*\fxerrorsname{Fehler}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{FIXME}%
+  \renewcommand*\fxfatalsname{FIXME}%
   \renewcommand*{\listfixmename}{Verzeichnis der Korrekturen}}
 %    \end{macrocode}
 % \end{option}
@@ -1645,14 +1640,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{danish}{%
   \renewcommand*\fxnotename{Note}%
-  \renewcommand*\fxwarningname{Advarsel}%
-  \renewcommand*\fxerrorname{Fejl}%
-  \renewcommand*\fxfatalname{FIXME}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Noter}%
+  \renewcommand*\fxwarningname{Advarsel}%
   \renewcommand*\fxwarningsname{Advarsler}%
+  \renewcommand*\fxerrorname{Fejl}%
   \renewcommand*\fxerrorsname{Fejl}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{FIXME}%
+  \renewcommand*\fxfatalsname{FIXME}%
   \renewcommand*{\listfixmename}{Rettelser}}
 %    \end{macrocode}
 % \end{option}
@@ -1661,14 +1655,13 @@
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{croatian}{%
   \renewcommand*\fxnotename{Poruka}%
-  \renewcommand*\fxwarningname{Upozorenje}%
-  \renewcommand*\fxerrorname{Gre\v ska}%
-  \renewcommand*\fxfatalname{FIXME}%
-  \renewcommand*\fixmeindexname{\fixmelogo}%
   \renewcommand*\fxnotesname{Poruke}%
+  \renewcommand*\fxwarningname{Upozorenje}%
   \renewcommand*\fxwarningsname{Upozorenja}%
+  \renewcommand*\fxerrorname{Gre\v ska}%
   \renewcommand*\fxerrorsname{Greske}%
-  \renewcommand*\fxfatalsname{}%
+  \renewcommand*\fxfatalname{FIXME}%
+  \renewcommand*\fxfatalsname{FIXME}%
   \renewcommand*{\listfixmename}{Popis korekcija}}
 
 %    \end{macrocode}
