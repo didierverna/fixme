@@ -1372,6 +1372,16 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsubsection{Starred versions}
+% \begin{macro}{\@fxsnote}
+%   \marg{type}\oarg{options}\marg{note}\marg{text}
+%    \begin{macrocode}
+\long\def\@fxsnote#1[#2]#3#4{%
+  #4\@fxnote{#1}[#2]{#3}}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsubsection{User-level interface}
 % \begin{macro}{\fxnote}
 %   \begin{macro}{\fxwarning}
