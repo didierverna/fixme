@@ -1005,41 +1005,105 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Layout macros\label{sec:code:layoutmacros}}
-% \subsubsubsection{Textual output}
-% \begin{macro}{\FXLayoutInline}
-%   \begin{macro}{\FXLayoutMargin}
-%     \begin{macro}{\FXLayoutMarginCLue}
-%       \begin{macro}{\FXLayoutFootnote}
-%         \begin{macro}{\FXLayoutContentsLine}
-%         \marg{type}\marg{author}\marg{note}
+% \subsubsection{Layout creation}
+% \begin{macro}{\@fxlayouts}
+%   Maintains the list of available layouts. The order in which we add the
+%   built-in layouts is important: we start with the footnote layout, so that
+%   it is sticked properly to the preceding text if active. Next we handle
+%   marginal layouts so that they are also close to the text to fix.
 %    \begin{macrocode}
-\newcommand*\FXLayoutInline[3]{#2 \@nameuse{fx#1name}: #3}
-\let\@fx@layout@inline\FXLayoutInline
+\newcommand*\@fxlayouts{}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXRegisterLayout}
+%   \oarg{boolfunc}\marg{name}\marg{funcname}\\
+%   Register a new layout with \fixme. This currently involves creating the
+%   boolean layout option with an optional function argument, \cs{let}'ing the
+%   translation macro to the actual layout macro, and updating the layout
+%   list.
+%    \begin{macrocode}
+\newcommand*\FXRegisterLayout[3][]{%
+  \@fxdefineboolkey[#1]{layout}{#2}%
+  \expandafter\let\csname @fx@layout@#2\endcsname#3%
+  \ifx\@fxlayouts\empty%
+    \g@addto@macro\@fxlayouts{#2}%
+  \else%
+    \g@addto@macro\@fxlayouts{,#2}%
+  \fi}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Built-in layouts}
+% \subsubsubsection{Footnote}
+% \begin{macro}{\FXLayoutFootnote}
+%   \begin{option}{footnote}
+%     \begin{macro}{\@fx@layout@footnote}
+%       \marg{type}\marg{author}\marg{note}
+%    \begin{macrocode}
+\newcommand*\FXLayoutFootnote[3]{\footnote{#2 \@nameuse{fx#1name}: #3}}
+\FXRegisterLayout{footnote}{\FXLayoutFootnote}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{option}
+% \end{macro}
+%
+% \subsubsubsection{Margin}
+% \begin{macro}{\FXLayoutMargin}
+%   \begin{option}{margin}
+%     \begin{macro}{\@fx@layout@margin}
+%       \marg{type}\marg{author}\marg{note}\\
+%    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}: #3]{%
     \footnotesize\raggedright#2 \@nameuse{fx#1name}: #3}}
-\let\@fx@layout@margin\FXLayoutMargin
+\FXRegisterLayout[%
+  \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
+    \@fxpkgwarning{%
+      marginal notes requested;\MessageBreak
+      turning marginal clues off}%
+    \fx@layout@marginclue{false}}]{%
+    margin}{\FXLayoutMargin}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{option}
+% \end{macro}
+%
+% \subsubsubsection{Margin clue}
+% \begin{macro}{\FXLayoutMarginCLue}
+%   \begin{option}{marginclue}
+%     \begin{macro}{\@fx@layout@marginclue}
+%       \marg{type}\marg{author}\marg{note}
+%    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}!]{%
     \footnotesize\raggedright#2 \@nameuse{fx#1name}!}}
-\let\@fx@layout@marginclue\FXLayoutMarginClue
-\newcommand*\FXLayoutFootnote[3]{\footnote{#2 \@nameuse{fx#1name}: #3}}
-\let\@fx@layout@footnote\FXLayoutFootnote
-\newcommand*\FXLayoutContentsLine[3]{%
-  \fxaddcontentsline{\@nameuse{fx#1name}: #3}}
-
+\FXRegisterLayout[%
+  \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
+    \@fxpkgwarning{%
+      marginal clues requested;\MessageBreak
+      turning marginal notes off}%
+    \fx@layout@margin{false}}]{%
+    marginclue}{\FXLayoutMarginClue}
 %    \end{macrocode}
-%         \end{macro}
-%       \end{macro}
 %     \end{macro}
-%   \end{macro}
+%   \end{option}
 % \end{macro}
-% Note that \cs{FXLayoutUser} is not defined here. Requesting the
-% \texttt{user} layout without defining one or the other would produce an
-% error, which is the expected behavior.
 %
-% \subsubsubsection{Index output}
+% \subsubsubsection{Inline}
+% \begin{macro}{\FXLayoutInline}
+%   \begin{option}{inline}
+%     \begin{macro}{\@fx@layout@inline}
+%       \marg{type}\marg{author}\marg{note}
+%    \begin{macrocode}
+\newcommand*\FXLayoutInline[3]{#2 \@nameuse{fx#1name}: #3}
+\FXRegisterLayout{inline}{\FXLayoutInline}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{option}
+% \end{macro}
+%
+% \subsubsubsection{Index}
 % \begin{macro}{\fixmeindexname}
 %   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
 %   well.
@@ -1061,109 +1125,54 @@
   \@esphack}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\fxnotesubidx}
+%   \begin{macro}{\fxwarningsubidx}
+%     \begin{macro}{\fxerrorsubidx}
+%       \begin{macro}{\fxfatalsubidx}
 %    \begin{macrocode}
 \newcommand*\fxnotesubidx{**a}
 \newcommand*\fxwarningsubidx{**b}
 \newcommand*\fxerrorsubidx{**c}
 \newcommand*\fxfatalsubidx{}
 %    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
 % \begin{macro}{\FXLayoutIndex}
-%   \marg{type}\marg{author}\marg{note}
+%   \begin{option}{index}
+%     \begin{macro}{\@fx@layout@index}
+%       \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
   \index{***@\fixmeindexname:%
     !\@nameuse{fx#1subidx}@\@nameuse{fx#1sname}:%
     !\@nameuse{thefx#1count}: #3}}
-\let\@fx@layout@index\FXLayoutIndex
+\FXRegisterLayout{index}{\FXLayoutIndex}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{option}
+% \end{macro}
+%
+% \subsubsubsection{Contents line}
+% \begin{macro}{\FXLayoutContentsLine}
+%   \marg{type}\marg{author}\marg{note}\\
+%   This one is not registered like the others because it is always active and
+%   used explicitely by the \texttt{lox} code.
+%    \begin{macrocode}
+\newcommand*\FXLayoutContentsLine[3]{%
+  \fxaddcontentsline{\@nameuse{fx#1name}: #3}}
 
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Layout options}
-% \subsubsubsection{Individual options}
-% As of version 4, these options are reimplemented with \texttt{xkeyval}. The
-% \texttt{margin} and \texttt{marginclue} layouts are mutually exclusive,
-% hence the non empty \meta{function} argument.
-% the \texttt{xkeyval} key macro to handle this.
-% \begin{option}{inline}
-%   \begin{option}{noinline}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineboolkey{layout}{inline}
-%    \end{macrocode}
-%   \end{option}
-% \end{option}
-% \begin{option}{margin}
-%   \begin{option}{nomargin}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineboolkey[%
-  \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
-    \@fxpkgwarning{%
-      marginal notes requested;\MessageBreak
-      turning marginal clues off}%
-    \fx@layout@marginclue{false}}]{%
-    layout}{margin}
-%    \end{macrocode}
-%   \end{option}
-% \end{option}
-% \begin{option}{footnote}
-%   \begin{option}{nofootnote}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineboolkey{layout}{footnote}
-%    \end{macrocode}
-%   \end{option}
-% \end{option}
-% \begin{option}{user}
-%   \begin{option}{nouser}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineboolkey{layout}{user}
-%    \end{macrocode}
-%   \end{option}
-% \end{option}
-% \begin{option}{marginclue}
-%   \begin{option}{nomarginclue}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineboolkey[%
-  \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
-    \@fxpkgwarning{%
-      marginal clues requested;\MessageBreak
-      turning marginal notes off}%
-    \fx@layout@margin{false}}]{%
-    layout}{marginclue}
-%    \end{macrocode}
-%   \end{option}
-% \end{option}
-% \begin{option}{index}
-%   \begin{option}{noindex}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineboolkey{layout}{index}
-
-%    \end{macrocode}
-%   \end{option}
-% \end{option}
+% \subsubsection{Layout control}
 % \begin{option}{innerlayout}
-%     \mbox{}
+%   The alternate inner mode layout:
 %    \begin{macrocode}
 \@fxdefinecmdkey{layout}{innerlayout}{}
-
 %    \end{macrocode}
 % \end{option}
-%
-% \subsubsubsection{Global options}
-% \begin{macro}{\@fxlayouts}
-%   This macro maintains the list of available layouts. Note that we start
-%   with the footnote layout, so that it is sticked properly to the preceding
-%   text if active. Next we handle marginal layouts so that it is also close
-%   to the text to fix.
-%    \begin{macrocode}
-\newcommand*\@fxlayouts{footnote,margin,marginclue,inline,user,index}
-%    \end{macrocode}
-% \end{macro}
 % \begin{option}{morelayout}
 %   The \texttt{morelayout} option adds to the existing layout configuration.
 %   The implementation is trivial, as it simply boils down to calling
