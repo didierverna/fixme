@@ -1109,15 +1109,15 @@
   \@esphack}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\fxnotesubidx}
-%   \begin{macro}{\fxwarningsubidx}
-%     \begin{macro}{\fxerrorsubidx}
-%       \begin{macro}{\fxfatalsubidx}
+% \begin{macro}{\@fxnotekey}
+%   \begin{macro}{\@fxwarningkey}
+%     \begin{macro}{\@fxerrorkey}
+%       \begin{macro}{\@fxfatalkey}
 %    \begin{macrocode}
-\newcommand*\fxnotesubidx{***a}
-\newcommand*\fxwarningsubidx{***b}
-\newcommand*\fxerrorsubidx{***c}
-\newcommand*\fxfatalsubidx{***d}
+\newcommand*\@fxnotekey{***a}
+\newcommand*\@fxwarningkey{***b}
+\newcommand*\@fxerrorkey{***c}
+\newcommand*\@fxfatalkey{***d}
 %    \end{macrocode}
 %       \end{macro}
 %     \end{macro}
@@ -1131,7 +1131,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
   \index{***@\fixmeindexname:%
-    !\@nameuse{fx#1subidx}@\@nameuse{fx#1sname}:%
+    !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
     !\@nameuse{thefx#1count}: #3}}
 \FXRegisterLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
