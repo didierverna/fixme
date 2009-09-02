@@ -679,32 +679,10 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxpresetkeys}
-%   \marg{families}\marg{head keys}\marg{tail keys}
+%   \marg{families}\marg{head keys}\marg{tail keys}\\
+%   Note: currently unused.
 %    \begin{macrocode}
-\newcommand\@fxpresetkeys{\presetkeys[fx]}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxdeclarelegacyopt}
-%   \marg{name}\\
-%   A ``legacy option'' is a package option that is not used anymore.
-%    \begin{macrocode}
-\newcommand*\@fxdeclarelegacyopt[1]{%
-  \DeclareOptionX[fx]<legacy>{#1}{%
-    \@fxpkgwarning{%
-      '#1' is a legacy option that has no effect anymore}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxdeclarelegacyboolopt}
-%   \marg{name}\\
-%   A ``legacy boolean option'' is a legacy option \texttt{opt} and its
-%   \texttt{noopt} counterpart. Note that we don't really (need to) ensure the
-%   boolean status of these options anymore.
-%    \begin{macrocode}
-\newcommand*\@fxdeclarelegacyboolopt[1]{%
-  \@fxdeclarelegacyopt{#1}
-  \@fxdeclarelegacyopt{no#1}}
-
+%% \newcommand\@fxpresetkeys{\presetkeys[fx]}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxvoidkeyerror}
@@ -1789,7 +1767,7 @@
 % the default area might get a different name from a user option. We don't
 % want to override it with our language setting.
 %    \begin{macrocode}
-\ProcessOptionsX*[fx]<ltx,legacy,lang,lox,log,layout>
+\ProcessOptionsX*[fx]<ltx,lang,lox,log,layout>
 
 %    \end{macrocode}
 %
@@ -1797,8 +1775,7 @@
 % \begin{macro}{\fxsetup}
 %   \marg{options}\\
 %   The inevitable setup macro, extremely impressive yet as trivial as can be
-%   with the \texttt{xkeyval} package\ldots All families are allowed except
-%   for the ``legacy'' one.
+%   with the \texttt{xkeyval} package\ldots
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout}{#1}}
 
