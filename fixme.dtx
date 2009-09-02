@@ -1080,7 +1080,7 @@
 %       \begin{macro}{\@fx@layout@inline}
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
-\newcommand*\FXLayoutInline[3]{#2 \@nameuse{fx#1name}: #3}
+\newcommand*\FXLayoutInline[3]{{\bfseries #2 \@nameuse{fx#1name}: #3}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1359,12 +1359,12 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsubsection{Starred versions}
+% \subsubsubsection{Starred version}
 % \begin{macro}{\@fxsnote}
 %   \marg{type}\oarg{options}\marg{note}\marg{text}
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
-  #4\@fxnote{#1}[#2]{#3}}
+  {\itshape #4}\@fxnote{#1}[#2]{#3}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1466,7 +1466,8 @@
 % \begin{macro}{\FXEnvBegin}
 %   \marg{type}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXEnvBegin[2]{\begin{quotation}#2 \@nameuse{fx#1name}: }
+\newcommand*\FXEnvBegin[2]{%
+  \begin{quotation}\bfseries #2 \@nameuse{fx#1name}: \ignorespaces}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXEnvEnd}
