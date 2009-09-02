@@ -82,6 +82,3 @@ etc.
 
 * If babel is loaded, follow the language automatically (very neat !). Should
   be trivial to do; have a look at \selectlanguage.
-
-* Revoir les cas de noexpand/expandafter, à simplifier avec \let\foo\relax
-pour éviter l'expansion
