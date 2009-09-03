@@ -1502,7 +1502,9 @@
 % environment is used to suppress output. Note that contrary to the macro
 % version, we don't need to define the \texttt{fxfatal} environment in a
 % specialized way because the fatal error will be triggered by the call to
-% \cs{fxfatal} anyway.\\
+% \cs{fxfatal} anyway.
+%
+% \subsubsubsection{Opening standard versions}
 % \begin{macro}{\@fxenvbegin@final}
 %   \begin{macro}{\@fxenvbegin@draft}
 %     \marg{type}\marg{options}\marg{summary}
@@ -1517,9 +1519,28 @@
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
+%
+% \subsubsubsection{Opening starred versions}
+% \begin{macro}{\@fxsenvbegin@final}
+%   \begin{macro}{\@fxsenvbegin@draft}
+%     \marg{type}\marg{options}\marg{summary}\marg{text}
+%    \begin{macrocode}
+\newcommand\@fxsenvbegin@final[4]{%
+  \@nameuse{fx#1}*[#2]{#3}{#4}%
+  \comment}
+\newcommand\@fxsenvbegin@draft[4]{%
+  \@nameuse{fx#1}*[#2,noinline]{#3}{#4}%
+  \FXEnvBegin{#1}{\fixmelogo}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsubsection{Closing versions}
 % \begin{macro}{\@fxenvend@final}
 %   \begin{macro}{\@fxenvend@draft}
-%     \marg{type}
+%     \marg{type}\\
+%     Note that closing in standard or starred versions is identical.
 %    \begin{macrocode}
 \newcommand*\@fxenvend@final[1]{\endcomment}
 \newcommand*\@fxenvend@draft[1]{\FXEnvEnd{#1}{\fixmelogo}}
@@ -1536,15 +1557,22 @@
 \newcommand*\@fxdefineenvironment[1]{%
   \newenvironment{anfx#1}[2][]{%
     \@fxenvbegin{#1}{##1}{##2}}{%
+    \@fxenvend{#1}}
+  \newenvironment{anfx#1*}[3][]{%
+    \@fxsenvbegin{#1}{##1}{##2}{##3}}{%
     \@fxenvend{#1}}}
 
 %    \end{macrocode}
 % \end{macro}
 % \begin{environment}{anfxnote}
-%   \begin{environment}{anfxwarning}
-%     \begin{environment}{anfxerror}
-%       \begin{environment}{anfxfatal}
-%         And we use it to create the user level interface:
+%   \begin{environment}{anfxnote*}
+%     \begin{environment}{anfxwarning}
+%       \begin{environment}{anfxwarning*}
+%         \begin{environment}{anfxerror}
+%           \begin{environment}{anfxerror*}
+%             \begin{environment}{anfxfatal}
+%               \begin{environment}{anfxfatal*}
+%                 And we use it to create the user level interface:
 %    \begin{macrocode}
 \@fxdefineenvironment{note}
 \@fxdefineenvironment{warning}
@@ -1552,6 +1580,10 @@
 \@fxdefineenvironment{fatal}
 
 %    \end{macrocode}
+%               \end{environment}
+%             \end{environment}
+%           \end{environment}
+%         \end{environment}
 %       \end{environment}
 %     \end{environment}
 %   \end{environment}
@@ -1565,47 +1597,6 @@
   \anfxfatal}
 \let\endafixme\endanfxfatal
 %    \end{macrocode}
-% \end{environment}
-% \begin{macro}{\@fxsenvbegin@final}
-%   \begin{macro}{\@fxsenvbegin@draft}
-%     \marg{type}\marg{options}\marg{summary}\marg{text}
-%    \begin{macrocode}
-\newcommand\@fxsenvbegin@final[4]{%
-  \@nameuse{fx#1}*[#2]{#3}{#4}%
-  \comment}
-\newcommand\@fxsenvbegin@draft[4]{%
-  \@nameuse{fx#1}*[#2,noinline]{#3}{#4}%
-  \FXEnvBegin{#1}{\fixmelogo}}
-
-%    \end{macrocode}
-%   \end{macro}
-% \end{macro}
-% \begin{macro}{\@fxsdefineenvironment}
-%   \marg{type}\\
-%   This command defines \fixme starred environments in a generic way:
-%    \begin{macrocode}
-\newcommand*\@fxsdefineenvironment[1]{%
-  \newenvironment{anfx#1*}[3][]{%
-    \@fxsenvbegin{#1}{##1}{##2}{##3}}{%
-    \@fxenvend{#1}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{environment}{anfxnote*}
-%   \begin{environment}{anfxwarning*}
-%     \begin{environment}{anfxerror*}
-%       \begin{environment}{anfxfatal*}
-%         And we use it to create the user level interface:
-%    \begin{macrocode}
-\@fxsdefineenvironment{note}
-\@fxsdefineenvironment{warning}
-\@fxsdefineenvironment{error}
-\@fxsdefineenvironment{fatal}
-
-%    \end{macrocode}
-%       \end{environment}
-%     \end{environment}
-%   \end{environment}
 % \end{environment}
 %
 % \subsection{Internationalization}
