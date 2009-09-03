@@ -1274,25 +1274,33 @@
 %
 % \subsubsection{Contents layout control}
 % \begin{option}{contentslayout}
-%   \begin{macro}{\@fxcontentslayout@draft}
+%   \begin{macro}{\@@fxcontentslayout}
+%     \marg{contents}\\
 %     This is much simpler than standard layout management because only one
 %     contents layout at a time is possible. Using a specific contents
 %     layout boils down to binding the layout macro to the proper translation
-%     one. Note that we're actually binding the \texttt{draft} macro, because
-%     in \texttt{final} mode, the contents is typeset unchanged.
+%     one.
 %    \begin{macrocode}
 \@fxdefinekey{contentslayout}{contentslayout}{%
-  \expandafter\let\expandafter\@fxcontentslayout@draft%
+  \expandafter\let\expandafter\@@fxcontentslayout%
     \csname @fxcontentslayout@#1\endcsname}
 %    \end{macrocode}
 %   \end{macro}
 % \end{option}
 % \begin{macro}{\@fxcontentslayout@final}
-%   Finally, in final mode, our contents layout function is the identity.
+%   \begin{macro}{\@fxcontentslayout@draft}
+%     \marg{contents}\\
+%     In \texttt{final} mode, the contents is typeset as-is. In \texttt{draft}
+%     mode, we use the selected layout. Note that we need this level of
+%     indirection (the \texttt{contentslayout} option cannot directly bind the
+%     draft version) because otherwise, the final/draft \cs{let} mechanism
+%     would break.
 %    \begin{macrocode}
 \newcommand\@fxcontentslayout@final[1]{#1}
+\newcommand\@fxcontentslayout@draft[1]{\@@fxcontentslayout{#1}}
 
 %    \end{macrocode}
+%   \end{macro}
 % \end{macro}
 %
 % \subsection{Logging}
@@ -1613,6 +1621,8 @@
 % with the call to the \cs{fx*} macro. The \texttt{envlayout} option is
 % defined in its own family and handled only here so that if somebody ever
 % tries to provide it outside a \fixme environment, an error will be produced.
+% Similarly, only the starred version handles the \texttt{contentslayout}, for
+% the same reason.
 %
 % \subsubsubsection{Opening standard versions}
 % \begin{macro}{\@fxenvbegin@final}
