@@ -1023,9 +1023,9 @@
 %
 % \subsubsection{Built-in layouts}
 % \subsubsubsection{Footnote}
-% \begin{macro}{\FXLayoutFootnote}
-%   \begin{option}{footnote}
-%     \begin{option}{nofootnote}
+% \begin{option}{footnote}
+%   \begin{option}{nofootnote}
+%     \begin{macro}{\FXLayoutFootnote}
 %       \begin{macro}{\@fx@layout@footnote}
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
@@ -1033,14 +1033,14 @@
 \FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 %       \end{macro}
-%     \end{option}
+%     \end{macro}
 %   \end{option}
-% \end{macro}
+% \end{option}
 %
 % \subsubsubsection{Margin}
-% \begin{macro}{\FXLayoutMargin}
-%   \begin{option}{margin}
-%     \begin{option}{nomargin}
+% \begin{option}{margin}
+%   \begin{option}{nomargin}
+%     \begin{macro}{\FXLayoutMargin}
 %       \begin{macro}{\@fx@layout@margin}
 %         \marg{type}\marg{author}\marg{note}\\
 %    \begin{macrocode}
@@ -1056,14 +1056,14 @@
     margin}{\FXLayoutMargin}
 %    \end{macrocode}
 %       \end{macro}
-%     \end{option}
+%     \end{macro}
 %   \end{option}
-% \end{macro}
+% \end{option}
 %
 % \subsubsubsection{Margin clue}
-% \begin{macro}{\FXLayoutMarginCLue}
-%   \begin{option}{marginclue}
-%     \begin{option}{nomarginclue}
+% \begin{option}{marginclue}
+%   \begin{option}{nomarginclue}
+%     \begin{macro}{\FXLayoutMarginCLue}
 %       \begin{macro}{\@fx@layout@marginclue}
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
@@ -1079,14 +1079,14 @@
     marginclue}{\FXLayoutMarginClue}
 %    \end{macrocode}
 %       \end{macro}
-%     \end{option}
+%     \end{macro}
 %   \end{option}
-% \end{macro}
+% \end{option}
 %
 % \subsubsubsection{Inline}
-% \begin{macro}{\FXLayoutInline}
-%   \begin{option}{inline}
-%     \begin{option}{noinline}
+% \begin{option}{inline}
+%   \begin{option}{noinline}
+%     \begin{macro}{\FXLayoutInline}
 %       \begin{macro}{\@fx@layout@inline}
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
@@ -1094,9 +1094,9 @@
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
-%     \end{option}
+%     \end{macro}
 %   \end{option}
-% \end{macro}
+% \end{option}
 %
 % \subsubsubsection{Index}
 % \begin{macro}{\fixmeindexname}
@@ -1134,9 +1134,9 @@
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
-% \begin{macro}{\FXLayoutIndex}
-%   \begin{option}{index}
-%     \begin{option}{noindex}
+% \begin{option}{index}
+%   \begin{option}{noindex}
+%     \begin{macro}{\FXLayoutIndex}
 %       \begin{macro}{\@fx@layout@index}
 %         \marg{type}\marg{author}\marg{note}
 %    \begin{macrocode}
@@ -1147,9 +1147,9 @@
 \FXRegisterLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
 %       \end{macro}
-%     \end{option}
+%     \end{macro}
 %   \end{option}
-% \end{macro}
+% \end{option}
 %
 % \subsubsubsection{Contents line\label{sec:code:contentslinelayout}}
 % \begin{macro}{\FXLayoutContentsLine}
@@ -1377,7 +1377,7 @@
 % \begin{macro}{\@fxnoteparameters}
 %   \marg{type}\\
 %   The following macro creates all required note parameters. This currently
-%   comprises the note counter, name and index name.
+%   comprises the note counter and names (singular and plural).
 %    \begin{macrocode}
 \newcommand*\@fxnoteparameters[1]{%
   \newcounter{fx#1count}
@@ -1403,13 +1403,13 @@
 %
 % \subsubsection{Layout dispatch\label{sec:code:layoutdispatch}}
 % \begin{macro}{\@fxhandleinnermode}
-%   Handles the case where \TeX{} is in inner mode. We use the alternate
-%   layout provided by the \texttt{innerlayout} option, and we make sure to
-%   disable both the \texttt{margin} and \texttt{marginclue} layout forms.
-%   This is done by appending \texttt{nomargin} and \texttt{nomarginclue} to
-%   the inner layout value (this also renders nasty user settings harmless).
-%   Before that, we provide some informative message if risky layout forms
-%   were active.
+%   Handle the case where \TeX{} is in inner mode. We use the alternate layout
+%   provided by the \texttt{innerlayout} option, and we make sure to disable
+%   both the \texttt{margin} and \texttt{marginclue} layout forms. This is
+%   done by appending \texttt{nomargin} and \texttt{nomarginclue} to the inner
+%   layout value (this also renders nasty user settings harmless). Before
+%   that, we provide some informative message if risky layout forms were
+%   active.
 %    \begin{macrocode}
 \newcommand\@fxhandleinnermode{%
   \ifinner%
@@ -1443,7 +1443,7 @@
 %
 % \subsubsection{Non fatal notes\label{sec:code:nonfatalnotes}}
 % The generic mechanism below applies only to \fixme notes, warnings and
-% errors. Fatal notes are handled in \sectionref{sec:code:fatalnotes}.
+% errors. Fatal notes are handled in section \sectionref{sec:code:fatalnotes}.
 %
 % \subsubsubsection{Status-dependent implementation}
 % \begin{macro}{\@@fxnote@final}
@@ -1478,7 +1478,9 @@
 % \begin{macro}{\@fxsnote}
 %   \marg{type}\oarg{options}\marg{note}\marg{text}\\
 %   We process the options here in order to get the required contents layout
-%   early enough.
+%   early enough. Note also that the \texttt{contentslayout} option has its
+%   own family, so that we can process it here, while producing an error if it
+%   were used in a non-star context.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
   \begingroup%
@@ -1567,7 +1569,9 @@
 % \begin{macro}{\@fxsfatal}
 %   \oarg{options}\marg{note}\marg{text}\\
 %   We process the options here in order to get the required contents layout
-%   early enough.
+%   early enough. Note also that the \texttt{contentslayout} option has its
+%   own family, so that we can process it here, while producing an error if it
+%   were used in a non-star context.
 %    \begin{macrocode}
 \newcommand\@fxsfatal[3][]{%
   \begingroup%
@@ -1621,8 +1625,8 @@
 % with the call to the \cs{fx*} macro. The \texttt{envlayout} option is
 % defined in its own family and handled only here so that if somebody ever
 % tries to provide it outside a \fixme environment, an error will be produced.
-% Similarly, only the starred version handles the \texttt{contentslayout}, for
-% the same reason.
+% Similarly, only the starred version handles the \texttt{contentslayout}
+% option and family, for the same reason.
 %
 % \subsubsubsection{Opening standard versions}
 % \begin{macro}{\@fxenvbegin@final}
@@ -1694,12 +1698,12 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{environment}{anfxnote}
-%   \begin{environment}{anfxnote*}
-%     \begin{environment}{anfxwarning}
-%       \begin{environment}{anfxwarning*}
-%         \begin{environment}{anfxerror}
-%           \begin{environment}{anfxerror*}
-%             \begin{environment}{anfxfatal}
+%   \begin{environment}{anfxwarning}
+%     \begin{environment}{anfxerror}
+%       \begin{environment}{anfxfatal}
+%         \begin{environment}{anfxnote*}
+%           \begin{environment}{anfxwarning*}
+%             \begin{environment}{anfxerror*}
 %               \begin{environment}{anfxfatal*}
 %                 And we use it to create the user level interface:
 %    \begin{macrocode}
