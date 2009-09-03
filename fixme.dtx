@@ -1198,6 +1198,51 @@
 %    \end{macrocode}
 % \end{option}
 %
+% \subsection{Environment Layout}
+% \subsubsection{Environment layout creation}
+% \begin{macro}{\FXRegisterEnvLayout}
+%   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
+%   Register a new environment layout with \fixme. This currently involves
+%   \cs{let}'ing the translation macros to the actual environment
+%   layout ones.
+%    \begin{macrocode}
+\newcommand*\FXRegisterEnvLayout[3]{%
+  \expandafter\let\csname @fx@envlayout@#1@begin\endcsname#2%
+  \expandafter\let\csname @fx@envlayout@#1@end\endcsname#3}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Built-in environment layouts}
+% \subsubsubsection{Quotation}
+% \begin{macro}{\FXEnvLayoutQuotationBegin}
+%   \begin{macro}{\FXEnvLayoutQuotationEnd}
+%     \marg{type}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXEnvLayoutQuotationBegin[2]{%
+  \begin{quotation}\bfseries #2 \@nameuse{fx#1name}: \ignorespaces}
+\newcommand*\FXEnvLayoutQuotationEnd[2]{\end{quotation}}
+\FXRegisterEnvLayout{quotation}{%
+  \FXEnvLayoutQuotationBegin}{\FXEnvLayoutQuotationEnd}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsection{Environment layout control}
+% \begin{option}{envlayout}
+%   This is much simpler than standard layout management because only one
+%   environment layout at a time is possible.
+%    \begin{macrocode}
+\@fxdefinekey{envlayout}{envlayout}{%
+  \expandafter\let\expandafter\@fx@envlayout@begin%
+    \csname @fx@envlayout@#1@begin\endcsname%
+  \expandafter\let\expandafter\@fx@envlayout@end%
+    \csname @fx@envlayout@#1@end\endcsname}
+
+%    \end{macrocode}
+% \end{option}
+%
 % \subsection{Logging}
 % \subsubsection{Logging macros}
 % \begin{macro}{\FXLogNote}
@@ -1490,19 +1535,6 @@
 % \end{macro}
 %
 % \subsection{\fixme environments}
-% \subsubsection{Layout macros}
-% \begin{macro}{\FXEnvBegin}
-%   \begin{macro}{\FXEnvEnd}
-%     \marg{type}\marg{author}
-%    \begin{macrocode}
-\newcommand*\FXEnvBegin[2]{%
-  \begin{quotation}\bfseries #2 \@nameuse{fx#1name}: \ignorespaces}
-\newcommand\FXEnvEnd[2]{\end{quotation}}
-
-%    \end{macrocode}
-%   \end{macro}
-% \end{macro}
-%
 % \subsubsection{Status-dependent implementation}
 % \fixme environments are always laid out inline. The environment's summary
 % is laid out by the corresponding macro, but the \texttt{inline} layout is
@@ -1523,7 +1555,7 @@
   \comment}
 \newcommand*\@fxenvbegin@draft[3]{%
   \@nameuse{fx#1}[#2,noinline]{#3}%
-  \FXEnvBegin{#1}{\fixmelogo}}
+  \@fx@envlayout@begin{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1539,7 +1571,7 @@
   \comment}
 \newcommand\@fxsenvbegin@draft[4]{%
   \@nameuse{fx#1}*[#2,noinline]{#3}{#4}%
-  \FXEnvBegin{#1}{\fixmelogo}}
+  \@fx@envlayout@begin{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1552,7 +1584,7 @@
 %     Note that closing in standard or starred versions is identical.
 %    \begin{macrocode}
 \newcommand*\@fxenvend@final[1]{\endcomment}
-\newcommand*\@fxenvend@draft[1]{\FXEnvEnd{#1}{\fixmelogo}}
+\newcommand*\@fxenvend@draft[1]{\@fx@envlayout@end{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1816,22 +1848,23 @@
 %
 % \subsubsection{Options Processing}
 % Put us in \texttt{english} and \texttt{final} mode, set default area to
-% \texttt{thepage}, enable marginal notes and set inner layout to
-% \texttt{inline}.
+% \texttt{thepage}, enable marginal notes, set inner layout to inline and
+% environment layout to quotation.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<ltx,lang,lox,log,layout>{%
+\ExecuteOptionsX[fx]<ltx,lang,lox,log,layout,envlayout>{%
   final,%
   english,%
   nosilent,%
   area=thepage,%
   layout=margin,%
-  innerlayout={layout=inline}}
+  innerlayout={layout=inline},%
+  envlayout=quotation}
 %    \end{macrocode}
 % Be sure to process the \texttt{lox} family after the \texttt{lang} one, as
 % the default area might get a different name from a user option. We don't
 % want to override it with our language setting.
 %    \begin{macrocode}
-\ProcessOptionsX*[fx]<ltx,lang,lox,log,layout>
+\ProcessOptionsX*[fx]<ltx,lang,lox,log,layout,envlayout>
 
 %    \end{macrocode}
 %
@@ -1841,7 +1874,7 @@
 %   The inevitable setup macro, extremely impressive yet as trivial as can be
 %   with the \texttt{xkeyval} package\ldots
 %    \begin{macrocode}
-\newcommand*\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout}{#1}}
+\newcommand*\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout,envlayout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
