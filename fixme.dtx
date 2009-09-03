@@ -1342,9 +1342,9 @@
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
-% \begin{macro}{\@fx@log@note}
-%   \begin{macro}{\@fx@log@warning}
-%     \begin{macro}{\@fx@log@fatal}
+% \begin{macro}{\@fxlog@note}
+%   \begin{macro}{\@fxlog@warning}
+%     \begin{macro}{\@fxlog@fatal}
 %       In order for the generic note dispatcher to be able to call the
 %       logging macros (see section \sectionref{sec:code:nonfatalnotes}), we
 %       need an easier translation mechanism from the note type to the actual
@@ -1352,9 +1352,9 @@
 %       they are implemented in a specialized way (see section
 %       \sectionref{sec:code:fatalnotes}).
 %    \begin{macrocode}
-\let\@fx@log@note\FXLogNote
-\let\@fx@log@warning\FXLogWarning
-\let\@fx@log@error\FXLogError
+\let\@fxlog@note\FXLogNote
+\let\@fxlog@warning\FXLogWarning
+\let\@fxlog@error\FXLogError
 
 %    \end{macrocode}
 %    \end{macro}
@@ -1460,7 +1460,7 @@
 %    \begin{macrocode}
 \newcommand*\@@fxnote@final[2]{%
   \FXLayoutContentsLine{#1}{#2}{\fixmelogo}%
-  \iffx@log@silent\else\@nameuse{@fx@log@#1}{#2}\fi}
+  \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}
 \newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
   \@@fxnote@final{#1}{#2}}
