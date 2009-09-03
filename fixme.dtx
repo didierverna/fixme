@@ -1011,7 +1011,7 @@
 %    \begin{macrocode}
 \newcommand*\FXRegisterLayout[3][]{%
   \@fxdefineboolkey[#1]{layout}{#2}%
-  \expandafter\let\csname @fx@layout@#2\endcsname#3%
+  \expandafter\let\csname @fxlayout@#2\endcsname#3%
   \ifx\@fxlayouts\empty%
     \g@addto@macro\@fxlayouts{#2}%
   \else%
@@ -1026,7 +1026,7 @@
 % \begin{option}{footnote}
 %   \begin{option}{nofootnote}
 %     \begin{macro}{\FXLayoutFootnote}
-%       \begin{macro}{\@fx@layout@footnote}
+%       \begin{macro}{\@fxlayout@footnote}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutFootnote[3]{\footnote{#3 \@nameuse{fx#1name}: #2}}
@@ -1041,7 +1041,7 @@
 % \begin{option}{margin}
 %   \begin{option}{nomargin}
 %     \begin{macro}{\FXLayoutMargin}
-%       \begin{macro}{\@fx@layout@margin}
+%       \begin{macro}{\@fxlayout@margin}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
@@ -1064,7 +1064,7 @@
 % \begin{option}{marginclue}
 %   \begin{option}{nomarginclue}
 %     \begin{macro}{\FXLayoutMarginCLue}
-%       \begin{macro}{\@fx@layout@marginclue}
+%       \begin{macro}{\@fxlayout@marginclue}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
@@ -1087,7 +1087,7 @@
 % \begin{option}{inline}
 %   \begin{option}{noinline}
 %     \begin{macro}{\FXLayoutInline}
-%       \begin{macro}{\@fx@layout@inline}
+%       \begin{macro}{\@fxlayout@inline}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{{\bfseries #3 \@nameuse{fx#1name}: #2}}
@@ -1137,7 +1137,7 @@
 % \begin{option}{index}
 %   \begin{option}{noindex}
 %     \begin{macro}{\FXLayoutIndex}
-%       \begin{macro}{\@fx@layout@index}
+%       \begin{macro}{\@fxlayout@index}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
@@ -1443,7 +1443,7 @@
   \@fxhandleinnermode%
   \@for\@fxlt:=\@fxlayouts\do{%
     \@nameuse{iffx@layout@\@fxlt}%
-      \@nameuse{@fx@layout@\@fxlt}{#1}{#2}{\fixmelogo}%
+      \@nameuse{@fxlayout@\@fxlt}{#1}{#2}{\fixmelogo}%
     \fi}}
 
 %    \end{macrocode}
