@@ -1027,9 +1027,9 @@
 %   \begin{option}{nofootnote}
 %     \begin{macro}{\FXLayoutFootnote}
 %       \begin{macro}{\@fx@layout@footnote}
-%         \marg{type}\marg{author}\marg{note}
+%         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXLayoutFootnote[3]{\footnote{#2 \@nameuse{fx#1name}: #3}}
+\newcommand*\FXLayoutFootnote[3]{\footnote{#3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 %       \end{macro}
@@ -1042,11 +1042,11 @@
 %   \begin{option}{nomargin}
 %     \begin{macro}{\FXLayoutMargin}
 %       \begin{macro}{\@fx@layout@margin}
-%         \marg{type}\marg{author}\marg{note}\\
+%         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
-  \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}: #3]{%
-    \footnotesize\raggedright#2 \@nameuse{fx#1name}: #3}}
+  \marginpar[\footnotesize\raggedleft #3 \@nameuse{fx#1name}: #2]{%
+    \footnotesize\raggedright #3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1065,11 +1065,11 @@
 %   \begin{option}{nomarginclue}
 %     \begin{macro}{\FXLayoutMarginCLue}
 %       \begin{macro}{\@fx@layout@marginclue}
-%         \marg{type}\marg{author}\marg{note}
+%         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\footnotesize\raggedleft#2 \@nameuse{fx#1name}!]{%
-    \footnotesize\raggedright#2 \@nameuse{fx#1name}!}}
+  \marginpar[\footnotesize\raggedleft #3 \@nameuse{fx#1name}!]{%
+    \footnotesize\raggedright #3 \@nameuse{fx#1name}!}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -1088,9 +1088,9 @@
 %   \begin{option}{noinline}
 %     \begin{macro}{\FXLayoutInline}
 %       \begin{macro}{\@fx@layout@inline}
-%         \marg{type}\marg{author}\marg{note}
+%         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXLayoutInline[3]{{\bfseries #2 \@nameuse{fx#1name}: #3}}
+\newcommand*\FXLayoutInline[3]{{\bfseries #3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1138,12 +1138,12 @@
 %   \begin{option}{noindex}
 %     \begin{macro}{\FXLayoutIndex}
 %       \begin{macro}{\@fx@layout@index}
-%         \marg{type}\marg{author}\marg{note}
+%         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
   \index{***@\fixmeindexname:%
     !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
-    !\@nameuse{thefx#1count}: #3}}
+    !\@nameuse{thefx#1count}: #2}}
 \FXRegisterLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
 %       \end{macro}
@@ -1153,12 +1153,12 @@
 %
 % \subsubsubsection{Contents line\label{sec:code:contentslinelayout}}
 % \begin{macro}{\FXLayoutContentsLine}
-%   \marg{type}\marg{author}\marg{note}\\
+%   \marg{type}\marg{note}\marg{author}\\
 %   This one is not registered like the others because it is always active and
 %   used explicitely by the \texttt{lox} code.
 %    \begin{macrocode}
 \newcommand*\FXLayoutContentsLine[3]{%
-  \fxaddcontentsline{\@nameuse{fx#1name}: #3}}
+  \fxaddcontentsline{\@nameuse{fx#1name}: #2}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1443,7 +1443,7 @@
   \@fxhandleinnermode%
   \@for\@fxlt:=\@fxlayouts\do{%
     \@nameuse{iffx@layout@\@fxlt}%
-      \@nameuse{@fx@layout@\@fxlt}{#1}{\fixmelogo}{#2}%
+      \@nameuse{@fx@layout@\@fxlt}{#1}{#2}{\fixmelogo}%
     \fi}}
 
 %    \end{macrocode}
@@ -1459,7 +1459,7 @@
 %     \marg{type}\marg{note}
 %    \begin{macrocode}
 \newcommand*\@@fxnote@final[2]{%
-  \FXLayoutContentsLine{#1}{\fixmelogo}{#2}%
+  \FXLayoutContentsLine{#1}{#2}{\fixmelogo}%
   \iffx@log@silent\else\@nameuse{@fx@log@#1}{#2}\fi}
 \newcommand*\@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
@@ -1553,7 +1553,7 @@
     and rerun LaTeX.}}
 \newcommand*\@@fxfatal@draft[1]{%
   \@fxlayout{fatal}{#1}%
-  \FXLayoutContentsLine{fatal}{\fixmelogo}{#1}%
+  \FXLayoutContentsLine{fatal}{#1}{\fixmelogo}%
   \iffx@log@silent\else\FXLogFatal{#1}\fi}
 
 %    \end{macrocode}
