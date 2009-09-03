@@ -1951,9 +1951,8 @@
 % \end{macro}
 %
 % \subsubsection{Options Processing}
-% Put us in \texttt{english} and \texttt{final} mode, set default area to
-% \texttt{thepage}, enable marginal notes, set inner layout to inline, the
-% contents layout to italics and the environment layout to quotation.
+% First, we execute some options to initialize \fixme to something sensible,
+% and then we process the user ones.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<ltx,lang,lox,log,layout,contentslayout,envlayout>{%
   final,%
@@ -1964,11 +1963,6 @@
   innerlayout={layout=inline},%
   contentslayout=italics,%
   envlayout=quotation}
-%    \end{macrocode}
-% Be sure to process the \texttt{lox} family after the \texttt{lang} one, as
-% the default area might get a different name from a user option. We don't
-% want to override it with our language setting.
-%    \begin{macrocode}
 \ProcessOptionsX*[fx]<ltx,lang,lox,log,layout,contentslayout,envlayout>
 
 %    \end{macrocode}
