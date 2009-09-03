@@ -1248,6 +1248,53 @@
 %   \end{macro}
 % \end{option}
 %
+% \subsection{Contents Layout}
+% \subsubsection{Contents layout creation}
+% \begin{macro}{\FXRegisterContentsLayout}
+%   \marg{name}\marg{funcname}\\
+%   Register a new contents layout with \fixme. This currently only involves
+%   constructing the translation macro.
+%    \begin{macrocode}
+\newcommand*\FXRegisterContentsLayout[2]{%
+  \expandafter\let\csname @fxcontentslayout@#1\endcsname#2}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Built-in contents layouts}
+% \subsubsubsection{Italics}
+% \begin{macro}{\FXContentsLayoutItalics}
+%   \marg{contents}
+%    \begin{macrocode}
+\newcommand\FXContentsLayoutItalics[1]{\begingroup\itshape #1\endgroup}
+\FXRegisterContentsLayout{italics}{\FXContentsLayoutItalics}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Contents layout control}
+% \begin{option}{contentslayout}
+%   \begin{macro}{\@fxcontentslayout@draft}
+%     This is much simpler than standard layout management because only one
+%     contents layout at a time is possible. Using a specific contents
+%     layout boils down to binding the layout macro to the proper translation
+%     one. Note that we're actually binding the \texttt{draft} macro, because
+%     in \texttt{final} mode, the contents is typeset unchanged.
+%    \begin{macrocode}
+\@fxdefinekey{contentslayout}{contentslayout}{%
+  \expandafter\let\expandafter\@fxcontentslayout@draft%
+    \csname @fxcontentslayout@#1\endcsname}
+%    \end{macrocode}
+%   \end{macro}
+% \end{option}
+% \begin{macro}{\@fxcontentslayout@final}
+%   Finally, in final mode, our contents layout function is the identity.
+%    \begin{macrocode}
+\newcommand\@fxcontentslayout@final[1]{#1}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Logging}
 % \subsubsection{Logging macros}
 % \begin{macro}{\FXLogNote}
@@ -1410,10 +1457,10 @@
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
   \begingroup%
-  \@fxsetkeys{ltx,lang,lox,log,layout}{#2}%
-  \stepcounter{fixmecount}%
-  \stepcounter{fx#1count}%
-  \@@fxnote{#1}{#3}%
+    \@fxsetkeys{ltx,lang,lox,log,layout}{#2}%
+    \stepcounter{fixmecount}%
+    \stepcounter{fx#1count}%
+    \@@fxnote{#1}{#3}%
   \endgroup}
 
 %    \end{macrocode}
@@ -1421,10 +1468,15 @@
 %
 % \subsubsubsection{Starred version}
 % \begin{macro}{\@fxsnote}
-%   \marg{type}\oarg{options}\marg{note}\marg{text}
+%   \marg{type}\oarg{options}\marg{note}\marg{text}\\
+%   We process the options here in order to get the required contents layout
+%   early enough.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
-  {\itshape #4}\@fxnote{#1}[#2]{#3}}
+  \begingroup%
+    \@fxsetkeys{ltx,lang,lox,log,layout,contentslayout}{#2}%
+    \@fxcontentslayout{#4}\@fxnote{#1}[]{#3}%
+  \endgroup}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1494,10 +1546,10 @@
 %    \begin{macrocode}
 \newcommand*\@fxfatal[2][]{%
   \begingroup%
-  \@fxsetkeys{ltx,lang,lox,log,layout}{#1}%
-  \stepcounter{fixmecount}%
-  \stepcounter{fxfatalcount}%
-  \@@fxfatal{#2}%
+    \@fxsetkeys{ltx,lang,lox,log,layout}{#1}%
+    \stepcounter{fixmecount}%
+    \stepcounter{fxfatalcount}%
+    \@@fxfatal{#2}%
   \endgroup}
 
 %    \end{macrocode}
@@ -1505,10 +1557,15 @@
 %
 % \subsubsubsection{Starred version}
 % \begin{macro}{\@fxsfatal}
-%   \oarg{options}\marg{note}\marg{text}
+%   \oarg{options}\marg{note}\marg{text}\\
+%   We process the options here in order to get the required contents layout
+%   early enough.
 %    \begin{macrocode}
 \newcommand\@fxsfatal[3][]{%
-  {\itshape #3}\@fxfatal[#1]{#2}}
+  \begingroup%
+    \@fxsetkeys{ltx,lang,lox,log,layout,contentslayout}{#1}%
+    \@fxcontentslayout{#3}\@fxfatal{#2}%
+  \endgroup}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1784,11 +1841,12 @@
 %   \begin{macro}{\@@fxfatal}
 %     \begin{macro}{\@fxenvbegin}
 %       \begin{macro}{\@fxenvend}
-%         \begin{macro}{\listoffixmes}
-%           \begin{option}{final}
-%             \begin{option}{draft}
-%               Select draft or final versions of internal macros, some of
-%               them also depending on the document class:
+%         \begin{macro}{\@fxcontentslayout}
+%           \begin{macro}{\listoffixmes}
+%             \begin{option}{final}
+%               \begin{option}{draft}
+%                 Select draft or final versions of internal macros, some of
+%                 them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@fxnote\@@fxnote@final%
@@ -1796,6 +1854,7 @@
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\@fxsenvbegin\@fxsenvbegin@final%
+  \let\@fxcontentslayout\@fxcontentslayout@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{ltx}{draft}{%
   \let\@@fxnote\@@fxnote@draft%
@@ -1803,11 +1862,13 @@
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
   \let\@fxsenvbegin\@fxsenvbegin@draft%
+  \let\@fxcontentslayout\@fxcontentslayout@draft%
   \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
+%               \end{option}
 %             \end{option}
-%           \end{option}
+%           \end{macro}
 %         \end{macro}
 %       \end{macro}
 %     \end{macro}
@@ -1867,23 +1928,24 @@
 %
 % \subsubsection{Options Processing}
 % Put us in \texttt{english} and \texttt{final} mode, set default area to
-% \texttt{thepage}, enable marginal notes, set inner layout to inline and
-% environment layout to quotation.
+% \texttt{thepage}, enable marginal notes, set inner layout to inline, the
+% contents layout to italics and the environment layout to quotation.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<ltx,lang,lox,log,layout,envlayout>{%
+\ExecuteOptionsX[fx]<ltx,lang,lox,log,layout,contentslayout,envlayout>{%
   final,%
   english,%
   nosilent,%
   area=thepage,%
   layout=margin,%
   innerlayout={layout=inline},%
+  contentslayout=italics,%
   envlayout=quotation}
 %    \end{macrocode}
 % Be sure to process the \texttt{lox} family after the \texttt{lang} one, as
 % the default area might get a different name from a user option. We don't
 % want to override it with our language setting.
 %    \begin{macrocode}
-\ProcessOptionsX*[fx]<ltx,lang,lox,log,layout,envlayout>
+\ProcessOptionsX*[fx]<ltx,lang,lox,log,layout,contentslayout,envlayout>
 
 %    \end{macrocode}
 %
@@ -1893,7 +1955,8 @@
 %   The inevitable setup macro, extremely impressive yet as trivial as can be
 %   with the \texttt{xkeyval} package\ldots
 %    \begin{macrocode}
-\newcommand*\fxsetup[1]{\@fxsetkeys{ltx,lang,lox,log,layout,envlayout}{#1}}
+\newcommand*\fxsetup[1]{%
+  \@fxsetkeys{ltx,lang,lox,log,layout,contentslayout,envlayout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
