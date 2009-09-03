@@ -1238,6 +1238,10 @@
 %       proper translation ones.
 %    \begin{macrocode}
 \@fxdefinekey{envlayout}{envlayout}{%
+  \@ifundefined{@fxenvlayout@#1@begin}{%
+    \@fxpkgerror{no environment layout named '#1'}{%
+      You have requested an environment layout named '#1',\MessageBreak
+      but no such layout seem to be registered with FiXme.}}{}%
   \expandafter\let\expandafter\@fxenvlayout@begin%
     \csname @fxenvlayout@#1@begin\endcsname%
   \expandafter\let\expandafter\@fxenvlayout@end%
