@@ -210,6 +210,19 @@
 % using the starred version, the environments expect one additional mandatory
 % argument: the text in question that will be highlighted.
 %
+% \subsection{List of \fixme's\label{sec:manual:lox}}
+% \DescribeMacro{\listoffixmes}
+% \fixme remembers where you put \fixme notes in a toc-like file whose
+% extension is \texttt{lox}. The \cs{listoffixmes} command generates the list
+% of all \fixme notes in a manner similar to that of the ``list of figures''
+% for instance. A standard layout is automatically selected for the
+% \texttt{article}, \texttt{report}, \texttt{book} classes and their
+% \komascript replacements. If another class is used, the \texttt{article}
+% layout is selected. Also, note that if there is no \fixme note left in the
+% document, this command doesn't generate an empty list, but rather stays
+% silent. It also stays silent in \texttt{final} mode, regardless of the
+% presence of remaining notes (see section \sectionref{sec:manual:behavior}).
+%
 % \subsection{Controlling the behavior of \fixme\label{sec:manual:behavior}}
 % \DescribeOption{final}
 % \DescribeOption{draft}
@@ -412,19 +425,6 @@
 % those forms are possible: \texttt{silent}, equivalent to
 % \texttt{silent=true}, and \texttt{nosilent}, equivalent to
 % \texttt{silent=false} (the default).
-%
-% \subsection{List of \fixme's\label{sec:manual:lox}}
-% \DescribeMacro{\listoffixmes}
-% \fixme remembers where you put \fixme notes in a toc-like file whose
-% extension is \texttt{lox}. The \cs{listoffixmes} command generates the list
-% of all \fixme notes in a manner similar to that of the ``list of figures''
-% for instance. A standard layout is automatically selected for the
-% \texttt{article}, \texttt{report}, \texttt{book} classes and their
-% \komascript replacements. If another class is used, the \texttt{article}
-% layout is selected. Also, note that if thre is no \fixme note left in the
-% document, this command doesn't generate an empty list, but rather stays
-% silent. It also stays silent in \texttt{final} mode, regardless of the
-% presence of remaining notes.
 %
 % \subsection{Floating \fixme notes}
 % At some point, people suggested that it would be nice to have global \fixme
