@@ -1202,9 +1202,8 @@
 % \subsubsection{Environment layout creation}
 % \begin{macro}{\FXRegisterEnvLayout}
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
-%   Register a new environment layout with \fixme. This currently involves
-%   \cs{let}'ing the translation macros to the actual environment
-%   layout ones.
+%   Register a new environment layout with \fixme. This currently only
+%   involves constructing the translation macros.
 %    \begin{macrocode}
 \newcommand*\FXRegisterEnvLayout[3]{%
   \expandafter\let\csname @fx@envlayout@#1@begin\endcsname#2%
@@ -1231,8 +1230,12 @@
 %
 % \subsubsection{Environment layout control}
 % \begin{option}{envlayout}
-%   This is much simpler than standard layout management because only one
-%   environment layout at a time is possible.
+%   \begin{macro}{\@fx@envlayout@begin}
+%     \begin{macro}{\@fx@envlayout@end}
+%       This is much simpler than standard layout management because only one
+%       environment layout at a time is possible. Using a specific environment
+%       layout boils down to binding the beginning and ending macros to the
+%       proper translation ones.
 %    \begin{macrocode}
 \@fxdefinekey{envlayout}{envlayout}{%
   \expandafter\let\expandafter\@fx@envlayout@begin%
@@ -1241,6 +1244,8 @@
     \csname @fx@envlayout@#1@end\endcsname}
 
 %    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
 % \end{option}
 %
 % \subsection{Logging}
@@ -1536,14 +1541,20 @@
 %
 % \subsection{\fixme environments}
 % \subsubsection{Status-dependent implementation}
-% \fixme environments are always laid out inline. The environment's summary
-% is laid out by the corresponding macro, but the \texttt{inline} layout is
-% disabled (this is as easy as appending \texttt{noinline} at the end of the
-% options list). In \texttt{final} mode, \texttt{verbatim}'s \texttt{comment}
-% environment is used to suppress output. Note that contrary to the macro
-% version, we don't need to define the \texttt{fxfatal} environment in a
-% specialized way because the fatal error will be triggered by the call to
-% \cs{fxfatal} anyway.
+% A \fixme environment's summary is laid out by the corresponding macro, but
+% the \texttt{inline} layout is disabled. This is as easy as appending
+% \texttt{noinline} to the end of the options list, which is not even worth
+% doing in final mode, since all layout is disabled then.\par
+% As far as the environment's body is concerned, \texttt{verbatim}'s
+% \texttt{comment} environment is used to suppress output.\par
+% Note that contrary to the macro version, we don't need to define the
+% \texttt{fxfatal} environment in a specialized way because the fatal error
+% will be triggered by the call to \cs{fxfatal} anyway.\par
+% All options are handled in the environments themselves. This is easier than
+% filtering the ones that are only relevant to the summary and pass them along
+% with the call to the \cs{fx*} macro. The \texttt{envlayout} option is
+% defined in its own family and handled only here so that if somebody ever
+% tries to provide it outside a \fixme environment, an error will be produced.
 %
 % \subsubsubsection{Opening standard versions}
 % \begin{macro}{\@fxenvbegin@final}
@@ -1551,11 +1562,15 @@
 %     \marg{type}\marg{options}\marg{summary}
 %    \begin{macrocode}
 \newcommand*\@fxenvbegin@final[3]{%
-  \@nameuse{fx#1}[#2]{#3}%
-  \comment}
+  \begingroup%
+    \@fxsetkeys{ltx,lang,lox,log,layout,envlayout}{#2}%
+    \@nameuse{fx#1}{#3}%
+    \comment}
 \newcommand*\@fxenvbegin@draft[3]{%
-  \@nameuse{fx#1}[#2,noinline]{#3}%
-  \@fx@envlayout@begin{#1}{\fixmelogo}}
+  \begingroup%
+    \@fxsetkeys{ltx,lang,lox,log,layout,envlayout}{#2,noinline}%
+    \@nameuse{fx#1}{#3}%
+    \@fx@envlayout@begin{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1567,11 +1582,15 @@
 %     \marg{type}\marg{options}\marg{summary}\marg{text}
 %    \begin{macrocode}
 \newcommand\@fxsenvbegin@final[4]{%
-  \@nameuse{fx#1}*[#2]{#3}{#4}%
-  \comment}
+  \begingroup%
+    \@fxsetkeys{ltx,lang,lox,log,layout,envlayout}{#2}%
+    \@nameuse{fx#1}*{#3}{#4}%
+    \comment}
 \newcommand\@fxsenvbegin@draft[4]{%
-  \@nameuse{fx#1}*[#2,noinline]{#3}{#4}%
-  \@fx@envlayout@begin{#1}{\fixmelogo}}
+  \begingroup%
+    \@fxsetkeys{ltx,lang,lox,log,layout,envlayout}{#2,noinline}%
+    \@nameuse{fx#1}*{#3}{#4}%
+    \@fx@envlayout@begin{#1}{\fixmelogo}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1583,8 +1602,8 @@
 %     \marg{type}\\
 %     Note that closing in standard or starred versions is identical.
 %    \begin{macrocode}
-\newcommand*\@fxenvend@final[1]{\endcomment}
-\newcommand*\@fxenvend@draft[1]{\@fx@envlayout@end{#1}{\fixmelogo}}
+\newcommand*\@fxenvend@final[1]{\endcomment\endgroup}
+\newcommand*\@fxenvend@draft[1]{\@fx@envlayout@end{#1}{\fixmelogo}\endgroup}
 
 %    \end{macrocode}
 %   \end{macro}
