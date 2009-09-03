@@ -32,14 +32,6 @@ of \protect.
   Okay :-) And then, that makes me think of minitoc. It would also be
 nice to have local lists of fixmes and stuff...
 
-
-* Mark Edgington <edgimar@gmail.com>
-
-I also have made macros for different people editing the same document, so
-that the comments from different people show up with a different prefix in
-them.
-
-
 * Ask for the translation of "fatal errors" in the supported languages
 
 * Internationalize the FXLog* messages
