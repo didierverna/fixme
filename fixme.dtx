@@ -1566,6 +1566,47 @@
 \let\endafixme\endanfxfatal
 %    \end{macrocode}
 % \end{environment}
+% \begin{macro}{\@fxsenvbegin@final}
+%   \begin{macro}{\@fxsenvbegin@draft}
+%     \marg{type}\marg{options}\marg{summary}\marg{text}
+%    \begin{macrocode}
+\newcommand\@fxsenvbegin@final[4]{%
+  \@nameuse{fx#1}*[#2]{#3}{#4}%
+  \comment}
+\newcommand\@fxsenvbegin@draft[4]{%
+  \@nameuse{fx#1}*[#2,noinline]{#3}{#4}%
+  \FXEnvBegin{#1}{\fixmelogo}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxsdefineenvironment}
+%   \marg{type}\\
+%   This command defines \fixme starred environments in a generic way:
+%    \begin{macrocode}
+\newcommand*\@fxsdefineenvironment[1]{%
+  \newenvironment{anfx#1*}[3][]{%
+    \@fxsenvbegin{#1}{##1}{##2}{##3}}{%
+    \@fxenvend{#1}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{environment}{anfxnote*}
+%   \begin{environment}{anfxwarning*}
+%     \begin{environment}{anfxerror*}
+%       \begin{environment}{anfxfatal*}
+%         And we use it to create the user level interface:
+%    \begin{macrocode}
+\@fxsdefineenvironment{note}
+\@fxsdefineenvironment{warning}
+\@fxsdefineenvironment{error}
+\@fxsdefineenvironment{fatal}
+
+%    \end{macrocode}
+%       \end{environment}
+%     \end{environment}
+%   \end{environment}
+% \end{environment}
 %
 % \subsection{Internationalization}
 % \begin{option}{english}
@@ -1703,12 +1744,14 @@
   \let\@@fxfatal\@@fxfatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
+  \let\@fxsenvbegin\@fxsenvbegin@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{ltx}{draft}{%
   \let\@@fxnote\@@fxnote@draft%
   \let\@@fxfatal\@@fxfatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
+  \let\@fxsenvbegin\@fxsenvbegin@draft%
   \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
