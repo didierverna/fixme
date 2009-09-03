@@ -20,8 +20,10 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 4.0
 =============
-** New feature: floating notes (not specific to any portion of text)
-suggested by Rasmus Villemoes.
+** New feature: targeted notes and environments
+(highlighting a portion of text), suggested by Mark Edgington.
+** New feature: floating notes
+(not specific to any portion of text), suggested by Rasmus Villemoes.
 ** New feature: alternate layout autoswitch for inner mode
 suggested by Will Robertson.
 ** New feature: key/value argument syntax in the whole user interface
