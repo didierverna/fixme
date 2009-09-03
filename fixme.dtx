@@ -1286,6 +1286,10 @@
 %     one.
 %    \begin{macrocode}
 \@fxdefinekey{contentslayout}{contentslayout}{%
+  \@ifundefined{@fxcontentslayout@#1}{%
+    \@fxpkgerror{no contents layout named '#1'}{%
+      You have requested a contents layout named '#1',\MessageBreak
+      but no such layout seem to be registered with FiXme.}}{}%
   \expandafter\let\expandafter\@@fxcontentslayout%
     \csname @fxcontentslayout@#1\endcsname}
 %    \end{macrocode}
