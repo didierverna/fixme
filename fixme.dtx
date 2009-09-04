@@ -1401,9 +1401,26 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{counter}{fx*count}
-%     \begin{macro}{\fx*name}
-%       \begin{macro}{\fx*sname}
-%           And we use it for all note types:
+%   \begin{macro}{\fx*name}
+%     \begin{macro}{\fx*sname}
+%       \makeatletter
+%         \let\PrintMacroName=\@gobble
+%         \let\PrintEnvName=\@gobble
+%         \let\PrintCounterName=\@gobble
+%       \makeatother
+%       \begin{counter}{fxnotecount}
+%         \begin{macro}{fxnotename}
+%           \begin{macro}{fxnotesname}
+%             \begin{counter}{fxwarningcount}
+%               \begin{macro}{fxwarningname}
+%                 \begin{macro}{fxwarningsname}
+%                   \begin{counter}{fxerrorcount}
+%                     \begin{macro}{fxerrorname}
+%                       \begin{macro}{fxerrorsname}
+%                         \begin{counter}{fxfatalcount}
+%                           \begin{macro}{fxfatalname}
+%                             \begin{macro}{fxfatalsname}
+%                               And we use it for all note types:
 %    \begin{macrocode}
 \@fxnoteparameters{note}
 \@fxnoteparameters{warning}
@@ -1411,6 +1428,18 @@
 \@fxnoteparameters{fatal}
 
 %    \end{macrocode}
+%                             \end{macro}
+%                           \end{macro}
+%                         \end{counter}
+%                       \end{macro}
+%                     \end{macro}
+%                   \end{counter}
+%                 \end{macro}
+%               \end{macro}
+%             \end{counter}
+%           \end{macro}
+%         \end{macro}
+%       \end{counter}
 %     \end{macro}
 %   \end{macro}
 % \end{counter}
@@ -1658,10 +1687,46 @@
 % \end{macro}
 % \begin{macro}{\fx*[*]}
 %   \begin{environment}{anfx*[*]}
+%     \makeatletter
+%       \let\PrintMacroName=\@gobble
+%       \let\PrintEnvName=\@gobble
+%     \makeatother
+%     \begin{macro}{\fxnote}
+%       \begin{macro}{\fxwarning}
+%         \begin{macro}{\fxerror}
+%           \begin{macro}{\fxfatal}
+%             \begin{macro}{\fxnote*}
+%               \begin{macro}{\fxwarning*}
+%                 \begin{macro}{\fxerror*}
+%                   \begin{macro}{\fxfatal*}
+%                     \begin{environment}{anfxnote}
+%                       \begin{environment}{anfxwarning}
+%                         \begin{environment}{anfxerror}
+%                           \begin{environment}{anfxfatal}
+%                             \begin{environment}{anfxnote*}
+%                               \begin{environment}{anfxwarning*}
+%                                 \begin{environment}{anfxerror*}
+%                                   \begin{environment}{anfxfatal*}
 %     And we use it to create the \fixme default user:
 %    \begin{macrocode}
 \fxnewauthor{fx}{anfx}{\fixmelogo}
 %    \end{macrocode}
+%                                   \end{environment}
+%                                 \end{environment}
+%                               \end{environment}
+%                             \end{environment}
+%                           \end{environment}
+%                         \end{environment}
+%                       \end{environment}
+%                     \end{environment}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
+%     \end{macro}
 %   \end{environment}
 % \end{macro}
 % \begin{macro}{\fixme}
