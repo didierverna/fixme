@@ -1734,11 +1734,11 @@
 %    \begin{macrocode}
 \newcommand*\@fxnewenvironments[3]{%
   \newenvironment{#1#2}[2][]{%
-    \@fxpresetkeys{misc}{author=#3}{}%
+    \@fxsetkeys{misc}{author=#3}{}%
     \@fxenvbegin{#2}{##1}{##2}}{%
     \@fxenvend{#2}}
   \newenvironment{#1#2*}[3][]{%
-    \@fxpresetkeys{misc}{author=#3}{}%
+    \@fxsetkeys{misc}{author=#3}{}%
     \@fxsenvbegin{#2}{##1}{##2}{##3}}{%
     \@fxenvend{#2}}}
 
