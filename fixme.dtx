@@ -1031,7 +1031,8 @@
 %       \begin{macro}{\@fxlayout@footnote}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXLayoutFootnote[3]{\footnote{#3 \@nameuse{fx#1name}: #2}}
+\newcommand*\FXLayoutFootnote[3]{%
+  \footnote{\ignorespaces #3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 %       \end{macro}
@@ -1047,8 +1048,9 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
-  \marginpar[\footnotesize\raggedleft #3 \@nameuse{fx#1name}: #2]{%
-    \footnotesize\raggedright #3 \@nameuse{fx#1name}: #2}}
+  \marginpar[%
+  \footnotesize\raggedleft\ignorespaces #3 \@nameuse{fx#1name}: #2]{%
+    \footnotesize\raggedright\ignorespaces #3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1070,8 +1072,8 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\footnotesize\raggedleft #3 \@nameuse{fx#1name}!]{%
-    \footnotesize\raggedright #3 \@nameuse{fx#1name}!}}
+  \marginpar[\footnotesize\raggedleft\ignorespaces #3 \@nameuse{fx#1name}!]{%
+    \footnotesize\raggedright\ignorespaces #3 \@nameuse{fx#1name}!}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -1092,7 +1094,8 @@
 %       \begin{macro}{\@fxlayout@inline}
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXLayoutInline[3]{{\bfseries #3 \@nameuse{fx#1name}: #2}}
+\newcommand*\FXLayoutInline[3]{%
+  {\bfseries\ignorespaces #3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1221,7 +1224,8 @@
 %     \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutQuotationBegin[2]{%
-  \begin{quotation}\bfseries #2 \@nameuse{fx#1name}: \ignorespaces}
+  \begin{quotation}
+    \bfseries\ignorespaces #2 \@nameuse{fx#1name}: \ignorespaces}
 \newcommand*\FXEnvLayoutQuotationEnd[2]{\end{quotation}}
 \FXRegisterEnvLayout{quotation}{%
   \FXEnvLayoutQuotationBegin}{\FXEnvLayoutQuotationEnd}
