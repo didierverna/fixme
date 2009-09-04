@@ -1696,11 +1696,11 @@
 % \end{macro}
 %
 % \subsubsection{User-level interface}
-% \begin{macro}{\@fxdefineenvironment}
+% \begin{macro}{\@fxnewenvironments}
 %   \marg{type}\\
 %   This command defines \fixme environments in a generic way:
 %    \begin{macrocode}
-\newcommand*\@fxdefineenvironment[1]{%
+\newcommand*\@fxnewenvironments[1]{%
   \newenvironment{anfx#1}[2][]{%
     \@fxenvbegin{#1}{##1}{##2}}{%
     \@fxenvend{#1}}
@@ -1720,10 +1720,10 @@
 %               \begin{environment}{anfxfatal*}
 %                 And we use it to create the user level interface:
 %    \begin{macrocode}
-\@fxdefineenvironment{note}
-\@fxdefineenvironment{warning}
-\@fxdefineenvironment{error}
-\@fxdefineenvironment{fatal}
+\@fxnewenvironments{note}
+\@fxnewenvironments{warning}
+\@fxnewenvironments{error}
+\@fxnewenvironments{fatal}
 
 %    \end{macrocode}
 %               \end{environment}
