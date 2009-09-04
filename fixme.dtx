@@ -1574,92 +1574,98 @@
 % \subsubsection{Status-dependent implementation}
 % A \fixme environment's summary is laid out by the corresponding macro, but
 % the \texttt{inline} layout is disabled. This is as easy as appending
-% \texttt{noinline} to the end of the options list, which is not even worth
-% doing in final mode, since all layouts are disabled then.\par
-% As far as the environment's body is concerned, \texttt{verbatim}'s
-% \texttt{comment} environment is used to suppress output in \texttt{final}
-% mode.\par
-% Note that contrary to the macro version, we don't need to define the
-% \texttt{fxfatal} environment in a specialized way because the fatal error
-% will be triggered by the call to \cs{fxfatal} anyway.\par
-% All options are handled in the environments themselves. This is easier than
-% filtering the ones that are only relevant to the summary and pass them along
-% with the call to the \cs{fx*} macro. The \texttt{envlayout} option is
-% defined in its own family and handled only here so that if somebody ever
-% tries to provide it outside a \fixme environment, an error will be produced.
-% Similarly, only the starred version handles the \texttt{contentslayout}
-% option and family, for the same reason.
-%
-% \subsubsubsection{Opening standard versions}
-% \begin{macro}{\@fxenvbegin@final}
-%   \begin{macro}{\@fxenvbegin@draft}
-%     \marg{type}\marg{options}\marg{summary}
+% \texttt{noinline} to the end of the options list.
+% \begin{macro}{\@@@@fxbeginenv@final}
+%   \begin{macro}{\@@@@fxbeginenv@draft}
+%     \begin{macro}{\@fxendenv@final}
+%       \begin{macro}{\@fxendenv@draft}
+%         \marg{type}\\
+%         In final mode, \texttt{verbatim}'s \texttt{comment} environment is
+%         used to suppress output.
 %    \begin{macrocode}
-\newcommand*\@fxenvbegin@final[3]{%
-  \begingroup%
-    \@fxsetkeys{ltx,lang,misc,log,layout,envlayout}{#2}%
-    \@nameuse{fx#1}{#3}%
-    \comment}
-\newcommand*\@fxenvbegin@draft[3]{%
-  \begingroup%
-    \@fxsetkeys{ltx,lang,misc,log,layout,envlayout}{#2,noinline}%
-    \@nameuse{fx#1}{#3}%
-    \@fxenvlayout@begin{#1}{\cmdfx@misc@author}}
+\def\@@@@fxbeginenv@final#1{\comment}
+\def\@@@@fxbeginenv@draft#1{\@fxenvlayout@begin{#1}{\cmdfx@misc@author}}
+\def\@fxendenv@final#1{\endcomment}
+\def\@fxendenv@draft#1{\@fxenvlayout@end{#1}{\cmdfx@misc@author}}
 
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsubsection{Opening starred versions}
-% \begin{macro}{\@fxsenvbegin@final}
-%   \begin{macro}{\@fxsenvbegin@draft}
-%     \marg{type}\marg{options}\marg{summary}\marg{text}
+% \subsubsection{Standard versions}
+% \begin{macro}{\@@@fxbeginenv}
+%   \begin{macro}{\@@fxbeginenv}
+%     \marg{type}\marg{summary}
 %    \begin{macrocode}
-\newcommand\@fxsenvbegin@final[4]{%
-  \begingroup%
-    \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout,envlayout}{#2}%
-    \@nameuse{fx#1}*{#3}{#4}%
-    \comment}
-\newcommand\@fxsenvbegin@draft[4]{%
-  \begingroup%
-    \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout,envlayout}{%
-      #2,noinline}%
-    \@nameuse{fx#1}*{#3}{#4}%
-    \@fxenvlayout@begin{#1}{\cmdfx@misc@author}}
+\def\@@@fxbeginenv#1#2{%
+  \@@fxnote{#1}{#2}%
+  \@@@@fxbeginenv{#1}}
+\def\@@fxbeginenv#1#2{%
+  \@fxsetkeys{layout}{noinline}%
+  \@@@fxbeginenv{#1}{#2}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxbeginenv}
+%   \marg{type}\oarg{options}\marg{summary}
+%    \begin{macrocode}
+\def\@fxbeginenv#1[#2]#3{%
+  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout}{#2,noinline}%
+  \@@@fxbeginenv{#1}{#3}}
 
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsubsection{Closing versions}
-% \begin{macro}{\@fxenvend@final}
-%   \begin{macro}{\@fxenvend@draft}
-%     \marg{type}\\
-%     Note that closing in standard or starred versions is identical.
+% \subsubsection{Starred versions}
+% \begin{macro}{\@@@fxbeginsenv}
+%   \begin{macro}{\@@fxbeginsenv}
+%     \marg{type}\marg{summary}\marg{text}
 %    \begin{macrocode}
-\newcommand*\@fxenvend@final[1]{%
-  \endcomment\endgroup}
-\newcommand*\@fxenvend@draft[1]{%
-  \@fxenvlayout@end{#1}{\cmdfx@misc@author}\endgroup}
+\long\def\@@@fxbeginsenv#1#2#3{%
+  \@@fxsnote{#1}{#2}{#3}
+  \@@@@fxbeginenv{#1}}
+\long\def\@@fxbeginsenv#1#2#3{%
+  \@fxsetkeys{layout}{noinline}%
+  \@@@fxbeginsenv{#1}{#2}{#3}}
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxbeginenv}
+%   \marg{type}\oarg{options}\marg{summary}\marg{text}\\
+%   Note the \texttt{contentslayout} family here.
+%    \begin{macrocode}
+\long\def\@fxbeginsenv#1[#2]#3#4{%
+  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,contentslayout}{#2,noinline}%
+  \@@@fxbeginsenv{#1}{#3}{#4}}
 
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
 %
 % \subsubsection{User-level interface}
-% \begin{macro}{\@fxnewenvironments}
+% \begin{macro}{\@fxnewnoteenvs}
 %   \marg{prefix}\marg{type}\marg{author}\\
-%   This command defines \fixme environments in a generic way:
+%   This macro defines \fixme environments in a generic way (note that the
+%   ending macros are identical):
 %    \begin{macrocode}
-\newcommand*\@fxnewenvironments[3]{%
-  \newenvironment{#1#2}[2][]{%
-    \@fxsetkeys{misc}{author=#3}{}%
-    \@fxenvbegin{#2}{##1}{##2}}{%
-    \@fxenvend{#2}}
-  \newenvironment{#1#2*}[3][]{%
-    \@fxsetkeys{misc}{author=#3}{}%
-    \@fxsenvbegin{#2}{##1}{##2}{##3}}{%
-    \@fxenvend{#2}}}
+\newcommand*\@fxnewnoteenvs[3]{%
+  \expandafter\def\csname #1#2\endcsname{%
+    \begingroup%
+      \@fxsetkeys{misc}{author=#3}%
+      \@ifnextchar[%]
+        {\@fxbeginenv{#2}}{\@@fxbeginenv{#2}}}
+  \expandafter\def\csname end#1#2\endcsname{%
+      \@fxendenv{#2}%
+    \endgroup}%
+  \expandafter\long\expandafter\def\csname #1#2*\endcsname{%
+    \begingroup%
+      \@fxsetkeys{misc}{author=#3}%
+      \@ifnextchar[%]
+        {\@fxbeginsenv{#2}}{\@@fxbeginsenv{#2}}}
+  \expandafter\def\csname end#1#2*\endcsname{%
+      \@fxendenv{#2}%
+    \endgroup}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1673,10 +1679,10 @@
 %               \begin{environment}{anfxfatal*}
 %                 And we use it to create the user level interface:
 %    \begin{macrocode}
-\@fxnewenvironments{anfx}{note}{}
-\@fxnewenvironments{anfx}{warning}{}
-\@fxnewenvironments{anfx}{error}{}
-\@fxnewenvironments{anfx}{fatal}{}
+\@fxnewnoteenvs{anfx}{note}{\fixmelogo}
+\@fxnewnoteenvs{anfx}{warning}{\fixmelogo}
+\@fxnewnoteenvs{anfx}{error}{\fixmelogo}
+\@fxnewnoteenvs{anfx}{fatal}{\fixmelogo}
 
 %    \end{macrocode}
 %               \end{environment}
@@ -1820,37 +1826,31 @@
 %
 % \subsection{Document status processing}
 % \begin{macro}{\@@@fxnote}
-%   \begin{macro}{\@@@fxfatal}
-%     \begin{macro}{\@fxenvbegin}
-%       \begin{macro}{\@fxenvend}
-%         \begin{macro}{\@fxcontentslayout}
-%           \begin{macro}{\listoffixmes}
-%             \begin{option}{final}
-%               \begin{option}{draft}
-%                 Select draft or final versions of internal macros, some of
-%                 them also depending on the document class:
+%   \begin{macro}{\@@@@fxbeginenv}
+%     \begin{macro}{\@fxendenv}
+%       \begin{macro}{\@fxcontentslayout}
+%         \begin{macro}{\listoffixmes}
+%           \begin{option}{final}
+%             \begin{option}{draft}
+%               Select draft or final versions of internal macros, some of
+%               them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@@fxnote\@@@fxnote@final%
-  \let\@@@fxfatal\@@@fxfatal@final%
-  \let\@fxenvbegin\@fxenvbegin@final%
-  \let\@fxenvend\@fxenvend@final%
-  \let\@fxsenvbegin\@fxsenvbegin@final%
+  \let\@@@@fxbeginenv\@@@@fxbeginenv@final
+  \let\@fxendenv\@fxendenv@final%
   \let\@fxcontentslayout\@fxcontentslayout@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{ltx}{draft}{%
   \let\@@@fxnote\@@@fxnote@draft%
-  \let\@@@fxfatal\@@@fxfatal@draft%
-  \let\@fxenvbegin\@fxenvbegin@draft%
-  \let\@fxenvend\@fxenvend@draft%
-  \let\@fxsenvbegin\@fxsenvbegin@draft%
+  \let\@@@@fxbeginenv\@@@@fxbeginenv@draft
+  \let\@fxendenv\@fxendenv@draft%
   \let\@fxcontentslayout\@fxcontentslayout@draft%
   \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
-%               \end{option}
 %             \end{option}
-%           \end{macro}
+%           \end{option}
 %         \end{macro}
 %       \end{macro}
 %     \end{macro}
