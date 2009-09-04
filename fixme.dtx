@@ -1503,32 +1503,32 @@
 % \end{macro}
 %
 % \subsubsubsection{User-level interface}
+% \begin{macro}{\@fxnewnonfatal}
+%   \marg{type}\\
+%   This command defines user-level non fatal notes in a generic way:
+%    \begin{macrocode}
+\newcommand*\@fxnewnonfatal[1]{%
+  \expandafter\DeclareRobustCommand\csname fx#1\endcsname{%
+    \@ifstar{%
+      \@ifnextchar[%]
+      {\@fxsnote{#1}}{\@fxsnote{#1}[]}}{%
+      \@ifnextchar[%]
+      {\@fxnote{#1}}{\@fxnote{#1}[]}}}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\fxnote}
 %   \begin{macro}{\fxnote*}
 %     \begin{macro}{\fxwarning}
 %       \begin{macro}{\fxwarning*}
 %         \begin{macro}{\fxerror}
 %           \begin{macro}{\fxerror*}
-%             \oarg{options}\marg{note}(\marg{text} for the starred versions)
+%             \oarg{options}\marg{note}(\marg{text} for the starred
+%             versions)\\
+%             And we use it to create the user-level interface:
 %    \begin{macrocode}
-\DeclareRobustCommand\fxnote{%
-  \@ifstar{%
-    \@ifnextchar[%]
-    {\@fxsnote{note}}{\@fxsnote{note}[]}}{%
-    \@ifnextchar[%]
-    {\@fxnote{note}}{\@fxnote{note}[]}}}
-\DeclareRobustCommand\fxwarning{%
-  \@ifstar{%
-    \@ifnextchar[%]
-    {\@fxsnote{warning}}{\@fxsnote{warning}[]}}{%
-    \@ifnextchar[%]
-    {\@fxnote{warning}}{\@fxnote{warning}[]}}}
-\DeclareRobustCommand\fxerror{%
-  \@ifstar{%
-    \@ifnextchar[%]
-    {\@fxsnote{error}}{\@fxsnote{error}[]}}{%
-    \@ifnextchar[%]
-    {\@fxnote{error}}{\@fxnote{error}[]}}}
+\@fxnewnonfatal{note}
+\@fxnewnonfatal{warning}
+\@fxnewnonfatal{error}
 
 %    \end{macrocode}
 %           \end{macro}
