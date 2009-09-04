@@ -1517,10 +1517,10 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsubsection{User-level interface}
+% \subsubsubsection{User-level interface generation}
 % \begin{macro}{\@fxnewnotemacro}
 %   \marg{prefix}\marg{type}\marg{author}\\
-%   This macro defines user-level note macros in a generic way:
+%   This macro defines the user-level interface:
 %    \begin{macrocode}
 \newcommand*\@fxnewnotemacro[3]{%
   \expandafter\DeclareRobustCommand\csname #1#2\endcsname{%
@@ -1530,43 +1530,6 @@
       {\@fxsnote{#2}}{\@@fxsnote{#2}}}{%
       \@ifnextchar[%]
       {\@fxnote{#2}}{\@@fxnote{#2}}}}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\fxnote}
-%   \begin{macro}{\fxwarning}
-%     \begin{macro}{\fxerror}
-%       \begin{macro}{\fxfatal}
-%         \begin{macro}{\fxnote*}
-%           \begin{macro}{\fxwarning*}
-%             \begin{macro}{\fxerror*}
-%               \begin{macro}{\fxfatal*}
-%                 \oarg{options}\marg{note}(\marg{text} for the starred
-%                 versions)\\
-%                 And we use it to create the user-level interface:
-%    \begin{macrocode}
-\@fxnewnotemacro{fx}{note}{\fixmelogo}
-\@fxnewnotemacro{fx}{warning}{\fixmelogo}
-\@fxnewnotemacro{fx}{error}{\fixmelogo}
-\@fxnewnotemacro{fx}{fatal}{\fixmelogo}
-
-%    \end{macrocode}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-% \end{macro}
-% \begin{macro}{\fixme}
-%   \oarg{options}\marg{note}\\
-%   Deprecate \cs{fixme}:
-%    \begin{macrocode}
-\DeclareRobustCommand\fixme{%
-  \@fxpkgwarning{\string\fixme\space is deprecated;\MessageBreak
-    please use \string\fxfatal\space instead}%
-  \fxfatal}
-
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1643,11 +1606,11 @@
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsection{User-level interface}
+% \subsubsection{User-level interface generation}
 % \begin{macro}{\@fxnewnoteenvs}
 %   \marg{prefix}\marg{type}\marg{author}\\
-%   This macro defines \fixme environments in a generic way (note that the
-%   ending macros are identical):
+%   This macro defines the user-level interface (note that the ending macros
+%   are identical):
 %    \begin{macrocode}
 \newcommand*\@fxnewnoteenvs[3]{%
   \expandafter\def\csname #1#2\endcsname{%
@@ -1669,30 +1632,38 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{environment}{anfxnote}
-%   \begin{environment}{anfxwarning}
-%     \begin{environment}{anfxerror}
-%       \begin{environment}{anfxfatal}
-%         \begin{environment}{anfxnote*}
-%           \begin{environment}{anfxwarning*}
-%             \begin{environment}{anfxerror*}
-%               \begin{environment}{anfxfatal*}
-%                 And we use it to create the user level interface:
+%
+% \subsection{\fixme authors}
+% \begin{macro}{\fxnewauthor}
+%   \marg{cmdprefix}\marg{envprefix}\marg{name}\\
+%   This macro creates the whole user-level interface for a particular author:
 %    \begin{macrocode}
-\@fxnewnoteenvs{anfx}{note}{\fixmelogo}
-\@fxnewnoteenvs{anfx}{warning}{\fixmelogo}
-\@fxnewnoteenvs{anfx}{error}{\fixmelogo}
-\@fxnewnoteenvs{anfx}{fatal}{\fixmelogo}
+\newcommand*\fxnewauthor[3]{%
+  \@fxnewnotemacro{#1}{note}{#3}%
+  \@fxnewnotemacro{#1}{warning}{#3}%
+  \@fxnewnotemacro{#1}{error}{#3}%
+  \@fxnewnotemacro{#1}{fatal}{#3}%
+  \@fxnewnoteenvs{#2}{note}{#3}%
+  \@fxnewnoteenvs{#2}{warning}{#3}%
+  \@fxnewnoteenvs{#2}{error}{#3}%
+  \@fxnewnoteenvs{#2}{fatal}{#3}}
 
 %    \end{macrocode}
-%               \end{environment}
-%             \end{environment}
-%           \end{environment}
-%         \end{environment}
-%       \end{environment}
-%     \end{environment}
-%   \end{environment}
-% \end{environment}
+% \end{macro}
+% And we use it to create the \fixme default user:
+%    \begin{macrocode}
+\fxnewauthor{fx}{anfx}{\fixmelogo}
+%    \end{macrocode}
+% \begin{macro}{\fixme}
+%   \oarg{options}\marg{note}\\
+%   Deprecate \cs{fixme}:
+%    \begin{macrocode}
+\DeclareRobustCommand\fixme{%
+  \@fxpkgwarning{\string\fixme\space is deprecated;\MessageBreak
+    please use \string\fxfatal\space instead}%
+  \fxfatal}
+%    \end{macrocode}
+% \end{macro}
 % \begin{environment}{afixme}
 %   Deprecate the \texttt{afixme} environment:
 %    \begin{macrocode}
