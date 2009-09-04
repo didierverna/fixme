@@ -1455,19 +1455,30 @@
 % errors. Fatal notes are handled in section \sectionref{sec:code:fatalnotes}.
 %
 % \subsubsubsection{Status-dependent implementation}
-% \begin{macro}{\@@fxnote@final}
-%   \begin{macro}{\@@fxnote@draft}
-%     \marg{type}\marg{note}
+% \begin{macro}{\@@@fxnote@final}
+%   \begin{macro}{\@@@fxnote@draft}
+%     \marg{type}\marg{note}\\
+%     The lower-level macros that perform the real job:
 %    \begin{macrocode}
-\newcommand*\@@fxnote@final[2]{%
+\newcommand*\@@@fxnote@final[2]{%
   \FXLayoutContentsLine{#1}{#2}{\cmdfx@misc@author}%
   \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}
-\newcommand*\@@fxnote@draft[2]{%
+\newcommand*\@@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
-  \@@fxnote@final{#1}{#2}}
-
+  \@@@fxnote@final{#1}{#2}}
 %    \end{macrocode}
 %  \end{macro}
+% \end{macro}
+% \begin{macro}{\@@fxnote}
+%   \marg{type}\marg{note}\\
+%   This level of indirection is needed because the counters need to be
+%   updated regardless of the document status.
+%    \begin{macrocode}
+\def\@@fxnote#1#2{%
+  \stepcounter{fixmecount}%
+  \stepcounter{fx#1count}%
+  \@@@fxnote{#1}{#2}}
+%    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnote}
 %   \marg{type}\oarg{options}\marg{note}
@@ -1475,8 +1486,6 @@
 \def\@fxnote#1[#2]#3{%
   \begingroup%
     \@fxsetkeys{ltx,lang,misc,log,layout}{#2}%
-    \stepcounter{fixmecount}%
-    \stepcounter{fx#1count}%
     \@@fxnote{#1}{#3}%
   \endgroup}
 
@@ -1484,17 +1493,19 @@
 % \end{macro}
 %
 % \subsubsubsection{Starred version}
+% \begin{macro}{\@@fxsnote}
+%   \marg{type}\marg{note}\marg{text}\\
+%    \begin{macrocode}
+\long\def\@@fxsnote#1#2#3{\@fxcontentslayout{#3}\@@fxnote{#1}{#2}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxsnote}
 %   \marg{type}\oarg{options}\marg{note}\marg{text}\\
-%   We process the options here in order to get the required contents layout
-%   early enough. Note also that the \texttt{contentslayout} option has its
-%   own family, so that we can process it here, while producing an error if it
-%   were used in a non-star context.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
   \begingroup%
     \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout}{#2}%
-    \@fxcontentslayout{#4}\@fxnote{#1}[]{#3}%
+    \@@fxsnote{#1}{#3}{#4}%
   \endgroup}
 
 %    \end{macrocode}
@@ -1507,12 +1518,12 @@
 %    \begin{macrocode}
 \newcommand*\@fxnewnonfatal[3]{%
   \expandafter\DeclareRobustCommand\csname #1#2\endcsname{%
-    \@fxpresetkeys{misc}{author=#3}{}%
+    \@fxsetkeys{misc}{author=#3}%
     \@ifstar{%
       \@ifnextchar[%]
-      {\@fxsnote{#2}}{\@fxsnote{#2}[]}}{%
+      {\@fxsnote{#2}}{\@@fxsnote{#2}}}{%
       \@ifnextchar[%]
-      {\@fxnote{#2}}{\@fxnote{#2}[]}}}}
+      {\@fxnote{#2}}{\@@fxnote{#2}}}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\fxnote}
@@ -1525,9 +1536,9 @@
 %             versions)\\
 %             And we use it to create the user-level interface:
 %    \begin{macrocode}
-\@fxnewnonfatal{fx}{note}{}
-\@fxnewnonfatal{fx}{warning}{}
-\@fxnewnonfatal{fx}{error}{}
+\@fxnewnonfatal{fx}{note}{FX}
+\@fxnewnonfatal{fx}{warning}{FX}
+\@fxnewnonfatal{fx}{error}{FX}
 
 %    \end{macrocode}
 %           \end{macro}
@@ -1542,18 +1553,18 @@
 % because their behavior differs in \texttt{final} mode.\par
 %
 % \subsubsubsection{Status-dependent implementation\label{sec:code:fatalnotes}}
-% \begin{macro}{\@@fxfatal@final}
-%   \begin{macro}{\@@fxfatal@draft}
+% \begin{macro}{\@@@fxfatal@final}
+%   \begin{macro}{\@@@fxfatal@draft}
 %     \marg{note}\\
 %    \begin{macrocode}
-\newcommand*\@@fxfatal@final[1]{%
+\newcommand*\@@@fxfatal@final[1]{%
   \@fxpkgerror{'#1' fatal error left in final version}{%
     You are currently processing in final mode,\MessageBreak
     but you still have some FiXme fatal errors left behind.\MessageBreak
     Type X to quit, fix your document (or switch back to draft
     mode),\MessageBreak
     and rerun LaTeX.}}
-\newcommand*\@@fxfatal@draft[1]{%
+\newcommand*\@@@fxfatal@draft[1]{%
   \@fxlayout{fatal}{#1}%
   \FXLayoutContentsLine{fatal}{#1}{\cmdfx@misc@author}%
   \iffx@log@silent\else\FXLogFatal{#1}\fi}
@@ -1561,14 +1572,23 @@
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
+% \begin{macro}{\@@fxfatal}
+%   \marg{note}\\
+%   This level of indirection is needed because the counters need to be
+%   updated regardless of the document status.
+%    \begin{macrocode}
+\def\@@fxfatal#1{%
+  \stepcounter{fixmecount}%
+  \stepcounter{fxfatalcount}%
+  \@@@fxfatal{#1}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxfatal}
 %   \oarg{options}\marg{note}
 %    \begin{macrocode}
-\newcommand*\@fxfatal[2][]{%
+\def\@fxfatal[#1]#2{%
   \begingroup%
     \@fxsetkeys{ltx,lang,misc,log,layout}{#1}%
-    \stepcounter{fixmecount}%
-    \stepcounter{fxfatalcount}%
     \@@fxfatal{#2}%
   \endgroup}
 
@@ -1577,16 +1597,18 @@
 %
 % \subsubsubsection{Starred version}
 % \begin{macro}{\@fxsfatal}
-%   \oarg{options}\marg{note}\marg{text}\\
-%   We process the options here in order to get the required contents layout
-%   early enough. Note also that the \texttt{contentslayout} option has its
-%   own family, so that we can process it here, while producing an error if it
-%   were used in a non-star context.
+%   \marg{note}\marg{text}\\
 %    \begin{macrocode}
-\newcommand\@fxsfatal[3][]{%
+\long\def\@@fxsfatal#1#2{\@fxcontentslayout{#2}\@@fxfatal{#1}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxsfatal}
+%   \oarg{options}\marg{note}\marg{text}\\
+%    \begin{macrocode}
+\long\def\@fxsfatal[#1]#2#3{%
   \begingroup%
     \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout}{#1}%
-    \@fxcontentslayout{#3}\@fxfatal{#2}%
+    \@@fxsfatal{#2}{#3}%
   \endgroup}
 
 %    \end{macrocode}
@@ -1599,12 +1621,12 @@
 %    \begin{macrocode}
 \newcommand*\@fxnewfatal[2]{%
   \expandafter\DeclareRobustCommand\csname #1fatal\endcsname{%
-    \@fxpresetkeys{misc}{author=#2}{}%
+    \@fxsetkeys{misc}{author=#2}%
     \@ifstar{%
       \@ifnextchar[%]
-      {\@fxsfatal}{\@fxsfatal[]}}{%
+      {\@fxsfatal}{\@@fxsfatal}}{%
       \@ifnextchar[%]
-      {\@fxfatal}{\@fxfatal[]}}}}
+      {\@fxfatal}{\@@fxfatal}}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1613,7 +1635,7 @@
 %     \oarg{options}\marg{note}(\marg{text} for the starred version)\\
 %     And we use it to create the user-level interface:
 %    \begin{macrocode}
-\@fxnewfatal{fx}{}
+\@fxnewfatal{fx}{FX}
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
@@ -1877,8 +1899,8 @@
 % \end{option}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\@@fxnote}
-%   \begin{macro}{\@@fxfatal}
+% \begin{macro}{\@@@fxnote}
+%   \begin{macro}{\@@@fxfatal}
 %     \begin{macro}{\@fxenvbegin}
 %       \begin{macro}{\@fxenvend}
 %         \begin{macro}{\@fxcontentslayout}
@@ -1889,16 +1911,16 @@
 %                 them also depending on the document class:
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
-  \let\@@fxnote\@@fxnote@final%
-  \let\@@fxfatal\@@fxfatal@final%
+  \let\@@@fxnote\@@@fxnote@final%
+  \let\@@@fxfatal\@@@fxfatal@final%
   \let\@fxenvbegin\@fxenvbegin@final%
   \let\@fxenvend\@fxenvend@final%
   \let\@fxsenvbegin\@fxsenvbegin@final%
   \let\@fxcontentslayout\@fxcontentslayout@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{ltx}{draft}{%
-  \let\@@fxnote\@@fxnote@draft%
-  \let\@@fxfatal\@@fxfatal@draft%
+  \let\@@@fxnote\@@@fxnote@draft%
+  \let\@@@fxfatal\@@@fxfatal@draft%
   \let\@fxenvbegin\@fxenvbegin@draft%
   \let\@fxenvend\@fxenvend@draft%
   \let\@fxsenvbegin\@fxsenvbegin@draft%
@@ -1975,7 +1997,6 @@
   english,%
   nosilent,%
   area=thepage,%
-  author=\fixmelogo,%
   layout=margin,%
   innerlayout={layout=inline},%
   contentslayout=italics,%
