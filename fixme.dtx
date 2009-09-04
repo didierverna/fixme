@@ -725,7 +725,7 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxdeclarecmdkey}
+% \begin{macro}{\@fxdefinecmdkey}
 %   \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}\\
 %    \begin{macrocode}
 \newcommand\@fxdefinecmdkey{\define@cmdkey[fx]}
@@ -819,10 +819,7 @@
 %
 % \subsubsection{List title}
 % \begin{macro}{\listfixmename}
-%   In order to redefine the list title, users have to call \cs{renewcommand}.
-%   I don't like this much: it would be cleaner to provide a real command
-%   that redefines the title internally. However, I'll stick with the
-%   current scheme because it is consistent with the rest of \LaTeX's lists.
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\listfixmename{}
 
@@ -975,8 +972,8 @@
 % \end{macro}
 % \begin{macro}{\lox@draft@ams}
 %   The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea
-%   of redefining the \cs{@starttoc} command to take two arguments. Therefore,
-%   I need to provide a specific version of the \cs{listoffixmes} macro:
+%   of redefining the \cs{@starttoc} macro to take two arguments. Therefore, I
+%   need to provide a specific version of the \cs{listoffixmes} macro:
 %    \begin{macrocode}
 \newcommand\lox@draft@ams{\@starttoc{lox}\listfixmename}
 
@@ -996,7 +993,7 @@
 %
 % \subsubsection{Layout creation}
 % \begin{macro}{\@fxlayouts}
-%   Maintains the list of available layouts. The order in which we add the
+%   A comma-separated list of available layouts. The order in which we add the
 %   built-in layouts is important: we start with the footnote layout, so that
 %   it is sticked properly to the preceding text if active. Next we handle
 %   marginal layouts so that they are also close to the text to fix.
@@ -1024,6 +1021,7 @@
 % \end{macro}
 %
 % \subsubsection{Built-in layouts}
+% Remember that the order is important!
 % \subsubsubsection{Footnote}
 % \begin{option}{footnote}
 %   \begin{option}{nofootnote}
@@ -1105,15 +1103,14 @@
 %
 % \subsubsubsection{Index}
 % \begin{macro}{\fixmeindexname}
-%   The comment about \cs{listfixmename} applies to \cs{fixmeindexname} as
-%   well.
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fixmeindexname{\fixmelogo}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@wrindex}
 %   \marg{contents}\\
-%   A replacement for \LaTeX's standard \cs{@wrindex} command to deal with the
+%   A replacement for \LaTeX's standard \cs{@wrindex} macro to deal with the
 %   \texttt{area} option. When given, it is supposed to replace the page
 %   number, just as in the list of fixmes.
 %    \begin{macrocode}
@@ -1129,6 +1126,7 @@
 %   \begin{macro}{\@fxwarningkey}
 %     \begin{macro}{\@fxerrorkey}
 %       \begin{macro}{\@fxfatalkey}
+%         The keys used to sort indexed \fixme notes by importance level:
 %    \begin{macrocode}
 \newcommand\@fxnotekey{***a}
 \newcommand\@fxwarningkey{***b}
@@ -1350,11 +1348,12 @@
 % \end{macro}
 % \begin{macro}{\@fxlog@note}
 %   \begin{macro}{\@fxlog@warning}
-%     \begin{macro}{\@fxlog@fatal}
-%       In order for the generic note dispatcher to be able to call the
-%       logging macros (see section \sectionref{sec:code:lowlevelcmd}), we
-%       need an easier translation mechanism from the note type to the actual
-%       command name.
+%     \begin{macro}{\@fxlog@error}
+%       \begin{macro}{\@fxlog@fatal}
+%         In order for the generic note dispatcher to be able to call the
+%         logging macros (see section \sectionref{sec:code:lowlevelcmd}), we
+%         need an easier translation mechanism from the note type to the
+%         actual macro name.
 %    \begin{macrocode}
 \let\@fxlog@note\FXLogNote
 \let\@fxlog@warning\FXLogWarning
@@ -1362,6 +1361,7 @@
 \let\@fxlog@fatal\FXLogFatal
 
 %    \end{macrocode}
+%      \end{macro}
 %    \end{macro}
 %  \end{macro}
 % \end{macro}
@@ -1390,7 +1390,8 @@
 % \begin{macro}{\@fxnoteparameters}
 %   \marg{type}\\
 %   The following macro creates all required note parameters. This currently
-%   comprises the note counter and names (singular and plural).
+%   comprises the note counter and names (singular and plural). The names will
+%   be initialized when executing the language option(s).
 %    \begin{macrocode}
 \newcommand*\@fxnoteparameters[1]{%
   \newcounter{fx#1count}
@@ -1441,7 +1442,7 @@
 % \end{macro}
 % \begin{macro}{\@fxlayout}
 %   \marg{type}\marg{note}\\
-%   Dispatch all active layouts.
+%   Dispatch to all active layouts.
 %    \begin{macrocode}
 \newcommand*\@fxlayout[2]{%
   \@fxhandleinnermode%
@@ -1538,10 +1539,10 @@
 % \end{macro}
 %
 % \subsection{\fixme environments}
-% \subsubsection{Status-dependent implementation}
 % A \fixme environment's summary is laid out by the corresponding macro, but
 % the \texttt{inline} layout is disabled. This is as easy as appending
 % \texttt{noinline} to the end of the options list.
+% \subsubsection{Status-dependent implementation}
 % \begin{macro}{\@@@@fxbeginenv@final}
 %   \begin{macro}{\@@@@fxbeginenv@draft}
 %     \begin{macro}{\@fxendenv@final}
@@ -1654,10 +1655,14 @@
 
 %    \end{macrocode}
 % \end{macro}
-% And we use it to create the \fixme default user:
+% \begin{macro}{\fx*[*]}
+%   \begin{environment}{anfx*[*]}
+%     And we use it to create the \fixme default user:
 %    \begin{macrocode}
 \fxnewauthor{fx}{anfx}{\fixmelogo}
 %    \end{macrocode}
+%   \end{environment}
+% \end{macro}
 % \begin{macro}{\fixme}
 %   \oarg{options}\marg{note}\\
 %   Deprecate \cs{fixme}:
@@ -1807,8 +1812,8 @@
 %         \begin{macro}{\listoffixmes}
 %           \begin{option}{final}
 %             \begin{option}{draft}
-%               Select draft or final versions of internal macros, some of
-%               them also depending on the document class:
+%               Select draft or final versions of internal macros (some of
+%               them also depending on the document class):
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@@fxnote\@@@fxnote@final%
@@ -1838,7 +1843,7 @@
 % argue that it is not optimal to handle this here. However, it would be
 % incorrect to do it in the \texttt{draft} option code because this option can
 % be switched at any point in the document (remember that it is understood
-% even by the note insertion commands and environments) and the stuff below
+% even by the note insertion macros and environments) and the stuff below
 % should only be executed once. Besides, \cs{@ifclassloaded} is an
 % \cs{@onlypreamble} macro\ldots
 %
@@ -1887,7 +1892,7 @@
 % First, we execute some options to initialize \fixme to something sensible,
 % and then we process the user ones.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,contentslayout,envlayout>{%
+\ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,envlayout,contentslayout>{%
   final,%
   english,%
   nosilent,%
@@ -1896,7 +1901,7 @@
   innerlayout={layout=inline},%
   contentslayout=italics,%
   envlayout=quotation}
-\ProcessOptionsX*[fx]<ltx,lang,misc,log,layout,contentslayout,envlayout>
+\ProcessOptionsX*[fx]<ltx,lang,misc,log,layout,envlayout,contentslayout>
 
 %    \end{macrocode}
 %
@@ -1907,7 +1912,7 @@
 %   with the \texttt{xkeyval} package\ldots
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout,envlayout}{#1}}
+  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,contentslayout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
