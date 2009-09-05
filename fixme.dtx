@@ -1763,12 +1763,6 @@
 % \end{environment}
 %
 % \subsection{Internationalization}
-% \begin{option}{langtrack}
-%   Whether to follow the value of \cs{languagename} automatically:
-%    \begin{macrocode}
-\@fxdefineboolkey{lang}{langtrack}
-%    \end{macrocode}
-% \end{option}
 % \begin{option}{english}
 %   \mbox{}
 %    \begin{macrocode}
@@ -1884,6 +1878,19 @@
   \renewcommand\fxfatalname{FIXME}%
   \renewcommand\fxfatalsname{FIXME}%
   \renewcommand\listfixmename{Popis korekcija}}
+
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{lang}
+%   Another way of setting the language:
+%    \begin{macrocode}
+\@fxdefinekey{lang}{lang}{\@fxsetkeys{lang}{#1}}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{langtrack}
+%   Whether to follow the value of \cs{languagename} automatically:
+%    \begin{macrocode}
+\@fxdefineboolkey{lang}{langtrack}
 
 %    \end{macrocode}
 % \end{option}
