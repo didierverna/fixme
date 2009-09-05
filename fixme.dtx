@@ -1672,11 +1672,11 @@
 % \end{macro}
 %
 % \subsection{\fixme authors}
-% \begin{macro}{\fxnewauthor}
+% \begin{macro}{\FXRegisterAuthor}
 %   \marg{cmdprefix}\marg{envprefix}\marg{name}\\
 %   This macro creates the whole user-level interface for a particular author:
 %    \begin{macrocode}
-\newcommand*\fxnewauthor[3]{%
+\newcommand*\FXRegisterAuthor[3]{%
   \@fxnewnotemacro{#1}{note}{#3}%
   \@fxnewnotemacro{#1}{warning}{#3}%
   \@fxnewnotemacro{#1}{error}{#3}%
@@ -1712,7 +1712,7 @@
 %                                   \begin{environment}{anfxfatal*}
 %     And we use it to create the \fixme default user:
 %    \begin{macrocode}
-\fxnewauthor{fx}{anfx}{\fixmelogo}
+\FXRegisterAuthor{fx}{anfx}{fixme}
 %    \end{macrocode}
 %                                   \end{environment}
 %                                 \end{environment}
