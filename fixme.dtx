@@ -1560,7 +1560,10 @@
 \newcommand*\@fxnewnotemacro[3]{%
   \expandafter\DeclareRobustCommand\csname #1#2\endcsname{%
     \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
-    \@fxsetkeys{misc}{author=#3}%
+    \ifthenelse{\equal{#3}{fixme}}{%
+      \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
+        \def\cmdfx@misc@author{\fixmelogo}}{}}{%
+      \def\cmdfx@misc@author{#3}}%
     \@ifstar{%
       \@ifnextchar[%]
       {\@fxsnote{#2}}{\@@fxsnote{#2}}}{%
@@ -1652,7 +1655,10 @@
   \expandafter\def\csname #1#2\endcsname{%
     \begingroup%
       \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
-      \@fxsetkeys{misc}{author=#3}%
+    \ifthenelse{\equal{#3}{fixme}}{%
+      \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
+        \def\cmdfx@misc@author{\fixmelogo}}{}}{%
+      \def\cmdfx@misc@author{#3}}%
       \@ifnextchar[%]
         {\@fxbeginenv{#2}}{\@@fxbeginenv{#2}}}
   \expandafter\def\csname end#1#2\endcsname{%
@@ -1661,7 +1667,10 @@
   \expandafter\long\expandafter\def\csname #1#2*\endcsname{%
     \begingroup%
       \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
-      \@fxsetkeys{misc}{author=#3}%
+    \ifthenelse{\equal{#3}{fixme}}{%
+      \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
+        \def\cmdfx@misc@author{\fixmelogo}}{}}{%
+      \def\cmdfx@misc@author{#3}}%
       \@ifnextchar[%]
         {\@fxbeginsenv{#2}}{\@@fxbeginsenv{#2}}}
   \expandafter\def\csname end#1#2*\endcsname{%
