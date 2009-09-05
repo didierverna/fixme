@@ -1559,6 +1559,7 @@
 %    \begin{macrocode}
 \newcommand*\@fxnewnotemacro[3]{%
   \expandafter\DeclareRobustCommand\csname #1#2\endcsname{%
+    \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
     \@fxsetkeys{misc}{author=#3}%
     \@ifstar{%
       \@ifnextchar[%]
@@ -1650,6 +1651,7 @@
 \newcommand*\@fxnewnoteenvs[3]{%
   \expandafter\def\csname #1#2\endcsname{%
     \begingroup%
+      \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
       \@fxsetkeys{misc}{author=#3}%
       \@ifnextchar[%]
         {\@fxbeginenv{#2}}{\@@fxbeginenv{#2}}}
@@ -1658,6 +1660,7 @@
     \endgroup}%
   \expandafter\long\expandafter\def\csname #1#2*\endcsname{%
     \begingroup%
+      \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
       \@fxsetkeys{misc}{author=#3}%
       \@ifnextchar[%]
         {\@fxbeginsenv{#2}}{\@@fxbeginsenv{#2}}}
@@ -1751,6 +1754,12 @@
 % \end{environment}
 %
 % \subsection{Internationalization}
+% \begin{option}{langtrack}
+%   Whether to follow the value of \cs{languagename} automatically:
+%    \begin{macrocode}
+\@fxdefineboolkey{lang}{langtrack}
+%    \end{macrocode}
+% \end{option}
 % \begin{option}{english}
 %   \mbox{}
 %    \begin{macrocode}
