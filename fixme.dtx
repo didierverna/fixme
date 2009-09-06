@@ -780,6 +780,14 @@
 \@fxdefinecmdkey{misc}{author}{}
 %    \end{macrocode}
 % \end{option}
+% \begin{macro}{\@fxendgroup}
+%   This macro is used in \cs{@@fxnote} to close the group opened at the user
+%   level. Since environments need to group opened for a longer time, they
+%   rebind it to \cs{relax}.
+%    \begin{macrocode}
+\let\@fxendgroup\endgroup
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxpreconfigure}
 %   \marg{author}\\
 %   This macro is used at the beginning of every user-level interface one, to
@@ -1558,22 +1566,24 @@
 % \begin{macro}{\@@fxnote}
 %   \marg{type}\marg{note}\\
 %   This level of indirection is needed because the counters need to be
-%   updated regardless of the document status.
+%   updated regardless of the document status. Note the use of
+%   \cs{@fxendgroup} which might either close the group opened at the
+%   user level by a note insertion macro, or do nothing if we're coming from
+%   an environment.
 %    \begin{macrocode}
 \def\@@fxnote#1#2{%
-  \stepcounter{fixmecount}%
-  \stepcounter{fx#1count}%
-  \@@@fxnote{#1}{#2}}
+    \stepcounter{fixmecount}%
+    \stepcounter{fx#1count}%
+    \@@@fxnote{#1}{#2}%
+  \@fxendgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnote}
 %   \marg{type}\oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
-  \begingroup%
-    \@fxsetkeys{ltx,lang,misc,log,layout}{#2}%
-    \@@fxnote{#1}{#3}%
-  \endgroup}
+  \@fxsetkeys{ltx,lang,misc,log,layout}{#2}%
+  \@@fxnote{#1}{#3}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1590,10 +1600,8 @@
 %   Note the \texttt{contentslayout} family here.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
-  \begingroup%
-    \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout}{#2}%
-    \@@fxsnote{#1}{#3}{#4}%
-  \endgroup}
+  \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout}{#2}%
+  \@@fxsnote{#1}{#3}{#4}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1605,12 +1613,13 @@
 %    \begin{macrocode}
 \newcommand*\@fxnewnotemacro[3]{%
   \expandafter\DeclareRobustCommand\csname #1#2\endcsname{%
-    \@fxpreconfigure{#3}%
-    \@ifstar{%
-      \@ifnextchar[%]
-      {\@fxsnote{#2}}{\@@fxsnote{#2}}}{%
-      \@ifnextchar[%]
-      {\@fxnote{#2}}{\@@fxnote{#2}}}}}
+    \begingroup%
+      \@fxpreconfigure{#3}%
+      \@ifstar{%
+        \@ifnextchar[%]
+        {\@fxsnote{#2}}{\@@fxsnote{#2}}}{%
+        \@ifnextchar[%]
+        {\@fxnote{#2}}{\@@fxnote{#2}}}}}
 %    \end{macrocode}
 % \end{macro}
 %
@@ -1690,12 +1699,15 @@
 % \subsubsection{User-level interface generation}
 % \begin{macro}{\@fxnewnoteenvs}
 %   \marg{prefix}\marg{type}\marg{author}\\
-%   This macro defines the user-level interface (note that the ending macros
-%   are identical):
+%   This macro defines the user-level interface. Note that the ending macros
+%   are identical. Note also that the environments close their own group, so
+%   we prevent \cs{@@fxnote} from doing so by temporarily rebinding
+%   \cs{@fxendgroup} to \cs{relax}.
 %    \begin{macrocode}
 \newcommand*\@fxnewnoteenvs[3]{%
   \expandafter\def\csname #1#2\endcsname{%
     \begingroup%
+      \let\@fxendgroup\relax%
       \@fxpreconfigure{#3}%
       \@ifnextchar[%]
         {\@fxbeginenv{#2}}{\@@fxbeginenv{#2}}}
@@ -1704,6 +1716,7 @@
     \endgroup}%
   \expandafter\long\expandafter\def\csname #1#2*\endcsname{%
     \begingroup%
+      \let\@fxendgroup\relax%
       \@fxpreconfigure{#3}%
       \@ifnextchar[%]
         {\@fxbeginsenv{#2}}{\@@fxbeginsenv{#2}}}
