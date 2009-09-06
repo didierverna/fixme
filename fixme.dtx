@@ -448,10 +448,10 @@
 % appears in the list of fixmes and in the index: if you choose to reference a
 % floating \fixme note that way, the page number is likely to be completely
 % meaningless. To compensate, a new option named ``area'' is provided. When
-% used, the given value will replace the page number in both the index and
-% the list of fixmes. The area can be anything you like, but should remain
-% quite short. By default, \texttt{area} is set the special value
-% \texttt{thepage}, which as you guessed means to use the page number.
+% used, the given value will replace the page number in both the index and the
+% list of fixmes. The area can be anything you like, but should remain rather
+% short. By default, \texttt{area} is set the special value \texttt{thepage},
+% which as you guessed means to use the page number.
 %
 % Here is an example of a floating note that would typically appear in the
 % document's preamble:
@@ -459,6 +459,51 @@
 % \usepackage{hyperref}
 % \fxfatal[layout=index,area=hyperref]{Fill in PDF fields (title etc.)}
 % \end{verbatim}
+%
+% \subsection{Internationalization\label{sec:manual:i18n}}
+% \subsubsection{Available languages}
+% \DescribeOption{english}
+% \DescribeOption{french}
+% \DescribeOption{francais}
+% \DescribeOption{spanish}
+% \DescribeOption{italian}
+% \DescribeOption{german}
+% \DescribeOption{ngerman}
+% \DescribeOption{danish}
+% \DescribeOption{croatian}
+% \fixme currently supports English, French, Spanish, Italian, German,
+% Danish and Croatian. You can select your preferred language by using the
+% corresponding language option. These options usually appear in the call to
+% \cs{documentclass} or \cs{usepackage}, but they are also understood by
+% \cs{fxsetup} and all the note insertion commands or environments. This
+% allows you to change the selected language either globally or locally, and
+% at any popint in the document. The \texttt{french} and \texttt{francais}
+% options are synonyms. The \texttt{german} and \texttt{ngerman} options are
+% currently equivalent.
+%
+% \DescribeOption{lang}
+% If you're manipulating language settings at the level of \fixme itself (as
+% opposed to the \cs{documentclass} level), you should use the \texttt{lang}
+% option rather than the inidividual ones described above (that is the
+% preferred style). For instance:
+% \begin{verbatim}
+% \usepackage[lang=french]{fixme}
+% \end{verbatim}
+%
+% \subsubsection{Language tracking}
+% \DescribeOption{langtrack}
+% If the document you're working on has parts written in different languages,
+% it might be the case that \fixme notes should follow the current language as
+% well (especially if you're in collaborative mode; see section
+% \sectionref{sec:manual:modes}). As of version 4, \fixme provides a boolean
+% option named \texttt{langtrack}. When specified, \fixme assumes that you're
+% using \texttt{babel} and automatically switches to the current language (as
+% specified by \texttt{babel}'s \cs{languagename} command), without requiring
+% an explicit language option. Note that for this to work, all the languages
+% in your document must also be known by \fixme, or you would get an ``unknown
+% option'' error. If one language is missing, you have two alternatives:
+% locally switch to one of the languages known by \fixme, or send me a
+% patch with support for the new language\ldots
 %
 % \section{Customizing \fixme}
 % \subsection{Customizing the \fixme notes layout}
@@ -513,22 +558,8 @@
 % also appear on the terminal during compilation.
 %
 % \subsection{Internationalization}
-% \DescribeOption{english}
-% \DescribeOption{french}
-% \DescribeOption{francais}
-% \DescribeOption{spanish}
-% \DescribeOption{italian}
-% \DescribeOption{german}
-% \DescribeOption{ngerman}
-% \DescribeOption{danish}
-% \DescribeOption{croatian}
-% \fixme currently supports English, French, Spanish, Italian, German,
-% Danish and Croatian. At any point in the document, you can select or change
-% the language you want to use by passing the corresponding option to
-% \cs{documentclass}, \cs{usepackage}, \cs{fxsetup} or any \fixme note
-% insertion command or environment. The \texttt{french} and \texttt{francais}
-% options are synonyms. The \texttt{german} and \texttt{ngerman} options are
-% currently equivalent.\par If you want a finer grain on the
+% \fixme's language options have been described in section
+% \sectionref{sec:manual:i18n}. If you want a finer grain on the
 % language-dependent parts of \fixme, the following commands are provided and
 % can be renewed.\par
 % \DescribeMacro{\fxnotename}
