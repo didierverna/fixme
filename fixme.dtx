@@ -708,18 +708,6 @@
 \newcommand\@fxdefinekey{\define@key[fx]}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxsetkeys}
-%   \marg{families}\oarg{na}\marg{keys}
-%    \begin{macrocode}
-\newcommand\@fxsetkeys{\setkeys[fx]}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxpresetkeys}
-%   \marg{families}\marg{head keys}\marg{tail keys}
-%    \begin{macrocode}
-\newcommand\@fxpresetkeys{\presetkeys[fx]}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\@fxvoidkeyerror}
 %   \marg{key}\marg{value}\\
 %   Issue a \fixme error about a void key misuse (see below):
@@ -757,14 +745,37 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefinecmdkey}
-%   \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}\\
+%   \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}
 %    \begin{macrocode}
 \newcommand\@fxdefinecmdkey{\define@cmdkey[fx]}
 
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxdefinechoicekey}
+%   \marg{family}\marg{key}\oarg{bin}\marg{alternatives}\ignorespaces
+%   \oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\@fxdefinechoicekey{\define@choicekey[fx]}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxsetkeys}
+%   \marg{families}\oarg{na}\marg{keys}
+%    \begin{macrocode}
+\newcommand\@fxsetkeys{\setkeys[fx]}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxpresetkeys}
+%   \marg{families}\marg{head keys}\marg{tail keys}
+%    \begin{macrocode}
+%%      Note: currently unused
+%%      \newcommand\@fxpresetkeys{\presetkeys[fx]}
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsection{Miscellaneous}
+% This section contains things that are orthogonal to the rest (and hence used
+% by several of the following sections).
 % \begin{option}{area}
 %   A \fixme note's ``area'' may replace the page number in the list of
 %   fixmes or in the index (see sections \sectionref{sec:code:contentsline}
@@ -790,16 +801,36 @@
 % \end{macro}
 % \begin{macro}{\@fxpreconfigure}
 %   \marg{author}\\
-%   This macro is used at the beginning of every user-level interface one, to
+%   This macro is used at the beginning of every user-level entry point, to
 %   preconfigure some aspects of the notes, before possibly processing
-%   options.
+%   options. Currently, this only involves presetting the note's author to the
+%   one specified in the call to \cs{FXRegisterAuthor}. This however is not
+%   done for the built-in \texttt{fixme} author, because this one should honor
+%   a global setting.
 %    \begin{macrocode}
 \newcommand*\@fxpreconfigure[1]{%
-  \iffx@lang@langtrack\@fxsetkeys{lang}{\languagename}\fi
-  \ifthenelse{\equal{#1}{fixme}}{%
-    \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
-      \def\cmdfx@misc@author{\fixmelogo}}{}}{%
-    \def\cmdfx@misc@author{#1}}}
+  \ifthenelse{\equal{#1}{fixme}}{}{\@fxsetkeys{misc}{author=#1}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxpostconfigure}
+%   This macro is used after processing user options (even when there is
+%   none), to postconfigure some aspects of the notes. Currently, this
+%   involves two things: setting the author to \cs{fixmelogo} if it still is
+%   \texttt{fixme}, and automatically tracking the current language if
+%   required (note that all other language options turn tracking off, meaning
+%   that one can override language tracking locally by providing a language
+%   explicitely).
+%    \begin{macrocode}
+\newcommand*\@fxpostconfigure{%
+  \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
+    \@fxsetkeys{misc}{author=\fixmelogo}}{}%
+  \iffx@lang@langtrack%
+    \key@ifundefined[fx]{lang}{\languagename}{%
+      \@fxpkgwarning{unknown language '\languagename';\MessageBreak
+        falling back to \@fxdefaultlang}%
+      \@fxsetkeys{lang}{\@fxdefaultlang}}{%
+      \@fxsetkeys{lang}{\languagename}}
+  \fi}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1569,9 +1600,13 @@
 %   updated regardless of the document status. Note the use of
 %   \cs{@fxendgroup} which might either close the group opened at the
 %   user level by a note insertion macro, or do nothing if we're coming from
-%   an environment.
+%   an environment. Also note that post-configuration will actually take place
+%   only if we come directly from a user-level macro without options.
+%   Otherwise, post-configuration already took place and is now \cs{let} to
+%   \cs{relax}.
 %    \begin{macrocode}
 \def\@@fxnote#1#2{%
+    \@fxpostconfigure%
     \stepcounter{fixmecount}%
     \stepcounter{fx#1count}%
     \@@@fxnote{#1}{#2}%
@@ -1591,8 +1626,13 @@
 % \subsubsection{Starred version}
 % \begin{macro}{\@@fxsnote}
 %   \marg{type}\marg{note}\marg{text}\\
+%   Note that post-configuration is done here (it's the code path confluent
+%   for all starred commands). Relaxing post-configuration afterwards is
+%   to prevent \cs{@@fxnote} from doing it again.
 %    \begin{macrocode}
-\long\def\@@fxsnote#1#2#3{\@fxcontentslayout{#3}\@@fxnote{#1}{#2}}
+\long\def\@@fxsnote#1#2#3{%
+  \@fxpostconfigure\let\@fxpostconfigure\relax%
+  \@fxcontentslayout{#3}\@@fxnote{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxsnote}
@@ -1648,9 +1688,13 @@
 % \subsubsection{Standard versions}
 % \begin{macro}{\@@@fxbeginenv}
 %   \begin{macro}{\@@fxbeginenv}
-%     \marg{type}\marg{summary}
+%     \marg{type}\marg{summary}\\
+%     Note that post-configuration is done here (it's the code path confluent
+%     for all non-starred environments). Relaxing post-configuration
+%     afterwards is to prevent \cs{@@fxnote} from doing it again.
 %    \begin{macrocode}
 \def\@@@fxbeginenv#1#2{%
+  \@fxpostconfigure\let\@fxpostconfigure\relax%
   \@@fxnote{#1}{#2}%
   \@@@@fxbeginenv{#1}}
 \def\@@fxbeginenv#1#2{%
@@ -1673,9 +1717,13 @@
 % \subsubsection{Starred versions}
 % \begin{macro}{\@@@fxbeginsenv}
 %   \begin{macro}{\@@fxbeginsenv}
-%     \marg{type}\marg{summary}\marg{text}
+%     \marg{type}\marg{summary}\marg{text}\\
+%     Note that post-configuration is done here (it's the code path confluent
+%     for all starred environments). Relaxing post-configuration afterwards is
+%     to prevent \cs{@@fxsnote} from doing it again.
 %    \begin{macrocode}
 \long\def\@@@fxbeginsenv#1#2#3{%
+  \@fxpostconfigure\let\@fxpostconfigure\relax%
   \@@fxsnote{#1}{#2}{#3}
   \@@@@fxbeginenv{#1}}
 \long\def\@@fxbeginsenv#1#2#3{%
@@ -1810,10 +1858,28 @@
 % \end{environment}
 %
 % \subsection{Internationalization}
+% \begin{option}{langtrack}
+%   Whether to track the value of \cs{languagename} automatically:
+%    \begin{macrocode}
+\@fxdefineboolkey{lang}{langtrack}
+
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{defaultlang}
+%   Which language to use when tracking leads to an unsuported language.
+%    \begin{macrocode}
+\@fxdefinechoicekey{lang}{defaultlang}[\@fxdefaultlang]{%
+  english,french,francais,spanish,italian,german,ngerman,danish,croatian}{}
+
+%    \end{macrocode}
+% \end{option}
+% Because an explicit language setting overrides language tracking, all the
+% options below turn language tracking off.
 % \begin{option}{english}
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{english}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Note}%
   \renewcommand\fxnotesname{Notes}%
   \renewcommand\fxwarningname{Warning}%
@@ -1829,6 +1895,7 @@
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{french}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Note}%
   \renewcommand\fxnotesname{Notes}%
   \renewcommand\fxwarningname{Attention}%
@@ -1850,6 +1917,7 @@
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{spanish}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Nota}%
   \renewcommand\fxnotesname{Notas}%
   \renewcommand\fxwarningname{Aviso}%
@@ -1865,6 +1933,7 @@
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{italian}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Nota}%
   \renewcommand\fxnotesname{Note}%
   \renewcommand\fxwarningname{Avviso}%
@@ -1880,6 +1949,7 @@
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{german}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Anm}%
   \renewcommand\fxnotesname{Anmerkungen}%
   \renewcommand\fxwarningname{Warnung}%
@@ -1901,6 +1971,7 @@
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{danish}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Note}%
   \renewcommand\fxnotesname{Noter}%
   \renewcommand\fxwarningname{Advarsel}%
@@ -1916,6 +1987,7 @@
 %   \mbox{}
 %    \begin{macrocode}
 \@fxdefinevoidkey{lang}{croatian}{%
+  \@fxsetkeys{lang}{langtrack=false}%
   \renewcommand\fxnotename{Poruka}%
   \renewcommand\fxnotesname{Poruke}%
   \renewcommand\fxwarningname{Upozorenje}%
@@ -1931,14 +2003,9 @@
 % \begin{option}{lang}
 %   Another way of setting the language:
 %    \begin{macrocode}
-\@fxdefinekey{lang}{lang}{\@fxsetkeys{lang}{#1}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{langtrack}
-%   Whether to follow the value of \cs{languagename} automatically:
-%    \begin{macrocode}
-\@fxdefineboolkey{lang}{langtrack}
-
+\@fxdefinechoicekey{lang}{lang}{%
+  english,french,francais,spanish,italian,german,ngerman,danish,croatian}{%
+  \@fxsetkeys{lang}{langtrack=false,#1}}
 %    \end{macrocode}
 % \end{option}
 %
@@ -2032,7 +2099,9 @@
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,envlayout,contentslayout>{%
   final,%
-  english,%
+  lang=english,%
+  langtrack=false,%
+  defaultlang=english,%
   nosilent,%
   area=thepage,%
   author=fixme,%
