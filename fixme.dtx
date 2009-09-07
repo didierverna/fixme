@@ -1348,12 +1348,11 @@
 %   \begin{macro}{\FXEnvLayoutQuotationEnd}
 %     \marg{type}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXEnvLayoutQuotationBegin[2]{%
-  \begin{quotation}
-    \bfseries\ignorespaces #2 \@nameuse{fx#1name}: \ignorespaces}
-\newcommand*\FXEnvLayoutQuotationEnd[2]{\end{quotation}}
-\FXRegisterEnvLayout{quotation}{%
-  \FXEnvLayoutQuotationBegin}{\FXEnvLayoutQuotationEnd}
+\newcommand*\FXEnvLayoutBoldBegin[2]{%
+  \bfseries\ignorespaces #2 \@nameuse{fx#1name}: \ignorespaces}
+\newcommand*\FXEnvLayoutBoldEnd[2]{}
+\FXRegisterEnvLayout{bold}{%
+  \FXEnvLayoutBoldBegin}{\FXEnvLayoutBoldEnd}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -2170,7 +2169,7 @@
   layout=margin,%
   innerlayout={layout=inline},%
   targetlayout=italics,%
-  envlayout=quotation}
+  envlayout=bold}
 \ProcessOptionsX*[fx]<ltx,lang,misc,log,layout,envlayout,targetlayout>
 
 %    \end{macrocode}
