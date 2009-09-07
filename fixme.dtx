@@ -470,7 +470,7 @@
 % \texttt{silent=true}, and \texttt{nosilent}, equivalent to
 % \texttt{silent=false} (the default).
 %
-% \subsection{Internationalization\label{sec:manual:i18n}}
+% \subsection{Controlling the language of \fixme\label{sec:manual:i18n}}
 % \subsubsection{Available languages}
 % \DescribeOption{english}
 % \DescribeOption{french}
@@ -481,10 +481,10 @@
 % \DescribeOption{ngerman}
 % \DescribeOption{danish}
 % \DescribeOption{croatian}
-% \fixme currently supports English, French, Spanish, Italian, German,
-% Danish and Croatian. You can select your preferred language by using the
-% corresponding language option. These options usually appear in the call to
-% \cs{documentclass} or \cs{usepackage}, but they are also understood by
+% \fixme currently supports English (the default), French, Spanish, Italian,
+% German, Danish and Croatian. You can select your preferred language by using
+% the corresponding language option. These options usually appear in the call
+% to \cs{documentclass} or \cs{usepackage}, but they are also understood by
 % \cs{fxsetup} and all the note insertion commands or environments. This
 % allows you to change the selected language either globally or locally, and
 % at any popint in the document. The \texttt{french} and \texttt{francais}
@@ -493,9 +493,9 @@
 %
 % \DescribeOption{lang}
 % If you're manipulating language settings at the level of \fixme itself (as
-% opposed to the \cs{documentclass} level), you should use the \texttt{lang}
-% option rather than the inidividual ones described above (that is the
-% preferred style). For instance:
+% opposed to the \cs{documentclass} level), then the preferred way to specify
+% a language is to use the \texttt{lang} option, and give it the language name
+% as a value. For instance:
 % \begin{verbatim}
 % \usepackage[lang=french]{fixme}
 % \end{verbatim}
@@ -509,11 +509,18 @@
 % option named \texttt{langtrack}. When specified, \fixme assumes that you're
 % using \texttt{babel} and automatically switches to the current language (as
 % specified by \texttt{babel}'s \cs{languagename} command), without requiring
-% an explicit language option. Note that for this to work, all the languages
-% in your document must also be known by \fixme, or you would get an ``unknown
-% option'' error. If one language is missing, you have two alternatives:
-% locally switch to one of the languages known by \fixme, or send me a
-% patch with support for the new language\ldots
+% an explicit language option.
+%
+% \DescribeOption{defaultlang}
+% In the case where tracking falls on a language unsupported by \fixme, a
+% warning will be issued and \fixme will switch to the language specified by
+% the \texttt{defaultlang} option (\texttt{english} by default). If you happen
+% to get one of these warnings, please consider sending me a patch with
+% support for this new language (see section \sectionref{sec:code:i18n}).
+%
+% Finally, note that specifying a language explicitely (by means of a language
+% option) in the note insertion commands and environments always takes
+% precedence over the language tracking behavior.
 %
 % \section{Customizing \fixme}
 % \subsection{Customizing the \fixme notes layout}
@@ -1904,7 +1911,7 @@
 %    \end{macrocode}
 % \end{environment}
 %
-% \subsection{Internationalization}
+% \subsection{Internationalization\label{sec:code:i18n}}
 % \begin{option}{langtrack}
 %   Whether to track the value of \cs{languagename} automatically:
 %    \begin{macrocode}
