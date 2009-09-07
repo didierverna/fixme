@@ -1109,11 +1109,11 @@
       \g@addto@macro\@fxlayouts{,#2}%
     \fi}{%
     \@fxpkgerror{layout '#2' already registered}{%
-      You have called \string\FXRegisterLayout\space with a layout name
-      already in use.\MessageBreak
+      You have called \string\FXRegisterLayout\space with a name already in
+      use.\MessageBreak
       If you want to modify an existing layout, renew its
       command.\MessageBreak
-      Otherwise, you must choose a different layout name.}}}
+      Otherwise, you must choose a different name.}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1307,8 +1307,15 @@
 %   involves constructing the translation macros.
 %    \begin{macrocode}
 \newcommand*\FXRegisterEnvLayout[3]{%
-  \expandafter\let\csname @fxenvlayout@#1@begin\endcsname#2%
-  \expandafter\let\csname @fxenvlayout@#1@end\endcsname#3}
+  \@ifundefined{@fxenvlayout@#1@begin}{%
+    \expandafter\let\csname @fxenvlayout@#1@begin\endcsname#2%
+    \expandafter\let\csname @fxenvlayout@#1@end\endcsname#3}{%
+    \@fxpkgerror{environment layout '#2' already registered}{%
+      You have called \string\FXRegisterEnvLayout\space with a name already in
+      use.\MessageBreak
+      If you want to modify an existing environment layout, renew its
+      commands.\MessageBreak
+      Otherwise, you must choose a different name.}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1362,7 +1369,14 @@
 %   constructing the translation macro.
 %    \begin{macrocode}
 \newcommand*\FXRegisterContentsLayout[2]{%
-  \expandafter\let\csname @fxcontentslayout@#1\endcsname#2}
+  \@ifundefined{@fxcontentslayout@#1}{%
+    \expandafter\let\csname @fxcontentslayout@#1\endcsname#2}{%
+    \@fxpkgerror{contents layout '#1' already registered}{%
+      You have called \string\FXRegisterContentsLayout\space with a name
+      already in use.\MessageBreak
+      If you want to modify an existing contents layout, renew its
+      command.\MessageBreak
+      Otherwise, you must choose another name.}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1796,13 +1810,14 @@
 \newcommand*\FXRegisterAuthor[3]{%
   \@ifundefined{#1note}{}{%
     \@fxpkgerror{command prefix '#1' already in use}{%
-      You have tried to register a new author with FiXme,\MessageBreak
-      but the command prefix is already in use. Please choose another one.}}%
+      You have called \string\FXRegisterAuthor\space with a command prefix
+      already in use.\MessageBreak
+      Please choose another one.}}%
   \@ifundefined{#2note}{}{%
     \@fxpkgerror{environment prefix '#2' already in use}{%
-      You have tried to register a new author with FiXme,\MessageBreak
-      but the environment prefix is already in use. Please choose another
-      one.}}%
+      You have called \string\FXRegisterAuthor\space with an environment
+      prefix already in use.\MessageBreak
+      Please choose another one.}}%
   \@fxnewnotemacro{#1}{note}{#3}%
   \@fxnewnotemacro{#1}{warning}{#3}%
   \@fxnewnotemacro{#1}{error}{#3}%
