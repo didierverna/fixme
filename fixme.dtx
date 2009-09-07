@@ -254,8 +254,12 @@
 % \fxfatal[draft]{bla bla}
 % \end{verbatim}
 %
+% \DescribeOption{status}
 % By default, \fixme is in \texttt{final} mode (\LaTeX{} itself behaves that
-% way).
+% way). If you plan to use a document status specific to \fixme (as opposed to
+% the whole document), then the preferred way to do this is to use the
+% \texttt{status} option, and give it the value \texttt{final} or
+% \texttt{draft}.
 %
 % \subsection{Controlling the layout of \fixme notes\label{sec:manual:layout}}
 % \fixme notes can appear in several forms in your document. Each of these
@@ -2054,8 +2058,9 @@
 %         \begin{macro}{\listoffixmes}
 %           \begin{option}{final}
 %             \begin{option}{draft}
-%               Select draft or final versions of internal macros (some of
-%               them also depending on the document class):
+%               \begin{option}{status}
+%                 Select draft or final versions of internal macros (some of
+%                 them also depending on the document class):
 %    \begin{macrocode}
 \@fxdefinevoidkey{ltx}{final}{%
   \let\@@@fxnote\@@@fxnote@final%
@@ -2069,8 +2074,10 @@
   \let\@fxendenv\@fxendenv@draft%
   \let\@fxtargetlayout\@fxtargetlayout@draft%
   \let\listoffixmes\lox@draft}
+\@fxdefinechoicekey{ltx}{status}{final,draft}{\@fxsetkeys{ltx}{#1}}
 
 %    \end{macrocode}
+%               \end{option}
 %             \end{option}
 %           \end{option}
 %         \end{macro}
@@ -2135,7 +2142,7 @@
 % and then we process the user ones.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,envlayout,targetlayout>{%
-  final,%
+  status=final,%
   lang=english,%
   langtrack=false,%
   defaultlang=english,%
