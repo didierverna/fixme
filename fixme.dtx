@@ -460,6 +460,50 @@
 % these classes, don't forget to choose another layout for \fixme, and also
 % avoid using marginal clues.
 %
+% \subsection{Controlling the layout of \fixme environments}
+% As discussed in section \sectionref{sec:manual:insertion}, the contents of a
+% \fixme environment (a long note) always appears inline. However, the exact
+% way this contents is typeset (in draft mode only) is subject to a layout of
+% its own, called the ``environment layout''.
+%
+% \DescribeOption{envlayout}
+% The environment layout can be specified with the \texttt{envlayout} option.
+% This option is very similar to the \texttt{layout} option discussed in
+% section \sectionref{sec:manual:globallayoutcontrol}, with the difference
+% that only one environment layout can be active at a time.
+%
+% By default, environment contents are typeset in bold characters, just like
+% inline \fixme notes. This environment layout is named\ldots \texttt{bold},
+% so you could achieve the same effect by using something like this:
+% \begin{verbatim}
+% \fxsetup{envlayout=bold}
+% \end{verbatim}
+% There is no other environment layout built in the core of \fixme, so there
+% is no reason for you to use this option.
+%
+% \subsection{Controlling the layout of \fixme textual targets}
+% As discussed in section \sectionref{sec:manual:insertion}, the starred
+% versions of the \fixme note insertion commands and environments let you
+% highlight a portion of text which is relevant to the current \fixme note.
+% The exact way this textual target is typeset (in draft mode only; otherwise
+% it is typeset as-is) is subject to a layout of its own, called the ``target
+% layout''.
+%
+% \DescribeOption{targetlayout}
+% The target layout can be specified with the \texttt{targetlayout} option.
+% This option is very similar to the \texttt{layout} option discussed in
+% section \sectionref{sec:manual:globallayoutcontrol}, with the difference
+% that only one target layout can be active at a time.
+%
+% By default, textual targets are typeset in italics. This target layout is
+% named\ldots \texttt{italics}, so you could achieve the same effect by using
+% something like this:
+% \begin{verbatim}
+% \usepackage[targetlayout=italics]{fixme}
+% \end{verbatim}
+% There is no other target layout built in the core of \fixme, so there
+% is no reason for you to use this option.
+%
 % \subsection{Controlling the logging of \fixme notes}
 % As well as being displayed in the document itself, all \fixme notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
