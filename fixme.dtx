@@ -360,21 +360,26 @@
 % \sectionref{sec:manual:individuallayoutcontrol} and
 % \sectionref{sec:manual:globallayoutcontrol}.
 %
-% \DescribeOption{area}
+% \DescribeOption{target}
 % The only slight problem that remains in the page number, which normally
 % appears in the list of fixmes and in the index: if you choose to reference a
 % floating \fixme note that way, the page number is likely to be completely
-% meaningless. To compensate, a new option named ``area'' is provided. When
+% meaningless. To compensate, a new option named ``target'' is provided. When
 % used, the given value will replace the page number in both the index and the
-% list of fixmes. The area can be anything you like, but should remain rather
-% short. By default, \texttt{area} is set the special value \texttt{thepage},
+% list of fixmes. The target can be anything you like, but should remain rather
+% short. By default, \texttt{target} is set the special value \texttt{thepage},
 % which as you guessed means to use the page number.
+%
+% The name "target" bears an intentional resemblance to \fixme's targeted
+% commands and environments, because we are indeed targetting the note to
+% something. The only difference is that in the case of floating notes, the
+% target is non-textual.
 %
 % Here is an example of a floating note that would typically appear in the
 % document's preamble:
 % \begin{verbatim}
 % \usepackage{hyperref}
-% \fxfatal[layout=index,area=hyperref]{Fill in PDF fields (title etc.)}
+% \fxfatal[layout=index,target=hyperref]{Fill in PDF fields (title etc.)}
 % \end{verbatim}
 %
 % \subsubsection{Inner layout}
@@ -409,8 +414,8 @@
 % \begin{verbatim}
 % \usepackage[layout=margin,innerlayout={layout=inline}]{fixme}
 % \end{verbatim}
-% \item The following gives the same result, while having a different
-%   semantics:
+% \item The following happens to give the same result in our particular case,
+%   while having a different semantics:
 % \begin{verbatim}
 % \usepackage[layout=margin,innerlayout=inline]{fixme}
 % \end{verbatim}
@@ -787,12 +792,12 @@
 % \subsection{Miscellaneous}
 % This section contains things that are orthogonal to the rest (and hence used
 % by several of the following sections).
-% \begin{option}{area}
-%   A \fixme note's ``area'' may replace the page number in the list of
+% \begin{option}{target}
+%   A \fixme note's ``target'' may replace the page number in the list of
 %   fixmes or in the index (see sections \sectionref{sec:code:contentsline}
 %   and \sectionref{sec:code:contentslinelayout}).
 %    \begin{macrocode}
-\@fxdefinecmdkey{misc}{area}{}
+\@fxdefinecmdkey{misc}{target}{}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{author}
@@ -881,7 +886,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\fxcontentsline}
-%   \marg{contents}\marg{area}\\
+%   \marg{contents}\marg{target}\\
 %   Similar to \LaTeX's \cs{contentsline} macro, but temporarily bind
 %   \cs{@dottedtocline} to our own version. The nice thing about this
 %   implementation is that we can still use \cs{l@fixme} (remember that it is
@@ -899,16 +904,16 @@
 % \begin{macro}{\fxaddcontentsline}
 %   \marg{contents}\\
 %   Wrapper around \LaTeX's \cs{addcontentsline} macro to handle the
-%   \texttt{area} option. If a specific area is provided, we can't use the
+%   \texttt{target} option. If a specific target is provided, we can't use the
 %   normal \cs{addcontentsline} macro for reasons explained above, so we use
 %   our own version of \cs{contentsline} instead. Note that this macro is at
 %   the user level because \cs{addcontentsline} is, but it is not currently
 %   documented in the user manual.
 %    \begin{macrocode}
 \newcommand*\fxaddcontentsline[1]{%
-  \ifthenelse{\equal{\cmdfx@misc@area}{thepage}}{%
+  \ifthenelse{\equal{\cmdfx@misc@target}{thepage}}{%
     \addcontentsline{lox}{fixme}{#1}}{%
-    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@misc@area}}}}
+    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@misc@target}}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1214,13 +1219,13 @@
 % \begin{macro}{\@wrindex}
 %   \marg{contents}\\
 %   A replacement for \LaTeX's standard \cs{@wrindex} macro to deal with the
-%   \texttt{area} option. When given, it is supposed to replace the page
+%   \texttt{target} option. When given, it is supposed to replace the page
 %   number, just as in the list of fixmes.
 %    \begin{macrocode}
 \def\@wrindex#1{%
-  \ifthenelse{\equal{\cmdfx@misc@area}{thepage}}{%
+  \ifthenelse{\equal{\cmdfx@misc@target}{thepage}}{%
     \protected@write\@indexfile{}{\string\indexentry{#1}{\thepage}}}{%
-    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@misc@area}}}
+    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@misc@target}}}
   \endgroup
   \@esphack}
 %    \end{macrocode}
@@ -2148,7 +2153,7 @@
   langtrack=false,%
   defaultlang=english,%
   nosilent,%
-  area=thepage,%
+  target=thepage,%
   author=fixme,%
   layout=margin,%
   innerlayout={layout=inline},%
