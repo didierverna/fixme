@@ -505,7 +505,7 @@
 % There is no other target layout built in the core of \fixme, so there
 % is no reason for you to use this option.
 %
-% \subsection{Controlling the logging of \fixme notes}
+% \subsection{Controlling the logging of \fixme}
 % As well as being displayed in the document itself, all \fixme notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
 % log file while the others are also displayed on the terminal output during
@@ -579,6 +579,98 @@
 % if you have \fixme warnings in both English and French, you will find two
 % different subcategories for warnings in the index: one called ``Warnings''
 % and one called ``Avertissements''.
+%
+% \subsection{Standalone or collaborative mode\label{sec:manual:modes}}
+% As of version 4, \fixme supports collaborative annotations as well as
+% ``standalone'', single-author documents.
+% \subsubsection{Standalone mode}
+% By default, \fixme is in standalone mode, meaning that it assumes there is
+% only one person annotating the document. This has several implications on
+% the layout. If you've tried it already, you may have noticed the following
+% points.
+% \begin{itemize}
+% \item All the built-in layout forms (index excepted) put the \fixme logo in
+%   front of every note. This is also true for \fixme environments. The idea
+%   is to distinguish \fixme contents from the rest of the document (for
+%   instance other marginal notes or other footnotes).
+% \item All notes are indexed under the main \fixme category, and sorted by
+%   importance level, but the \fixme logo is not repeated at every note (that
+%   would be useless).
+% \item Similarly, the list of fixmes does not clutter itself with the logo,
+% because we already know that its contents is specific to \fixme.
+% \end{itemize}
+% As a matter of fact, when you see the \fixme logo appear somewhere, you're
+% not actually contemplating it, but rather the note's \emph{author}. It just
+% happens that by default (meaning in standalone mode), the only note author
+% is \fixme itself.
+%
+% \DescribeOption{author}
+% In standalone mode, you might be annoyed by this orgy of \fixme logos. This
+% might happen if for instance you're using the \texttt{margin} layout and you
+% \emph{know} there is nothing but \fixme notes in there. In such a case, you
+% will most likely want to change the notes author to \emph{nothing}. This can
+% be acomplished by using the \texttt{author} option, which is understood by
+% the package itself, the \cs{fxsetup} command and all the note insertion
+% commands or environments. Doing something like the following will get rid of
+% the damn logo for good:
+% \begin{verbatim}
+% \usepackage[author=]{fixme}
+% \end{verbatim}
+%
+% \subsubsection{Collaborative mode}
+% If, on the other hand, you're working in collaboration with other people,
+% every potential ``fixer'' might want to tag his or her own notes. So
+% assuming that John Doe is another author, he would most likely do something
+% like this:
+% \begin{verbatim}
+% \fxfatal[author=JD]{rephrase this}
+% \end{verbatim}
+% And suddenly, John's fatal note will be prefixed with his initials. This is
+% not a very satisfactory solution however, because it would require you to
+% explicitely provide the author's tag in every single note you create.
+% Fortunately, \fixme offers an easier way to achieve this.
+%
+% \subsubsubsection{Registering new authors}
+% \noindent\DescribeMacro{\FXRegisterAuthor}
+% \marg{cmdprefix}\marg{envprefix}\marg{tag}\\
+% The command \cs{FXRegisterAuthor} registers a new author with \fixme. It
+% takes three arguments: the last one (\meta{tag}) is just the same as the
+% value you would pass to the \texttt{author} option: it will serve as a
+% prefix for John's notes. In addition to that, a complete new set of
+% user-level commands (prefixed with \meta{cmdprefix}) and environments
+% (prefixed with \meta{envprefix}) will be created. To clarify, suppose that
+% we have registered John like this:
+% \begin{verbatim}
+% \FXRegisterAuthor{jd}{ajd}{JD}
+% \end{verbatim}
+% Now, John can use the commands \cs{jdnote}, \cs{jdwarning} \etc, along with
+% their starred versions, and he can also use the environments
+% \texttt{ajdnote}, \texttt{ajdwarning} \etc, along with their starred
+% versions as well. If you really want to know the whole story, it turns out
+% that the main \fixme interface described in section
+% \sectionref{sec:manual:insertion} is created with this single line of code:
+% \begin{verbatim}
+% \FXRegisterAuthor{fx}{anfx}{fixme}
+% \end{verbatim}
+%
+% \paragraph{Fun with the \texttt{author} option}
+% Some precisions about the author option are in order here. When a new
+% author is registered with \fixme, the generated commands and environments
+% work by \emph{presetting} the author option to the specified \meta{tag}.
+% This means that it is still possible to override it explicitely like this:
+% \begin{verbatim}
+% \jdfatal[author=XX]{rephrase this}
+% \end{verbatim}
+% The only case I can figure at in which you would want to do that is if
+% you're at war and want to plot a gigantic con against a fixer you hate.
+%
+% The other remark is about the default \texttt{fx*} user interface: the
+% \texttt{fixme} default user is special in that it is the only registered
+% user to honor global \texttt{author} options (provided in the call to
+% \cs{usepackage} or \cs{fxsetup}). The intended use of this is that the
+% \emph{main} author of the document uses the \texttt{fx*} interface, possibly
+% specifying a \meta{tag} different from the default \fixme logo, and all
+% other authors are registered via \cs{FXRegisterAuthor}.
 %
 % \section{Customizing \fixme}
 % \subsection{Customizing the \fixme notes layout}
