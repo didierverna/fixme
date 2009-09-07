@@ -1361,67 +1361,67 @@
 %   \end{macro}
 % \end{option}
 %
-% \subsection{Contents Layout}
-% \subsubsection{Contents layout creation}
-% \begin{macro}{\FXRegisterContentsLayout}
+% \subsection{Target Layout}
+% \subsubsection{Target layout creation}
+% \begin{macro}{\FXRegisterTargetLayout}
 %   \marg{name}\marg{funcname}\\
-%   Register a new contents layout with \fixme. This currently only involves
+%   Register a new target layout with \fixme. This currently only involves
 %   constructing the translation macro.
 %    \begin{macrocode}
-\newcommand*\FXRegisterContentsLayout[2]{%
-  \@ifundefined{@fxcontentslayout@#1}{%
-    \expandafter\let\csname @fxcontentslayout@#1\endcsname#2}{%
-    \@fxpkgerror{contents layout '#1' already registered}{%
-      You have called \string\FXRegisterContentsLayout\space with a name
+\newcommand*\FXRegisterTargetLayout[2]{%
+  \@ifundefined{@fxtargetlayout@#1}{%
+    \expandafter\let\csname @fxtargetlayout@#1\endcsname#2}{%
+    \@fxpkgerror{target layout '#1' already registered}{%
+      You have called \string\FXRegisterTargetLayout\space with a name
       already in use.\MessageBreak
-      If you want to modify an existing contents layout, renew its
+      If you want to modify an existing target layout, renew its
       command.\MessageBreak
       Otherwise, you must choose another name.}}}
 
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Built-in contents layouts}
+% \subsubsection{Built-in target layouts}
 % \subsubsubsection{Italics}
-% \begin{macro}{\FXContentsLayoutItalics}
-%   \marg{contents}
+% \begin{macro}{\FXTargetLayoutItalics}
+%   \marg{target}
 %    \begin{macrocode}
-\newcommand\FXContentsLayoutItalics[1]{\begingroup\itshape #1\endgroup}
-\FXRegisterContentsLayout{italics}{\FXContentsLayoutItalics}
+\newcommand\FXTargetLayoutItalics[1]{\begingroup\itshape #1\endgroup}
+\FXRegisterTargetLayout{italics}{\FXTargetLayoutItalics}
 
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Contents layout control}
-% \begin{option}{contentslayout}
-%   \begin{macro}{\@@fxcontentslayout}
-%     \marg{contents}\\
+% \subsubsection{Target layout control}
+% \begin{option}{targetlayout}
+%   \begin{macro}{\@@fxtargetlayout}
+%     \marg{target}\\
 %     This is much simpler than standard layout management because only one
-%     contents layout at a time is possible. Using a specific contents
+%     target layout at a time is possible. Using a specific target
 %     layout boils down to binding the layout macro to the proper translation
 %     one.
 %    \begin{macrocode}
-\@fxdefinekey{contentslayout}{contentslayout}{%
-  \@ifundefined{@fxcontentslayout@#1}{%
-    \@fxpkgerror{no contents layout named '#1'}{%
-      You have requested a contents layout named '#1',\MessageBreak
+\@fxdefinekey{targetlayout}{targetlayout}{%
+  \@ifundefined{@fxtargetlayout@#1}{%
+    \@fxpkgerror{no target layout named '#1'}{%
+      You have requested a target layout named '#1',\MessageBreak
       but no such layout seem to be registered with FiXme.}}{}%
-  \expandafter\let\expandafter\@@fxcontentslayout%
-    \csname @fxcontentslayout@#1\endcsname}
+  \expandafter\let\expandafter\@@fxtargetlayout%
+    \csname @fxtargetlayout@#1\endcsname}
 %    \end{macrocode}
 %   \end{macro}
 % \end{option}
-% \begin{macro}{\@fxcontentslayout@final}
-%   \begin{macro}{\@fxcontentslayout@draft}
-%     \marg{contents}\\
-%     In \texttt{final} mode, the contents is typeset as-is. In \texttt{draft}
+% \begin{macro}{\@fxtargetlayout@final}
+%   \begin{macro}{\@fxtargetlayout@draft}
+%     \marg{target}\\
+%     In \texttt{final} mode, the target is typeset as-is. In \texttt{draft}
 %     mode, we use the selected layout. Note that we need this level of
-%     indirection (the \texttt{contentslayout} option cannot directly bind the
+%     indirection (the \texttt{targetlayout} option cannot directly bind the
 %     draft version) because otherwise, the final/draft \cs{let} mechanism
 %     would break.
 %    \begin{macrocode}
-\newcommand\@fxcontentslayout@final[1]{#1}
-\newcommand\@fxcontentslayout@draft[1]{\@@fxcontentslayout{#1}}
+\newcommand\@fxtargetlayout@final[1]{#1}
+\newcommand\@fxtargetlayout@draft[1]{\@@fxtargetlayout{#1}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1659,15 +1659,15 @@
 %    \begin{macrocode}
 \long\def\@@fxsnote#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
-  \@fxcontentslayout{#3}\@@fxnote{#1}{#2}}
+  \@fxtargetlayout{#3}\@@fxnote{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxsnote}
 %   \marg{type}\oarg{options}\marg{note}\marg{text}\\
-%   Note the \texttt{contentslayout} family here.
+%   Note the \texttt{targetlayout} family here.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,contentslayout}{#2}%
+  \@fxsetkeys{ltx,lang,misc,log,layout,targetlayout}{#2}%
   \@@fxsnote{#1}{#3}{#4}}
 
 %    \end{macrocode}
@@ -1761,10 +1761,10 @@
 % \end{macro}
 % \begin{macro}{\@fxbeginenv}
 %   \marg{type}\oarg{options}\marg{summary}\marg{text}\\
-%   Note the \texttt{contentslayout} family here.
+%   Note the \texttt{targetlayout} family here.
 %    \begin{macrocode}
 \long\def\@fxbeginsenv#1[#2]#3#4{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,contentslayout}{#2,noinline}%
+  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,targetlayout}{#2,noinline}%
   \@@@fxbeginsenv{#1}{#3}{#4}}
 
 %    \end{macrocode}
@@ -2050,7 +2050,7 @@
 % \begin{macro}{\@@@fxnote}
 %   \begin{macro}{\@@@@fxbeginenv}
 %     \begin{macro}{\@fxendenv}
-%       \begin{macro}{\@fxcontentslayout}
+%       \begin{macro}{\@fxtargetlayout}
 %         \begin{macro}{\listoffixmes}
 %           \begin{option}{final}
 %             \begin{option}{draft}
@@ -2061,13 +2061,13 @@
   \let\@@@fxnote\@@@fxnote@final%
   \let\@@@@fxbeginenv\@@@@fxbeginenv@final
   \let\@fxendenv\@fxendenv@final%
-  \let\@fxcontentslayout\@fxcontentslayout@final%
+  \let\@fxtargetlayout\@fxtargetlayout@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{ltx}{draft}{%
   \let\@@@fxnote\@@@fxnote@draft%
   \let\@@@@fxbeginenv\@@@@fxbeginenv@draft
   \let\@fxendenv\@fxendenv@draft%
-  \let\@fxcontentslayout\@fxcontentslayout@draft%
+  \let\@fxtargetlayout\@fxtargetlayout@draft%
   \let\listoffixmes\lox@draft}
 
 %    \end{macrocode}
@@ -2134,7 +2134,7 @@
 % First, we execute some options to initialize \fixme to something sensible,
 % and then we process the user ones.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,envlayout,contentslayout>{%
+\ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,envlayout,targetlayout>{%
   final,%
   lang=english,%
   langtrack=false,%
@@ -2144,9 +2144,9 @@
   author=fixme,%
   layout=margin,%
   innerlayout={layout=inline},%
-  contentslayout=italics,%
+  targetlayout=italics,%
   envlayout=quotation}
-\ProcessOptionsX*[fx]<ltx,lang,misc,log,layout,envlayout,contentslayout>
+\ProcessOptionsX*[fx]<ltx,lang,misc,log,layout,envlayout,targetlayout>
 
 %    \end{macrocode}
 %
@@ -2157,7 +2157,7 @@
 %   with the \texttt{xkeyval} package\ldots
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,contentslayout}{#1}}
+  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,targetlayout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
