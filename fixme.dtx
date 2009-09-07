@@ -702,6 +702,12 @@
 % \end{macro}
 %
 % \subsubsection{\texttt{xkeyval} related}
+% \begin{macro}{\@fxkeyifundefined}
+%   \marg{families}\marg{keys}\marg{then}\marg{else}
+%    \begin{macrocode}
+\newcommand\@fxkeyifundefined{\key@ifundefined[fx]}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxdefinekey}
 %   \marg{family}\marg{key}\oarg{default}\marg{function}
 %    \begin{macrocode}
@@ -825,7 +831,7 @@
   \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
     \@fxsetkeys{misc}{author=\fixmelogo}}{}%
   \iffx@lang@langtrack%
-    \key@ifundefined[fx]{lang}{\languagename}{%
+    \@fxkeyifundefined{lang}{\languagename}{%
       \@fxpkgwarning{unknown language '\languagename';\MessageBreak
         falling back to \@fxdefaultlang}%
       \@fxsetkeys{lang}{\@fxdefaultlang}}{%
@@ -1094,13 +1100,20 @@
 %   list.
 %    \begin{macrocode}
 \newcommand*\FXRegisterLayout[3][]{%
-  \@fxdefineboolkey[#1]{layout}{#2}%
-  \expandafter\let\csname @fxlayout@#2\endcsname#3%
-  \ifx\@fxlayouts\empty%
-    \g@addto@macro\@fxlayouts{#2}%
-  \else%
-    \g@addto@macro\@fxlayouts{,#2}%
-  \fi}
+  \@fxkeyifundefined{layout}{#2}{%
+    \@fxdefineboolkey[#1]{layout}{#2}%
+    \expandafter\let\csname @fxlayout@#2\endcsname#3%
+    \ifx\@fxlayouts\empty%
+      \g@addto@macro\@fxlayouts{#2}%
+    \else%
+      \g@addto@macro\@fxlayouts{,#2}%
+    \fi}{%
+    \@fxpkgerror{layout '#2' already registered}{%
+      You have called \string\FXRegisterLayout\space with a layout name
+      already in use.\MessageBreak
+      If you want to modify an existing layout, renew its
+      command.\MessageBreak
+      Otherwise, you must choose a different layout name.}}}
 
 %    \end{macrocode}
 % \end{macro}
