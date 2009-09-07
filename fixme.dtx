@@ -129,29 +129,34 @@
 %
 %
 % \section{Using \fixme}
-% \subsection{Requirements}
+% \subsection{Initialization}
+% \subsubsection{Requirements}
 % In order to work properly, \fixme requires the presence of some \LaTeX{}
 % packages. You don't have to load them explicitly though. As long as
 % \LaTeX{} can locate them, they will be used automatically. \fixme currently
 % depends on \texttt{xspace}, \texttt{ifthen}, \texttt{verbatim} and
 % \texttt{xkeyval} no older than release date 2006/11/18.
 %
-% \subsection{Loading the package}
+% \subsubsection{Loading the package}
 % In order to load \fixme, simply say |\usepackage[|\meta{options}|]{fixme}|
 % in the preamble of your document. There is an important number of options
 % that you can use in order to customize \fixme's default or global behavior.
 % These options will be discussed when appropriate.\\
+%
+% \subsubsection{Global setup modification}
 % \DescribeMacro{\fxsetup}\marg{options}\\
 % Another way of customizing \fixme's global behavior is to use the
 % \cs{fxsetup} command. \cs{fxsetup} understands the same options as the
 % package itself and can be used in the preamble as well as in the document's
 % body.
 %
+% \subsubsection{Local setup modification}
 % Finally, note that unless specified otherwise, all package options are also
-% understood by the note insertion commands or environments. The effect is
-% then local to that particular command.
+% understood by the note insertion commands or environments described in
+% section \sectionref{sec:manual:insertion}. The effect is then local to that
+% particular command.
 %
-% \subsection{Inserting \fixme notes}
+% \subsection{Inserting \fixme notes\label{sec:manual:insertion}}
 % \subsubsection{Commands}
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
