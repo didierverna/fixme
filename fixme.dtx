@@ -1794,6 +1794,15 @@
 %   This macro creates the whole user-level interface for a particular author:
 %    \begin{macrocode}
 \newcommand*\FXRegisterAuthor[3]{%
+  \@ifundefined{#1note}{}{%
+    \@fxpkgerror{command prefix '#1' already in use}{%
+      You have tried to register a new author with FiXme,\MessageBreak
+      but the command prefix is already in use. Please choose another one.}}%
+  \@ifundefined{#2note}{}{%
+    \@fxpkgerror{environment prefix '#2' already in use}{%
+      You have tried to register a new author with FiXme,\MessageBreak
+      but the environment prefix is already in use. Please choose another
+      one.}}%
   \@fxnewnotemacro{#1}{note}{#3}%
   \@fxnewnotemacro{#1}{warning}{#3}%
   \@fxnewnotemacro{#1}{error}{#3}%
