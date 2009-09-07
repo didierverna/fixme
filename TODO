@@ -42,6 +42,5 @@ nice to have local lists of fixmes and stuff...
   (or adding user) layouts. See marginnote, pdfcomment, the todonotes package
   etc. 
 
-* silent option does not shut up the summary. See if we want that, and if we
-would like to add values to this option (like silent={log,tty,summary,all}
-etc. 
+* See if we want more than the silent option. For instance
+  silent={log,tty,summary,all}.
