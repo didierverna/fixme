@@ -268,11 +268,9 @@
 %
 % \subsubsection{Built-in layout forms}
 % The layout forms currently supported are: inline (directly in the text),
-% marginal notes (the default), footnotes, index entries and marginal
-% clues. \fixme notes may also appear in a ``list of fixmes'' (see section
-% \sectionref{sec:manual:lox}), but this is not really a layout form. While
-% most of these forms should be self-explanatory, marginal clues deserve a bit
-% more explanation.
+% marginal notes (the default), footnotes, index entries and marginal clues.
+% While most of these forms should be self-explanatory, marginal clues deserve
+% a bit more explanation.
 %
 % If your preferred layout form is inline or say, footnote, it might be
 % somewhat difficult to localize the \fixme note on the page, especially its
@@ -286,7 +284,7 @@
 % you try to activate both, only the most recently activated one will be
 % enabled (and you'll get a notice in the log file and on the terminal).
 %
-% \subsubsection{Individual control}
+% \subsubsection{Individual control\label{sec:manual:individuallayoutcontrol}}
 % \DescribeOption{inline}
 % \DescribeOption{margin}
 % \DescribeOption{marginclue}
@@ -319,7 +317,7 @@
 % \fxsetup{nomargin}
 % \end{verbatim}
 %
-% \subsubsection{Global control}
+% \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
 % \DescribeOption{layout}
 % \DescribeOption{morelayout}
 % As of version 4.0, an even more convenient way to specify the required
@@ -343,11 +341,48 @@
 % \cs{fxsetup} command and also locally by every note insertion command or
 % environment.
 %
+% \subsubsection{Corollary: floating \fixme notes}
+% At some point, people suggested that it would be nice to have global \fixme
+% notes, not related to any portion of the text in particular. Such notes
+% could be general comments about the whole document, and could even be issued
+% in the preamble. This is what I call ``floating'' \fixme notes.
+%
+% Originally, I started writing a new set of commands to do just that, but
+% with the flexibility that \fixme version 4 provides, I quickly realized that
+% such commands were an unnecessary addition.
+%
+% Since floating notes are not supposed to relate to any part of the text,
+% they should not be typeset anywhere in it. This is especially true if you
+% want to put some of them in the document's preamble. However, even a
+% preamble \fixme note could be recorded and displayed in the index or in the
+% list of fixmes. And it turns out that you can specify all that with the
+% layout options described in sections
+% \sectionref{sec:manual:individuallayoutcontrol} and
+% \sectionref{sec:manual:globallayoutcontrol}.
+%
+% \DescribeOption{area}
+% The only slight problem that remains in the page number, which normally
+% appears in the list of fixmes and in the index: if you choose to reference a
+% floating \fixme note that way, the page number is likely to be completely
+% meaningless. To compensate, a new option named ``area'' is provided. When
+% used, the given value will replace the page number in both the index and the
+% list of fixmes. The area can be anything you like, but should remain rather
+% short. By default, \texttt{area} is set the special value \texttt{thepage},
+% which as you guessed means to use the page number.
+%
+% Here is an example of a floating note that would typically appear in the
+% document's preamble:
+% \begin{verbatim}
+% \usepackage{hyperref}
+% \fxfatal[layout=index,area=hyperref]{Fill in PDF fields (title etc.)}
+% \end{verbatim}
+%
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
-% particular note (see section \sectionref{sec:manual:othercommonproblems} for
-% some of them). As of version 4.0, one frequent reason (described below) can
-% be handled automatically by \fixme.
+% particular note: creating a floating note is one of them; see section
+% \sectionref{sec:manual:othercommonproblems} for some others. As of version
+% 4.0, one frequent reason (described below) can be handled automatically by
+% \fixme.
 %
 % Remember that the default layout is to use margin paragraphs. Unfortunately,
 % margin paragraphs are forbidden by \TeX{} in several situations, like a
@@ -429,40 +464,6 @@
 % those forms are possible: \texttt{silent}, equivalent to
 % \texttt{silent=true}, and \texttt{nosilent}, equivalent to
 % \texttt{silent=false} (the default).
-%
-% \subsection{Floating \fixme notes}
-% At some point, people suggested that it would be nice to have global \fixme
-% notes, not related to any portion of the text in particular. Such notes
-% could be general comments about the whole document, and could even be issued
-% in the preamble. This is what I call ``floating'' \fixme notes.
-%
-% Originally, I started writing a new set of commands to do just that, but
-% with the flexibility that \fixme version 4 provides, I quickly realized that
-% such commands were an unnecessary addition.
-%
-% Since floating notes are not supposed to relate to any part of the text,
-% they should not be typeset anywhere in it. This is especially true if you
-% want to put some of them in the document's preamble. However, even a
-% preamble \fixme note can be recorded and displayed in the index or in the
-% list of fixmes. And it turns out that you can specify all that with the
-% layout options described in section \sectionref{sec:manual:layout}.
-%
-% \DescribeOption{area}
-% The only slight problem that remains in the page number, which normally
-% appears in the list of fixmes and in the index: if you choose to reference a
-% floating \fixme note that way, the page number is likely to be completely
-% meaningless. To compensate, a new option named ``area'' is provided. When
-% used, the given value will replace the page number in both the index and the
-% list of fixmes. The area can be anything you like, but should remain rather
-% short. By default, \texttt{area} is set the special value \texttt{thepage},
-% which as you guessed means to use the page number.
-%
-% Here is an example of a floating note that would typically appear in the
-% document's preamble:
-% \begin{verbatim}
-% \usepackage{hyperref}
-% \fxfatal[layout=index,area=hyperref]{Fill in PDF fields (title etc.)}
-% \end{verbatim}
 %
 % \subsection{Internationalization\label{sec:manual:i18n}}
 % \subsubsection{Available languages}
