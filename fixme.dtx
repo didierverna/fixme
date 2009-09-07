@@ -273,9 +273,10 @@
 %
 % \subsubsection{Built-in layout forms}
 % The layout forms built in the core of \fixme are: inline (directly in the
-% text, in bold), marginal notes (the default), footnotes, index entries and
-% marginal clues. While most of these forms should be self-explanatory,
-% marginal clues deserve a bit more explanation.
+% text, in bold), marginal notes (the default), footnotes, index entries
+% (sorted by level of importance) and marginal clues. While most of these
+% forms should be self-explanatory, marginal clues deserve a bit more
+% explanation.
 %
 % If your preferred layout form is inline or say, footnote, it might be
 % somewhat difficult to localize the \fixme note on the page, especially its
@@ -570,6 +571,14 @@
 % Finally, note that specifying a language explicitely (by means of a language
 % option) in the note insertion commands and environments always takes
 % precedence over the language tracking behavior.
+%
+% \subsubsection{Indexing in different languages}
+% If your document contains \fixme notes written in different languages, and
+% you have requested the \texttt{index} layout, \fixme will not only classify
+% the notes by their level of importance, but also by language. For example,
+% if you have \fixme warnings in both English and French, you will find two
+% different subcategories for warnings in the index: one called ``Warnings''
+% and one called ``Avertissements''.
 %
 % \section{Customizing \fixme}
 % \subsection{Customizing the \fixme notes layout}
