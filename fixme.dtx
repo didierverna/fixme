@@ -2180,15 +2180,15 @@
 % compilation:
 %    \begin{macrocode}
 \AtEndDocument{%
-  \GenericWarning{%
-    (FiXme)\@spaces\@spaces
-  }{%
-    FiXme Summary: Number of notes: \thefxnotecount,\MessageBreak%
-    Number of warnings: \thefxwarningcount,\MessageBreak%
-    Number of errors: \thefxerrorcount,\MessageBreak%
-    Number of fatal errors: \thefxfatalcount,\MessageBreak%
-    Total: \thefixmecount\@gobble%
-  }}
+  \iffx@log@silent\else
+    \GenericWarning{%
+      (FiXme)\@spaces\@spaces}{%
+      FiXme Summary: Number of notes: \thefxnotecount,\MessageBreak%
+      Number of warnings: \thefxwarningcount,\MessageBreak%
+      Number of errors: \thefxerrorcount,\MessageBreak%
+      Number of fatal errors: \thefxfatalcount,\MessageBreak%
+      Total: \thefixmecount\@gobble}%
+  \fi}
 %    \end{macrocode}
 %
 % ^^A \PrintChanges
