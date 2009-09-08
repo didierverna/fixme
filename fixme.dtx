@@ -946,68 +946,6 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Miscellaneous}
-% This section contains things that are orthogonal to the rest (and hence used
-% by several of the following sections).
-% \begin{option}{target}
-%   A \fixme note's ``target'' may replace the page number in the list of
-%   fixmes or in the index (see sections \sectionref{sec:code:contentsline}
-%   and \sectionref{sec:code:contentslinelayout}).
-%    \begin{macrocode}
-\@fxdefinecmdkey{misc}{target}{}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{author}
-%   A \fixme note's ``author'' allows to distinguish notes from different
-%   persons in collaborative mode.
-%    \begin{macrocode}
-\@fxdefinecmdkey{misc}{author}{}
-%    \end{macrocode}
-% \end{option}
-% \begin{macro}{\@fxendgroup}
-%   This macro is used in \cs{@@fxnote} to close the group opened at the user
-%   level. Since environments need to group opened for a longer time, they
-%   rebind it to \cs{relax}.
-%    \begin{macrocode}
-\let\@fxendgroup\endgroup
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxpreconfigure}
-%   \marg{author}\\
-%   This macro is used at the beginning of every user-level entry point, to
-%   preconfigure some aspects of the notes, before possibly processing
-%   options. Currently, this only involves presetting the note's author to the
-%   one specified in the call to \cs{FXRegisterAuthor}. This however is not
-%   done for the built-in \texttt{fixme} author, because this one should honor
-%   a global setting.
-%    \begin{macrocode}
-\newcommand*\@fxpreconfigure[1]{%
-  \ifthenelse{\equal{#1}{fixme}}{}{\@fxsetkeys{misc}{author=#1}}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxpostconfigure}
-%   This macro is used after processing user options (even when there is
-%   none), to postconfigure some aspects of the notes. Currently, this
-%   involves two things: setting the author to \cs{fixmelogo} if it still is
-%   \texttt{fixme}, and automatically tracking the current language if
-%   required (note that all other language options turn tracking off, meaning
-%   that one can override language tracking locally by providing a language
-%   explicitely).
-%    \begin{macrocode}
-\newcommand*\@fxpostconfigure{%
-  \ifthenelse{\equal{\cmdfx@misc@author}{fixme}}{%
-    \@fxsetkeys{misc}{author=\fixmelogo}}{}%
-  \iffx@lang@langtrack%
-    \@fxkeyifundefined{lang}{\languagename}{%
-      \@fxpkgwarning{unknown language '\languagename';\MessageBreak
-        falling back to \@fxdefaultlang}%
-      \@fxsetkeys{lang}{\@fxdefaultlang}}{%
-      \@fxsetkeys{lang}{\languagename}}
-  \fi}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsection{List macros}
 % \subsubsection{Contents lines\label{sec:code:contentsline}}
 % \begin{macro}{\l@fixme}
@@ -1017,12 +955,13 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdottedtocline}
-%   \marg{tocdepth}\marg{indent}\marg{numwidth}\marg{contents}\marg{location}\\
-%   This macro is copied almost verbatim from \LaTeX's core. The intent is
-%   to do a similar layout, but replacing the last argument, normally a page
-%   number, by arbitrary text. The original macro defines a restricted width
-%   to typeset the page number which is much too short for us, so we just let
-%   the \meta{location} text take all the space it needs.
+%   \marg{tocdepth}\marg{indent}\marg{numwidth}\marg{contents}\marg{target}\\
+%   This macro is copied almost verbatim from \LaTeX's core. The intent is to
+%   do a similar layout, but replacing the last argument, normally a page
+%   number, by arbitrary text (in our case, a note's target). The original
+%   macro defines a restricted width to typeset the page number which is much
+%   too short for us, so we just let the \meta{target} text take all the space
+%   it needs.
 %    \begin{macrocode}
 \newcommand*\@fxdottedtocline[5]{%
   \ifnum #1>\c@tocdepth \else
@@ -1048,14 +987,15 @@
 %   \cs{@dottedtocline} to our own version. The nice thing about this
 %   implementation is that we can still use \cs{l@fixme} (remember that it is
 %   bound to \cs{l@figure}) without exactly knowing what its definition is.
-%   Note that this macro is at the user level because \cs{contentsline} is,
-%   but it is not currently documented in the user manual.
+%   This macro is at the user level because \cs{contentsline} is, but it is
+%   not currently documented in the user manual.
 %    \begin{macrocode}
 \newcommand*\fxcontentsline[2]{%
   \begingroup%
   \let\@dottedtocline\@fxdottedtocline%
   \l@fixme{#1}{#2}%
   \endgroup}
+
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\fxaddcontentsline}
@@ -1063,14 +1003,14 @@
 %   Wrapper around \LaTeX's \cs{addcontentsline} macro to handle the
 %   \texttt{target} option. If a specific target is provided, we can't use the
 %   normal \cs{addcontentsline} macro for reasons explained above, so we use
-%   our own version of \cs{contentsline} instead. Note that this macro is at
-%   the user level because \cs{addcontentsline} is, but it is not currently
-%   documented in the user manual.
+%   our own version of \cs{contentsline} instead. This macro is at the user
+%   level because \cs{addcontentsline} is, but it is not currently documented
+%   in the user manual.
 %    \begin{macrocode}
 \newcommand*\fxaddcontentsline[1]{%
-  \ifthenelse{\equal{\cmdfx@misc@target}{thepage}}{%
+  \ifthenelse{\equal{\cmdfx@note@target}{thepage}}{%
     \addcontentsline{lox}{fixme}{#1}}{%
-    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@misc@target}}}}
+    \addtocontents{lox}{\protect\fxcontentsline{#1}{\cmdfx@note@target}}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1239,6 +1179,29 @@
 % \end{macro}
 %
 % \subsection{Layout}
+% \begin{option}{multiuser}
+%   \begin{option}{singleuser}
+%     \begin{option}{mode}
+%       These options specify whether \fixme should function in standalone or
+%       collaborative mode, allowing the different layouts to tweak their
+%       output.
+%    \begin{macrocode}
+\@fxdefineboolkey[%
+  \ifthenelse{\equal{#1}{true}}{%
+    \fx@mode@singleuserfalse}{%
+    \fx@mode@singleusertrue}]{%
+    mode}{multiuser}
+\@fxdefineboolkey[%
+  \ifthenelse{\equal{#1}{true}}{%
+    \fx@mode@multiuserfalse}{%
+    \fx@mode@multiusertrue}]{%
+    mode}{singleuser}
+\@fxdefinechoicekey{mode}{mode}{multiuser,singleuser}{\@fxsetkeys{mode}{#1}}
+
+%    \end{macrocode}
+%     \end{option}
+%   \end{option}
+% \end{option}
 % \begin{macro}{\@fxsetlayoutkeys}
 %   \marg{keys}\\
 %   This macro would probably be overkill if we did not need to
@@ -1380,9 +1343,9 @@
 %   number, just as in the list of fixmes.
 %    \begin{macrocode}
 \def\@wrindex#1{%
-  \ifthenelse{\equal{\cmdfx@misc@target}{thepage}}{%
+  \ifthenelse{\equal{\cmdfx@note@target}{thepage}}{%
     \protected@write\@indexfile{}{\string\indexentry{#1}{\thepage}}}{%
-    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@misc@target}}}
+    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@note@target}}}
   \endgroup
   \@esphack}
 %    \end{macrocode}
@@ -1426,7 +1389,12 @@
 %   used explicitely by the \texttt{lox} code.
 %    \begin{macrocode}
 \newcommand*\FXLayoutContentsLine[3]{%
-  \fxaddcontentsline{\@nameuse{fx#1name}: #2}}
+  \iffx@mode@multiuser%
+    \fxaddcontentsline{%
+      \ignorespaces #3 \@nameuse{fx#1name}: #2}%
+  \else%
+    \fxaddcontentsline{\@nameuse{fx#1name}: #2}%
+  \fi}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1581,10 +1549,9 @@
 %   \begin{macro}{\@fxtargetlayout@draft}
 %     \marg{target}\\
 %     In \texttt{final} mode, the target is typeset as-is. In \texttt{draft}
-%     mode, we use the selected layout. Note that we need this level of
-%     indirection (the \texttt{targetlayout} option cannot directly bind the
-%     draft version) because otherwise, the final/draft \cs{let} mechanism
-%     would break.
+%     mode, we use the selected layout. We need this level of indirection (the
+%     \texttt{targetlayout} option cannot directly bind the draft version)
+%     because otherwise, the final/draft \cs{let} mechanism would break.
 %    \begin{macrocode}
 \newcommand\@fxtargetlayout@final[1]{#1}
 \newcommand\@fxtargetlayout@draft[1]{\@@fxtargetlayout{#1}}
@@ -1721,6 +1688,21 @@
 %     \end{macro}
 %   \end{macro}
 % \end{counter}
+% \begin{option}{author}
+%   A \fixme note's ``author'' allows to distinguish notes from different
+%   persons in collaborative mode.
+%    \begin{macrocode}
+\@fxdefinecmdkey{note}{author}{}
+%    \end{macrocode}
+% \end{option}
+% \begin{option}{target}
+%   A \fixme note's ``target'' may replace the page number in the list of
+%   fixmes or in the index (see also section
+%   \sectionref{sec:code:contentslinelayout}).
+%    \begin{macrocode}
+\@fxdefinecmdkey{note}{target}{}
+%    \end{macrocode}
+% \end{option}
 %
 % \subsubsection{Layout dispatch\label{sec:code:layoutdispatch}}
 % \begin{macro}{\@fxhandleinnermode}
@@ -1755,7 +1737,7 @@
   \@fxhandleinnermode%
   \@for\@fxlt:=\@fxlayouts\do{%
     \@nameuse{iffx@layout@\@fxlt}%
-      \@nameuse{@fxlayout@\@fxlt}{#1}{#2}{\cmdfx@misc@author}%
+      \@nameuse{@fxlayout@\@fxlt}{#1}{#2}{\cmdfx@note@author}%
     \fi}}
 
 %    \end{macrocode}
@@ -1775,11 +1757,11 @@
       Type X to quit, fix your document (or switch back to draft
       mode),\MessageBreak
       and rerun LaTeX.}}{%
-    \FXLayoutContentsLine{#1}{#2}{\cmdfx@misc@author}%
+    \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
     \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}}
 \newcommand*\@@@fxnote@draft[2]{%
   \@fxlayout{#1}{#2}%
-  \FXLayoutContentsLine{#1}{#2}{\cmdfx@misc@author}%
+  \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
   \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}
 
 %    \end{macrocode}
@@ -1787,16 +1769,42 @@
 % \end{macro}
 %
 % \subsubsection{Standard version}
+% \begin{macro}{\@fxpostconfigure}
+%   This macro is used in \cs{@@fxnote} below, after processing user options
+%   (even when there is none), to postconfigure some aspects of the notes.
+%   Currently, this involves two things: setting the author to \cs{fixmelogo}
+%   if it still is \texttt{fixme}, and automatically tracking the current
+%   language if required (note that all other language options turn tracking
+%   off, meaning that one can override language tracking locally by providing
+%   a language explicitely). Since environments need the post-configuration
+%   done sooner, they perform it themselves and rebind this macro to
+%   \cs{relax}.
+%    \begin{macrocode}
+\newcommand*\@fxpostconfigure{%
+  \ifthenelse{\equal{\cmdfx@note@author}{fixme}}{%
+    \@fxsetkeys{note}{author=\fixmelogo}}{}%
+  \iffx@lang@langtrack%
+    \@fxkeyifundefined{lang}{\languagename}{%
+      \@fxpkgwarning{unknown language '\languagename';\MessageBreak
+        falling back to \@fxdefaultlang}%
+      \@fxsetkeys{lang}{\@fxdefaultlang}}{%
+      \@fxsetkeys{lang}{\languagename}}
+  \fi}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxendgroup}
+%   This macro is used in \cs{@@fxnote} below to close the group opened at the
+%   user level. Since environments need the group opened for a longer time,
+%   they rebind it to \cs{relax} and close the group themselves later on.
+%    \begin{macrocode}
+\let\@fxendgroup\endgroup
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@@fxnote}
 %   \marg{type}\marg{note}\\
 %   This level of indirection is needed because the counters need to be
-%   updated regardless of the document status. Note the use of
-%   \cs{@fxendgroup} which might either close the group opened at the
-%   user level by a note insertion macro, or do nothing if we're coming from
-%   an environment. Also note that post-configuration will actually take place
-%   only if we come directly from a user-level macro without options.
-%   Otherwise, post-configuration already took place and is now \cs{let} to
-%   \cs{relax}.
+%   updated regardless of the document status.
 %    \begin{macrocode}
 \def\@@fxnote#1#2{%
     \@fxpostconfigure%
@@ -1810,7 +1818,7 @@
 %   \marg{type}\oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
-  \@fxsetkeys{ltx,lang,misc,log,layout}{#2}%
+  \@fxsetkeys{mode,status,lang,log,note,layout}{#2}%
   \@@fxnote{#1}{#3}}
 
 %    \end{macrocode}
@@ -1819,9 +1827,9 @@
 % \subsubsection{Starred version}
 % \begin{macro}{\@@fxsnote}
 %   \marg{type}\marg{note}\marg{text}\\
-%   Note that post-configuration is done here (it's the code path confluent
-%   for all starred commands). Relaxing post-configuration afterwards is
-%   to prevent \cs{@@fxnote} from doing it again.
+%   Post-configuration is done here (it's the code path confluent for all
+%   starred commands). Relaxing post-configuration afterwards is to prevent
+%   \cs{@@fxnote} from doing it again.
 %    \begin{macrocode}
 \long\def\@@fxsnote#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
@@ -1833,13 +1841,26 @@
 %   Note the \texttt{targetlayout} family here.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,targetlayout}{#2}%
+  \@fxsetkeys{mode,status,lang,log,note,layout,targetlayout}{#2}%
   \@@fxsnote{#1}{#3}{#4}}
 
 %    \end{macrocode}
 % \end{macro}
 %
 % \subsubsection{User-level interface generation}
+% \begin{macro}{\@fxpreconfigure}
+%   \marg{author}\\
+%   This macro is used at the beginning of every user-level entry point (here
+%   for notes, and also in the environments section), to preconfigure some
+%   aspects of the notes, before possibly processing options. Currently, this
+%   only involves presetting the note's author to the one specified in the
+%   call to \cs{FXRegisterAuthor}. This however is not done for the built-in
+%   \texttt{fixme} author, because this one should honor a global setting.
+%    \begin{macrocode}
+\newcommand*\@fxpreconfigure[1]{%
+  \ifthenelse{\equal{#1}{fixme}}{}{\@fxsetkeys{note}{author=#1}}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxnewnotemacro}
 %   \marg{prefix}\marg{type}\marg{author}\\
 %   This macro defines the user-level interface:
@@ -1870,9 +1891,9 @@
 %         used to suppress output.
 %    \begin{macrocode}
 \def\@@@@fxbeginenv@final#1{\comment}
-\def\@@@@fxbeginenv@draft#1{\@fxenvlayout@begin{#1}{\cmdfx@misc@author}}
+\def\@@@@fxbeginenv@draft#1{\@fxenvlayout@begin{#1}{\cmdfx@note@author}}
 \def\@fxendenv@final#1{\endcomment}
-\def\@fxendenv@draft#1{\@fxenvlayout@end{#1}{\cmdfx@misc@author}}
+\def\@fxendenv@draft#1{\@fxenvlayout@end{#1}{\cmdfx@note@author}}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -1882,9 +1903,9 @@
 % \begin{macro}{\@@@fxbeginenv}
 %   \begin{macro}{\@@fxbeginenv}
 %     \marg{type}\marg{summary}\\
-%     Note that post-configuration is done here (it's the code path confluent
-%     for all non-starred environments). Relaxing post-configuration
-%     afterwards is to prevent \cs{@@fxnote} from doing it again.
+%     Post-configuration is done here (it's the code path confluent for all
+%     non-starred environments). Relaxing post-configuration afterwards is to
+%     prevent \cs{@@fxnote} from doing it again.
 %    \begin{macrocode}
 \def\@@@fxbeginenv#1#2{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
@@ -1900,7 +1921,7 @@
 %   \marg{type}\oarg{options}\marg{summary}
 %    \begin{macrocode}
 \def\@fxbeginenv#1[#2]#3{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout}{#2,noinline}%
+  \@fxsetkeys{mode,status,lang,log,note,layout,envlayout}{#2,noinline}%
   \@@@fxbeginenv{#1}{#3}}
 
 %    \end{macrocode}
@@ -1911,9 +1932,9 @@
 % \begin{macro}{\@@@fxbeginsenv}
 %   \begin{macro}{\@@fxbeginsenv}
 %     \marg{type}\marg{summary}\marg{text}\\
-%     Note that post-configuration is done here (it's the code path confluent
-%     for all starred environments). Relaxing post-configuration afterwards is
-%     to prevent \cs{@@fxsnote} from doing it again.
+%     Post-configuration is done here (it's the code path confluent for all
+%     starred environments). Relaxing post-configuration afterwards is to
+%     prevent \cs{@@fxsnote} from doing it again.
 %    \begin{macrocode}
 \long\def\@@@fxbeginsenv#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
@@ -1930,7 +1951,8 @@
 %   Note the \texttt{targetlayout} family here.
 %    \begin{macrocode}
 \long\def\@fxbeginsenv#1[#2]#3#4{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,targetlayout}{#2,noinline}%
+  \@fxsetkeys{mode,status,lang,log,note,layout,envlayout,targetlayout}{%
+    #2,noinline}%
   \@@@fxbeginsenv{#1}{#3}{#4}}
 
 %    \end{macrocode}
@@ -1940,10 +1962,10 @@
 % \subsubsection{User-level interface generation}
 % \begin{macro}{\@fxnewnoteenvs}
 %   \marg{prefix}\marg{type}\marg{author}\\
-%   This macro defines the user-level interface. Note that the ending macros
-%   are identical. Note also that the environments close their own group, so
-%   we prevent \cs{@@fxnote} from doing so by temporarily rebinding
-%   \cs{@fxendgroup} to \cs{relax}.
+%   This macro defines the user-level interface. The ending macros are
+%   identical. Also, the environments close their own group, so we prevent
+%   \cs{@@fxnote} from doing so by temporarily rebinding \cs{@fxendgroup} to
+%   \cs{relax}.
 %    \begin{macrocode}
 \newcommand*\@fxnewnoteenvs[3]{%
   \expandafter\def\csname #1#2\endcsname{%
@@ -2224,19 +2246,19 @@
 %                 Select draft or final versions of internal macros (some of
 %                 them also depending on the document class):
 %    \begin{macrocode}
-\@fxdefinevoidkey{ltx}{final}{%
+\@fxdefinevoidkey{status}{final}{%
   \let\@@@fxnote\@@@fxnote@final%
   \let\@@@@fxbeginenv\@@@@fxbeginenv@final
   \let\@fxendenv\@fxendenv@final%
   \let\@fxtargetlayout\@fxtargetlayout@final%
   \let\listoffixmes\lox@final}
-\@fxdefinevoidkey{ltx}{draft}{%
+\@fxdefinevoidkey{status}{draft}{%
   \let\@@@fxnote\@@@fxnote@draft%
   \let\@@@@fxbeginenv\@@@@fxbeginenv@draft
   \let\@fxendenv\@fxendenv@draft%
   \let\@fxtargetlayout\@fxtargetlayout@draft%
   \let\listoffixmes\lox@draft}
-\@fxdefinechoicekey{ltx}{status}{final,draft}{\@fxsetkeys{ltx}{#1}}
+\@fxdefinechoicekey{status}{status}{final,draft}{\@fxsetkeys{status}{#1}}
 
 %    \end{macrocode}
 %               \end{option}
@@ -2258,14 +2280,14 @@
 % should only be executed once. Besides, \cs{@ifclassloaded} is an
 % \cs{@onlypreamble} macro\ldots
 %
-% Note that as documented, marginal notes are incompatible with the ACM SIG
-% classes. Initially, I thought I would detect these classes and issue an
-% error if marginal layout (or clue) is active. However, I changed my mind,
-% because nothing prevents somebody to write a new class on top of these ones
-% and authorize \cs{marginpar} back again. Normally these classes issue an
-% error if \cs{marginpar} is used. However, the 2.3 / June 2007 versions are
-% buggy and the error actually triggers a stack overflow in \LaTeX\ldots
-% (patch submitted). Oh boy, these classes are a mess.
+% As documented, marginal notes are incompatible with the ACM SIG classes.
+% Initially, I thought I would detect these classes and issue an error if
+% marginal layout (or clue) is active. However, I changed my mind, because
+% nothing prevents somebody to write a new class on top of these ones and
+% authorize \cs{marginpar} back again. Normally these classes issue an error
+% if \cs{marginpar} is used. However, the 2.3 / June 2007 versions are buggy
+% and the error actually triggers a stack overflow in \LaTeX\ldots (patch
+% submitted). Oh boy, these classes are a mess.
 % \begin{macro}{\@lox@prtc}
 %   \begin{macro}{\@lox@psttc}
 %    \begin{macrocode}
@@ -2303,19 +2325,20 @@
 % First, we execute some options to initialize \fixme to something sensible,
 % and then we process the user ones.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<ltx,lang,misc,log,layout,envlayout,targetlayout>{%
+\ExecuteOptionsX[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>{%
+  mode=singleuser,%
   status=final,%
   lang=english,%
   langtrack=false,%
   defaultlang=english,%
   nosilent,%
-  target=thepage,%
   author=fixme,%
+  target=thepage,%
   layout=margin,%
   innerlayout={layout=inline},%
-  targetlayout=italics,%
-  envlayout=bold}
-\ProcessOptionsX*[fx]<ltx,lang,misc,log,layout,envlayout,targetlayout>
+  envlayout=bold,%
+  targetlayout=italics}
+\ProcessOptionsX*[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>
 
 %    \end{macrocode}
 %
@@ -2326,7 +2349,7 @@
 %   with the \texttt{xkeyval} package\ldots
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{%
-  \@fxsetkeys{ltx,lang,misc,log,layout,envlayout,targetlayout}{#1}}
+  \@fxsetkeys{mode,status,lang,log,note,layout,envlayout,targetlayout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
