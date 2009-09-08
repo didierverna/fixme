@@ -2443,9 +2443,64 @@
 % \appendix
 % \section{Additional Layouts}
 %
-% \section{Additional themes}
+% \section{Additional themes\label{sec:code:themes}}
+% \subsection{The ``signature'' theme}
+% This theme overrides the existing layouts to display the authors tags as a
+% signature (\ie at the end of the notes) instead of as a prefix.
 %    \begin{macrocode}
 %<*fxthemesignature>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxthemesignature}
+
+%    \end{macrocode}
+% It seems that \cs{ifthenelse} is fragile: it breaks if used within moving
+% arguments (or somehting like that). So the safe path is to construct the
+% signature first (possibly empty), and to store it in a temporary macro, to
+% be used when needed.
+%    \begin{macrocode}
+\newcommand\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxtempsig{}}{%
+    \def\@fxtempsig{ -- \textit{#1}}}}
+
+\renewcommand*\FXLayoutFootnote[3]{%
+  \@fxdosig{#3}%
+  \footnote{\@nameuse{fx#1name}: #2\@fxtempsig}}
+\renewcommand*\FXLayoutMargin[3]{%
+  \@fxdosig{#3}%
+  \marginpar[%
+  \footnotesize\raggedleft\@nameuse{fx#1name}: #2\@fxtempsig]{%
+    \footnotesize\raggedright\@nameuse{fx#1name}: #2\@fxtempsig}}
+\renewcommand*\FXLayoutMarginClue[3]{%
+  \@fxdosig{#3}%
+  \marginpar[\footnotesize\raggedleft\@nameuse{fx#1name}!\@fxtempsig]{%
+    \footnotesize\raggedright\@nameuse{fx#1name}!\@fxtempsig}}
+\renewcommand*\FXLayoutInline[3]{%
+  \@fxdosig{#3}%
+  {\bfseries\@nameuse{fx#1name}: #2\@fxtempsig}}
+\renewcommand*\FXLayoutIndex[3]{%
+  \@fxdosig{#3}%
+  \iffx@mode@multiuser%
+    \index{***@\fixmeindexname:%
+      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{thefx#1count}: #2\@fxtempsig}%
+    \index{***#3@\fixmeindexname{} (#3):%
+      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{thefx#1count}: #2}%
+  \else%
+    \index{***@\fixmeindexname:%
+      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{thefx#1count}: #2}%
+  \fi}
+\renewcommand*\FXLayoutContentsLine[3]{%
+  \iffx@mode@multiuser%
+    \@fxdosig{#3}%
+    \fxaddcontentsline{\@nameuse{fx#1name}: #2\@fxtempsig}%
+  \else%
+    \fxaddcontentsline{\@nameuse{fx#1name}: #2}%
+  \fi}
+\renewcommand*\FXEnvLayoutBoldBegin[2]{%
+  \bfseries\@nameuse{fx#1name}: \ignorespaces}
+\renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxtempsig}
 %</fxthemesignature>
 %    \end{macrocode}
 % ^^A \PrintChanges
