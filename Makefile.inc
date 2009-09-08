@@ -17,5 +17,6 @@
 
 TEXMFDIR = ${HOME}/.texmf
 
+DST_EMPTY_DIRS = themes
 
 ### Makefile.inc ends here
