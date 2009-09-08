@@ -1372,9 +1372,18 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
-  \index{***@\fixmeindexname:%
-    !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
-    !\@nameuse{thefx#1count}: #2}}
+  \iffx@mode@multiuser%
+    \index{***@\fixmeindexname:%
+      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{thefx#1count}: #3: #2}%
+    \index{***#3@\fixmeindexname{} (#3):%
+      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{thefx#1count}: #2}%
+  \else%
+    \index{***@\fixmeindexname:%
+      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{thefx#1count}: #2}%
+  \fi}
 \FXRegisterLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
 %       \end{macro}
