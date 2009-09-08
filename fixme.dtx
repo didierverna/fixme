@@ -37,6 +37,7 @@
 % \OnlyDescription
 \CodelineIndex
 % \RecordChanges
+\usepackage{fixme} %% for \GetFileInfo, and the logo
 \begin{document}
 \DocInput{fixme.dtx}
 \end{document}
@@ -46,6 +47,7 @@
 %
 % \catcode`\¡=14
 % ^^A\CheckSum{880}
+% \GetFileInfo{fixme.sty}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -79,16 +81,13 @@
 % \newcommand\komascript{\textsc{Koma}-Script\xspace}
 % \newcommand\auctex{AUC-\TeX\xspace}
 %
-% \newcommand\version{4.0}
-% \newcommand\releasedate{2009/09/08}
+% \newcommand\fx{\fixmelogo\xspace}
 % \newcommand\packagecopyright{%
 %   Copyright \copyright{} 1998--2002, 2004--2007, 2009 Didier Verna}
-% \newcommand\fixme{\textsf{FiXme}\xspace}
 %
-% \date\today
-% \title{\fixme{} -- a \LaTeXe{} package for inserting fixme notes
-%   in your documents\thanks{This document describes \fixme \version,
-%     release date \releasedate.}}
+% \date{\texttt{\fileversion{} (\filedate)}}
+% \title{\fx{} -- a \LaTeXe{} package for inserting fixme notes in your
+%   documents}
 % \author{Didier Verna\\
 %   \texttt{mailto:didier@lrde.epita.fr}\\
 %   \texttt{http://www.lrde.epita.fr/\~{}didier/}}
