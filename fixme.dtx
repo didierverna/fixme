@@ -1287,7 +1287,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutFootnote[3]{%
-  \footnote{\ignorespaces #3 \@nameuse{fx#1name}: #2}}
+  \footnote{\ignorespaces#3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 %       \end{macro}
@@ -1304,8 +1304,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
-  \footnotesize\raggedleft\ignorespaces #3 \@nameuse{fx#1name}: #2]{%
-    \footnotesize\raggedright\ignorespaces #3 \@nameuse{fx#1name}: #2}}
+  \footnotesize\raggedleft\ignorespaces#3 \@nameuse{fx#1name}: #2]{%
+    \footnotesize\raggedright\ignorespaces#3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1327,8 +1327,8 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\footnotesize\raggedleft\ignorespaces #3 \@nameuse{fx#1name}!]{%
-    \footnotesize\raggedright\ignorespaces #3 \@nameuse{fx#1name}!}}
+  \marginpar[\footnotesize\raggedleft\ignorespaces#3 \@nameuse{fx#1name}!]{%
+    \footnotesize\raggedright\ignorespaces#3 \@nameuse{fx#1name}!}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -1350,7 +1350,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\bfseries\ignorespaces #3 \@nameuse{fx#1name}: #2}}
+  {\bfseries\ignorespaces#3 \@nameuse{fx#1name}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1428,8 +1428,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
-    \fxaddcontentsline{%
-      \ignorespaces #3 \@nameuse{fx#1name}: #2}%
+    \fxaddcontentsline{\ignorespaces#3 \@nameuse{fx#1name}: #2}%
   \else%
     \fxaddcontentsline{\@nameuse{fx#1name}: #2}%
   \fi}
@@ -1500,7 +1499,7 @@
 %     \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutBoldBegin[2]{%
-  \bfseries\ignorespaces #2 \@nameuse{fx#1name}: \ignorespaces}
+  \bfseries\ignorespaces#2 \@nameuse{fx#1name}: \ignorespaces}
 \newcommand*\FXEnvLayoutBoldEnd[2]{}
 \FXRegisterEnvLayout{bold}{%
   \FXEnvLayoutBoldBegin}{\FXEnvLayoutBoldEnd}
@@ -1558,7 +1557,7 @@
 % \begin{macro}{\FXTargetLayoutItalics}
 %   \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutItalics[1]{\begingroup\itshape #1\endgroup}
+\newcommand\FXTargetLayoutItalics[1]{\begingroup\itshape#1\endgroup}
 \FXRegisterTargetLayout{italics}{\FXTargetLayoutItalics}
 
 %    \end{macrocode}
