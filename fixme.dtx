@@ -101,22 +101,22 @@
 %   ``fixed'', where they are located, and what needs to be done. This is what
 %   I call ``fixme notes''. The purpose of this package is to provide you with
 %   convenient ways to insert such notes in your documents.\par
-%   The \fixme package is \packagecopyright{}, and distributed under the
+%   The \fx package is \packagecopyright{}, and distributed under the
 %   terms of the LPPL license.
 % \end{abstract}
 %
 % \tableofcontents
 %
 % \section{Description}
-% With \fixme, you can insert different kinds of notes in your documents,
+% With \fx, you can insert different kinds of notes in your documents,
 % ranging from simple not-so-important notices to critical stuff that must
 % absolutely be fixed in the final version.\par
-% \fixme gives you full control on the layout of these notes: they can be
+% \fx gives you full control on the layout of these notes: they can be
 % displayed inline (directly in the text), as marginal paragraphs (the
 % default), as footnotes and even as index entries. All these possibilities
-% can be mixed together. Additionally, you can summarize all \fixme notes in
+% can be mixed together. Additionally, you can summarize all \fx notes in
 % a ``list of fixme's''.\par
-% \fixme notes are also recorded in the log file, and (depending on their
+% \fx notes are also recorded in the log file, and (depending on their
 % importance level) some of them are displayed on the terminal during
 % compilation. A final summary is also created at the end of the compilation
 % process.\par
@@ -127,24 +127,24 @@
 % (they're still recorded in the log file though).
 %
 %
-% \section{Using \fixme}
+% \section{Using \fx}
 % \subsection{Initialization}
 % \subsubsection{Requirements}
-% In order to work properly, \fixme requires the presence of some \LaTeX{}
+% In order to work properly, \fx requires the presence of some \LaTeX{}
 % packages. You don't have to load them explicitly though. As long as
-% \LaTeX{} can locate them, they will be used automatically. \fixme currently
+% \LaTeX{} can locate them, they will be used automatically. \fx currently
 % depends on \texttt{xspace}, \texttt{ifthen}, \texttt{verbatim} and
 % \texttt{xkeyval} no older than release date 2006/11/18.
 %
 % \subsubsection{Loading the package}
-% In order to load \fixme, simply say |\usepackage[|\meta{options}|]{fixme}|
+% In order to load \fx, simply say |\usepackage[|\meta{options}|]{fixme}|
 % in the preamble of your document. There is an important number of options
-% that you can use in order to customize \fixme's default or global behavior.
+% that you can use in order to customize \fx's default or global behavior.
 % These options will be discussed when appropriate.\\
 %
 % \subsubsection{Global setup modification}
 % \DescribeMacro{\fxsetup}\marg{options}\\
-% Another way of customizing \fixme's global behavior is to use the
+% Another way of customizing \fx's global behavior is to use the
 % \cs{fxsetup} command. \cs{fxsetup} understands the same options as the
 % package itself and can be used in the preamble as well as in the document's
 % body.
@@ -155,17 +155,17 @@
 % section \sectionref{sec:manual:insertion}. The effect is then local to that
 % particular command.
 %
-% \subsection{Inserting \fixme notes\label{sec:manual:insertion}}
+% \subsection{Inserting \fx notes\label{sec:manual:insertion}}
 % \subsubsection{Commands}
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
 % \DescribeMacro{\fxerror}
 % \DescribeMacro{\fxfatal}\oarg{options}\marg{note}\\
-% \fixme provides four note insertion commands corresponding to different
+% \fx provides four note insertion commands corresponding to different
 % levels of importance (notes, warnings, errors and fatal errors).
 % \cs{fxfatal} is a bit different from the other ones, as will be explained in
 % section \sectionref{sec:manual:behavior}.\par
-% \DescribeMacro{\fixme}
+% \DescribeMacro{\fx}
 % As of version 4, the \cs{fixme} command is a synonym for \cs{fxfatal} and is
 % considered deprecated.\par
 %
@@ -174,9 +174,9 @@
 % \DescribeMacro{\fxwarning*}
 % \DescribeMacro{\fxerror*}
 % \DescribeMacro{\fxfatal*}\oarg{options}\marg{note}\marg{text}\\
-% Sometimes, you might not only want to issue a \fixme note, but also
+% Sometimes, you might not only want to issue a \fx note, but also
 % highlight the relevant part of the text to which it applies. This is what I
-% call ``targeting'' the note. As of version 4, \fixme provides starred
+% call ``targeting'' the note. As of version 4, \fx provides starred
 % versions of its note insertion commands to do that. In star form, these
 % commands expect an additional mandatory argument containing the text to be
 % highlighted.
@@ -184,7 +184,7 @@
 % \subsubsection{Environments}
 % \emph{\textbf{Warning:} as of version 4.0, the environments interface has
 %   changed and is \emph{not} backward-compatible.}\\
-% \fixme notes are meant to be short: consider that they are likely to go in
+% \fx notes are meant to be short: consider that they are likely to go in
 % the list of fixmes and in the index for instance. If you feel the need for
 % writing longer comments, the environments described below might come in
 % handy.\\
@@ -192,14 +192,14 @@
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
-% \fixme provides four note environments; one for every note level. These
+% \fx provides four note environments; one for every note level. These
 % environments take one mandatory argument (meant to be a short summary
 % of the long note) and behave in exactly the same way as their command
 % counterpart. The layout policy is a bit different though (see section
 % \sectionref{sec:manual:layout}): the long note (the environment's contents)
 % will always appear inline, and the \meta{summary} will obey all active
 % layout forms except for the inline one, just as if it had been passed to one
-% of the \fixme note insertion commands described in the previous section.
+% of the \fx note insertion commands described in the previous section.
 %
 % \DescribeEnv{afixme}
 % As of version 4, the \texttt{afixme} environement is a synonym for
@@ -210,33 +210,33 @@
 % \DescribeEnv{anfxwarning*}
 % \DescribeEnv{anfxerror*}
 % \DescribeEnv{anfxfatal*}\oarg{options}\marg{summary}\marg{text}\\
-% \fixme environments can also be targeted to a specific portion of text. When
+% \fx environments can also be targeted to a specific portion of text. When
 % using the starred version, the environments expect one additional mandatory
 % argument: the text in question that will be highlighted.
 %
-% \subsection{List of \fixme's\label{sec:manual:lox}}
+% \subsection{List of \fx's\label{sec:manual:lox}}
 % \DescribeMacro{\listoffixmes}
-% \fixme remembers where you put \fixme notes in a toc-like file whose
+% \fx remembers where you put \fx notes in a toc-like file whose
 % extension is \texttt{lox}. The \cs{listoffixmes} command generates the list
-% of all \fixme notes in a manner similar to that of the ``list of figures''
+% of all \fx notes in a manner similar to that of the ``list of figures''
 % for instance. A standard layout is automatically selected for the
 % \texttt{article}, \texttt{report}, \texttt{book} classes and their
 % \komascript replacements. If another class is used, the \texttt{article}
-% layout is selected. Also, note that if there is no \fixme note left in the
+% layout is selected. Also, note that if there is no \fx note left in the
 % document, this command doesn't generate an empty list, but rather stays
 % silent. It also stays silent in \texttt{final} mode, regardless of the
 % presence of remaining notes (see section \sectionref{sec:manual:behavior}).
 %
-% \subsection{Controlling the behavior of \fixme\label{sec:manual:behavior}}
+% \subsection{Controlling the behavior of \fx\label{sec:manual:behavior}}
 % \DescribeOption{final}
 % \DescribeOption{draft}
-% The behavior of \fixme is controlled by the two standard options
+% The behavior of \fx is controlled by the two standard options
 % \texttt{final} and \texttt{draft}. These options are usually given to
 % \cs{documentclass} which in turn passes them to all packages. In addition,
 % you can also use them as options to \cs{usepackage}, in the call to
 % \cs{fxsetup}, and even to the note insertion commands and environments.
 %
-% In \texttt{draft} mode, \fixme notes are recorded in the log file and appear
+% In \texttt{draft} mode, \fx notes are recorded in the log file and appear
 % in the document as specified by the layout settings (see section
 % \sectionref{sec:manual:layout}). Additionally, warnings, errors and fatal
 % errors are also displayed on the terminal.
@@ -259,28 +259,28 @@
 % \end{verbatim}
 %
 % \DescribeOption{status}
-% By default, \fixme is in \texttt{final} mode (\LaTeX{} itself behaves that
-% way). If you're manipulating the document status at the level of \fixme
+% By default, \fx is in \texttt{final} mode (\LaTeX{} itself behaves that
+% way). If you're manipulating the document status at the level of \fx
 % itself (as opposed to the \cs{documentclass} level), then the preferred way
 % to do this is to use the \texttt{status} option, and give it the value
 % \texttt{final} or \texttt{draft}.
 %
-% \subsection{Controlling the layout of \fixme notes\label{sec:manual:layout}}
-% \fixme notes can appear in several forms in your document. Each of these
+% \subsection{Controlling the layout of \fx notes\label{sec:manual:layout}}
+% \fx notes can appear in several forms in your document. Each of these
 % forms can be individually selected, or they can be combined together. This
 % section describes the built-in layout forms and their possible combination.
 %
 % \subsubsection{Built-in layout forms}
-% The layout forms built in the core of \fixme are: inline (directly in the
+% The layout forms built in the core of \fx are: inline (directly in the
 % text, in bold), marginal notes (the default), footnotes, index entries
 % (sorted by level of importance) and marginal clues. While most of these
 % forms should be self-explanatory, marginal clues deserve a bit more
 % explanation.
 %
 % If your preferred layout form is inline or say, footnote, it might be
-% somewhat difficult to localize the \fixme note on the page, especially its
+% somewhat difficult to localize the \fx note on the page, especially its
 % vertical position. That's where marginal clues come into play. A marginal
-% clue does not display the \fixme note's contents, but only an indication
+% clue does not display the \fx note's contents, but only an indication
 % that there is such a note at that (vertical) position. So you have to use
 % another layout form (again, typically inline or footnote) in order to get
 % the actual note's contents.
@@ -346,20 +346,20 @@
 % \cs{fxsetup} command and also locally by every note insertion command or
 % environment.
 %
-% \subsubsection{Corollary: floating \fixme notes}
-% At some point, people suggested that it would be nice to have global \fixme
+% \subsubsection{Corollary: floating \fx notes}
+% At some point, people suggested that it would be nice to have global \fx
 % notes, not related to any portion of the text in particular. Such notes
 % could be general comments about the whole document, and could even be issued
-% in the preamble. This is what I call ``floating'' \fixme notes.
+% in the preamble. This is what I call ``floating'' \fx notes.
 %
 % Originally, I started writing a new set of commands to do just that, but
-% with the flexibility that \fixme version 4 provides, I quickly realized that
+% with the flexibility that \fx version 4 provides, I quickly realized that
 % such commands were an unnecessary addition.
 %
 % Since floating notes are not supposed to relate to any part of the text,
 % they should not be typeset anywhere in it. This is especially true if you
 % want to put some of them in the document's preamble. However, even a
-% preamble \fixme note could be recorded and displayed in the index or in the
+% preamble \fx note could be recorded and displayed in the index or in the
 % list of fixmes. And it turns out that you can specify all that with the
 % layout options described in sections
 % \sectionref{sec:manual:individuallayoutcontrol} and
@@ -368,14 +368,14 @@
 % \DescribeOption{target}
 % The only slight problem that remains in the page number, which normally
 % appears in the list of fixmes and in the index: if you choose to reference a
-% floating \fixme note that way, the page number is likely to be completely
+% floating \fx note that way, the page number is likely to be completely
 % meaningless. To compensate, a new option named ``target'' is provided. When
 % used, the given value will replace the page number in both the index and the
 % list of fixmes. The target can be anything you like, but should remain rather
 % short. By default, \texttt{target} is set the special value \texttt{thepage},
 % which as you guessed means to use the page number.
 %
-% The name "target" bears an intentional resemblance to \fixme's targeted
+% The name "target" bears an intentional resemblance to \fx's targeted
 % commands and environments, because we are indeed targetting the note to
 % something. The only difference is that in the case of floating notes, the
 % target is non-textual.
@@ -392,7 +392,7 @@
 % particular note: creating a floating note is one of them; see section
 % \sectionref{sec:manual:othercommonproblems} for some others. As of version
 % 4.0, one frequent reason (described below) can be handled automatically by
-% \fixme.
+% \fx.
 %
 % Remember that the default layout is to use margin paragraphs. Unfortunately,
 % margin paragraphs are forbidden by \TeX{} in several situations, like a
@@ -401,9 +401,9 @@
 %
 % \DescribeOption{innerlayout}
 % The good news is that this situation can be detected automatically. As of
-% version 4.0, \fixme provides an option named \texttt{innerlayout} that
+% version 4.0, \fx provides an option named \texttt{innerlayout} that
 % allows you to specify an alternate layout setting to use when \TeX{} is in
-% \emph{inner} mode. In addition to that, \fixme automatically disables the
+% \emph{inner} mode. In addition to that, \fx automatically disables the
 % \texttt{margin} and \texttt{marginclue} forms.
 %
 % Using \texttt{innerlayout} is not as trivial as it may seem: it
@@ -414,7 +414,7 @@
 % \emph{override} it. Here are some examples to clarify things a little. You
 % should try to understand them.
 % \begin{itemize}
-% \item By default, the \fixme inner layout is set to just \texttt{inline}.
+% \item By default, the \fx inner layout is set to just \texttt{inline}.
 %   This can be simulated by the following call:
 % \begin{verbatim}
 % \usepackage[layout=margin,innerlayout={layout=inline}]{fixme}
@@ -424,7 +424,7 @@
 % \begin{verbatim}
 % \usepackage[layout=margin,innerlayout=inline]{fixme}
 % \end{verbatim}
-% \item If you have set \fixme to use a safe layout globally (for instance,
+% \item If you have set \fx to use a safe layout globally (for instance,
 %   \texttt{inline} and \texttt{index}), and you want to use the same layout
 %   in inner mode, then you should provide an \emph{empty} inner layout, like
 %   this:
@@ -437,7 +437,7 @@
 % \subsubsection{Other common layout
 %   problems\label{sec:manual:othercommonproblems}}
 % This section describes some other common problems that people have
-% encountered using \fixme. Although \fixme might not be directly responsible
+% encountered using \fx. Although \fx might not be directly responsible
 % for them, it is still good to keep them in mind.
 %
 % \subsubsubsection{Footnotes and margin paragraphs in floats}
@@ -457,12 +457,12 @@
 % \subsubsubsection{ACM classes compatibility}
 % The ACM \textsc{Sig} classes (\texttt{acm\_proc\_article-sp} and
 % \texttt{sig-alternate}) forbid the use of \cs{marginpar}, so if you use
-% these classes, don't forget to choose another layout for \fixme, and also
+% these classes, don't forget to choose another layout for \fx, and also
 % avoid using marginal clues.
 %
-% \subsection{Controlling the layout of \fixme environments}
+% \subsection{Controlling the layout of \fx environments}
 % As discussed in section \sectionref{sec:manual:insertion}, the contents of a
-% \fixme environment (a long note) always appears inline. However, the exact
+% \fx environment (a long note) always appears inline. However, the exact
 % way this contents is typeset (in draft mode only) is subject to a layout of
 % its own, called the ``environment layout''.
 %
@@ -473,18 +473,18 @@
 % that only one environment layout can be active at a time.
 %
 % By default, environment contents are typeset in bold characters, just like
-% inline \fixme notes. This environment layout is named\ldots \texttt{bold},
+% inline \fx notes. This environment layout is named\ldots \texttt{bold},
 % so you could achieve the same effect by using something like this:
 % \begin{verbatim}
 % \fxsetup{envlayout=bold}
 % \end{verbatim}
-% There is no other environment layout built in the core of \fixme, so there
+% There is no other environment layout built in the core of \fx, so there
 % is no reason for you to use this option.
 %
-% \subsection{Controlling the layout of \fixme textual targets}
+% \subsection{Controlling the layout of \fx textual targets}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
-% versions of the \fixme note insertion commands and environments let you
-% highlight a portion of text which is relevant to the current \fixme note.
+% versions of the \fx note insertion commands and environments let you
+% highlight a portion of text which is relevant to the current \fx note.
 % The exact way this textual target is typeset (in draft mode only; otherwise
 % it is typeset as-is) is subject to a layout of its own, called the ``target
 % layout''.
@@ -501,11 +501,11 @@
 % \begin{verbatim}
 % \usepackage[targetlayout=italics]{fixme}
 % \end{verbatim}
-% There is no other target layout built in the core of \fixme, so there
+% There is no other target layout built in the core of \fx, so there
 % is no reason for you to use this option.
 %
-% \subsection{Controlling the logging of \fixme}
-% As well as being displayed in the document itself, all \fixme notes are
+% \subsection{Controlling the logging of \fx}
+% As well as being displayed in the document itself, all \fx notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
 % log file while the others are also displayed on the terminal output during
 % compilation.\par
@@ -519,7 +519,7 @@
 % \texttt{silent=true}, and \texttt{nosilent}, equivalent to
 % \texttt{silent=false} (the default).
 %
-% \subsection{Controlling the language of \fixme\label{sec:manual:i18n}}
+% \subsection{Controlling the language of \fx\label{sec:manual:i18n}}
 % \subsubsection{Available languages}
 % \DescribeOption{english}
 % \DescribeOption{french}
@@ -530,7 +530,7 @@
 % \DescribeOption{ngerman}
 % \DescribeOption{danish}
 % \DescribeOption{croatian}
-% \fixme currently supports English (the default), French, Spanish, Italian,
+% \fx currently supports English (the default), French, Spanish, Italian,
 % German, Danish and Croatian. You can select your preferred language by using
 % the corresponding language option. These options usually appear in the call
 % to \cs{documentclass} or \cs{usepackage}, but they are also understood by
@@ -541,7 +541,7 @@
 % currently equivalent.
 %
 % \DescribeOption{lang}
-% If you're manipulating language settings at the level of \fixme itself (as
+% If you're manipulating language settings at the level of \fx itself (as
 % opposed to the \cs{documentclass} level), then the preferred way to specify
 % a language is to use the \texttt{lang} option, and give it the language name
 % as a value. For instance:
@@ -552,17 +552,17 @@
 % \subsubsection{Language tracking}
 % \DescribeOption{langtrack}
 % If the document you're working on has parts written in different languages,
-% it might be the case that \fixme notes should follow the current language as
+% it might be the case that \fx notes should follow the current language as
 % well (especially if you're in collaborative mode; see section
-% \sectionref{sec:manual:modes}). As of version 4, \fixme provides a boolean
-% option named \texttt{langtrack}. When specified, \fixme assumes that you're
+% \sectionref{sec:manual:modes}). As of version 4, \fx provides a boolean
+% option named \texttt{langtrack}. When specified, \fx assumes that you're
 % using \texttt{babel} and automatically switches to the current language (as
 % specified by \texttt{babel}'s \cs{languagename} command), without requiring
 % an explicit language option.
 %
 % \DescribeOption{defaultlang}
-% In the case where tracking falls on a language unsupported by \fixme, a
-% warning will be issued and \fixme will switch to the language specified by
+% In the case where tracking falls on a language unsupported by \fx, a
+% warning will be issued and \fx will switch to the language specified by
 % the \texttt{defaultlang} option (\texttt{english} by default). If you happen
 % to get one of these warnings, please consider sending me a patch with
 % support for this new language (see section \sectionref{sec:code:i18n}).
@@ -572,41 +572,41 @@
 % precedence over the language tracking behavior.
 %
 % \subsubsection{Indexing in different languages}
-% If your document contains \fixme notes written in different languages, and
-% you have requested the \texttt{index} layout, \fixme will not only classify
+% If your document contains \fx notes written in different languages, and
+% you have requested the \texttt{index} layout, \fx will not only classify
 % the notes by their level of importance, but also by language. For example,
-% if you have \fixme warnings in both English and French, you will find two
+% if you have \fx warnings in both English and French, you will find two
 % different subcategories for warnings in the index: one called ``Warnings''
 % and one called ``Avertissements''.
 %
 % \subsection{Standalone or collaborative mode\label{sec:manual:modes}}
-% As of version 4, \fixme supports collaborative annotations as well as
+% As of version 4, \fx supports collaborative annotations as well as
 % ``standalone'', single-author documents.
 % \subsubsection{Standalone mode}
-% By default, \fixme is in standalone mode, meaning that it assumes there is
+% By default, \fx is in standalone mode, meaning that it assumes there is
 % only one person annotating the document. This has several implications on
 % the layout. If you've tried it already, you may have noticed the following
 % points.
 % \begin{itemize}
-% \item All the built-in layout forms (index excepted) put the \fixme logo in
-%   front of every note. This is also true for \fixme environments. The idea
-%   is to distinguish \fixme contents from the rest of the document (for
+% \item All the built-in layout forms (index excepted) put the \fx logo in
+%   front of every note. This is also true for \fx environments. The idea
+%   is to distinguish \fx contents from the rest of the document (for
 %   instance other marginal notes or other footnotes).
-% \item All notes are indexed under the main \fixme category, and sorted by
-%   importance level, but the \fixme logo is not repeated at every note (that
+% \item All notes are indexed under the main \fx category, and sorted by
+%   importance level, but the \fx logo is not repeated at every note (that
 %   would be useless).
 % \item Similarly, the list of fixmes does not clutter itself with the logo,
-% because we already know that its contents is specific to \fixme.
+% because we already know that its contents is specific to \fx.
 % \end{itemize}
-% As a matter of fact, when you see the \fixme logo appear somewhere, you're
+% As a matter of fact, when you see the \fx logo appear somewhere, you're
 % not actually contemplating it, but rather the note's \emph{author}. It just
 % happens that by default (meaning in standalone mode), the only note author
-% is \fixme itself.
+% is \fx itself.
 %
 % \DescribeOption{author}
-% In standalone mode, you might be annoyed by this orgy of \fixme logos. This
+% In standalone mode, you might be annoyed by this orgy of \fx logos. This
 % might happen if for instance you're using the \texttt{margin} layout and you
-% \emph{know} there is nothing but \fixme notes in there. In such a case, you
+% \emph{know} there is nothing but \fx notes in there. In such a case, you
 % will most likely want to change the notes author to \emph{nothing}. This can
 % be acomplished by using the \texttt{author} option, which is understood by
 % the package itself, the \cs{fxsetup} command and all the note insertion
@@ -627,12 +627,12 @@
 % And suddenly, John's fatal note will be prefixed with his initials. This is
 % not a very satisfactory solution however, because it would require you to
 % explicitely provide the author's tag in every single note you create.
-% Fortunately, \fixme offers an easier way to achieve this.
+% Fortunately, \fx offers an easier way to achieve this.
 %
 % \subsubsubsection{Registering new authors}
 % \noindent\DescribeMacro{\FXRegisterAuthor}
 % \marg{cmdprefix}\marg{envprefix}\marg{tag}\\
-% The command \cs{FXRegisterAuthor} registers a new author with \fixme. It
+% The command \cs{FXRegisterAuthor} registers a new author with \fx. It
 % takes three arguments: the last one (\meta{tag}) is just the same as the
 % value you would pass to the \texttt{author} option: it will serve as a
 % prefix for John's notes. In addition to that, a complete new set of
@@ -646,7 +646,7 @@
 % their starred versions, and he can also use the environments
 % \texttt{ajdnote}, \texttt{ajdwarning} \etc, along with their starred
 % versions as well. If you really want to know the whole story, it turns out
-% that the main \fixme interface described in section
+% that the main \fx interface described in section
 % \sectionref{sec:manual:insertion} is created with this single line of code:
 % \begin{verbatim}
 % \FXRegisterAuthor{fx}{anfx}{fixme}
@@ -654,7 +654,7 @@
 %
 % \paragraph{Fun with the \texttt{author} option}
 % Some precisions about the author option are in order here. When a new
-% author is registered with \fixme, the generated commands and environments
+% author is registered with \fx, the generated commands and environments
 % work by \emph{presetting} the author option to the specified \meta{tag}.
 % This means that it is still possible to override it explicitely like this:
 % \begin{verbatim}
@@ -669,20 +669,20 @@
 % \cs{usepackage} or \cs{fxsetup}). The intended use of this is that the
 % \emph{main} author of the document uses the \texttt{fx*} interface
 % (preferably with a personal \texttt{author} setting, different from the
-% \fixme logo), and all other authors are registered via
+% \fx logo), and all other authors are registered via
 % \cs{FXRegisterAuthor}.
 %
 % \paragraph{Globally switching to collaborative mode}
 % We're getting close, but we're not quite there yet. Perhaps you would like
 % to see the tags from the different authors in the list of fixmes, or even in
-% the index? Remember that \fixme is in standalone mode by default, so the
+% the index? Remember that \fx is in standalone mode by default, so the
 % (only) tag does not appear in those places.
 %
 % \noindent
 % \DescribeOption{singleuser}
 % \DescribeOption{multiuser}
 % \DescribeOption{mode}
-% If you want this additional information, you've got to ask \fixme to
+% If you want this additional information, you've got to ask \fx to
 % globally switch to collaborative mode. This can be done with either one of
 % the three options \texttt{singleuser}, \texttt{mutliuser} or \texttt{mode}.
 % \texttt{singleuser} and \texttt{multiuser} are boolean options. The
@@ -691,15 +691,15 @@
 % options are understood globally by \cs{usepackage} or \cs{fxsetup}, and also
 % locally by the note insertion commands or environments.
 %
-% When collaborative mode is active, \fixme adjusts the list of fixmes layout
-% to display the authors tags as well. Additionally, \fixme notes are indexed
+% When collaborative mode is active, \fx adjusts the list of fixmes layout
+% to display the authors tags as well. Additionally, \fx notes are indexed
 % as before, but additional index entries, sorted by author, and generated as
 % well.
 %
-% \section{Customizing \fixme}
-% \subsection{Customizing the \fixme notes layout}
+% \section{Customizing \fx}
+% \subsection{Customizing the \fx notes layout}
 % \subsubsection{Commands}
-% The actual typesetting of \fixme notes is done by the commands described
+% The actual typesetting of \fx notes is done by the commands described
 % below. If you want to change their behavior, you can \cs{renewcommand}
 % them.\\
 % \DescribeMacro{\FXLayoutInline}
@@ -708,8 +708,8 @@
 % \marg{prefix}\marg{note}\\
 % The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
 % parts: a ``prefix'' which depends on the note level, and the note itself.
-% By default, the prefix is one of ``\fixme note:'', ``\fixme warning:'',
-% ``\fixme error:''  or simply ``\fixme:'', and appears in bold. The note
+% By default, the prefix is one of ``\fx note:'', ``\fx warning:'',
+% ``\fx error:''  or simply ``\fx:'', and appears in bold. The note
 % itself appears emphasized.\\
 % \DescribeMacro{\FXayoutMarginCLue}
 % \marg{prefix}\\
@@ -717,27 +717,27 @@
 % above.\\
 % \DescribeMacro{\FXLayoutIndex}
 % \marg{note}\\
-% All \fixme index entries appear under the ``\fixme'' key in the symbols
+% All \fx index entries appear under the ``\fx'' key in the symbols
 % section. There are 4 subcategories under this key, as many as there are note
 % levels. By default, only the first 3 of them are used though (fatal errors
-% do not appear under a subkey, but directly under the \fixme key). The notes
+% do not appear under a subkey, but directly under the \fx key). The notes
 % are numbered in the index.\par
 %
 % \subsubsection{Environments}
-% The actual typesetting of \fixme environments is done by the commands
+% The actual typesetting of \fx environments is done by the commands
 % described below. If you want to change their behavior, you can
 % \cs{renewcommand} them.\\
 % \DescribeMacro{\FXEnvBegin}
 % \marg{prefix}\\
-% Remember that a \fixme environment's summary is typeset by the corresponding
-% layout command, as describe above. By default, \fixme uses a
+% Remember that a \fx environment's summary is typeset by the corresponding
+% layout command, as describe above. By default, \fx uses a
 % \texttt{quotation} environment to typeset the longer note, and the prefix
 % appears in bold.\\
 % \DescribeMacro{\FXEnvEnd}
 % This command closes the \texttt{quotation} by default.
 %
-% \subsection{Customizing the \fixme notes logging}
-% The actual logging of \fixme notes is done by the commands described
+% \subsection{Customizing the \fx notes logging}
+% The actual logging of \fx notes is done by the commands described
 % below. If you want to change their behavior, you can \cs{renewcommand}
 % them.\\
 % \DescribeMacro{\FXLogNote}
@@ -749,9 +749,9 @@
 % also appear on the terminal during compilation.
 %
 % \subsection{Internationalization}
-% \fixme's language options have been described in section
+% \fx's language options have been described in section
 % \sectionref{sec:manual:i18n}. If you want a finer grain on the
-% language-dependent parts of \fixme, the following commands are provided and
+% language-dependent parts of \fx, the following commands are provided and
 % can be renewed.\par
 % \DescribeMacro{\fxnotename}
 % \DescribeMacro{\fxwarningname}
@@ -765,11 +765,11 @@
 % \DescribeMacro{\fxwarningindexname}
 % \DescribeMacro{\fxerrorindexname}
 % \DescribeMacro{\fxfatalindexname}
-% The command \cs{fixmeindexname} defines the main \fixme index key. The other
+% The command \cs{fixmeindexname} defines the main \fx index key. The other
 % ones define the different index subkeys for each note level. Please note that
 % an empty name for a subkey means that you don't actually want a subcategory
 % (that's the case by default for fatal errors). The corresponding notes will
-% then appear directly under the main \fixme key. For that reason, a non
+% then appear directly under the main \fx key. For that reason, a non
 % empty subkey must end with an exclamation mark.\par
 % \DescribeMacro{\listfixmename}
 % \cs{listfixmename} defines the title for the ``list of fixmes'' section.
@@ -777,7 +777,7 @@
 % \section{\auctex support}
 % \auctex is a powerful major mode for editing \TeX{} documents in
 % \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
-% completion of command names once they are known. \fixme supports \auctex
+% completion of command names once they are known. \fx supports \auctex
 % by providing a style file named \texttt{fixme.el} which contains \auctex
 % definitions for the relevant commands. This file should be installed in a
 % place where \auctex can find it (usually in a subdirectory of your
@@ -836,20 +836,20 @@
 %   conflicts with Babel in Spanish environments.\\
 %   Fix bug reported by Knut Lickert: index entries were unconditionally built.
 % \item[v2.0] New feature: note levels.\\
-%   New feature: \fixme note counters and usage summary.\\
+%   New feature: \fx note counters and usage summary.\\
 %   Suggestions from Kasper B. Graversen |<kbg@dkik.dk>|.\\
 %   Support for Spanish thanks to Agust\'in Mart\'in |<agusmba@terra.es>|
 % \item[v1.5] New appearance option: \texttt{inline}.
 % \item[v1.4] Support for the \komascript classes.\\
 %   Fix bug reported by Ulf Jaenicke-Roessler: the \cs{listoffixmes} command
-%   didn't work when called before the first \fixme note.
+%   didn't work when called before the first \fx note.
 % \item[v1.3] Support for Italian thanks to Riccardo Murri
 %   |<murri@phc.unipi.it>|.
 % \item[v1.2] Support for German thanks to Harald Harders
 %   |<h.harders@tu-bs.de>|.
 % \end{itemize}
 %
-% \StopEventually{\par Well, I think that's it. Enjoy using \fixme!
+% \StopEventually{\par Well, I think that's it. Enjoy using \fx!
 %   \vfill\hfill\small \packagecopyright{}.}
 %
 % \section{Implementation}
@@ -868,7 +868,7 @@
 
 %    \end{macrocode}
 % \begin{macro}{\fixmelogo}
-%   The \fixme logo:
+%   The \fx logo:
 %    \begin{macrocode}
 \newcommand\fixmelogo{\textsf{FiXme}}
 
@@ -880,7 +880,7 @@
 % \begin{macro}{\@fxpkginfo}
 %   \begin{macro}{\@fxpkgwarning}
 %     \marg{msg}\\
-%     Issue a \fixme package info or warning:
+%     Issue a \fx package info or warning:
 %    \begin{macrocode}
 \newcommand\@fxpkginfo{\PackageInfo{FiXme}}
 \newcommand\@fxpkgwarning{\PackageWarning{FiXme}}
@@ -889,7 +889,7 @@
 % \end{macro}
 % \begin{macro}{\@fxpkgerror}
 %   \marg{shortmsg}\marg{longmsg}\\
-%   Issue a \fixme package error:
+%   Issue a \fx package error:
 %    \begin{macrocode}
 \newcommand\@fxpkgerror{\PackageError{FiXme}}
 
@@ -911,7 +911,7 @@
 % \end{macro}
 % \begin{macro}{\@fxvoidkeyerror}
 %   \marg{key}\marg{value}\\
-%   Issue a \fixme error about a void key misuse (see below):
+%   Issue a \fx error about a void key misuse (see below):
 %    \begin{macrocode}
 \newcommand*\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
@@ -922,7 +922,7 @@
 % \end{macro}
 % \begin{macro}{\@fxdefinevoidkey}
 %   \marg{family}\marg{name}\marg{func}\\
-%   A \fixme ``void key'' is an \texttt{xkeyval} key that doesn't expect any
+%   A \fx ``void key'' is an \texttt{xkeyval} key that doesn't expect any
 %   argument.
 %    \begin{macrocode}
 \newcommand*\@fxdefinevoidkey[3]{%
@@ -935,7 +935,7 @@
 % \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
 %   \oarg{func}\marg{family}\marg{name}\\
-%   A \fixme ``boolean key'' is like an \texttt{xkeyval} one, with the
+%   A \fx ``boolean key'' is like an \texttt{xkeyval} one, with the
 %   addition that for every such \texttt{key}, there is a \texttt{nokey} void
 %   key counterpart.
 %    \begin{macrocode}
@@ -1178,11 +1178,11 @@
 % \begin{macro}{\lox@final}
 %   \begin{macro}{\lox@draft}
 %     In order to prevent the List of Fixme's heading from being generated
-%     when there are no \fixme notes, a test on the existence of the
+%     when there are no \fx notes, a test on the existence of the
 %     \texttt{lox} file is performed. There's a slight bug left however:
 %     after removing the last fixme note, one ends up with an empty
 %     \texttt{lox} file, so the heading still appears. Previously, this
-%     was done by checking if some \fixme notes were given, but that was
+%     was done by checking if some \fx notes were given, but that was
 %     buggy: the List of Fixme's could not appear before the first fixme
 %     note\ldots I should try to detect whether the file is empty.
 %    \begin{macrocode}
@@ -1210,7 +1210,7 @@
 % \begin{option}{multiuser}
 %   \begin{option}{singleuser}
 %     \begin{option}{mode}
-%       These options specify whether \fixme should function in standalone or
+%       These options specify whether \fx should function in standalone or
 %       collaborative mode, allowing the different layouts to tweak their
 %       output.
 %    \begin{macrocode}
@@ -1252,7 +1252,7 @@
 % \end{macro}
 % \begin{macro}{\FXRegisterLayout}
 %   \oarg{boolfunc}\marg{name}\marg{funcname}\\
-%   Register a new layout with \fixme. This currently involves creating the
+%   Register a new layout with \fx. This currently involves creating the
 %   boolean layout option with an optional function argument, \cs{let}'ing the
 %   translation macro to the actual layout macro, and updating the layout
 %   list.
@@ -1382,7 +1382,7 @@
 %   \begin{macro}{\@fxwarningkey}
 %     \begin{macro}{\@fxerrorkey}
 %       \begin{macro}{\@fxfatalkey}
-%         The keys used to sort indexed \fixme notes by importance level:
+%         The keys used to sort indexed \fx notes by importance level:
 %    \begin{macrocode}
 \newcommand\@fxnotekey{***a}
 \newcommand\@fxwarningkey{***b}
@@ -1475,7 +1475,7 @@
 % \subsubsection{Environment layout creation}
 % \begin{macro}{\FXRegisterEnvLayout}
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
-%   Register a new environment layout with \fixme. This currently only
+%   Register a new environment layout with \fx. This currently only
 %   involves constructing the translation macros.
 %    \begin{macrocode}
 \newcommand*\FXRegisterEnvLayout[3]{%
@@ -1536,7 +1536,7 @@
 % \subsubsection{Target layout creation}
 % \begin{macro}{\FXRegisterTargetLayout}
 %   \marg{name}\marg{funcname}\\
-%   Register a new target layout with \fixme. This currently only involves
+%   Register a new target layout with \fx. This currently only involves
 %   constructing the translation macro.
 %    \begin{macrocode}
 \newcommand*\FXRegisterTargetLayout[2]{%
@@ -1651,7 +1651,7 @@
 % \subsubsection{Logging control}
 % \begin{option}{silent}
 %   \begin{option}{nosilent}
-%     Whether to log \fixme notes:
+%     Whether to log \fx notes:
 %    \begin{macrocode}
 \@fxdefineboolkey{log}{silent}
 
@@ -1659,7 +1659,7 @@
 %   \end{option}
 % \end{option}
 %
-% \subsection{\fixme notes}
+% \subsection{\fx notes}
 % \subsubsection{Note parameters}
 % \begin{counter}{fixmecount}
 %   \texttt{fixmecount} maintains the total of all notes, regardless of their
@@ -1726,14 +1726,14 @@
 %   \end{macro}
 % \end{counter}
 % \begin{option}{author}
-%   A \fixme note's ``author'' allows to distinguish notes from different
+%   A \fx note's ``author'' allows to distinguish notes from different
 %   persons in collaborative mode.
 %    \begin{macrocode}
 \@fxdefinecmdkey{note}{author}{}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{target}
-%   A \fixme note's ``target'' may replace the page number in the list of
+%   A \fx note's ``target'' may replace the page number in the list of
 %   fixmes or in the index (see also section
 %   \sectionref{sec:code:contentslinelayout}).
 %    \begin{macrocode}
@@ -1914,8 +1914,8 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{\fixme environments}
-% A \fixme environment's summary is laid out by the corresponding macro, but
+% \subsection{\fx environments}
+% A \fx environment's summary is laid out by the corresponding macro, but
 % the \texttt{inline} layout is disabled. This is as easy as appending
 % \texttt{noinline} to the end of the options list.
 % \subsubsection{Status-dependent implementation}
@@ -2027,7 +2027,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{\fixme authors}
+% \subsection{\fx authors}
 % \begin{macro}{\FXRegisterAuthor}
 %   \marg{cmdprefix}\marg{envprefix}\marg{name}\\
 %   This macro creates the whole user-level interface for a particular author:
@@ -2076,7 +2076,7 @@
 %                               \begin{environment}{anfxwarning*}
 %                                 \begin{environment}{anfxerror*}
 %                                   \begin{environment}{anfxfatal*}
-%     And we use it to create the \fixme default user:
+%     And we use it to create the \fx default user:
 %    \begin{macrocode}
 \FXRegisterAuthor{fx}{anfx}{fixme}
 %    \end{macrocode}
@@ -2359,7 +2359,7 @@
 % \end{macro}
 %
 % \subsubsection{Options Processing}
-% First, we execute some options to initialize \fixme to something sensible,
+% First, we execute some options to initialize \fx to something sensible,
 % and then we process the user ones.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>{%
@@ -2391,7 +2391,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{\fixme summary}
+% \subsubsection{\fx summary}
 % Finally, output a summary giving the number of fixme notes at the end of the
 % compilation:
 %    \begin{macrocode}
