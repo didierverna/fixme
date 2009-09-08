@@ -673,6 +673,25 @@
 % \fixme logo), and all other authors are registered via
 % \cs{FXRegisterAuthor}.
 %
+% \paragraph{Globally switching to collaborative mode}
+% We're getting close, but we're not quite there yet. Perhaps you would like
+% to see the tags from the different authors in the list of fixmes, or even in
+% the index? Remember that \fixme is in standalone mode by default, so the
+% (only) tag does not appear in those places.
+%
+% \noindent
+% \DescribeOption{singleuser}
+% \DescribeOption{multiuser}
+% \DescribeOption{mode}
+% If you want this additional information, you've got to ask \fixme to
+% globally switch to collaborative mode. This can be done with either one of
+% the three options \texttt{singleuser}, \texttt{mutliuser} or \texttt{mode}.
+% \texttt{singleuser} and \texttt{multiuser} are boolean options. The
+% \texttt{mode} option takes a value of either \texttt{singleuser} or
+% \texttt{multiuser}. This is the preferred way to switch the mode. These
+% options are understood globally by \cs{usepackage} or \cs{fxsetup}, and also
+% locally by the note insertion commands or environments.
+%
 % \section{Customizing \fixme}
 % \subsection{Customizing the \fixme notes layout}
 % \subsubsection{Commands}
