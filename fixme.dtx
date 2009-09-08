@@ -2314,6 +2314,28 @@
 %   \end{macro}
 % \end{macro}
 %
+% \subsection{Themes support}
+% \begin{macro}{\@fxloadtheme}
+%   \marg{name}\\
+%   Require the package named \texttt{fxtheme}\meta{name}:
+%    \begin{macrocode}
+\newcommand*\@fxloadtheme[1]{\RequirePackage{fxtheme#1}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{option}{theme}
+%   Because themes are implemented as style files, loading a theme can only be
+%   done via \cs{fxsetup}: it is not possible to load a theme directly in
+%   \cs{usepackage} (because \LaTeX{} doesn't like \cs{RequirePackage} in the
+%   middle of options processing), neither during a user-level interface call,
+%   probably for the same reason. I could change this, but I don't think it's
+%   worth it because people will want to load only one theme at a time anyway.
+%    \begin{macrocode}
+\@fxdefinekey{theme}{theme}{\@fxloadtheme{#1}}
+
+%    \end{macrocode}
+% \end{option}
+%
 % \subsection{Finale}
 % \subsubsection{Class-dependent settings}
 % Currently, our class dependencies only matter in draft mode, so one could
@@ -2367,7 +2389,8 @@
 %
 % \subsubsection{Options Processing}
 % First, we execute some options to initialize \fx to something sensible,
-% and then we process the user ones.
+% and then we process the user ones. Note the abscence of the \texttt{theme}
+% family here.
 %    \begin{macrocode}
 \ExecuteOptionsX[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>{%
   mode=singleuser,%
@@ -2390,10 +2413,12 @@
 % \begin{macro}{\fxsetup}
 %   \marg{options}\\
 %   The inevitable setup macro, extremely impressive yet as trivial as can be
-%   with the \texttt{xkeyval} package\ldots
+%   with the \texttt{xkeyval} package\ldots \cs{fxsetup} is the only place
+%   where the \texttt{theme} family is processed.
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{%
-  \@fxsetkeys{mode,status,lang,log,note,layout,envlayout,targetlayout}{#1}}
+  \@fxsetkeys{mode,status,lang,log,note,%
+    theme,layout,envlayout,targetlayout}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
