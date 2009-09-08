@@ -1254,14 +1254,15 @@
 % \begin{macro}{\FXRegisterLayout}
 %   \oarg{boolfunc}\marg{name}\marg{funcname}\\
 %   Register a new layout with \fx. This currently involves creating the
-%   boolean layout option with an optional function argument, \cs{let}'ing the
-%   translation macro to the actual layout macro, and updating the layout
-%   list.
+%   boolean layout option with an optional function argument, constructing the
+%   translation macro to call the actual layout macro, and updating the layout
+%   list. The translation macro can't be \cs{let} to the real one, because
+%   themes might want to redefine latter.
 %    \begin{macrocode}
 \newcommand*\FXRegisterLayout[3][]{%
   \@fxkeyifundefined{layout}{#2}{%
     \@fxdefineboolkey[#1]{layout}{#2}%
-    \expandafter\let\csname @fxlayout@#2\endcsname#3%
+    \expandafter\def\csname @fxlayout@#2\endcsname{#3}%
     \ifx\@fxlayouts\empty%
       \g@addto@macro\@fxlayouts{#2}%
     \else%
@@ -1475,13 +1476,15 @@
 % \subsubsection{Environment layout creation}
 % \begin{macro}{\FXRegisterEnvLayout}
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
-%   Register a new environment layout with \fx. This currently only
-%   involves constructing the translation macros.
+%   Register a new environment layout with \fx. This currently only involves
+%   constructing the translation macros. The translation macros in question
+%   can't be \cs{let} to the real ones, because themes might want to redefine
+%   latter.
 %    \begin{macrocode}
 \newcommand*\FXRegisterEnvLayout[3]{%
   \@ifundefined{@fxenvlayout@#1@begin}{%
-    \expandafter\let\csname @fxenvlayout@#1@begin\endcsname#2%
-    \expandafter\let\csname @fxenvlayout@#1@end\endcsname#3}{%
+    \expandafter\def\csname @fxenvlayout@#1@begin\endcsname{#2}%
+    \expandafter\def\csname @fxenvlayout@#1@end\endcsname{#3}}{%
     \@fxpkgerror{environment layout '#2' already registered}{%
       You have called \string\FXRegisterEnvLayout\space with a name already in
       use.\MessageBreak
@@ -1537,11 +1540,13 @@
 % \begin{macro}{\FXRegisterTargetLayout}
 %   \marg{name}\marg{funcname}\\
 %   Register a new target layout with \fx. This currently only involves
-%   constructing the translation macro.
+%   constructing the translation macro. The translation macro in question
+%   can't be \cs{let} to the real one, because themes might want to redefine
+%   latter.
 %    \begin{macrocode}
 \newcommand*\FXRegisterTargetLayout[2]{%
   \@ifundefined{@fxtargetlayout@#1}{%
-    \expandafter\let\csname @fxtargetlayout@#1\endcsname#2}{%
+    \expandafter\def\csname @fxtargetlayout@#1\endcsname{#2}}{%
     \@fxpkgerror{target layout '#1' already registered}{%
       You have called \string\FXRegisterTargetLayout\space with a name
       already in use.\MessageBreak
@@ -1635,12 +1640,14 @@
 %         In order for the generic note dispatcher to be able to call the
 %         logging macros (see section \sectionref{sec:code:lowlevelcmd}), we
 %         need an easier translation mechanism from the note type to the
-%         actual macro name.
+%         actual macro name. The translation macros in question can't be
+%         \cs{let} to the real one, because users might want to redefine
+%         the actual log macros later.
 %    \begin{macrocode}
-\let\@fxlog@note\FXLogNote
-\let\@fxlog@warning\FXLogWarning
-\let\@fxlog@error\FXLogError
-\let\@fxlog@fatal\FXLogFatal
+\def\@fxlog@note{\FXLogNote}
+\def\@fxlog@warning{\FXLogWarning}
+\def\@fxlog@error{\FXLogError}
+\def\@fxlog@fatal{\FXLogFatal}
 
 %    \end{macrocode}
 %      \end{macro}
