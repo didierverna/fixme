@@ -2605,6 +2605,19 @@
 %</fxenvlayoutitalics>
 %    \end{macrocode}
 %
+% \subsection{Target Layouts}
+% \subsubsection{The \texttt{bold} target layout}
+%    \begin{macrocode}
+%<*fxtargetlayoutbold>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxtargetlayoutbold}
+
+\newcommand\FXTargetLayoutBold[1]{\begingroup\bfseries#1\endgroup}
+\FXRegisterTargetLayout{bold}{\FXTargetLayoutBold}
+
+%</fxtargetlayoutbold>
+%    \end{macrocode}
+%
 % \section{Additional themes}
 % Here are the predefined themes distributed with \fx.
 % \subsection{The \texttt{signature} theme}
