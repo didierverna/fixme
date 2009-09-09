@@ -95,6 +95,7 @@
 % \newcommand\sectionref[1]{\ref{#1} on page \pageref{#1}}
 %
 % \newcommand\etc{\textit{etc.}\xspace}
+% \newcommand\vs{\textit{vs.}\xspace}
 % \newcommand\ie{\textit{i.e.}\xspace}
 % \newcommand\komascript{\textsc{Koma}-Script\xspace}
 % \newcommand\auctex{AUC-\TeX\xspace}
@@ -489,28 +490,41 @@
 % way this contents is typeset (in draft mode only) is subject to a layout of
 % its own, called the ``environment layout''.
 %
+% \subsubsection{Selecting an environment layout}
 % \DescribeOption{envlayout}
 % The desired environment layout can be selected with the \texttt{envlayout}
-% option. This option is very similar to the \texttt{layout} option discussed
-% in section \sectionref{sec:manual:globallayoutcontrol}, with the difference
-% that only one environment layout can be active at a time.
+% option. Contrary to the note layouts, only one environment layout can be
+% active at a time. The \texttt{envlayout} option is understood by the package
+% itself, the \cs{fxsetup} command and all the note insertion environments
+% (not the commands!). There are some restrictions on its usage however, as
+% discussed in the next section.
 %
-% \fx comes with two predefined environment layouts called \texttt{bold} (the
-% default) and \texttt{italics}. You've probably guessed what they do already.
-% The \texttt{envlayout} option is understood by the package itself, the
-% \cs{fxsetup} macro and all the note insertion environments (not the
-% commands!), with a small gotcha however\ldots
-%
+% \subsubsection{Built-in \vs external layouts}
 % Environments layouts are provided either in the core of \fx, or in separate
-% files loaded dynamically on demand. This is to lighten the pressure of \fx
-% on \TeX's resources. However, for technical reasons, it is not possible to
-% load an external environment layout when \LaTeX{} is processing the
-% \cs{usepackage} options. Because of this, you're strongly encouraged to
-% leave \cs{usepackage} alone and use \cs{fxsetup} instead, like this for
-% example:
-% \begin{verbatim}
-% \fxsetup{envlayout=italics}
-% \end{verbatim}
+% files loaded dynamically on demand. Simple layouts are typically built-in,
+% whereas those requiring additional packages are external, so that they don't
+% consume \TeX{} resources if not used. As a consequence, selecting an
+% external layout with the \texttt{envlayout} option might involve loading the
+% relevant file first.
+%
+% For technical reasons, it is not possible to do such a thing outside the
+% preamble, neither in the middle of processing \cs{usepackage} options. As a
+% result, the \texttt{envlayout} option is restricted and you have two
+% possibilities for using an external layout:
+% \begin{enumerate}
+% \item Use \cs{fxsetup} in the preamble, like this:
+%   |\fxsetup{envlayout=name}|. This will load it \emph{and} select it
+%   immediately.
+% \item \DescribeMacro{\fxuseenvlayout} Use the \cs{fxuseenvlayout} command in
+%   the preamble like this:\\
+%   |\fxuseenvlayout{name}|. This is strictly equivalent to the previous
+%   solution.
+% \item \DescribeMacro{\fxloadenvlayout} If on the other hand you want to load
+%   an environment layout \emph{without} using it immediately (perhaps in
+%   order to use it locally in some \fx notes), use the \cs{fxloadenvlayout}
+%   command in the preamble like this: |\fxloadlayout{name}|. After that, you
+%   can select it anywhere you wish.
+% \end{enumerate}
 %
 % \subsection{Controlling the layout of \fx targets}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
@@ -529,7 +543,7 @@
 % \fx comes with two predefined target layouts called \texttt{italics} (the
 % default) and \texttt{bold}. You've probably guessed what they do already.
 % The \texttt{targetlayout} option is understood by the package itself, the
-% \cs{fxsetup} macro and all the starred note insertion commands and
+% \cs{fxsetup} command and all the starred note insertion commands and
 % environments. The same usage restriction as for the \texttt{envlayout}
 % option applies: it might not be possible to select a target layout in the
 % call to \cs{usepackage} if this layout comes from an external file.
@@ -746,7 +760,7 @@
 % option and give it the name of the theme you want to use.
 %
 % The \texttt{theme} option has one gotcha, though: it can only be used with
-% the \cs{fxsetup} macro. It is not possible to use it in \cs{usepackage},
+% the \cs{fxsetup} command. It is not possible to use it in \cs{usepackage},
 % neither in the note insertion commands or environements. This is no big
 % deal, however, because it is very unlikely that you would want to change the
 % current theme in the middle of your document.
@@ -1586,9 +1600,9 @@
 % \end{macro}
 %
 % \subsubsection{Built-in environment layouts}
-% \subsubsubsection{Quotation}
-% \begin{macro}{\FXEnvLayoutQuotationBegin}
-%   \begin{macro}{\FXEnvLayoutQuotationEnd}
+% \subsubsubsection{Bold}
+% \begin{macro}{\FXEnvLayoutBoldBegin}
+%   \begin{macro}{\FXEnvLayoutBoldEnd}
 %     \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutBoldBegin[2]{%
@@ -1601,26 +1615,17 @@
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsection{Environment layout loading}
-% \begin{macro}{\@fxloadenvlayout}
+% \subsubsection{Environment layout selection}
+% \begin{macro}{\@fxselectenvlayout}
 %   \marg{name}
-%    \begin{macrocode}
-\newcommand*\@fxloadenvlayout[1]{\RequirePackage{fxenvlayout#1}}
-
-%    \end{macrocode}
-% \end{macro}
-%
-% \subsubsection{Environment layout control}
-% \begin{option}{envlayout}
 %   \begin{macro}{\@fxenvlayout@begin}
 %     \begin{macro}{\@fxenvlayout@end}
 %       This is much simpler than standard layout management because only one
 %       environment layout at a time is possible. Using a specific environment
-%       layout boils down to binding the beginning and ending macros to the
-%       proper translation ones.
+%       layout boils down to possibly loading it, and binding the beginning
+%       and ending macros to the proper translation ones.
 %    \begin{macrocode}
-\@fxdefinekey{envlayout}{envlayout}{%
-  \@ifundefined{@fxenvlayout@#1@begin}{\@fxloadenvlayout{#1}}{}%
+\newcommand*\@fxselectenvlayout[1]{%
   \expandafter\let\expandafter\@fxenvlayout@begin%
     \csname @fxenvlayout@#1@begin\endcsname%
   \expandafter\let\expandafter\@fxenvlayout@end%
@@ -1629,6 +1634,31 @@
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
+% \end{macro}
+%
+% \subsubsection{Environment layout loading}
+% \begin{macro}{\fxloadenvlayout}
+%   \begin{macro}{\fxuseenvlayout}
+%     \marg{name}
+%    \begin{macrocode}
+\newcommand*\fxloadenvlayout[1]{\usepackage{fxenvlayout#1}}
+\newcommand*\fxuseenvlayout[1]{%
+  \fxloadenvlayout{#1}%
+  \@fxselectenvlayout{#1}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsection{Environment layout control}
+% \begin{option}{envlayout}
+%    \begin{macrocode}
+\@fxdefinekey{envlayout}{envlayout}{%
+  \@ifundefined{@fxenvlayout@#1@begin}{%
+    \fxuseenvlayout{#1}}{%
+    \@fxselectenvlayout{#1}}}
+
+%    \end{macrocode}
 % \end{option}
 %
 % \subsection{Target Layout}
