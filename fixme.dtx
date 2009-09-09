@@ -489,19 +489,27 @@
 % its own, called the ``environment layout''.
 %
 % \DescribeOption{envlayout}
-% The environment layout can be specified with the \texttt{envlayout} option.
-% This option is very similar to the \texttt{layout} option discussed in
-% section \sectionref{sec:manual:globallayoutcontrol}, with the difference
+% The desired environment layout can be selected with the \texttt{envlayout}
+% option. This option is very similar to the \texttt{layout} option discussed
+% in section \sectionref{sec:manual:globallayoutcontrol}, with the difference
 % that only one environment layout can be active at a time.
 %
-% By default, environment contents are typeset in bold characters, just like
-% inline \fx notes. This environment layout is named\ldots \texttt{bold},
-% so you could achieve the same effect by using something like this:
+% \fx comes with two predefined environment layouts called \texttt{bold} (the
+% default) and \texttt{italics}. You've probably guessed what they do already.
+% The \texttt{envlayout} option is understood by the package itself, the
+% \cs{fxsetup} macro and all the note insertion environments (not the
+% commands!), with a small gotcha however\ldots
+%
+% Environments layouts are provided either in the core of \fx, or in separate
+% files loaded dynamically on demand. This is to lighten the pressure of \fx
+% on \TeX's resources. However, for technical reasons, it is not possible to
+% load an external environment layout when \LaTeX{} is processing the
+% \cs{usepackage} options. Because of this, you're strongly encouraged to
+% leave \cs{usepackage} alone and use \cs{fxsetup} instead, like this for
+% example:
 % \begin{verbatim}
-% \fxsetup{envlayout=bold}
+% \fxsetup{envlayout=italics}
 % \end{verbatim}
-% There is no other environment layout built in the core of \fx, so there
-% is no reason for you to use this option.
 %
 % \subsection{Controlling the layout of \fx targets}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
@@ -1593,6 +1601,14 @@
 %   \end{macro}
 % \end{macro}
 %
+% \subsubsection{Environment layout loading}
+% \begin{macro}{loadenvlayout}
+%   \marg{name}
+%    \begin{macrocode}
+\newcommand*\@fxloadenvlayout[1]{\RequirePackage{fxenvlayout#1}}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{Environment layout control}
 % \begin{option}{envlayout}
 %   \begin{macro}{\@fxenvlayout@begin}
@@ -1603,10 +1619,7 @@
 %       proper translation ones.
 %    \begin{macrocode}
 \@fxdefinekey{envlayout}{envlayout}{%
-  \@ifundefined{@fxenvlayout@#1@begin}{%
-    \@fxpkgerror{no environment layout named '#1'}{%
-      You have requested an environment layout named '#1',\MessageBreak
-      but no such layout seem to be registered with FiXme.}}{}%
+  \@ifundefined{@fxenvlayout@#1@begin}{\@fxloadenvlayout{#1}}{}%
   \expandafter\let\expandafter\@fxenvlayout@begin%
     \csname @fxenvlayout@#1@begin\endcsname%
   \expandafter\let\expandafter\@fxenvlayout@end%
@@ -2399,64 +2412,50 @@
 % \subsection{Extrernal layout support}
 % \subsubsection{External layout loading}
 % \begin{macro}{\@fxloadlayout}
-%   \begin{macro}{\@fxloadenvlayout}
-%     \begin{macro}{\@fxloadtargetlayout}
-%   \marg{name}\\
-%   These macros implement the loading of the different layouts.
+%   \begin{macro}{\@fxloadtargetlayout}
+%     \marg{name}\\
+%     These macros implement the loading of the different layouts.
 %    \begin{macrocode}
 \newcommand*\@fxloadlayout[1]{\RequirePackage{fxlayout#1}}
-\newcommand*\@fxloadenvlayout[1]{\RequirePackage{fxenvlayout#1}}
 \newcommand*\@fxloadtargetlayout[1]{\RequirePackage{fxtargetlayout#1}}
 
 %    \end{macrocode}
-%     \end{macro}
 %   \end{macro}
 % \end{macro}
 % \subsubsection{External layout activation}
 % \begin{macro}{\@fxuselayout}
-%   \begin{macro}{\@fxuseenvlayout}
-%     \begin{macro}{\@fxusetargetlayout}
-%   \marg{name}\\
-%   These macros load and activate the different layouts.
+%   \begin{macro}{\@fxusetargetlayout}
+%     \marg{name}\\
+%     These macros load and activate the different layouts.
 %    \begin{macrocode}
 \newcommand*\@fxuselayout[1]{%
   \@fxloadlayout{#1}%
   \@fxsetlayoutkeys{#1=true}}
-\newcommand*\@fxuseenvlayout[1]{%
-  \@fxloadenvlayout{#1}%
-  \@fxsetkeys{envlayout}{envlayout=#1}}
 \newcommand*\@fxusetargetlayout[1]{%
   \@fxloadtargetlayout{#1}%
   \@fxsetkeys{targetlayout}{targetlayout=#1}}
 
 %    \end{macrocode}
-%     \end{macro}
 %   \end{macro}
 % \end{macro}
 %
 % \subsubsection{External layout options}
 % \begin{option}{loadlayout}
-%   \begin{option}{loadenvlayout}
-%     \begin{option}{loadtargetlayout}
-%       The layout loading options:
+%   \begin{option}{loadtargetlayout}
+%     The layout loading options:
 %    \begin{macrocode}
 \@fxdefinekey{layout}{loadlayout}{\@fxloadlayout{#1}}
-\@fxdefinekey{envlayout}{loadenvlayout}{\@fxloadenvlayout{#1}}
 \@fxdefinekey{targetlayout}{loadtargetlayout}{\@fxloadtargetlayout{#1}}
 %    \end{macrocode}
-%     \end{option}
 %   \end{option}
 % \end{option}
 % \begin{option}{uselayout}
-%   \begin{option}{useenvlayout}
-%     \begin{option}{usetargetlayout}
-%       The layout activation options:
+%   \begin{option}{usetargetlayout}
+%     The layout activation options:
 %    \begin{macrocode}
 \@fxdefinekey{layout}{uselayout}{\@fxuselayout{#1}}
-\@fxdefinekey{envlayout}{useenvlayout}{\@fxuseenvlayout{#1}}
 \@fxdefinekey{targetlayout}{usetargetlayout}{\@fxusetargetlayout{#1}}
 %    \end{macrocode}
-%     \end{option}
 %   \end{option}
 % \end{option}
 %
