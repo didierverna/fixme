@@ -721,16 +721,21 @@
 % \subsection{Themes}
 % \fx 4.0 comes with support for themes. Themes are a way to modify the
 % built-in layout capabilities of \fx, or even supply new ones. Themes do not
-% belong to the core of \fx because I want the core to be as portable across
-% \LaTeX{} distributions as possible, so \fx itself does not rely on that many
-% other packages. Themes, on the other hand, might rely heavily on third-party
-% libraries to provide their functionality.
+% belong to the core of \fx for two reasons.
+% \begin{enumerate}
+% \item I want the core to be as portable across \LaTeX{} distributions as
+%   possible, so \fx itself does not rely on that many other packages. Themes,
+%   on the other hand, might rely heavily on third-party libraries to provide
+%   their functionality.
+% \item Keeping themes outside of the core means that only the one you want to
+%   use is loaded, effectively lightening the weight of \fx on \TeX's
+%   resources.
+% \end{enumerate}
 %
+% \subsubsection{Using themes}
 % \DescribeOption{theme}
 % The interface for using a theme is quite simple: use the \texttt{theme}
-% option and give it the name of the theme you want to use. There are a number
-% of themes provided in the distribution of \fx. See appendix
-% \sectionref{sec:code:themes} for a list of them.
+% option and give it the name of the theme you want to use.
 %
 % The \texttt{theme} option has one gotcha, though: it can only be used with
 % the \cs{fxsetup} macro. It is not possible to use it in \cs{usepackage},
@@ -746,6 +751,25 @@
 % \FXRegisterAuthor{jd}{ajd}{JD}
 % %% etc.
 % \end{verbatim}
+%
+% \subsubsection{Themes list}
+% \fx comes with a number of predefine themes listed below.
+% \begin{description}
+%   \renewcommand\descriptionlabel[1]{\hspace{\labelsep}\texttt{#1}}
+% \item[signature] This theme overrides the existing layouts to display the
+%   author tags as a signature (\ie at the end of the notes) instead of as a
+%   prefix.
+% \item[color]
+%   \DescribeColor{fxnote}
+%   \DescribeColor{fxwarning}
+%   \DescribeColor{fxerror}
+%   \DescribeColor{fxfatal}
+%   This theme overrides the existing layouts to use different
+%   colors for the different note levels. As a consequence, it also avoids
+%   printing the note names. The colors used to display the notes are named
+%   \texttt{fxnote}, \texttt{fxwarning}, \texttt{fxerror} and
+%   \texttt{fxfatal}. You can redefine them if you whish.
+% \end{description}
 %
 % \section{Customizing \fx}
 % \subsection{Customizing the \fx notes layout}
@@ -2500,26 +2524,31 @@
 %
 % \appendix
 % \section{Additional Layouts}
-%
-% \section{Additional themes\label{sec:code:themes}}
-% \subsection{The ``signature'' theme}
-% This theme overrides the existing layouts to display the authors tags as a
-% signature (\ie at the end of the notes) instead of as a prefix.
+% \section{Additional themes}
+% Here are the predefined themes distributed with \fx.
+% \subsection{The \texttt{signature} theme}
 %    \begin{macrocode}
 %<*fxthemesignature>
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{fxthemesignature}
 
 %    \end{macrocode}
-% It seems that \cs{ifthenelse} is fragile: it breaks if used within moving
-% arguments (or somehting like that). So the safe path is to construct the
-% signature first (possibly empty), and to store it in a temporary macro, to
-% be used when needed.
+% \begin{macro}{\@fxdosig}
+%   \marg{author}\\
+%   Use a signature of the form ``-- sig'', unless author is empty.
+%
+%   It seems that \cs{ifthenelse} is fragile: it breaks if used within moving
+%   arguments (or somehting like that). So the safe path is to construct the
+%   signature first (possibly empty), and to store it in a temporary macro, to
+%   be used when needed.
 %    \begin{macrocode}
 \newcommand\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxtempsig{}}{%
     \def\@fxtempsig{ -- \textit{#1}}}}
 
+%    \end{macrocode}
+% \end{macro}
+%    \begin{macrocode}
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
   \footnote{\@nameuse{fx#1name}: #2\@fxtempsig}}
@@ -2562,10 +2591,7 @@
 %</fxthemesignature>
 %    \end{macrocode}
 %
-% \subsection{The ``color theme}
-% This theme overrides the existing layouts to use different colors for the
-% different note levels. As a consequence, it also avoids printing the
-% note names.
+% \subsection{The \texttt{color} theme}
 %    \begin{macrocode}
 %<*fxthemecolor>
 \NeedsTeXFormat{LaTeX2e}
@@ -2573,16 +2599,22 @@
 
 \RequirePackage{color}
 
+%    \end{macrocode}
+% \begin{macro}{\@fxdocolon}
+%   \marg{author}\\
+%   Add a colon after the author tag, unless empty. Same comment as above
+%   about the \texttt{ifthen} package.
+%    \begin{macrocode}
 \newcommand\@fxdocolon[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxcolon{}}{\def\@fxcolon{: }}}
 
 %    \end{macrocode}
+% \end{macro}
 % \begin{color}{fxnote}
 %   \begin{color}{fxwarning}
 %     \begin{color}{fxerror}
 %       \begin{color}{fxfatal}
-%         We provide a color for every note level. The user may call
-%         \cs{definecolor} again to override the default values.
+%         The 4 colors that can be redefined by the user.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
