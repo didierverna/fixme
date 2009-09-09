@@ -17,6 +17,6 @@
 
 TEXMFDIR = ${HOME}/.texmf
 
-DST_EMPTY_DIRS = themes
+DST_EMPTY_DIRS = themes layouts layouts/env layouts/target
 
 ### Makefile.inc ends here

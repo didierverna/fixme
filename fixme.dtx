@@ -2396,6 +2396,70 @@
 %   \end{macro}
 % \end{macro}
 %
+% \subsection{Extrernal layout support}
+% \subsubsection{External layout loading}
+% \begin{macro}{\@fxloadlayout}
+%   \begin{macro}{\@fxloadenvlayout}
+%     \begin{macro}{\@fxloadtargetlayout}
+%   \marg{name}\\
+%   These macros implement the loading of the different layouts.
+%    \begin{macrocode}
+\newcommand*\@fxloadlayout[1]{\RequirePackage{fxlayout#1}}
+\newcommand*\@fxloadenvlayout[1]{\RequirePackage{fxenvlayout#1}}
+\newcommand*\@fxloadtargetlayout[1]{\RequirePackage{fxtargetlayout#1}}
+
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+% \subsubsection{External layout activation}
+% \begin{macro}{\@fxuselayout}
+%   \begin{macro}{\@fxuseenvlayout}
+%     \begin{macro}{\@fxusetargetlayout}
+%   \marg{name}\\
+%   These macros load and activate the different layouts.
+%    \begin{macrocode}
+\newcommand*\@fxuselayout[1]{%
+  \@fxloadlayout{#1}%
+  \@fxsetlayoutkeys{#1=true}}
+\newcommand*\@fxuseenvlayout[1]{%
+  \@fxloadenvlayout{#1}%
+  \@fxsetkeys{envlayout}{envlayout=#1}}
+\newcommand*\@fxusetargetlayout[1]{%
+  \@fxloadtargetlayout{#1}%
+  \@fxsetkeys{targetlayout}{targetlayout=#1}}
+
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsection{External layout options}
+% \begin{option}{loadlayout}
+%   \begin{option}{loadenvlayout}
+%     \begin{option}{loadtargetlayout}
+%       The layout loading options:
+%    \begin{macrocode}
+\@fxdefinekey{layout}{loadlayout}{\@fxloadlayout{#1}}
+\@fxdefinekey{envlayout}{loadenvlayout}{\@fxloadenvlayout{#1}}
+\@fxdefinekey{targetlayout}{loadtargetlayout}{\@fxloadtargetlayout{#1}}
+%    \end{macrocode}
+%     \end{option}
+%   \end{option}
+% \end{option}
+% \begin{option}{uselayout}
+%   \begin{option}{useenvlayout}
+%     \begin{option}{usetargetlayout}
+%       The layout activation options:
+%    \begin{macrocode}
+\@fxdefinekey{layout}{uselayout}{\@fxuselayout{#1}}
+\@fxdefinekey{envlayout}{useenvlayout}{\@fxuseenvlayout{#1}}
+\@fxdefinekey{targetlayout}{usetargetlayout}{\@fxusetargetlayout{#1}}
+%    \end{macrocode}
+%     \end{option}
+%   \end{option}
+% \end{option}
+%
 % \subsection{Themes support}
 % \begin{macro}{\@fxloadtheme}
 %   \marg{name}\\
