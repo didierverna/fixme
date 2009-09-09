@@ -5,7 +5,7 @@
 %% Author:        Didier Verna <didier@lrde.epita.fr>
 %% Maintainer:    Didier Verna <didier@lrde.epita.fr>
 %% Created:       Thu Dec 10 16:04:01 1998
-%% Last Revision: Wed Sep  9 09:17:59 2009
+%% Last Revision: Wed Sep  9 16:33:57 2009
 
 %% This file is part of FiXme.
 
@@ -50,12 +50,17 @@ FiXme consists of the files listed in the file `README'.^^J
 \catcode`\¡=14
 \BaseDirectory{.}
 \DeclareDir{themes}{themes}
+\DeclareDir{layouts}{layouts}
+\DeclareDir{envlayouts}{layouts/env}
+\DeclareDir{targetlayouts}{layouts/target}
 \generate{
   \file{header.inc}{\from{fixme.dtx}{header}}
   \file{fixme.sty}{\from{fixme.dtx}{header,fixme}}}
 \generate{\usedir{themes}
   \file{fxthemesignature.sty}{\from{fixme.dtx}{fxthemesignature}}
   \file{fxthemecolor.sty}{\from{fixme.dtx}{fxthemecolor}}}
+\generate{\usedir{envlayouts}
+  \file{fxenvlayoutitalics.sty}{\from{fixme.dtx}{fxenvlayoutitalics}}}
 
 \Msg{}
 \Msg{,----------}
