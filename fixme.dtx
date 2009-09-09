@@ -2588,6 +2588,23 @@
 %
 % \appendix
 % \section{Additional Layouts}
+% Here are the predefined layouts distributed with \fx.
+%
+% \subsection{Environment layout}
+% \subsubsection{The \texttt{italics} environment layout}
+%    \begin{macrocode}
+%<*fxenvlayoutitalics>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxenvlayoutitalics}
+
+\newcommand*\FXEnvLayoutItalicsBegin[2]{%
+  \itshape\ignorespaces#2 \@nameuse{fx#1name}: \ignorespaces}
+\newcommand*\FXEnvLayoutItalicsEnd[2]{}
+\FXRegisterEnvLayout{italics}{\FXEnvLayoutItalicsBegin}{\FXEnvLayoutItalicsEnd}
+
+%</fxenvlayoutitalics>
+%    \end{macrocode}
+%
 % \section{Additional themes}
 % Here are the predefined themes distributed with \fx.
 % \subsection{The \texttt{signature} theme}
