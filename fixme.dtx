@@ -34,10 +34,21 @@
 \documentclass[a4paper]{ltxdoc}
 \usepackage{xspace}
 \usepackage{docx}
+% #### NOTE: I don't want to \usepackage{fixme} just for getting the file
+% information. So here what I do: generate a header with only the
+% \ProvidesPackage command, and also the \fixmelogo. Then, I \input it so that
+% \GetFileInfo works. However, I need to manually set the current file name
+% and extension that would normally be set by \RequirePackage. Also, note that
+% the call to \GetFileInfo below needs to use the extension of the header,
+% that is inc instead of sty, even the file fixme.inc does not really exist.
+\makeatletter
+  \def\@currname{fixme}
+  \def\@currext{inc}
+\makeatother
+\input{header.inc}
 % \OnlyDescription
 \CodelineIndex
 % \RecordChanges
-\usepackage[silent]{fixme} %% for \GetFileInfo, and the logo
 \begin{document}
 \DocInput{fixme.dtx}
 \end{document}
@@ -47,7 +58,7 @@
 %
 % \catcode`\¡=14
 % ^^A\CheckSum{880}
-% \GetFileInfo{fixme.sty}
+% \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
 %%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
@@ -856,23 +867,28 @@
 % \section{Implementation}
 % \subsection{Preamble}
 %    \begin{macrocode}
-%<*fixme>
-\NeedsTeXFormat{LaTeX2e}
+%<fixme>\NeedsTeXFormat{LaTeX2e}
+%<*header>
 \ProvidesPackage{fixme}[2009/09/08 v4.0 Insert fixme notes in your documents]
 
+%</header>
 %    \end{macrocode}
 % Some required packages:
 %    \begin{macrocode}
+%<*fixme>
 \RequirePackage{ifthen}
 \RequirePackage{verbatim}
 \RequirePackage{xkeyval}[2006/11/18]
 
+%</fixme>
 %    \end{macrocode}
 % \begin{macro}{\fixmelogo}
 %   The \fx logo:
 %    \begin{macrocode}
+%<*header>
 \newcommand\fixmelogo{\textsf{FiXme}}
 
+%</header>
 %    \end{macrocode}
 % \end{macro}
 %
@@ -883,6 +899,7 @@
 %     \marg{msg}\\
 %     Issue a \fx package info or warning:
 %    \begin{macrocode}
+%<*fixme>
 \newcommand\@fxpkginfo{\PackageInfo{FiXme}}
 \newcommand\@fxpkgwarning{\PackageWarning{FiXme}}
 %    \end{macrocode}
