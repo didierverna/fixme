@@ -31,6 +31,8 @@
   \def\PrintOptionName#1{\strut\MacroFont\string#1\ }}{}
 \@ifundefined{PrintCounterName}{%
   \def\PrintCounterName#1{\strut\MacroFont\string#1\ }}{}
+\@ifundefined{PrintColorName}{%
+  \def\PrintColorName#1{\strut\MacroFont\string#1\ }}{}
 
 \def\SpecialMainOptionIndex#1{%
   \@bsphack%
@@ -46,6 +48,14 @@
     #1\actualchar{\string\ttfamily\space#1} (counter)\encapchar main}%
   \special@index{%
     counters:\levelchar#1\actualchar%
+    {\string\ttfamily\space#1}\encapchar main}%
+  \@esphack}
+\def\SpecialMainColorIndex#1{%
+  \@bsphack%
+  \special@index{%
+    #1\actualchar{\string\ttfamily\space#1} (color)\encapchar main}%
+  \special@index{%
+    colors:\levelchar#1\actualchar%
     {\string\ttfamily\space#1}\encapchar main}%
   \@esphack}
 
@@ -90,6 +100,11 @@
   \MakePrivateLetters\m@cro@docx{Option}}
 \let\endoption\endtrivlist
 
+\def\color{\begingroup
+  \catcode`\\12
+  \MakePrivateLetters\m@cro@docx{Color}}
+\let\endcolor\endtrivlist
+
 
 \@ifundefined{PrintDescribeOption}{%
   \def\PrintDescribeOption#1{\strut\MacroFont#1\ }}{}
@@ -118,5 +133,19 @@
 \def\DescribeCounter{%
   \leavevmode\@bsphack\begingroup\MakePrivateLetters
   \Describe@Counter}
+
+\@ifundefined{PrintDescribeColor}{%
+  \def\PrintDescribeColor#1{\strut\MacroFont#1\ }}{}
+\def\SpecialColorIndex#1{\@bsphack
+  \index{#1\actualchar{\protect\ttfamily#1}
+    (color)\encapchar usage}%
+  \index{colors:\levelchar#1\actualchar{\protect\ttfamily#1}\encapchar
+    usage}\@esphack}
+\def\Describe@Color#1{\endgroup
+  \marginpar{\raggedleft\PrintDescribeColor{#1}}%
+  \SpecialColorIndex{#1}\@esphack\ignorespaces}
+\def\DescribeColor{%
+  \leavevmode\@bsphack\begingroup\MakePrivateLetters
+  \Describe@Color}
 
 %%% docx.sty ends here
