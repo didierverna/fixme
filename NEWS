@@ -29,6 +29,8 @@ suggested by Michael Kubovy
 ** Support for alternate layout autoswitch in TeX's inner mode
 suggested by Will Robertson.
 ** Support for automatic language tracking in multilingual documents
+** Support for themes
+** Extended support for user-provided layouts
 ** Support for key=value argument syntax in the whole user interface
 ** New command \fxsetup
 ** Homogenize log and console messages
