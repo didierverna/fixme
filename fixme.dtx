@@ -709,6 +709,35 @@
 % as before, but additional index entries, sorted by author, and generated as
 % well.
 %
+% \subsection{Themes}
+% \fx 4.0 comes with support for themes. Themes are a way to modify the
+% built-in layout capabilities of \fx, or even supply new ones. Themes do not
+% belong to the core of \fx because I want the core to be as portable across
+% \LaTeX{} distributions as possible, so \fx itself does not rely on that many
+% other packages. Themes, on the other hand, might rely heavily on third-party
+% libraries to provide their functionality.
+%
+% \DescribeOption{theme}
+% The interface for using a theme is quite simple: use the \texttt{theme}
+% option and give it the name of the theme you want to use. There are a number
+% of themes provided in the distribution of \fx. See appendix
+% \sectionref{sec:code:themes} for a list of them.
+%
+% The \texttt{theme} option has one gotcha, though: it can only be used with
+% the \cs{fxsetup} macro. It is not possible to use it in \cs{usepackage},
+% neither in the note insertion commands or environements. This is no big
+% deal, however, because it is very unlikely that you would want to change the
+% current theme in the middle of your document.
+%
+% Here's how you would load the \texttt{signature} theme, provided in the
+% distribution:
+% \begin{verbatim}
+% \usepackage{fixme}
+% \fxsetup{theme=signature,author=dvl,multiuser}
+% \FXRegisterAuthor{jd}{ajd}{JD}
+% %% etc.
+% \end{verbatim}
+%
 % \section{Customizing \fx}
 % \subsection{Customizing the \fx notes layout}
 % \subsubsection{Commands}
