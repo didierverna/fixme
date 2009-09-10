@@ -1658,13 +1658,15 @@
 % \end{macro}
 %
 % \subsubsection{Environment layout loading}
-% \begin{macro}{\fxloadenvlayout}
+% \begin{macro}{\fxloadenvlayouts}
+%   \marg{names}
 %   \begin{macro}{\fxuseenvlayout}
 %     \marg{name}
 %    \begin{macrocode}
-\newcommand*\fxloadenvlayout[1]{\usepackage{fxenvlayout#1}}
+\newcommand*\fxloadenvlayouts[1]{%
+  \@for\@fxlt:=#1\do{\usepackage{fxenvlayout#1}}}
 \newcommand*\fxuseenvlayout[1]{%
-  \fxloadenvlayout{#1}%
+  \fxloadenvlayouts{#1}%
   \@fxselectenvlayout{#1}}
 
 %    \end{macrocode}
