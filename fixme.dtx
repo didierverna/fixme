@@ -507,24 +507,45 @@
 % external layout with the \texttt{envlayout} option might involve loading the
 % relevant file first.
 %
+% \noindent\DescribeMacro{\fxuseenvlayout}\marg{name}\\
+% \DescribeMacro{\fxloadenvlayouts}\marg{names}\\
 % For technical reasons, it is not possible to do such a thing outside the
 % preamble, neither in the middle of processing \cs{usepackage} options. As a
 % result, the \texttt{envlayout} option is restricted and you have two
 % possibilities for using an external layout:
 % \begin{enumerate}
-% \item Use \cs{fxsetup} in the preamble, like this:
-%   |\fxsetup{envlayout=name}|. This will load it \emph{and} select it
-%   immediately.
-% \item \DescribeMacro{\fxuseenvlayout} Use the \cs{fxuseenvlayout} command in
-%   the preamble like this:\\
+% \item Use the \texttt{envlayout} option in a call to \cs{fxsetup} in the
+%   preamble, like this: |\fxsetup{envlayout=name}|. This will load it
+%   \emph{and} select it immediately.
+% \item Use the \cs{fxuseenvlayout} command in the preamble like this:\\
 %   |\fxuseenvlayout{name}|. This is strictly equivalent to the previous
 %   solution.
-% \item \DescribeMacro{\fxloadenvlayout} If on the other hand you want to load
-%   an environment layout \emph{without} using it immediately (perhaps in
-%   order to use it locally in some \fx notes), use the \cs{fxloadenvlayout}
-%   command in the preamble like this: |\fxloadlayout{name}|. After that, you
-%   can select it anywhere you wish.
+% \item If on the other hand you want to load one or several environment
+%   layouts \emph{without} using them immediately (perhaps in order to use
+%   them locally in some \fx notes), use the \cs{fxloadenvlayouts} command in
+%   the preamble like this: |\fxloadenvlayouts{name,...}|. After that, you can
+%   select any of those layouts anywhere you wish.
 % \end{enumerate}
+%
+% \subsubsection{Available environment layouts}
+% The table below lists the environment layouts currently distributed with
+% \fx.
+% \begin{center}
+%   \DeleteShortVerb{\|}
+%   ^^A\begin{table}
+%     ^^A  \centering
+%     \begin{tabular}{|l|l|p{5cm}|}
+%       \hline
+%       \textbf{Name} & \textbf{External} & \textbf{Description}\\
+%       \hline\hline
+%       \texttt{bold} & & Display contents in bold\\
+%       \texttt{italics} & & Display contents in italics\\
+%       \hline
+%     \end{tabular}
+%     ^^A   \caption{Available environment layouts}
+%     ^^A  \label{tbl:env}
+%     ^^A \end{table}
+% \end{center}
 %
 % \subsection{Controlling the layout of \fx targets}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
