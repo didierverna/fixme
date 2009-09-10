@@ -1711,15 +1711,20 @@
 % \subsubsection{Environment layout loading}
 % \begin{macro}{\fxloadenvlayouts}
 %   \marg{names}
-%   \begin{macro}{\fxuseenvlayout}
-%     \marg{name}
 %    \begin{macrocode}
 \newcommand*\fxloadenvlayouts[1]{%
   \@for\@fxlt:=#1\do{\usepackage{fxenvlayout#1}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fxuseenvlayout}
+%   \begin{macro}{\FXRequireEnvLayout}
+%     \marg{name}\\
+%     \cs{FXRequireEnvLayout} is a better style for themes programming.
+%    \begin{macrocode}
 \newcommand*\fxuseenvlayout[1]{%
   \fxloadenvlayouts{#1}%
   \@fxselectenvlayout{#1}}
-
+\let\FXRequireEnvLayout\fxuseenvlayout
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
@@ -1799,15 +1804,21 @@
 % \subsubsection{Target layout loading}
 % \begin{macro}{\fxloadtargetlayouts}
 %   \marg{names}
-%   \begin{macro}{\fxusetargetlayout}
-%     \marg{name}
 %    \begin{macrocode}
 \newcommand*\fxloadtargetlayouts[1]{%
   \@for\@fxlt:=#1\do{\usepackage{fxtargetlayout#1}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fxusetargetlayout}
+%   \begin{macro}{\FXRequireTargetLayout}
+%     \marg{name}\\
+%     \cs{FXRequireTargetLayout} is a better style for themes programming.
+%    \begin{macrocode}
 \newcommand*\fxusetargetlayout[1]{%
   \fxloadtargetlayouts{#1}%
   \@fxselecttargetlayout{#1}}
-
+\let\FXRequireTargetLayout\fxusetargetlayout
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
@@ -2711,12 +2722,84 @@
 %
 % \appendix
 % \section{External Layouts}
-% Here are the predefined layouts distributed with \fx.
-%
 % \subsection{Environment layouts}
+% \subsubsection{The \texttt{color} environment layout}
+%    \begin{macrocode}
+%<*fxenvlayoutcolor>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxenvlayoutcolor}
+
+\RequirePackage{color}
+
+%    \end{macrocode}
+% \begin{macro}{\@fxdocolon}
+%   \marg{author}\\
+%   Add a colon after the author tag, unless empty.
+%    \begin{macrocode}
+\providecommand*\@fxdocolon[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxcolon{}}{\def\@fxcolon{: }}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{color}{fxnote}
+%   \begin{color}{fxwarning}
+%     \begin{color}{fxerror}
+%       \begin{color}{fxfatal}
+%         Environments use the same colors as the notes themselves because
+%         their contents really is a longer note.
+%    \begin{macrocode}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
+
+%    \end{macrocode}
+%       \end{color}
+%     \end{color}
+%   \end{color}
+% \end{color}
+% \begin{macro}{\FXEnvLayoutColorBegin}
+%   \begin{macro}{\FXEnvLayoutColorEnd}
+%     \marg{type}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXEnvLayoutColorBegin[2]{%
+  \@fxdocolon{#2}%
+  \color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
+\newcommand*\FXEnvLayoutColorEnd[2]{}
+\FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
+
+%</fxenvlayoutcolor>
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
 % \subsection{Target Layouts}
+% \subsubsection{The \texttt{color} target layout}
+%    \begin{macrocode}
+%<*fxtargetlayoutcolor>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxtargetlayoutcolor}
+
+\RequirePackage{color}
+
+%    \end{macrocode}
+% \begin{color}{fxtarget}
+%    \begin{macrocode}
+\definecolor{fxtarget}{rgb}{0.3725,0.6196,0.6275}
+
+%    \end{macrocode}
+% \end{color}
+% \begin{macro}{\FXTargetLayoutColor}
+%   \marg{target}
+%    \begin{macrocode}
+\newcommand\FXTargetLayoutColor[1]{\begingroup\color{fxtarget}#1\endgroup}
+\FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
+
+%</fxtargetlayoutcolor>
+%    \end{macrocode}
+% \end{macro}
+%
 % \section{Themes}
-% Here are the predefined themes distributed with \fx.
 % \subsection{The \texttt{signature} theme}
 %    \begin{macrocode}
 %<*fxthemesignature>
@@ -2790,35 +2873,9 @@
 
 \RequirePackage{color}
 
-%    \end{macrocode}
-% \begin{macro}{\@fxdocolon}
-%   \marg{author}\\
-%   Add a colon after the author tag, unless empty. Same comment as above
-%   about the \texttt{ifthen} package.
-%    \begin{macrocode}
-\newcommand\@fxdocolon[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxcolon{}}{\def\@fxcolon{: }}}
+\FXRequireEnvLayout{color}
+\FXRequireTargetLayout{color}
 
-%    \end{macrocode}
-% \end{macro}
-% \begin{color}{fxnote}
-%   \begin{color}{fxwarning}
-%     \begin{color}{fxerror}
-%       \begin{color}{fxfatal}
-%         The 4 colors that can be redefined by the user.
-%    \begin{macrocode}
-\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
-\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
-\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
-\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
-\definecolor{fxtarget}{rgb}{0.3725,0.6196,0.6275}
-
-%    \end{macrocode}
-%       \end{color}
-%     \end{color}
-%   \end{color}
-% \end{color}
-%    \begin{macrocode}
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdocolon{#3}%
   \footnote{\color{fx#1}\ignorespaces#3\@fxcolon #2}}
@@ -2855,16 +2912,6 @@
     \fxaddcontentsline{\color{fx#1}#2}%
   \fi}
 
-\newcommand*\FXEnvLayoutColorBegin[2]{%
-  \@fxdocolon{#2}%
-  \color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
-\newcommand*\FXEnvLayoutColorEnd[2]{}
-\FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
-\@fxsetkeys{envlayout}{envlayout=color}
-
-\newcommand\FXTargetLayoutColor[1]{\begingroup\color{fxtarget}#1\endgroup}
-\FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
-\@fxsetkeys{targetlayout}{targetlayout=color}
 %</fxthemecolor>
 %    \end{macrocode}
 % ^^A \PrintChanges
