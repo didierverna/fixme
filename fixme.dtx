@@ -540,6 +540,7 @@
 %     \texttt{italics} & & Display contents in italics\\
 %     \hline
 %   \end{tabular}
+%   \MakeShortVerb{\|}
 % \end{center}
 %
 % \subsection{Controlling the layout of \fx targets}
@@ -550,19 +551,58 @@
 % it is typeset as-is) is subject to a layout of its own, called the ``target
 % layout''.
 %
+% \subsubsection{Selecting a target layout}
 % \DescribeOption{targetlayout}
 % The desired target layout can be selected with the \texttt{targetlayout}
-% option. This option works pretty much like the \texttt{envlayout} option
-% discussed in section \sectionref{sec:manual:envlayoutcontrol}, as only one
-% target layout can be active at a time.
+% option. Contrary to the note layouts, only one target layout can be active
+% at a time. The \texttt{targetlayout} option is understood by the package
+% itself, the \cs{fxsetup} command and all the note insertion environments
+% (not the commands!). There are some restrictions on its usage however, as
+% discussed in the next section.
 %
-% \fx comes with two predefined target layouts called \texttt{italics} (the
-% default) and \texttt{bold}. You've probably guessed what they do already.
-% The \texttt{targetlayout} option is understood by the package itself, the
-% \cs{fxsetup} command and all the starred note insertion commands and
-% environments. The same usage restriction as for the \texttt{envlayout}
-% option applies: it might not be possible to select a target layout in the
-% call to \cs{usepackage} if this layout comes from an external file.
+% \subsubsection{Built-in \vs external layouts}
+% Target layouts are provided either in the core of \fx, or in separate files
+% loaded dynamically on demand. Simple layouts are typically built-in, whereas
+% those requiring additional packages are external, so that they don't consume
+% \TeX{} resources if not used. As a consequence, selecting an external layout
+% with the \texttt{targetlayout} option might involve loading the relevant
+% file first.
+%
+% \noindent\DescribeMacro{\fxusetargetlayout}\marg{name}\\
+% \DescribeMacro{\fxloadtargetlayouts}\marg{names}\\
+% For technical reasons, it is not possible to do such a thing outside the
+% preamble, neither in the middle of processing \cs{usepackage} options. As a
+% result, the \texttt{targetlayout} option is restricted and you have two
+% possibilities for using an external layout:
+% \begin{enumerate}
+% \item Use the \texttt{targetlayout} option in a call to \cs{fxsetup} in the
+%   preamble, like this: |\fxsetup{targetlayout=name}|. This will load it
+%   \emph{and} select it immediately.
+% \item Use the \cs{fxusetargetlayout} command in the preamble like this:\\
+%   |\fxusetargetlayout{name}|. This is strictly equivalent to the previous
+%   solution.
+% \item If on the other hand you want to load one or several target layouts
+%   \emph{without} using them immediately (perhaps in order to use
+%   them locally in some \fx notes), use the \cs{fxloadtargetlayouts} command
+%   in the preamble like this: |\fxloadtargetlayouts{name,...}|. After that,
+%   you can select any of those layouts anywhere you wish.
+% \end{enumerate}
+%
+% \subsubsection{Available target layouts}
+% The table below lists the target layouts currently distributed with
+% \fx.
+% \begin{center}
+%   \DeleteShortVerb{\|}
+%   \begin{tabular}{|l|l|p{5cm}|}
+%     \hline
+%     \textbf{Name} & \textbf{External} & \textbf{Description}\\
+%     \hline\hline
+%     \texttt{bold} & & Display target in bold\\
+%     \texttt{italics} & & Display target in italics\\
+%     \hline
+%   \end{tabular}
+%   \MakeShortVerb{\|}
+% \end{center}
 %
 % \subsection{Controlling the logging of \fx}
 % As well as being displayed in the document itself, all \fx notes are
