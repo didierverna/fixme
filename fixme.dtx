@@ -2594,25 +2594,16 @@
 %    \end{macrocode}
 % \end{option}
 %
-% \subsection{Themes support}
-% \begin{macro}{\@fxloadtheme}
-%   \marg{name}\\
-%   Require the package named \texttt{fxtheme}\meta{name}:
+% \subsection{Theme support}
+% \begin{macro}{\fxusetheme}
+%   \marg{name}
 %    \begin{macrocode}
-\newcommand*\@fxloadtheme[1]{\RequirePackage{fxtheme#1}}
-
+\newcommand*\fxusetheme[1]{\usepackage{fxtheme#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{theme}
-%   Because themes are implemented as style files, loading a theme can only be
-%   done via \cs{fxsetup}: it is not possible to load a theme directly in
-%   \cs{usepackage} (because \LaTeX{} doesn't like \cs{RequirePackage} in the
-%   middle of options processing), neither during a user-level interface call,
-%   probably for the same reason. I could change this, but I don't think it's
-%   worth it because people will want to load only one theme at a time anyway.
 %    \begin{macrocode}
-\@fxdefinekey{theme}{theme}{\@fxloadtheme{#1}}
-
+\@fxdefinekey{theme}{theme}{\fxusetheme{#1}}
 %    \end{macrocode}
 % \end{option}
 %
