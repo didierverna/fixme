@@ -1603,8 +1603,8 @@
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
 %   Register a new environment layout with \fx. This currently only involves
 %   constructing the translation macros. The translation macros in question
-%   can't be \cs{let} to the real ones, because themes might want to redefine
-%   latter.
+%   can't be \cs{let} to the real ones, because themes or users might want to
+%   redefine the latter.
 %    \begin{macrocode}
 \newcommand*\FXRegisterEnvLayout[3]{%
   \@ifundefined{@fxenvlayout@#1@begin}{%
@@ -1650,11 +1650,13 @@
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
+%
 % \subsubsection{Environment layout selection}
 % \begin{macro}{\@fxselectenvlayout}
 %   \marg{name}
 %   \begin{macro}{\@fxenvlayout@begin}
 %     \begin{macro}{\@fxenvlayout@end}
+%       \marg{type}\marg{author}\\
 %       This is much simpler than standard layout management because only one
 %       environment layout at a time is possible. Using a specific environment
 %       layout boils down to possibly loading it, and binding the beginning
@@ -1704,8 +1706,8 @@
 %   \marg{name}\marg{funcname}\\
 %   Register a new target layout with \fx. This currently only involves
 %   constructing the translation macro. The translation macro in question
-%   can't be \cs{let} to the real one, because themes might want to redefine
-%   latter.
+%   can't be \cs{let} to the real one, because themes or user might want to
+%   redefine the latter.
 %    \begin{macrocode}
 \newcommand*\FXRegisterTargetLayout[2]{%
   \@ifundefined{@fxtargetlayout@#1}{%
@@ -1721,6 +1723,16 @@
 % \end{macro}
 %
 % \subsubsection{Built-in target layouts}
+% \subsubsubsection{Bold}
+% \begin{macro}{\FXTargetLayoutBold}
+%   \marg{target}
+%    \begin{macrocode}
+\newcommand\FXTargetLayoutBold[1]{\begingroup\bfseries#1\endgroup}
+\FXRegisterTargetLayout{bold}{\FXTargetLayoutBold}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsubsection{Italics}
 % \begin{macro}{\FXTargetLayoutItalics}
 %   \marg{target}
@@ -1731,39 +1743,57 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Target layout loading}
-% \begin{macro}{\@fxloadtargetlayout}
+% \subsubsection{Target layout selection}
+% \begin{macro}{\@fxselecttargetlayout}
 %   \marg{name}
-%    \begin{macrocode}
-\newcommand*\@fxloadtargetlayout[1]{\RequirePackage{fxtargetlayout#1}}
-
-%    \end{macrocode}
-% \end{macro}
-%
-% \subsubsection{Target layout control}
-% \begin{option}{targetlayout}
 %   \begin{macro}{\@@fxtargetlayout}
 %     \marg{target}\\
 %     This is much simpler than standard layout management because only one
-%     target layout at a time is possible. Using a specific target
-%     layout boils down to binding the layout macro to the proper translation
-%     one.
+%     target layout at a time is possible. Using a specific target layout
+%     boils down to possibly loading it, and binding the layout macro to the
+%     proper translation one.
 %    \begin{macrocode}
-\@fxdefinekey{targetlayout}{targetlayout}{%
-  \@ifundefined{@fxtargetlayout@#1}{\@fxloadtargetlayout{#1}}{}%
+\newcommand*\@fxselecttargetlayout[1]{%
   \expandafter\let\expandafter\@@fxtargetlayout%
     \csname @fxtargetlayout@#1\endcsname}
 
 %    \end{macrocode}
 %   \end{macro}
+% \end{macro}
+%
+% \subsubsection{Target layout loading}
+% \begin{macro}{\fxloadtargetlayouts}
+%   \marg{names}
+%   \begin{macro}{\fxusetargetlayout}
+%     \marg{name}
+%    \begin{macrocode}
+\newcommand*\fxloadtargetlayouts[1]{%
+  \@for\@fxlt:=#1\do{\usepackage{fxtargetlayout#1}}}
+\newcommand*\fxusetargetlayout[1]{%
+  \fxloadtargetlayouts{#1}%
+  \@fxselecttargetlayout{#1}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
+%
+% \subsubsection{Target layout control}
+% \begin{option}{targetlayout}
+%    \begin{macrocode}
+\@fxdefinekey{targetlayout}{targetlayout}{%
+  \@ifundefined{@fxtargetlayout@#1}{%
+    \fxusetargetlayout{#1}}{%
+    \@fxselecttargetlayout{#1}}}
+
+%    \end{macrocode}
 % \end{option}
+%
+% \subsubsection{Status-dependant versions}
 % \begin{macro}{\@fxtargetlayout@final}
 %   \begin{macro}{\@fxtargetlayout@draft}
 %     \marg{target}\\
 %     In \texttt{final} mode, the target is typeset as-is. In \texttt{draft}
-%     mode, we use the selected layout. We need this level of indirection (the
-%     \texttt{targetlayout} option cannot directly bind the draft version)
-%     because otherwise, the final/draft \cs{let} mechanism would break.
+%     mode, we use the selected layout.
 %    \begin{macrocode}
 \newcommand\@fxtargetlayout@final[1]{#1}
 \newcommand\@fxtargetlayout@draft[1]{\@@fxtargetlayout{#1}}
@@ -2645,24 +2675,12 @@
 %    \end{macrocode}
 %
 % \appendix
-% \section{Additional Layouts}
+% \section{External Layouts}
 % Here are the predefined layouts distributed with \fx.
 %
 % \subsection{Environment layouts}
 % \subsection{Target Layouts}
-% \subsubsection{The \texttt{bold} target layout}
-%    \begin{macrocode}
-%<*fxtargetlayoutbold>
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxtargetlayoutbold}
-
-\newcommand\FXTargetLayoutBold[1]{\begingroup\bfseries#1\endgroup}
-\FXRegisterTargetLayout{bold}{\FXTargetLayoutBold}
-
-%</fxtargetlayoutbold>
-%    \end{macrocode}
-%
-% \section{Additional themes}
+% \section{Themes}
 % Here are the predefined themes distributed with \fx.
 % \subsection{The \texttt{signature} theme}
 %    \begin{macrocode}
