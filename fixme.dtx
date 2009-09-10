@@ -1636,6 +1636,20 @@
 %   \end{macro}
 % \end{macro}
 %
+% \subsubsubsection{Italics}
+% \begin{macro}{\FXEnvLayoutItalicsBegin}
+%   \begin{macro}{\FXEnvLayoutItalicsEnd}
+%     \marg{type}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXEnvLayoutItalicsBegin[2]{%
+  \itshape\ignorespaces#2 \@nameuse{fx#1name}: \ignorespaces}
+\newcommand*\FXEnvLayoutItalicsEnd[2]{}
+\FXRegisterEnvLayout{italics}{%
+  \FXEnvLayoutItalicsBegin}{\FXEnvLayoutItalicsEnd}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
 % \subsubsection{Environment layout selection}
 % \begin{macro}{\@fxselectenvlayout}
 %   \marg{name}
@@ -2635,20 +2649,6 @@
 % Here are the predefined layouts distributed with \fx.
 %
 % \subsection{Environment layouts}
-% \subsubsection{The \texttt{italics} environment layout}
-%    \begin{macrocode}
-%<*fxenvlayoutitalics>
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxenvlayoutitalics}
-
-\newcommand*\FXEnvLayoutItalicsBegin[2]{%
-  \itshape\ignorespaces#2 \@nameuse{fx#1name}: \ignorespaces}
-\newcommand*\FXEnvLayoutItalicsEnd[2]{}
-\FXRegisterEnvLayout{italics}{\FXEnvLayoutItalicsBegin}{\FXEnvLayoutItalicsEnd}
-
-%</fxenvlayoutitalics>
-%    \end{macrocode}
-%
 % \subsection{Target Layouts}
 % \subsubsection{The \texttt{bold} target layout}
 %    \begin{macrocode}
