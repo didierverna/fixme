@@ -33,7 +33,13 @@
 %<*driver>
 \documentclass[a4paper]{ltxdoc}
 \usepackage{xspace}
+
 \usepackage{dox}
+\doxitem{Option}{option}{options}
+\doxitem{Counter}{counter}{counters}
+\doxitem{Color}{color}{colors}
+\doxitem{Theme}{theme}{themes}
+
 % #### NOTE: I don't want to \usepackage{fixme} just for getting the file
 % information. So here what I do: generate a header with only the
 % \ProvidesPackage command, and also the \fixmelogo. Then, I \input it so that
@@ -849,6 +855,8 @@
 % \end{verbatim}
 %
 % \subsubsection{Themes list}
+% \DescribeTheme{signature}
+% \DescribeTheme{color}
 % \fx comes with a number of predefine themes listed below.
 % \begin{description}
 %   \renewcommand\descriptionlabel[1]{\hspace{\labelsep}\texttt{#1}}
@@ -2810,6 +2818,7 @@
 %
 % \section{Themes}
 % \subsection{The \texttt{signature} theme}
+% \begin{theme}{signature}
 %    \begin{macrocode}
 %<*fxthemesignature>
 \NeedsTeXFormat{LaTeX2e}
@@ -2873,8 +2882,10 @@
 \renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxtempsig}
 %</fxthemesignature>
 %    \end{macrocode}
+% \end{theme}
 %
 % \subsection{The \texttt{color} theme}
+% \begin{theme}{color}
 %    \begin{macrocode}
 %<*fxthemecolor>
 \NeedsTeXFormat{LaTeX2e}
@@ -2923,6 +2934,7 @@
 
 %</fxthemecolor>
 %    \end{macrocode}
+% \end{theme}
 % ^^A \PrintChanges
 % \PrintIndex
 % \Finale
