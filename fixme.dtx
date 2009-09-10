@@ -530,18 +530,29 @@
 % \subsubsection{Available environment layouts}
 % The table below lists the environment layouts currently distributed with
 % \fx.
+%
 % \begin{center}
 %   \DeleteShortVerb{\|}
-%   \begin{tabular}{|l|l|p{5cm}|}
+%   \begin{tabular}{|l|c|p{5cm}|}
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
 %     \texttt{bold} & & Display contents in bold\\
 %     \texttt{italics} & & Display contents in italics\\
+%     \texttt{color} & \texttt{*} & Display contents in color\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 % \end{center}
+%
+% \DescribeColor{fxnote}
+% \DescribeColor{fxwarning}
+% \DescribeColor{fxerror}
+% \DescribeColor{fxfatal}
+% The \texttt{color} environment layout uses one of four colors named
+% according to the note's importance level to display its contents. This
+% layout is used in the \texttt{color} theme (see section
+% \sectionref{sec:manual:themes}).
 %
 % \subsection{Controlling the layout of \fx targets}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
@@ -591,18 +602,25 @@
 % \subsubsection{Available target layouts}
 % The table below lists the target layouts currently distributed with
 % \fx.
+%
 % \begin{center}
 %   \DeleteShortVerb{\|}
-%   \begin{tabular}{|l|l|p{5cm}|}
+%   \begin{tabular}{|l|c|p{5cm}|}
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
 %     \texttt{bold} & & Display target in bold\\
 %     \texttt{italics} & & Display target in italics\\
+%     \texttt{color} & \texttt{*} & Display target in color\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 % \end{center}
+%
+% \DescribeColor{fxtarget}
+% The \texttt{color} target layout uses the color named \texttt{fxtarget}
+% to display the target text. This layout is used in the \texttt{color} theme
+% (see section \sectionref{sec:manual:themes}).
 %
 % \subsection{Controlling the logging of \fx}
 % As well as being displayed in the document itself, all \fx notes are
@@ -796,7 +814,7 @@
 % as before, but additional index entries, sorted by author, and generated as
 % well.
 %
-% \subsection{Themes}
+% \subsection{Themes\label{sec:manual:themes}}
 % \fx 4.0 comes with support for themes. Themes are a way to modify the
 % built-in layout capabilities of \fx, or even supply new ones. Themes do not
 % belong to the core of \fx for two reasons.
