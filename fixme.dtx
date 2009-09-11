@@ -536,7 +536,8 @@
 %   select any of those layouts anywhere you wish.
 % \end{enumerate}
 %
-% \subsubsection{Available environment layouts}
+% \subsubsection{Available environment
+%   layouts\label{sec:manual:envlayoutslist}}
 % The table below lists the environment layouts currently distributed with
 % \fx.
 %
@@ -566,7 +567,8 @@
 % layout is used in the \texttt{color} theme (see section
 % \sectionref{sec:manual:themes}).
 %
-% \subsection{Controlling the layout of \fx targets}
+% \subsection{Controlling the layout of \fx
+%   targets\label{sec:manual:targetlayoutcontrol}}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
 % versions of the \fx note insertion commands and environments let you
 % highlight a portion of text which is relevant to the current \fx note.
@@ -611,7 +613,7 @@
 %   you can select any of those layouts anywhere you wish.
 % \end{enumerate}
 %
-% \subsubsection{Available target layouts}
+% \subsubsection{Available target layouts\label{sec:manual:targetlayoutslist}}
 % The table below lists the target layouts currently distributed with
 % \fx.
 %
@@ -830,58 +832,35 @@
 % well.
 %
 % \subsection{Themes\label{sec:manual:themes}}
-% \fx 4.0 comes with support for themes. Themes are a way to modify the
-% built-in layout capabilities of \fx, or even supply new ones. Themes do not
-% belong to the core of \fx for two reasons.
-% \begin{enumerate}
-% \item I want the core to be as portable across \LaTeX{} distributions as
-%   possible, so \fx itself does not rely on that many other packages. Themes,
-%   on the other hand, might rely heavily on third-party libraries to provide
-%   their functionality.
-% \item Keeping themes outside of the core means that only the one you want to
-%   use is loaded, effectively lightening the weight of \fx on \TeX's
-%   resources.
-% \end{enumerate}
+% \fx 4.0 comes with support for themes. Themes are orthogonal to layouts:
+% they provide a way to modify the overall appearance of \fx by overriding the
+% existing layouts and/or by providing new ones.
 %
 % \subsubsection{Using themes}
 % \DescribeOption{theme}
 % The interface for using a theme is quite simple: use the \texttt{theme}
-% option and give it the name of the theme you want to use.
-%
-% The \texttt{theme} option has one gotcha, though: it can only be used with
-% the \cs{fxsetup} command. It is not possible to use it in \cs{usepackage},
-% neither in the note insertion commands or environements. This is no big
-% deal, however, because it is very unlikely that you would want to change the
-% current theme in the middle of your document.
-%
-% Here's how you would load the \texttt{signature} theme, provided in the
-% distribution:
-% \begin{verbatim}
-% \usepackage{fixme}
-% \fxsetup{theme=signature,author=dvl,multiuser}
-% \FXRegisterAuthor{jd}{ajd}{JD}
-% %% etc.
-% \end{verbatim}
+% option and give it the name of the theme you want to use. Theme are always
+% external: there are none in the  core of \fx but instead they are provided
+% as independent files. As a consequence, the \texttt{theme} option has the
+% same usage restrictions as the \texttt{envlayout} or \texttt{targetlayout}
+% ones (see sections \sectionref{sec:manual:envlayoutcontrol} and
+% \sectionref{sec:manual:targetlayoutcontrol}).
 %
 % \subsubsection{Themes list}
 % \DescribeTheme{signature}
 % \DescribeTheme{color}
-% \fx comes with a number of predefine themes listed below.
+% \fx comes with a number of predefined themes listed below.
 % \begin{description}
 %   \renewcommand\descriptionlabel[1]{\hspace{\labelsep}\texttt{#1}}
 % \item[signature] This theme overrides the existing layouts to display the
 %   author tags as a signature (\ie at the end of the notes) instead of as a
 %   prefix.
-% \item[color]
-%   \DescribeColor{fxnote}
-%   \DescribeColor{fxwarning}
-%   \DescribeColor{fxerror}
-%   \DescribeColor{fxfatal}
-%   This theme overrides the existing layouts to use different
-%   colors for the different note levels. As a consequence, it also avoids
-%   printing the note names. The colors used to display the notes are named
-%   \texttt{fxnote}, \texttt{fxwarning}, \texttt{fxerror} and
-%   \texttt{fxfatal}. You can redefine them if you whish.
+% \item[color] This theme overrides the built-in layouts to use different
+%   colors for the different note levels. As a consequence, it avoids printing
+%   the note names. This theme also loads and activates the \texttt{color}
+%   environment and target layouts described in sections
+%   \sectionref{sec:manual:envlayoutslist} and
+%   \sectionref{sec:manual:targetlayoutslist}.
 % \end{description}
 %
 % \section{Customizing \fx}
