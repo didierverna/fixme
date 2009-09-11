@@ -111,7 +111,9 @@
 %   Copyright \copyright{} 1998--2002, 2004--2007, 2009 Didier Verna}
 %
 % \pagestyle{mystyle}
-% \markright{\hskip-.5\marginparwidth \fx \fileversion{} (\filedate)}
+% \newcommand\fxmarkright{%
+%   \markright{\hskip-.5\marginparwidth \fx \fileversion{} (\filedate)}}
+% \fxmarkright
 %
 % \date{\texttt{\fileversion{} (\filedate)}}
 % \title{\fx{} -- a \LaTeXe{} package for inserting fixme notes in your
@@ -2936,7 +2938,9 @@
 %    \end{macrocode}
 % \end{theme}
 % ^^A \PrintChanges
-% \PrintIndex
+% ^^A Nobody messes up with the marks in this document, but \index@prologue.
+% ^^A That sucks.
+% \begingroup\let\markboth\relax\PrintIndex\endgroup
 % \Finale
 %
 % ^^A fixme.dtx ends here.
