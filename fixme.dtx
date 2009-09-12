@@ -845,7 +845,15 @@
 % as independent files. As a consequence, the \texttt{theme} option has the
 % same usage restrictions as the \texttt{envlayout} or \texttt{targetlayout}
 % ones (see sections \sectionref{sec:manual:envlayoutcontrol} and
-% \sectionref{sec:manual:targetlayoutcontrol}).
+% \sectionref{sec:manual:targetlayoutcontrol}). Moreover, it is not possible
+% to ``maintain'' several themes and switch between them in a single document.
+% Themes can be loaded only in the preamble.
+%
+% \noindent
+% \DescribeMacro{\fxusetheme}
+% \marg{name}\\
+% An alternative to the \texttt{theme} option is to use the \cs{fxusetheme}
+% command, which takes the theme's name as its only mandatory argument.
 %
 % \subsubsection{Available themes}
 % \DescribeTheme{signature}
@@ -982,6 +990,24 @@
 % named \texttt{fxtargetlayout}\meta{name}\texttt{.sty}. It will then be
 % recognized by the \cs{fxloadtargetlayouts} and \cs{fxusetargetlayout}
 % commands.
+%
+% \subsection{Creating a new theme}
+% Creating a new theme may involve anything from using (by way of
+% \cs{fxsetup}) or modifying existing layouts, to providing new ones. If your
+% new theme has specific layouts, you may consider writing them in seperate
+% files as described before, in order to make them more generally available.
+%
+% \noindent
+% \DescribeMacro{\FXRequireLayout}
+% \DescribeMacro{\FXRequireEnvLayout}
+% \DescribeMacro{\FXRequireTargetLayout}
+% \marg{name}\\
+% In order to use an external layout in a theme, use the commands
+% \cs{FXRequire*Layout} and give them the layout's name as argument.
+%
+% A theme should be saved in a file named
+% \texttt{fxtheme}\meta{name}\texttt{.sty}. It will then be recognized by the
+% \texttt{theme} option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
 % \DescribeMacro{\fxlang*name}
