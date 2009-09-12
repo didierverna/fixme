@@ -984,20 +984,21 @@
 % commands.
 %
 % \subsection{Internationalization}
-% \DescribeMacro{\fxnotename}
-% \DescribeMacro{\fxnotesname}
-% \DescribeMacro{\fxwarningname}
-% \DescribeMacro{\fxwarningsname}
-% \DescribeMacro{\fxerrorname}
-% \DescribeMacro{\fxerrorsname}
-% \DescribeMacro{\fxfatalname}
-% \DescribeMacro{\fxfatalsname}
+% \DescribeMacro{\fxlang*name}
+% \DescribeMacro{\fxlang*sname}
 % \fx's language control has been described in section
-% \sectionref{sec:manual:i18n}. The actual commands that produce the
-% language-dependent parts of \fx are renewable. Note names in singular or
-% plural forms are defined by \cs{fxnotename}, \cs{fxnotesname} \etc\\
-% \DescribeMacro{\listfixmename}
-% The ``list of fixmes'' title is defined by \cs{listfixmename}.
+% \sectionref{sec:manual:i18n}. For every supported language \meta{lang}, a
+% number of macros define the language-dependent part of \fx. The commands
+% \cs{fx}\meta{lang}\texttt{notename}, \cs{fx}\meta{lang}\texttt{notesname},
+% and their equivalent for the other note levels define the singular and
+% plural forms of the note names.\\
+% \DescribeMacro{\langlistfixmename}
+% The title for the list of fixmes is defined by the command
+% \cs{}\meta{lang}\texttt{listfixmename}.
+%
+% All of these commands may be renewed, and their values will be honored by
+% \fx in all situations, including potential language changes across the
+% document.
 %
 % \section{\auctex support}
 % \auctex is a powerful major mode for editing \TeX{} documents in
