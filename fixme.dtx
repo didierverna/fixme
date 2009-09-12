@@ -1274,27 +1274,19 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{List title}
-% \begin{macro}{\listfixmename}
-%   \mbox{}
-%    \begin{macrocode}
-\newcommand\listfixmename{}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsubsection{List headers}
 % Lists are output in a document class dependant fashion. Classes
 % currently recognized are \texttt{article}, \texttt{report},
 % \texttt{book} and their \komascript replacements.
+%
 % \subsubsubsection{\texttt{article} version}
 % \begin{macro}{\@lox@prtc@article}
 %   \begin{macro}{\@lox@psttc@article}
 %     \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@article{%
-  \section*{\listfixmename%
-    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
+  \section*{\@fxlistfixmename%
+    \@mkboth{\MakeUppercase\@fxlistfixmename}{\MakeUppercase\@fxlistfixmename}}}
 \let\@lox@psttc@article\relax
 
 %    \end{macrocode}
@@ -1311,8 +1303,8 @@
   \else
     \@restonecolfalse
   \fi
-  \chapter*{\listfixmename%
-    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
+  \chapter*{\@fxlistfixmename%
+    \@mkboth{\MakeUppercase\@fxlistfixmename}{\MakeUppercase\@fxlistfixmename}}}
 \newcommand\@lox@psttc@report{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
@@ -1329,8 +1321,8 @@
   \else
     \@restonecolfalse
   \fi
-  \chapter*{\listfixmename%
-    \@mkboth{\MakeUppercase\listfixmename}{\MakeUppercase\listfixmename}}}
+  \chapter*{\@fxlistfixmename%
+    \@mkboth{\MakeUppercase\@fxlistfixmename}{\MakeUppercase\@fxlistfixmename}}}
 \newcommand\@lox@psttc@book{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
@@ -1344,7 +1336,7 @@
 % \begin{macro}{\lox@heading}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand\lox@heading{\float@listhead{\listfixmename}}
+\newcommand\lox@heading{\float@listhead{\@fxlistfixmename}}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -1432,7 +1424,7 @@
 %   of redefining the \cs{@starttoc} macro to take two arguments. Therefore, I
 %   need to provide a specific version of the \cs{listoffixmes} macro:
 %    \begin{macrocode}
-\newcommand\lox@draft@ams{\@starttoc{lox}\listfixmename}
+\newcommand\lox@draft@ams{\@starttoc{lox}\@fxlistfixmename}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1518,7 +1510,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutFootnote[3]{%
-  \footnote{\ignorespaces#3 \@nameuse{fx#1name}: #2}}
+  \footnote{\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 %       \end{macro}
@@ -1535,8 +1527,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
-  \footnotesize\raggedleft\ignorespaces#3 \@nameuse{fx#1name}: #2]{%
-    \footnotesize\raggedright\ignorespaces#3 \@nameuse{fx#1name}: #2}}
+  \footnotesize\raggedleft\ignorespaces#3 \fxnotename{#1}: #2]{%
+    \footnotesize\raggedright\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1558,8 +1550,9 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\footnotesize\raggedleft\ignorespaces#3 \@nameuse{fx#1name}!]{%
-    \footnotesize\raggedright\ignorespaces#3 \@nameuse{fx#1name}!}}
+  \marginpar[%
+  \footnotesize\raggedleft\ignorespaces#3 \fxnotename{#1}!]{%
+    \footnotesize\raggedright\ignorespaces#3 \fxnotename{#1}!}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -1581,7 +1574,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\bfseries\ignorespaces#3 \@nameuse{fx#1name}: #2}}
+  {\bfseries\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1634,14 +1627,14 @@
 \newcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #3: #2}%
     \index{***#3@\fixmeindexname{} (#3):%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
   \else%
     \index{***@\fixmeindexname:%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
   \fi}
 \FXRegisterLayout{index}{\FXLayoutIndex}
@@ -1659,9 +1652,9 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
-    \fxaddcontentsline{\ignorespaces#3 \@nameuse{fx#1name}: #2}%
+    \fxaddcontentsline{\ignorespaces#3 \fxnotename{#1}: #2}%
   \else%
-    \fxaddcontentsline{\@nameuse{fx#1name}: #2}%
+    \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
 
 %    \end{macrocode}
@@ -1733,7 +1726,7 @@
 %     \begin{layout}{bold}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutBoldBegin[2]{%
-  \bfseries\ignorespaces#2 \@nameuse{fx#1name}: \ignorespaces}
+  \bfseries\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutBoldEnd[2]{}
 \FXRegisterEnvLayout{bold}{%
   \FXEnvLayoutBoldBegin}{\FXEnvLayoutBoldEnd}
@@ -1750,7 +1743,7 @@
 %     \begin{layout}{italics}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutItalicsBegin[2]{%
-  \itshape\ignorespaces#2 \@nameuse{fx#1name}: \ignorespaces}
+  \itshape\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutItalicsEnd[2]{}
 \FXRegisterEnvLayout{italics}{%
   \FXEnvLayoutItalicsBegin}{\FXEnvLayoutItalicsEnd}
@@ -1993,71 +1986,25 @@
 % \subsection{\fx notes}
 % \subsubsection{Note parameters}
 % \begin{counter}{fixmecount}
-%   \texttt{fixmecount} maintains the total of all notes, regardless of their
-%   level.
+%   \begin{counter}{fxnotecount}
+%     \begin{counter}{fxwarningcount}
+%       \begin{counter}{fxerrorcount}
+%         \begin{counter}{fxfatalcount}
+%           \texttt{fixmecount} maintains the total of all notes, regardless
+%           of their level. Each note type also gets its own counter:
 %    \begin{macrocode}
 \newcounter{fixmecount}
+\newcounter{fxnotecount}
+\newcounter{fxwarningcount}
+\newcounter{fxerrorcount}
+\newcounter{fxfatalcount}
 
 %    \end{macrocode}
-% \end{counter}
-% \begin{macro}{\@fxnoteparameters}
-%   \marg{type}\\
-%   The following macro creates all required note parameters. This currently
-%   comprises the note counter and names (singular and plural). The names will
-%   be initialized when executing the language option(s).
-%    \begin{macrocode}
-\newcommand*\@fxnoteparameters[1]{%
-  \newcounter{fx#1count}
-  \expandafter\newcommand\csname fx#1name\endcsname{}
-  \expandafter\newcommand\csname fx#1sname\endcsname{}}
-
-%    \end{macrocode}
-% \end{macro}
-%   ^^A #### FIXME: this doesn't work
-%   \DoNotIndex{\fx*count,\fx*name,\fx*sname}
-% \begin{counter}{fx*count}
-%   \begin{macro}{\fx*name}
-%     \begin{macro}{\fx*sname}
-%       \makeatletter
-%         \let\PrintMacroName=\@gobble
-%         \let\PrintEnvName=\@gobble
-%         \let\PrintCounterName=\@gobble
-%       \makeatother
-%       \begin{counter}{fxnotecount}
-%         \begin{macro}{fxnotename}
-%           \begin{macro}{fxnotesname}
-%             \begin{counter}{fxwarningcount}
-%               \begin{macro}{fxwarningname}
-%                 \begin{macro}{fxwarningsname}
-%                   \begin{counter}{fxerrorcount}
-%                     \begin{macro}{fxerrorname}
-%                       \begin{macro}{fxerrorsname}
-%                         \begin{counter}{fxfatalcount}
-%                           \begin{macro}{fxfatalname}
-%                             \begin{macro}{fxfatalsname}
-%                               And we use it for all note types:
-%    \begin{macrocode}
-\@fxnoteparameters{note}
-\@fxnoteparameters{warning}
-\@fxnoteparameters{error}
-\@fxnoteparameters{fatal}
-
-%    \end{macrocode}
-%                             \end{macro}
-%                           \end{macro}
-%                         \end{counter}
-%                       \end{macro}
-%                     \end{macro}
-%                   \end{counter}
-%                 \end{macro}
-%               \end{macro}
-%             \end{counter}
-%           \end{macro}
-%         \end{macro}
+%           \end{counter}
+%         \end{counter}
 %       \end{counter}
-%     \end{macro}
-%   \end{macro}
-% \end{counter}
+%     \end{counter}
+%   \end{counter}
 % \begin{option}{author}
 %   A \fx note's ``author'' allows to distinguish notes from different
 %   persons in collaborative mode.
@@ -2455,156 +2402,160 @@
 % \end{environment}
 %
 % \subsection{Internationalization\label{sec:code:i18n}}
-% \begin{option}{langtrack}
+% \begin{macro}{\@fxlanguages}
+%   This macro references all the supported languages, including language
+%   aliases:
+%    \begin{macrocode}
+\newcommand*\@fxlanguages{%
+  english,french,francais,spanish,italian,german,ngerman,danish,croatian}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \subsubsection{Language definitions}
+% \subsubsubsection{English}
+%    \begin{macrocode}
+\newcommand\fxenglishnotename{Note}
+\newcommand\fxenglishnotesname{Notes}
+\newcommand\fxenglishwarningname{Warning}
+\newcommand\fxenglishwarningsname{Warnings}
+\newcommand\fxenglisherrorname{Error}
+\newcommand\fxenglisherrorsname{Errors}
+\newcommand\fxenglishfatalname{Fatal}
+\newcommand\fxenglishfatalsname{Fatals}
+\newcommand\englishlistfixmename{List of Corrections}
+%    \end{macrocode}
+% \subsubsubsection{French}
+%    \begin{macrocode}
+\newcommand\fxfrenchnotename{Note}
+\newcommand\fxfrenchnotesname{Notes}
+\newcommand\fxfrenchwarningname{Attention}
+\newcommand\fxfrenchwarningsname{Avertissements}
+\newcommand\fxfrencherrorname{Erreur}
+\newcommand\fxfrencherrorsname{Erreurs}
+\newcommand\fxfrenchfatalname{Fatal}
+\newcommand\fxfrenchfatalsname{Fatales}
+\newcommand\frenchlistfixmename{Liste des Corrections}
+%    \end{macrocode}
+% \subsubsubsection{Spanish}
+%    \begin{macrocode}
+\newcommand\fxspanishnotename{Nota}
+\newcommand\fxspanishnotesname{Notas}
+\newcommand\fxspanishwarningname{Aviso}
+\newcommand\fxspanishwarningsname{Avisos}
+\newcommand\fxspanisherrorname{Error}
+\newcommand\fxspanisherrorsname{Errores}
+\newcommand\fxspanishfatalname{FIXME}
+\newcommand\fxspanishfatalsname{FIXME}
+\newcommand\spanishlistfixmename{Lista de Correcciones}
+%    \end{macrocode}
+% \subsubsubsection{Italian}
+%    \begin{macrocode}
+\newcommand\fxitaliannotename{Nota}
+\newcommand\fxitaliannotesname{Note}
+\newcommand\fxitalianwarningname{Avviso}
+\newcommand\fxitalianwarningsname{Avvisi}
+\newcommand\fxitalianerrorname{Errore}
+\newcommand\fxitalianerrorsname{Errori}
+\newcommand\fxitalianfatalname{FIXME}
+\newcommand\fxitalianfatalsname{FIXME}
+\newcommand\italianlistfixmename{Corrigenda}
+%    \end{macrocode}
+% \subsubsubsection{German}
+%    \begin{macrocode}
+\newcommand\fxgermannotename{Anm}
+\newcommand\fxgermannotesname{Anmerkungen}
+\newcommand\fxgermanwarningname{Warnung}
+\newcommand\fxgermanwarningsname{Warnungen}
+\newcommand\fxgermanerrorname{Fehler}
+\newcommand\fxgermanerrorsname{Fehler}
+\newcommand\fxgermanfatalname{FIXME}
+\newcommand\fxgermanfatalsname{FIXME}
+\newcommand\germanlistfixmename{Verzeichnis der Korrekturen}
+%    \end{macrocode}
+% \subsubsubsection{Danish}
+%    \begin{macrocode}
+\newcommand\fxdanishnotename{Note}
+\newcommand\fxdanishnotesname{Noter}
+\newcommand\fxdanishwarningname{Advarsel}
+\newcommand\fxdanishwarningsname{Advarsler}
+\newcommand\fxdanisherrorname{Fejl}
+\newcommand\fxdanisherrorsname{Fejl}
+\newcommand\fxdanishfatalname{FIXME}
+\newcommand\fxdanishfatalsname{FIXME}
+\newcommand\danishlistfixmename{Rettelser}
+%    \end{macrocode}
+% \subsubsubsection{Croatian}
+%    \begin{macrocode}
+\newcommand\fxcroatiannotename{Poruka}
+\newcommand\fxcroatiannotesname{Poruke}
+\newcommand\fxcroatianwarningname{Upozorenje}
+\newcommand\fxcroatianwarningsname{Upozorenja}
+\newcommand\fxcroatianerrorname{Gre\v ska}
+\newcommand\fxcroatianerrorsname{Greske}
+\newcommand\fxcroatianfatalname{FIXME}
+\newcommand\fxcroatianfatalsname{FIXME}
+\newcommand\croatianlistfixmename{Popis korekcija}
+
+%    \end{macrocode}
+% \subsubsection{Language tracking}
+% \begin{option}{langtrack}fxlanguages
 %   Whether to track the value of \cs{languagename} automatically:
 %    \begin{macrocode}
 \@fxdefineboolkey{lang}{langtrack}
-
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{defaultlang}
-%   Which language to use when tracking leads to an unsuported language.
+%   Which language to use when tracking leads to an unsuported language:
 %    \begin{macrocode}
-\@fxdefinechoicekey{lang}{defaultlang}[\@fxdefaultlang]{%
-  english,french,francais,spanish,italian,german,ngerman,danish,croatian}{}
+\def\@fxexpr{\@fxdefinechoicekey{lang}{defaultlang}[\@fxdefaultlang]}
+\expandafter\@fxexpr\expandafter{\@fxlanguages}{}
 
 %    \end{macrocode}
 % \end{option}
-% Because an explicit language setting overrides language tracking, all the
-% options below turn language tracking off.
-% \begin{option}{english}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{english}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Note}%
-  \renewcommand\fxnotesname{Notes}%
-  \renewcommand\fxwarningname{Warning}%
-  \renewcommand\fxwarningsname{Warnings}%
-  \renewcommand\fxerrorname{Error}%
-  \renewcommand\fxerrorsname{Errors}%
-  \renewcommand\fxfatalname{Fatal}%
-  \renewcommand\fxfatalsname{Fatals}%
-  \renewcommand\listfixmename{List of Corrections}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{french}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{french}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Note}%
-  \renewcommand\fxnotesname{Notes}%
-  \renewcommand\fxwarningname{Attention}%
-  \renewcommand\fxwarningsname{Avertissements}%
-  \renewcommand\fxerrorname{Erreur}%
-  \renewcommand\fxerrorsname{Erreurs}%
-  \renewcommand\fxfatalname{Fatal}%
-  \renewcommand\fxfatalsname{Fatales}%
-  \renewcommand\listfixmename{Liste des Corrections}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{francais}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{francais}{\@fxsetkeys{lang}{french}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{spanish}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{spanish}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Nota}%
-  \renewcommand\fxnotesname{Notas}%
-  \renewcommand\fxwarningname{Aviso}%
-  \renewcommand\fxwarningsname{Avisos}%
-  \renewcommand\fxerrorname{Error}%
-  \renewcommand\fxerrorsname{Errores}%
-  \renewcommand\fxfatalname{FIXME}%
-  \renewcommand\fxfatalsname{FIXME}%
-  \renewcommand\listfixmename{Lista de Correcciones}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{italian}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{italian}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Nota}%
-  \renewcommand\fxnotesname{Note}%
-  \renewcommand\fxwarningname{Avviso}%
-  \renewcommand\fxwarningsname{Avvisi}%
-  \renewcommand\fxerrorname{Errore}%
-  \renewcommand\fxerrorsname{Errori}%
-  \renewcommand\fxfatalname{FIXME}%
-  \renewcommand\fxfatalsname{FIXME}%
-  \renewcommand\listfixmename{Corrigenda}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{german}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{german}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Anm}%
-  \renewcommand\fxnotesname{Anmerkungen}%
-  \renewcommand\fxwarningname{Warnung}%
-  \renewcommand\fxwarningsname{Warnungen}%
-  \renewcommand\fxerrorname{Fehler}%
-  \renewcommand\fxerrorsname{Fehler}%
-  \renewcommand\fxfatalname{FIXME}%
-  \renewcommand\fxfatalsname{FIXME}%
-  \renewcommand\listfixmename{Verzeichnis der Korrekturen}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{ngerman}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{ngerman}{\@fxsetkeys{lang}{german}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{danish}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{danish}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Note}%
-  \renewcommand\fxnotesname{Noter}%
-  \renewcommand\fxwarningname{Advarsel}%
-  \renewcommand\fxwarningsname{Advarsler}%
-  \renewcommand\fxerrorname{Fejl}%
-  \renewcommand\fxerrorsname{Fejl}%
-  \renewcommand\fxfatalname{FIXME}%
-  \renewcommand\fxfatalsname{FIXME}%
-  \renewcommand\listfixmename{Rettelser}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{croatian}
-%   \mbox{}
-%    \begin{macrocode}
-\@fxdefinevoidkey{lang}{croatian}{%
-  \@fxsetkeys{lang}{langtrack=false}%
-  \renewcommand\fxnotename{Poruka}%
-  \renewcommand\fxnotesname{Poruke}%
-  \renewcommand\fxwarningname{Upozorenje}%
-  \renewcommand\fxwarningsname{Upozorenja}%
-  \renewcommand\fxerrorname{Gre\v ska}%
-  \renewcommand\fxerrorsname{Greske}%
-  \renewcommand\fxfatalname{FIXME}%
-  \renewcommand\fxfatalsname{FIXME}%
-  \renewcommand\listfixmename{Popis korekcija}}
-
-%    \end{macrocode}
-% \end{option}
+%
+% \subsubsection{Language options}
 % \begin{option}{lang}
-%   Another way of setting the language:
+%   \begin{macro}{\@fxlang}
+%     Store the current language in \cs{@fxlang} after having handled language
+%     aliases, and disable language tracking:
 %    \begin{macrocode}
-\@fxdefinechoicekey{lang}{lang}{%
-  english,french,francais,spanish,italian,german,ngerman,danish,croatian}{%
-  \@fxsetkeys{lang}{langtrack=false,#1}}
+\def\@fxexpr{\@fxdefinechoicekey{lang}{lang}[\@fxlang]}
+\expandafter\@fxexpr\expandafter{\@fxlanguages}{%
+  \ifthenelse{\equal{#1}{francais}}{\def\@fxlang{french}}{%
+    \ifthenelse{\equal{#1}{ngerman}}{\def\@fxlang{german}}{}}%
+  \@fxsetkeys{lang}{langtrack=false}}
+
 %    \end{macrocode}
+%   \end{macro}
 % \end{option}
+% Create individual language options:
+%    \begin{macrocode}
+\@for\@fxlg:=\@fxlanguages,\do{%
+  \def\@fxexprone{\@fxdefinevoidkey{lang}}
+  \edef\@fxexprtwo{{\@fxlg}{\noexpand\@fxsetkeys{lang}{lang=\@fxlg}}}
+  \expandafter\@fxexprone\@fxexprtwo}
+
+%    \end{macrocode}
+%
+% \subsubsection{Language abstraction layer}
+% \begin{macro}{\@fxlistfixmename}
+%   Construct the ``list of fixmes'' title in a language dependent fashion:
+%    \begin{macrocode}
+\newcommand*\@fxlistfixmename{\@nameuse{\@fxlang listfixmename}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fxnotename}
+%   \begin{macro}{\fxnotesname}
+%     \marg{type}\\
+%     Construct the notes names in a language dependent fashion:
+%    \begin{macrocode}
+\newcommand*\fxnotename[1]{\@nameuse{fx\@fxlang#1name}}
+\newcommand*\fxnotesname[1]{\@nameuse{fx\@fxlang#1sname}}
+
+%    \end{macrocode}
+%   \end{macro}
+% \end{macro}
 %
 % \subsection{Document status processing}
 % \begin{macro}{\@@@fxnote}
@@ -2903,42 +2854,42 @@
 %    \begin{macrocode}
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
-  \footnote{\@nameuse{fx#1name}: #2\@fxtempsig}}
+  \footnote{\fxnotename{#1}: #2\@fxtempsig}}
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \footnotesize\raggedleft\@nameuse{fx#1name}: #2\@fxtempsig]{%
-    \footnotesize\raggedright\@nameuse{fx#1name}: #2\@fxtempsig}}
+  \footnotesize\raggedleft\fxnotename{#1}: #2\@fxtempsig]{%
+    \footnotesize\raggedright\fxnotename{#1}: #2\@fxtempsig}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\footnotesize\raggedleft\@nameuse{fx#1name}!\@fxtempsig]{%
-    \footnotesize\raggedright\@nameuse{fx#1name}!\@fxtempsig}}
+  \marginpar[\footnotesize\raggedleft\fxnotename{#1}!\@fxtempsig]{%
+    \footnotesize\raggedright\fxnotename{#1}!\@fxtempsig}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\bfseries\@nameuse{fx#1name}: #2\@fxtempsig}}
+  {\bfseries\fxnotename{#1}: #2\@fxtempsig}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2\@fxtempsig}%
     \index{***#3@\fixmeindexname{} (#3):%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
   \else%
     \index{***@\fixmeindexname:%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
   \fi}
 \renewcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
     \@fxdosig{#3}%
-    \fxaddcontentsline{\@nameuse{fx#1name}: #2\@fxtempsig}%
+    \fxaddcontentsline{\fxnotename{#1}: #2\@fxtempsig}%
   \else%
-    \fxaddcontentsline{\@nameuse{fx#1name}: #2}%
+    \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
 \renewcommand*\FXEnvLayoutBoldBegin[2]{%
-  \bfseries\@nameuse{fx#1name}: \ignorespaces}
+  \bfseries\fxnotename{#1}: \ignorespaces}
 \renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxtempsig}
 %</fxthemesignature>
 %    \end{macrocode}
@@ -2973,14 +2924,14 @@
 \renewcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !{\color{fx#1}\@nameuse{thefx#1count}: #3: #2}}%
     \index{***#3@\fixmeindexname{} (#3):%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !{\color{fx#1}\@nameuse{thefx#1count}: #2}}%
   \else%
     \index{***@\fixmeindexname:%
-      !\@nameuse{@fx#1key}@\@nameuse{fx#1sname}:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !{\color{fx#1}\@nameuse{thefx#1count}: #2}}%
   \fi}
 
