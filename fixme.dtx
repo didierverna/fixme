@@ -846,7 +846,7 @@
 % ones (see sections \sectionref{sec:manual:envlayoutcontrol} and
 % \sectionref{sec:manual:targetlayoutcontrol}).
 %
-% \subsubsection{Themes list}
+% \subsubsection{Available themes}
 % \DescribeTheme{signature}
 % \DescribeTheme{color}
 % \fx comes with a number of predefined themes listed below.
@@ -863,57 +863,124 @@
 %   \sectionref{sec:manual:targetlayoutslist}.
 % \end{description}
 %
-% \section{Customizing \fx}
-% \subsection{Customizing the \fx notes layout}
-% \subsubsection{Commands}
-% The actual typesetting of \fx notes is done by the commands described
-% below. If you want to change their behavior, you can \cs{renewcommand}
-% them.\\
-% \DescribeMacro{\FXLayoutInline}
-% \DescribeMacro{\FXLayoutMargin}
-% \DescribeMacro{\FXLayoutFootnote}
-% \marg{prefix}\marg{note}\\
-% The \texttt{inline}, \texttt{margin} and \texttt{footnote} layouts have two
-% parts: a ``prefix'' which depends on the note level, and the note itself.
-% By default, the prefix is one of ``\fx note:'', ``\fx warning:'',
-% ``\fx error:''  or simply ``\fx:'', and appears in bold. The note
-% itself appears emphasized.\\
-% \DescribeMacro{\FXayoutMarginCLue}
-% \marg{prefix}\\
-% The special \texttt{marginclue} layout only outputs the prefix mentioned
-% above.\\
-% \DescribeMacro{\FXLayoutIndex}
-% \marg{note}\\
-% All \fx index entries appear under the ``\fx'' key in the symbols
-% section. There are 4 subcategories under this key, as many as there are note
-% levels. By default, only the first 3 of them are used though (fatal errors
-% do not appear under a subkey, but directly under the \fx key). The notes
-% are numbered in the index.\par
+% \section{Extending \fx}
+% Hear hear, this is where you start spending more time hacking \LaTeX{} than
+% actually writing your document\ldots
 %
-% \subsubsection{Environments}
-% The actual typesetting of \fx environments is done by the commands
-% described below. If you want to change their behavior, you can
-% \cs{renewcommand} them.\\
-% \DescribeMacro{\FXEnvBegin}
-% \marg{prefix}\\
-% Remember that a \fx environment's summary is typeset by the corresponding
-% layout command, as describe above. By default, \fx uses a
-% \texttt{quotation} environment to typeset the longer note, and the prefix
-% appears in bold.\\
-% \DescribeMacro{\FXEnvEnd}
-% This command closes the \texttt{quotation} by default.
+% \subsection{Modifying existing layouts}
+% \fx note, environment and target layouts are implemented as a (set of)
+% commands conforming to strict prototypes. If you're not happy with the way
+% they perform, you have the possibility to \cs{renewcommand} them (in fact,
+% you should use \cs{renewcommand*} for note and environment layouts). In such
+% a case, it is probably best to have a look at the code in order to figure
+% out how the original ones are written. However, a description of their
+% prototypes is given below.
 %
-% \subsection{Customizing the \fx notes logging}
-% The actual logging of \fx notes is done by the commands described
-% below. If you want to change their behavior, you can \cs{renewcommand}
-% them.\\
-% \DescribeMacro{\FXLogNote}
-% \DescribeMacro{\FXLogWarning}
-% \DescribeMacro{\FXLogError}
-% \DescribeMacro{\FXLogFatal}
-% \marg{note}\\
-% By default, simple notes are recorded in the log file only, and the others
-% also appear on the terminal during compilation.
+% \subsubsection{Modifying existing note layouts}
+% Each note layout is implemented as a macro taking three mandatory arguments.
+% By convention, this macro is named \cs{FXLayout}\meta{name}, for instance
+% \cs{FXLayoutInline}.
+%
+% \noindent
+% \DescribeMacro{\FXLayout*}
+% \marg{type}\marg{note}\marg{author}\\
+% \meta{type} is the note type. It can be one of \texttt{note},
+% \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{note} is the
+% actual note, and \meta{author} is the note author's tag.
+%
+% \subsubsection{Modifying existing environment layouts}
+% \begin{sloppypar}
+%   Each environment layout is implemented as two macros taking two mandatory
+%   arguments. By convention, these macros are named
+%   \cs{FXEnvLayout}\meta{name}\texttt{Begin} and
+%   \cs{FXEnvLayout}\meta{name}\texttt{End}, for instance
+%   \cs{FXEnvLayoutBoldBegin} and \cs{FXEnvLayoutBoldEnd}.
+% \end{sloppypar}
+%
+% \noindent
+% \DescribeMacro{\FXEnvLayout*Begin}
+% \DescribeMacro{\FXEnvLayout*End}
+% \marg{type}\marg{author}\\
+% \meta{type} is the note type. It can be one of \texttt{note},
+% \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
+% note author's tag.
+%
+% \subsubsection{Modifying existing target layouts}
+% Each target layout is implemented as a macro taking one mandatory argument.
+% By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
+% instance \cs{FXTargetLayoutBold}.
+%
+% \noindent
+% \DescribeMacro{\FXTargetLayout*}
+% \marg{target}\\
+% \meta{target} is the textual target.
+%
+% \subsection{Creating new layouts}
+% Creating a new layout first requires that you write new layout macros as
+% described in the previous section. Once you've done that, the next step is
+% to make \fx aware of this addition. This is called ``registering'' a layout.
+%
+% \subsubsection{Registering a new note layout}
+% \begin{sloppypar}
+%   \DescribeMacro{\FXRegisterLayout}
+%   \oarg{boolfunc}\marg{name}\marg{macro}\\
+%   In order to register a new note layout with \fx, use the command
+%   \cs{FXRegisterLayout}. This macro has two mandatory arguments: the layout
+%   \meta{name} and the associated layout \meta{macro}. For instance, the
+%   \texttt{inline} layout is registered like this:
+% \end{sloppypar}
+% \begin{verbatim}
+% \FXRegisterLayout{inline}{\FXLayoutInline}
+% \end{verbatim}
+% The first (optional) argument may provide code that will be executed when
+% the layout is activated (it is used for instance to implement mutual
+% exclusion between the \texttt{margin} and \texttt{marginclue} layouts.
+%
+% Once registered, the new layout gets a boolean option \meta{name} and is
+% also recognized by the \texttt{layout} and \texttt{morelayout} options as
+% \meta{name}.
+%
+% If you want to save your layout externally,
+%
+% \subsubsection{Registering a new environment layout}
+% \begin{sloppypar}
+%   \DescribeMacro{\FXRegisterEnvLayout}
+%   \marg{name}\marg{begin}\marg{end}\\
+%   In order to register a new environment layout with \fx, use the command
+%   \cs{FXRegisterEnvLayout}. This macro has three mandatory arguments: the
+%   layout \meta{name} and the associated \meta{begin} and \meta{end} macros.
+%   For instance, the \texttt{color} layout is registered like this:
+% \end{sloppypar}
+% \begin{verbatim}
+% \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
+% \end{verbatim}
+% Once registered, the new layout is recognized by the \texttt{envlayout}
+% option as \meta{name}.
+%
+% If you want to save your layout externally, you need to store it in a file
+% named \texttt{fxenvlayout}\meta{name}\texttt{.sty}. It will then be
+% recognized by the \cs{fxloadenvlayouts} and \cs{fxuseenvlayout} commands as
+% \meta{name}.
+%
+% \subsubsection{Registering a new target layout}
+% \begin{sloppypar}
+%   \DescribeMacro{\FXRegisterTargetLayout}
+%   \marg{name}\marg{macro}\\
+%   In order to register a new target layout with \fx, use the command
+%   \cs{FXRegisterTargetLayout}. This macro has two mandatory arguments: the
+%   layout \meta{name} and the associated \meta{macro}. For instance, the
+%   \texttt{color} layout is registered like this:
+% \end{sloppypar}
+% \begin{verbatim}
+% \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
+% \end{verbatim}
+% Once registered, the new layout is recognized by the \texttt{targetlayout}
+% option as \meta{name}.
+%
+% If you want to save your layout externally, you need to store it in a file
+% named \texttt{fxtargetlayout}\meta{name}\texttt{.sty}. It will then be
+% recognized by the \cs{fxloadtargetlayouts} and \cs{fxusetargetlayout}
+% commands.
 %
 % \subsection{Internationalization}
 % \fx's language options have been described in section
