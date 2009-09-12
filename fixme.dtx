@@ -983,30 +983,20 @@
 % commands.
 %
 % \subsection{Internationalization}
-% \fx's language options have been described in section
-% \sectionref{sec:manual:i18n}. If you want a finer grain on the
-% language-dependent parts of \fx, the following commands are provided and
-% can be renewed.\par
 % \DescribeMacro{\fxnotename}
+% \DescribeMacro{\fxnotesname}
 % \DescribeMacro{\fxwarningname}
+% \DescribeMacro{\fxwarningsname}
 % \DescribeMacro{\fxerrorname}
+% \DescribeMacro{\fxerrorsname}
 % \DescribeMacro{\fxfatalname}
-% \DescribeMacro{\fixmelogo}
-% The \cs{fx*name} commands define the name of the four different note levels.
-% They make intensive use of \cs{fixmelogo} ;-)\par
-% \DescribeMacro{\fixmeindexname}
-% \DescribeMacro{\fxnoteindexname}
-% \DescribeMacro{\fxwarningindexname}
-% \DescribeMacro{\fxerrorindexname}
-% \DescribeMacro{\fxfatalindexname}
-% The command \cs{fixmeindexname} defines the main \fx index key. The other
-% ones define the different index subkeys for each note level. Please note that
-% an empty name for a subkey means that you don't actually want a subcategory
-% (that's the case by default for fatal errors). The corresponding notes will
-% then appear directly under the main \fx key. For that reason, a non
-% empty subkey must end with an exclamation mark.\par
+% \DescribeMacro{\fxfatalsname}
+% \fx's language control has been described in section
+% \sectionref{sec:manual:i18n}. The actual commands that produce the
+% language-dependent parts of \fx are renewable. Note names in singular or
+% plural forms are defined by \cs{fxnotename}, \cs{fxnotesname} \etc\\
 % \DescribeMacro{\listfixmename}
-% \cs{listfixmename} defines the title for the ``list of fixmes'' section.
+% The ``list of fixmes'' title is defined by \cs{listfixmename}.
 %
 % \section{\auctex support}
 % \auctex is a powerful major mode for editing \TeX{} documents in
