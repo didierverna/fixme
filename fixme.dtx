@@ -1786,7 +1786,7 @@
 % \begin{macro}{\fxuseenvlayout}
 %   \begin{macro}{\FXRequireEnvLayout}
 %     \marg{name}\\
-%     \cs{FXRequireEnvLayout} is a better style for themes programming.
+%     \cs{FXRequireEnvLayout} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxuseenvlayout[1]{%
   \fxloadenvlayouts{#1}%
@@ -1884,7 +1884,7 @@
 % \begin{macro}{\fxusetargetlayout}
 %   \begin{macro}{\FXRequireTargetLayout}
 %     \marg{name}\\
-%     \cs{FXRequireTargetLayout} is a better style for themes programming.
+%     \cs{FXRequireTargetLayout} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxusetargetlayout[1]{%
   \fxloadtargetlayouts{#1}%
@@ -1925,8 +1925,7 @@
 %   \begin{macro}{\FXLogWarning}
 %     \begin{macro}{\FXLogerror}
 %       \begin{macro}{\FXLogFatal}
-%         \marg{msg}\\
-%         Logging includes both log file and terminal output.
+%         \marg{msg}
 %    \begin{macrocode}
 \newcommand*\FXLogNote[1]{%
   \GenericInfo{%
@@ -2403,8 +2402,7 @@
 %
 % \subsection{Internationalization\label{sec:code:i18n}}
 % \begin{macro}{\@fxlanguages}
-%   This macro references all the supported languages, including language
-%   aliases:
+%   This macro lists all the supported languages, including aliases:
 %    \begin{macrocode}
 \newcommand*\@fxlanguages{%
   english,french,francais,spanish,italian,german,ngerman,danish,croatian}
@@ -2499,7 +2497,7 @@
 
 %    \end{macrocode}
 % \subsubsection{Language tracking}
-% \begin{option}{langtrack}fxlanguages
+% \begin{option}{langtrack}
 %   Whether to track the value of \cs{languagename} automatically:
 %    \begin{macrocode}
 \@fxdefineboolkey{lang}{langtrack}
@@ -2531,7 +2529,7 @@
 % \end{option}
 % Create individual language options:
 %    \begin{macrocode}
-\@for\@fxlg:=\@fxlanguages,\do{%
+\@for\@fxlg:=\@fxlanguages,\do{
   \def\@fxexprone{\@fxdefinevoidkey{lang}}
   \edef\@fxexprtwo{{\@fxlg}{\noexpand\@fxsetkeys{lang}{lang=\@fxlg}}}
   \expandafter\@fxexprone\@fxexprtwo}
@@ -2721,8 +2719,8 @@
 %   where the \texttt{theme} family is processed.
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{%
-  \@fxsetkeys{mode,status,lang,log,note,%
-    theme,layout,envlayout,targetlayout}{#1}}
+  \@fxsetkeys{mode,status,lang,log,note,theme,layout,envlayout,targetlayout}{%
+    #1}}
 
 %    \end{macrocode}
 % \end{macro}
