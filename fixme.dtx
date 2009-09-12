@@ -37,6 +37,7 @@
 \usepackage{dox}
 \doxitem{Option}{option}{options}
 \doxitem{Counter}{counter}{counters}
+\doxitem{Language}{lang}{languages}
 \doxitem{Color}{color}{colors}
 \doxitem{Layout}{layout}{layouts}
 \doxitem{Theme}{theme}{themes}
@@ -2412,6 +2413,7 @@
 %
 % \subsubsection{Language definitions}
 % \subsubsubsection{English}
+% \begin{lang}{english}
 %    \begin{macrocode}
 \newcommand\fxenglishnotename{Note}
 \newcommand\fxenglishnotesname{Notes}
@@ -2423,7 +2425,11 @@
 \newcommand\fxenglishfatalsname{Fatals}
 \newcommand\englishlistfixmename{List of Corrections}
 %    \end{macrocode}
+% \end{lang}
+%
 % \subsubsubsection{French}
+% \begin{lang}{french}
+%   \begin{lang}{francais}
 %    \begin{macrocode}
 \newcommand\fxfrenchnotename{Note}
 \newcommand\fxfrenchnotesname{Notes}
@@ -2435,7 +2441,11 @@
 \newcommand\fxfrenchfatalsname{Fatales}
 \newcommand\frenchlistfixmename{Liste des Corrections}
 %    \end{macrocode}
+%   \end{lang}
+% \end{lang}
+%
 % \subsubsubsection{Spanish}
+% \begin{lang}{spanish}
 %    \begin{macrocode}
 \newcommand\fxspanishnotename{Nota}
 \newcommand\fxspanishnotesname{Notas}
@@ -2447,7 +2457,10 @@
 \newcommand\fxspanishfatalsname{FIXME}
 \newcommand\spanishlistfixmename{Lista de Correcciones}
 %    \end{macrocode}
+% \end{lang}
+%
 % \subsubsubsection{Italian}
+% \begin{lang}{italian}
 %    \begin{macrocode}
 \newcommand\fxitaliannotename{Nota}
 \newcommand\fxitaliannotesname{Note}
@@ -2459,7 +2472,11 @@
 \newcommand\fxitalianfatalsname{FIXME}
 \newcommand\italianlistfixmename{Corrigenda}
 %    \end{macrocode}
+% \end{lang}
+%
 % \subsubsubsection{German}
+% \begin{lang}{german}
+%   \begin{lang}{ngerman}
 %    \begin{macrocode}
 \newcommand\fxgermannotename{Anm}
 \newcommand\fxgermannotesname{Anmerkungen}
@@ -2471,7 +2488,11 @@
 \newcommand\fxgermanfatalsname{FIXME}
 \newcommand\germanlistfixmename{Verzeichnis der Korrekturen}
 %    \end{macrocode}
+%   \end{lang}
+% \end{lang}
+%
 % \subsubsubsection{Danish}
+% \begin{lang}{danish}
 %    \begin{macrocode}
 \newcommand\fxdanishnotename{Note}
 \newcommand\fxdanishnotesname{Noter}
@@ -2483,7 +2504,10 @@
 \newcommand\fxdanishfatalsname{FIXME}
 \newcommand\danishlistfixmename{Rettelser}
 %    \end{macrocode}
+% \end{lang}
+%
 % \subsubsubsection{Croatian}
+% \begin{lang}{croatian}
 %    \begin{macrocode}
 \newcommand\fxcroatiannotename{Poruka}
 \newcommand\fxcroatiannotesname{Poruke}
@@ -2496,6 +2520,8 @@
 \newcommand\croatianlistfixmename{Popis korekcija}
 
 %    \end{macrocode}
+% \end{lang}
+%
 % \subsubsection{Language tracking}
 % \begin{option}{langtrack}
 %   Whether to track the value of \cs{languagename} automatically:
@@ -2527,7 +2553,16 @@
 %    \end{macrocode}
 %   \end{macro}
 % \end{option}
-% Create individual language options:
+% \begin{option}{english}
+%   \begin{option}{french}
+%     \begin{option}{francais}
+%       \begin{option}{spanish}
+%         \begin{option}{italian}
+%           \begin{option}{german}
+%             \begin{option}{ngerman}
+%               \begin{option}{danish}
+%                 \begin{option}{croatian}
+%                   Create individual language options:
 %    \begin{macrocode}
 \@for\@fxlg:=\@fxlanguages,\do{
   \def\@fxexprone{\@fxdefinevoidkey{lang}}
@@ -2535,6 +2570,15 @@
   \expandafter\@fxexprone\@fxexprtwo}
 
 %    \end{macrocode}
+%                 \end{option}
+%               \end{option}
+%             \end{option}
+%           \end{option}
+%         \end{option}
+%       \end{option}
+%     \end{option}
+%   \end{option}
+% \end{option}
 %
 % \subsubsection{Language abstraction layer}
 % \begin{macro}{\@fxlistfixmename}
