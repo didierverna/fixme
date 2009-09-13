@@ -626,8 +626,7 @@
 % The table below lists the target layouts currently distributed with
 % \fx.
 %
-% \DescribeLayout{bold}
-% \DescribeLayout{italics}
+% \DescribeLayout{plain}
 % \DescribeLayout{color}
 % \begin{center}
 %   \DeleteShortVerb{\|}
@@ -635,13 +634,17 @@
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
-%     \texttt{bold} & & Display target in bold\\
-%     \texttt{italics} & & Display target in italics\\
+%     \texttt{plain} & & Display target as-is\\
 %     \texttt{color} & \texttt{*} & Display target in color\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 % \end{center}
+%
+% \DescribeMacro{\fxtargetlayoutplainface}
+% By default, the \texttt{plain} target layout displays its contents in
+% italics. You can modify this by renew'ing the \cs{fxtargetlayoutplainface}
+% command (\cs{itshape} by default).
 %
 % \DescribeColor{fxtarget}
 % The \texttt{color} target layout uses the color named \texttt{fxtarget}
@@ -911,7 +914,7 @@
 %   arguments. By convention, these macros are named
 %   \cs{FXEnvLayout}\meta{name}\texttt{Begin} and
 %   \cs{FXEnvLayout}\meta{name}\texttt{End}, for instance
-%   \cs{FXEnvLayoutBoldBegin} and \cs{FXEnvLayoutBoldEnd}.
+%   \cs{FXEnvLayoutPlainBegin} and \cs{FXEnvLayoutPlainEnd}.
 % \end{sloppypar}
 %
 % \noindent
@@ -925,7 +928,7 @@
 % \subsubsection{Modifying existing target layouts}
 % Each target layout is implemented as a macro taking one mandatory argument.
 % By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
-% instance \cs{FXTargetLayoutBold}.
+% instance \cs{FXTargetLayoutPlain}.
 %
 % \noindent
 % \DescribeMacro{\FXTargetLayout*}
@@ -1858,25 +1861,19 @@
 % \end{macro}
 %
 % \subsubsection{Built-in target layouts}
-% \subsubsubsection{Bold}
+% \subsubsubsection{Plain}
+% \begin{macro}{\fxtargetlayoutplainface}
+%    \begin{macrocode}
+\newcommand*\fxtargetlayoutplainface{\itshape}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\FXTargetLayoutBold}
 %   \marg{target}
 %   \begin{layout}{bold}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutBold[1]{\begingroup\bfseries#1\endgroup}
-\FXRegisterTargetLayout{bold}{\FXTargetLayoutBold}
-
-%    \end{macrocode}
-%   \end{layout}
-% \end{macro}
-%
-% \subsubsubsection{Italics}
-% \begin{macro}{\FXTargetLayoutItalics}
-%   \marg{target}
-%   \begin{layout}{italics}
-%    \begin{macrocode}
-\newcommand\FXTargetLayoutItalics[1]{\begingroup\itshape#1\endgroup}
-\FXRegisterTargetLayout{italics}{\FXTargetLayoutItalics}
+\newcommand\FXTargetLayoutPlain[1]{%
+  \begingroup\fxtargetlayoutplainface#1\endgroup}
+\FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
 
 %    \end{macrocode}
 %   \end{layout}
@@ -2777,7 +2774,7 @@
   layout=margin,%
   innerlayout={layout=inline},%
   envlayout=plain,%
-  targetlayout=italics}
+  targetlayout=plain}
 \ProcessOptionsX*[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>
 
 %    \end{macrocode}
