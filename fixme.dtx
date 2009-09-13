@@ -1871,8 +1871,7 @@
 %   \marg{target}
 %   \begin{layout}{bold}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutPlain[1]{%
-  \begingroup\fxtargetlayoutplainface#1\endgroup}
+\newcommand\FXTargetLayoutPlain[1]{\fxtargetlayoutplainface#1}
 \FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
 
 %    \end{macrocode}
@@ -1938,7 +1937,8 @@
 %     mode, we use the selected layout.
 %    \begin{macrocode}
 \newcommand\@fxtargetlayout@final[1]{#1}
-\newcommand\@fxtargetlayout@draft[1]{\@@fxtargetlayout{#1}}
+\newcommand\@fxtargetlayout@draft[1]{%
+  \begingroup\@@fxtargetlayout{#1}\endgroup}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -2941,7 +2941,7 @@
 %   \begin{macro}{\FXTargetLayoutColor}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutColor[1]{\begingroup\color{fxtarget}#1\endgroup}
+\newcommand\FXTargetLayoutColor[1]{\color{fxtarget}#1}
 \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 
 %</fxtargetlayoutcolor>
