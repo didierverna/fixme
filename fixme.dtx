@@ -2868,8 +2868,64 @@
 %   \end{macro}
 % \end{layout}
 %
+% \subsubsection{The \texttt{colorsig} environment layout}
+% \begin{layout}{colorsig}
+%    \begin{macrocode}
+%<*fxenvlayoutcolorsig>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxenvlayoutcolorsig}
+
+\RequirePackage{color}
+
+%    \end{macrocode}
+%   \begin{macro}{\@fxdosig}
+%     \marg{author}
+%     \begin{macro}{\@fxsignature}
+%       Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- \textit{#1}}}}
+
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{color}{fxnote}
+%     \begin{color}{fxwarning}
+%       \begin{color}{fxerror}
+%         \begin{color}{fxfatal}
+%           Environments use the same colors as the notes themselves because
+%           their contents really is a longer note.
+%    \begin{macrocode}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
+
+%    \end{macrocode}
+%         \end{color}
+%       \end{color}
+%     \end{color}
+%   \end{color}
+%   \begin{macro}{\FXEnvLayoutColorSigBegin}
+%     \begin{macro}{\FXEnvLayoutColorSigEnd}
+%       \marg{type}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXEnvLayoutColorSigBegin[2]{\color{fx#1}}
+\newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
+\FXRegisterEnvLayout{colorsig}{%
+  \FXEnvLayoutColorSigBegin}{\FXEnvLayoutColorSigEnd}
+
+%</fxenvlayoutcolorsig>
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{layout}
+%
 % \subsection{Target Layouts}
 % \subsubsection{The \texttt{color} target layout}
+% Since targets don't include author information, this layout is usable in
+% both the \texttt{color} and \texttt{colorsig} themes.
 % \begin{layout}{color}
 %    \begin{macrocode}
 %<*fxtargetlayoutcolor>
@@ -2906,42 +2962,39 @@
 
 %    \end{macrocode}
 % \begin{macro}{\@fxdosig}
-%   \marg{author}\\
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%
-%   It seems that \cs{ifthenelse} is fragile: it breaks if used within moving
-%   arguments (or somehting like that). So the safe path is to construct the
-%   signature first (possibly empty), and to store it in a temporary macro, to
-%   be used when needed.
+%   \marg{author}
+%   \begin{macro}{\@fxsignature}
+%     Use a signature of the form ``-- sig'', unless author is empty.
 %    \begin{macrocode}
-\newcommand\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxtempsig{}}{%
-    \def\@fxtempsig{ -- \textit{#1}}}}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- \textit{#1}}}}
 
 %    \end{macrocode}
+%   \end{macro}
 % \end{macro}
 %    \begin{macrocode}
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
-  \footnote{\fxnotename{#1}: #2\@fxtempsig}}
+  \footnote{\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \footnotesize\raggedleft\fxnotename{#1}: #2\@fxtempsig]{%
-    \footnotesize\raggedright\fxnotename{#1}: #2\@fxtempsig}}
+  \footnotesize\raggedleft\fxnotename{#1}: #2\@fxsignature]{%
+    \footnotesize\raggedright\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\footnotesize\raggedleft\fxnotename{#1}!\@fxtempsig]{%
-    \footnotesize\raggedright\fxnotename{#1}!\@fxtempsig}}
+  \marginpar[\footnotesize\raggedleft\fxnotename{#1}!\@fxsignature]{%
+    \footnotesize\raggedright\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\bfseries\fxnotename{#1}: #2\@fxtempsig}}
+  {\bfseries\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
-      !\@nameuse{thefx#1count}: #2\@fxtempsig}%
+      !\@nameuse{thefx#1count}: #2\@fxsignature}%
     \index{***#3@\fixmeindexname{} (#3):%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
@@ -2953,13 +3006,13 @@
 \renewcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
     \@fxdosig{#3}%
-    \fxaddcontentsline{\fxnotename{#1}: #2\@fxtempsig}%
+    \fxaddcontentsline{\fxnotename{#1}: #2\@fxsignature}%
   \else%
     \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
 \renewcommand*\FXEnvLayoutBoldBegin[2]{%
   \bfseries\fxnotename{#1}: \ignorespaces}
-\renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxtempsig}
+\renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxsignature}
 %</fxthemesignature>
 %    \end{macrocode}
 % \end{theme}
@@ -3015,6 +3068,64 @@
 %</fxthemecolor>
 %    \end{macrocode}
 % \end{theme}
+%
+% \subsection{The \texttt{colorsig} theme}
+% \begin{theme}{colorsig}
+%   The \texttt{colorsig} environment layout provides \cs{@fxdosig}, so there
+%   is no need to provide it here.
+%    \begin{macrocode}
+%<*fxthemecolorsig>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxthemecolorsig}
+
+\RequirePackage{color}
+
+\FXRequireEnvLayout{colorsig}
+\FXRequireTargetLayout{color}
+
+\renewcommand*\FXLayoutFootnote[3]{%
+  \@fxdosig{#3}%
+  \footnote{\color{fx#1}#2\@fxsignature}}
+\renewcommand*\FXLayoutMargin[3]{%
+  \@fxdosig{#3}%
+  \marginpar[%
+  \footnotesize\raggedleft\color{fx#1}#2\@fxsignature]{%
+    \footnotesize\raggedright\color{fx#1}#2\@fxsignature}}
+\renewcommand*\FXLayoutMarginClue[3]{%
+  \@fxdosig{#3}%
+  \marginpar[\footnotesize\raggedleft\color{fx#1}!\@fxsignature]{%
+    \footnotesize\raggedright\color{fx#1}!\@fxsignature}}
+\renewcommand*\FXLayoutInline[3]{%
+  \@fxdosig{#3}%
+  {\bfseries\color{fx#1}#2\@fxsignature}}
+\renewcommand*\FXLayoutIndex[3]{%
+  \@fxdosig{#3}%
+  \iffx@mode@multiuser%
+    \index{***@\fixmeindexname:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
+      !{\color{fx#1}\@nameuse{thefx#1count}: #2\@fxsignature}}%
+    \index{***#3@\fixmeindexname{} (#3):%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
+      !{\color{fx#1}\@nameuse{thefx#1count}: #2}}%
+  \else%
+    \index{***@\fixmeindexname:%
+      !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
+      !{\color{fx#1}\@nameuse{thefx#1count}: #2}}%
+  \fi}
+\renewcommand*\FXLayoutContentsLine[3]{%
+  \iffx@mode@multiuser%
+    \@fxdosig{#3}%
+    \fxaddcontentsline{\color{fx#1}#2\@fxsignature}%
+  \else%
+    \fxaddcontentsline{\color{fx#1}#2}%
+  \fi}
+\renewcommand*\FXEnvLayoutBoldBegin[2]{%
+  \color{fx#1}}
+\renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxsignature}
+%</fxthemecolorsig>
+%    \end{macrocode}
+% \end{theme}
+%
 % ^^A \PrintChanges
 % ^^A Nobody messes up with the marks in this document, but \index@prologue.
 % ^^A That sucks.
