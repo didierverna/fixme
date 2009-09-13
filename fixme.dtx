@@ -305,10 +305,9 @@
 %
 % \subsubsection{Built-in layout forms}
 % The layout forms built in the core of \fx are: inline (directly in the
-% text, in bold), marginal notes (the default), footnotes, index entries
-% (sorted by level of importance) and marginal clues. While most of these
-% forms should be self-explanatory, marginal clues deserve a bit more
-% explanation.
+% text), marginal notes (the default), footnotes, index entries (sorted by
+% level of importance) and marginal clues. While most of these forms should be
+% self-explanatory, marginal clues deserve a bit more explanation.
 %
 % If your preferred layout form is inline or say, footnote, it might be
 % somewhat difficult to localize the \fx note on the page, especially its
@@ -354,6 +353,11 @@
 % \fxsetup{margin=false}
 % \fxsetup{nomargin}
 % \end{verbatim}
+%
+% \DescribeMacro{\fxlayoutinlineface}
+% By default, the \texttt{inline} layout displays its contents in bold font,
+% to distinguish the note from the surrounding text. You can modify this by
+% renew'ing the \cs{fxlayoutinlineface} command (\cs{bfseries} by default).
 %
 % \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
 % \DescribeOption{layout}
@@ -542,8 +546,7 @@
 % The table below lists the environment layouts currently distributed with
 % \fx.
 %
-% \DescribeLayout{bold}
-% \DescribeLayout{italics}
+% \DescribeLayout{plain}
 % \DescribeLayout{color}
 % \begin{center}
 %   \DeleteShortVerb{\|}
@@ -551,13 +554,18 @@
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
-%     \texttt{bold} & & Display contents in bold\\
-%     \texttt{italics} & & Display contents in italics\\
+%     \texttt{plain} & & Display contents as-is\\
 %     \texttt{color} & \texttt{*} & Display contents in color\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 % \end{center}
+%
+% \DescribeMacro{\fxenvlayoutplainface}
+% By default, the \texttt{plain} environment layout displays its contents in
+% bold font, to distinguish it from the surrounding text. You can modify this
+% by renew'ing the \cs{fxenvlayoutplainface} command (\cs{bfseries} by
+% default).
 %
 % \DescribeColor{fxnote}
 % \DescribeColor{fxwarning}
@@ -1595,6 +1603,11 @@
 % \end{option}
 %
 % \subsubsubsection{Inline}
+% \begin{macro}{\fxlayoutinlineface}
+%    \begin{macrocode}
+\newcommand*\fxlayoutinlineface{\bfseries}
+%    \end{macrocode}
+% \end{macro}
 % \begin{option}{inline}
 %   \begin{option}{noinline}
 %     \begin{macro}{\FXLayoutInline}
@@ -1602,7 +1615,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\bfseries\ignorespaces#3 \fxnotename{#1}: #2}}
+  {\fxlayoutinlineface\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1747,34 +1760,21 @@
 % \end{macro}
 %
 % \subsubsection{Built-in environment layouts}
-% \subsubsubsection{Bold}
-% \begin{macro}{\FXEnvLayoutBoldBegin}
-%   \begin{macro}{\FXEnvLayoutBoldEnd}
-%     \marg{type}\marg{author}
-%     \begin{layout}{bold}
+% \subsubsubsection{Plain}
+% \begin{macro}{\fxenvlayoutplainface}
 %    \begin{macrocode}
-\newcommand*\FXEnvLayoutBoldBegin[2]{%
-  \bfseries\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
-\newcommand*\FXEnvLayoutBoldEnd[2]{}
-\FXRegisterEnvLayout{bold}{%
-  \FXEnvLayoutBoldBegin}{\FXEnvLayoutBoldEnd}
-
+\newcommand*\fxenvlayoutplainface{\bfseries}
 %    \end{macrocode}
-%     \end{layout}
-%   \end{macro}
 % \end{macro}
-%
-% \subsubsubsection{Italics}
-% \begin{macro}{\FXEnvLayoutItalicsBegin}
-%   \begin{macro}{\FXEnvLayoutItalicsEnd}
+% \begin{macro}{\FXEnvLayoutPlainBegin}
+%   \begin{macro}{\FXEnvLayoutPlainEnd}
 %     \marg{type}\marg{author}
-%     \begin{layout}{italics}
+%     \begin{layout}{plain}
 %    \begin{macrocode}
-\newcommand*\FXEnvLayoutItalicsBegin[2]{%
-  \itshape\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
-\newcommand*\FXEnvLayoutItalicsEnd[2]{}
-\FXRegisterEnvLayout{italics}{%
-  \FXEnvLayoutItalicsBegin}{\FXEnvLayoutItalicsEnd}
+\newcommand*\FXEnvLayoutPlainBegin[2]{%
+  \fxenvlayoutplainface\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
+\newcommand*\FXEnvLayoutPlainEnd[2]{}
+\FXRegisterEnvLayout{plain}{\FXEnvLayoutPlainBegin}{\FXEnvLayoutPlainEnd}
 
 %    \end{macrocode}
 %     \end{layout}
@@ -2776,7 +2776,7 @@
   target=thepage,%
   layout=margin,%
   innerlayout={layout=inline},%
-  envlayout=bold,%
+  envlayout=plain,%
   targetlayout=italics}
 \ProcessOptionsX*[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>
 
@@ -2988,7 +2988,7 @@
     \footnotesize\raggedright\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\bfseries\fxnotename{#1}: #2\@fxsignature}}
+  {\fxlayoutinlineface\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -3010,9 +3010,9 @@
   \else%
     \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
-\renewcommand*\FXEnvLayoutBoldBegin[2]{%
-  \bfseries\fxnotename{#1}: \ignorespaces}
-\renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxsignature}
+\renewcommand*\FXEnvLayoutPlainBegin[2]{%
+  \fxenvlayoutplainface\fxnotename{#1}: \ignorespaces}
+\renewcommand*\FXEnvLayoutPlainEnd[2]{\@fxdosig{#2}\@fxsignature}
 %</fxthemesignature>
 %    \end{macrocode}
 % \end{theme}
@@ -3097,7 +3097,7 @@
     \footnotesize\raggedright\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\bfseries\color{fx#1}#2\@fxsignature}}
+  {\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -3119,9 +3119,9 @@
   \else%
     \fxaddcontentsline{\color{fx#1}#2}%
   \fi}
-\renewcommand*\FXEnvLayoutBoldBegin[2]{%
+\renewcommand*\FXEnvLayoutPlainBegin[2]{%
   \color{fx#1}}
-\renewcommand*\FXEnvLayoutBoldEnd[2]{\@fxdosig{#2}\@fxsignature}
+\renewcommand*\FXEnvLayoutPlainEnd[2]{\@fxdosig{#2}\@fxsignature}
 %</fxthemecolorsig>
 %    \end{macrocode}
 % \end{theme}
