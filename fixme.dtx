@@ -563,10 +563,10 @@
 %   \MakeShortVerb{\|}
 % \end{center}
 %
-% \DescribeMacro{\fxenvplainface}
+% \DescribeMacro{\fxenvface}
 % By default, the \texttt{plain} environment layout displays its contents in
 % bold font, to distinguish it from the surrounding text. You can modify this
-% by renew'ing the \cs{fxenvplainface} command (\cs{bfseries} by
+% by renew'ing the \cs{fxenvface} command (\cs{bfseries} by
 % default).
 %
 % \DescribeColor{fxnote}
@@ -1780,10 +1780,10 @@
 %
 % \subsubsection{Built-in environment layouts}
 % \subsubsubsection{Plain}
-% \begin{macro}{\fxenvplainface}
+% \begin{macro}{\fxenvface}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxenvplainface{\bfseries}
+\newcommand*\fxenvface{\bfseries}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXEnvLayoutPlainBegin}
@@ -1793,7 +1793,7 @@
 %       \mbox{}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutPlainBegin[2]{%
-  \fxenvplainface\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
+  \fxenvface\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutPlainEnd[2]{}
 \FXRegisterEnvLayout{plain}{\FXEnvLayoutPlainBegin}{\FXEnvLayoutPlainEnd}
 
@@ -2875,7 +2875,7 @@
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutSignatureBegin[2]{%
-  \fxenvplainface\fxnotename{#1}: \ignorespaces}
+  \fxenvface\fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
 \FXRegisterEnvLayout{signature}{%
   \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
