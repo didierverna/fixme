@@ -3049,22 +3049,12 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{fxthemesignature}
 
+%    \end{macrocode}
+% \cs{@fxdosig} and \cs{@fxsignature} are provided by the \texttt{signature}
+% environment layout.
+%    \begin{macrocode}
 \FXRequireEnvLayout{signature}
 
-%    \end{macrocode}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-%   \begin{macro}{\@fxsignature}
-%     Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- \textit{#1}}}}
-
-%    \end{macrocode}
-%   \end{macro}
-% \end{macro}
-%    \begin{macrocode}
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
   \footnote{\fxnotename{#1}: #2\@fxsignature}}
@@ -3085,7 +3075,7 @@
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
-      !\@nameuse{thefx#1count}: #2\@fxsignature}%
+      !\@nameuse{thefx#1count}: #2{\@fxsignature}}%
     \index{***#3@\fixmeindexname{} (#3):%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
