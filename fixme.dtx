@@ -856,7 +856,8 @@
 % \subsection{Themes\label{sec:manual:themes}}
 % \fx 4.0 comes with support for themes. Themes are orthogonal to layouts:
 % they provide a way to modify the overall appearance of \fx by overriding the
-% existing layouts and/or by providing new ones.
+% existing layouts and/or by providing new ones. In fact, a theme can be any
+% kind of customization that you would otherwise put in your preamble.
 %
 % \subsubsection{Using themes}
 % \DescribeOption{theme}
@@ -877,21 +878,25 @@
 % command, which takes the theme's name as its only mandatory argument.
 %
 % \subsubsection{Available themes}
-% \DescribeTheme{signature}
-% \DescribeTheme{color}
 % \fx comes with a number of predefined themes listed below.
-% \begin{description}
-%   \renewcommand\descriptionlabel[1]{\hspace{\labelsep}\texttt{#1}}
-% \item[signature] This theme overrides the existing layouts to display the
-%   author tags as a signature (\ie at the end of the notes) instead of as a
-%   prefix.
-% \item[color] This theme overrides the built-in layouts to use different
-%   colors for the different note levels. As a consequence, it avoids printing
-%   the note names. This theme also loads and activates the \texttt{color}
-%   environment and target layouts described in sections
-%   \sectionref{sec:manual:envlayoutslist} and
-%   \sectionref{sec:manual:targetlayoutslist}.
-% \end{description}
+%
+% \subsubsubsection{signature}
+% \DescribeTheme{signature}
+% This theme overrides the existing layouts to display the author tags as a
+% signature (\ie at the end of the notes) instead of as a prefix.
+%
+% \subsubsubsection{color}
+% \DescribeTheme{color}
+% This theme overrides the built-in layouts to use different colors for the
+% different note levels. As a consequence, it avoids printing the note names.
+% This theme also loads and activates the \texttt{color} environment and
+% target layouts described in sections \sectionref{sec:manual:envlayoutslist}
+% and \sectionref{sec:manual:targetlayoutslist}.
+%
+% \subsubsubsection{colorsig}
+% \DescribeTheme{colorsig}
+% This theme combines the features of the \texttt{color} and
+% \texttt{signature} ones.
 %
 % \section{Extending \fx}
 % Hear hear, this is where you start spending more time hacking \LaTeX{} than
