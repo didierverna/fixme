@@ -547,7 +547,8 @@
 % \fx.
 %
 % \DescribeLayout{plain}
-% \DescribeLayout{color}
+% \DescribeLayout{signature}
+% \DescribeLayout{plain}
 % \DescribeLayout{colorsig}
 % \begin{center}
 %   \DeleteShortVerb{\|}
@@ -556,6 +557,7 @@
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
 %     \texttt{plain} & & Display contents as-is\\
+%     \texttt{signature} & & Display signed contents\\
 %     \texttt{color} & \texttt{*} & Display contents in color\\
 %     \texttt{colorsig} & \texttt{*} & Display signed contents in color\\
 %     \hline
@@ -568,6 +570,13 @@
 % bold font, to distinguish it from the surrounding text. You can modify this
 % by renew'ing the \cs{fxenvface} command (\cs{bfseries} by
 % default).
+%
+% \DescribeMacro{\fxsignatureface}
+% The \texttt{signature} environment layout prints the author's tag (see
+% \sectionref{sec:manual:modes}) as a signature instead of as a prefix. In
+% addition to \cs{fxenvface}, it also uses \cs{fxsignatureface} for the
+% signature part (\cs{itshape} by default). This layout is used by the
+% \texttt{signature} theme (see section \sectionref{sec:manual:themes}).
 %
 % \DescribeColor{fxnote}
 % \DescribeColor{fxwarning}
