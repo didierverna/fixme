@@ -548,7 +548,7 @@
 %
 % \DescribeLayout{plain}
 % \DescribeLayout{signature}
-% \DescribeLayout{plain}
+% \DescribeLayout{color}
 % \DescribeLayout{colorsig}
 % \begin{center}
 %   \DeleteShortVerb{\|}
@@ -557,7 +557,7 @@
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
 %     \texttt{plain} & & Display contents as-is\\
-%     \texttt{signature} & & Display signed contents\\
+%     \texttt{signature} & \texttt{*} & Display signed contents\\
 %     \texttt{color} & \texttt{*} & Display contents in color\\
 %     \texttt{colorsig} & \texttt{*} & Display signed contents in color\\
 %     \hline
@@ -569,14 +569,16 @@
 % By default, the \texttt{plain} environment layout displays its contents in
 % bold font, to distinguish it from the surrounding text. You can modify this
 % by renew'ing the \cs{fxenvface} command (\cs{bfseries} by
-% default).
+% default). A ``face'' is a command that is used to modify the appearance of
+% some text. We will encounter more faces as we go.
 %
 % \DescribeMacro{\fxsignatureface}
 % The \texttt{signature} environment layout prints the author's tag (see
-% \sectionref{sec:manual:modes}) as a signature instead of as a prefix. In
-% addition to \cs{fxenvface}, it also uses \cs{fxsignatureface} for the
-% signature part (\cs{itshape} by default). This layout is used by the
-% \texttt{signature} theme (see section \sectionref{sec:manual:themes}).
+% \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
+% layout honors \cs{fxenvface}, but uses \cs{fxsignatureface} on top of it for
+% the signature part (it is set to \cs{itshape} by default). This layout is
+% used by the \texttt{signature} theme (see section
+% \sectionref{sec:manual:themes}).
 %
 % \DescribeColor{fxnote}
 % \DescribeColor{fxwarning}
@@ -585,12 +587,15 @@
 % The \texttt{color} environment layout uses one of four colors named
 % \texttt{fx*}, according to the note's importance level, to display its
 % contents. It also avoids printing the note level, since that information is
-% already conveyed by the color. This layout is used in the \texttt{color}
-% theme (see section \sectionref{sec:manual:themes}).
+% already conveyed by the color. This layout honors \cs{fxenvface}, but resets
+% it to \meta{nothing} first. It is used in the \texttt{color} theme (see
+% section \sectionref{sec:manual:themes}).
 %
 % The \texttt{colorsig} environment layout combines the features of the
-% \texttt{signature} and \texttt{color} ones. It is used by the
-% \texttt{colorsig} theme (see section \sectionref{sec:manual:themes}).
+% \texttt{signature} and \texttt{color} ones. It honors \cs{fxenvface} and
+% \cs{fxsignatureface}, but resets \cs{fxenvface} to \meta{nothing} first. It
+% is used by the \texttt{colorsig} theme (see section
+% \sectionref{sec:manual:themes}).
 %
 % \subsection{Controlling the layout of \fx
 %   targets\label{sec:manual:targetlayoutcontrol}}
@@ -664,10 +669,11 @@
 %
 % \DescribeColor{fxtarget}
 % The \texttt{color} target layout uses the color named \texttt{fxtarget}
-% to display the target text. Note that technically speaking, this layout is
-% not necessary because the same effect could be achieved by redefining
-% \cs{fxtargetface} to produce the color. It is however provided
-% for a practical reason: it is used in both the \texttt{color} and the
+% to display the target text. It honors \cs{fxtargetface} but resets it to
+% \meta{nothing} first. Note that technically speaking, this layout is not
+% necessary because the same effect could be achieved by redefining
+% \cs{fxtargetface} to produce the color. It is however provided for a
+% practical reason: it is used in both the \texttt{color} and the
 % \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
 %
 % \subsection{Controlling the logging of \fx}
@@ -890,21 +896,26 @@
 %
 % \subsubsubsection{signature}
 % \DescribeTheme{signature}
-% This theme overrides the existing layouts to display the author tags as a
-% signature (\ie at the end of the notes) instead of as a prefix.
+% This theme uses the \texttt{signature} environment layout (see section
+% \sectionref{sec:manual:envlayoutslist}), and overrides the built-in ones to
+% display the author tags as a signature (\ie at the end of the notes) instead
+% of as a prefix. All original layout faces are honored.
 %
 % \subsubsubsection{color}
 % \DescribeTheme{color}
-% This theme overrides the built-in layouts to use different colors for the
-% different note levels. As a consequence, it avoids printing the note names.
-% This theme also loads and activates the \texttt{color} environment and
-% target layouts described in sections \sectionref{sec:manual:envlayoutslist}
-% and \sectionref{sec:manual:targetlayoutslist}.
+% This theme uses the \texttt{color} environment and target layouts (see
+% sections \sectionref{sec:manual:envlayoutslist} and
+% \sectionref{sec:manual:targetlayoutslist}), and overrides the built-in ones
+% to use different colors for the different note levels. As a consequence, it
+% avoids printing the note names because this information is already contained
+% in the colors themselves. This theme also honors \cs{fxinlineface}, but
+% resets it to \meta{nothing} first.
 %
 % \subsubsubsection{colorsig}
 % \DescribeTheme{colorsig}
 % This theme combines the features of the \texttt{color} and
-% \texttt{signature} ones.
+% \texttt{signature} ones. This theme also honors \cs{fxinlineface}, but
+% resets it to \meta{nothing} first.
 %
 % \section{Extending \fx}
 % Hear hear, this is where you start spending more time hacking \LaTeX{} than
@@ -2887,7 +2898,6 @@
 \newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
 \FXRegisterEnvLayout{signature}{%
   \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
-
 %</fxenvlayoutsignature>
 %    \end{macrocode}
 %     \end{macro}
@@ -2926,6 +2936,8 @@
 \definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
 \definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
 
+\renewcommand\fxenvface{}
+
 %    \end{macrocode}
 %         \end{color}
 %       \end{color}
@@ -2937,10 +2949,9 @@
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorBegin[2]{%
   \@fxdocolon{#2}%
-  \color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
+  \fxenvface\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
 \newcommand*\FXEnvLayoutColorEnd[2]{}
 \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
-
 %</fxenvlayoutcolor>
 %    \end{macrocode}
 %     \end{macro}
@@ -2988,6 +2999,8 @@
 \definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
 \definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
 
+\renewcommand\fxenvface{}
+
 %    \end{macrocode}
 %         \end{color}
 %       \end{color}
@@ -2997,11 +3010,10 @@
 %     \begin{macro}{\FXEnvLayoutColorSigEnd}
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXEnvLayoutColorSigBegin[2]{\color{fx#1}}
+\newcommand*\FXEnvLayoutColorSigBegin[2]{\fxenvface\color{fx#1}}
 \newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
 \FXRegisterEnvLayout{colorsig}{%
   \FXEnvLayoutColorSigBegin}{\FXEnvLayoutColorSigEnd}
-
 %</fxenvlayoutcolorsig>
 %    \end{macrocode}
 %     \end{macro}
@@ -3027,14 +3039,15 @@
 %    \begin{macrocode}
 \definecolor{fxtarget}{rgb}{0.3725,0.6196,0.6275}
 
+\renewcommand\fxtargetface{}
+
 %    \end{macrocode}
 %   \end{color}
 %   \begin{macro}{\FXTargetLayoutColor}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutColor[1]{\color{fxtarget}#1}
+\newcommand\FXTargetLayoutColor[1]{\fxtargetface\color{fxtarget}#1}
 \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
-
 %</fxtargetlayoutcolor>
 %    \end{macrocode}
 %   \end{macro}
@@ -3108,6 +3121,8 @@
 \FXRequireEnvLayout{color}
 \FXRequireTargetLayout{color}
 
+\renewcommand\fxinlineface{}
+
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdocolon{#3}%
   \footnote{\color{fx#1}\ignorespaces#3\@fxcolon #2}}
@@ -3121,7 +3136,7 @@
     \footnotesize\raggedright\color{fx#1}\ignorespaces#3!}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdocolon{#3}%
-  {\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  {\fxinlineface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
@@ -3143,7 +3158,6 @@
   \else%
     \fxaddcontentsline{\color{fx#1}#2}%
   \fi}
-
 %</fxthemecolor>
 %    \end{macrocode}
 % \end{theme}
@@ -3162,6 +3176,8 @@
 \FXRequireEnvLayout{colorsig}
 \FXRequireTargetLayout{color}
 
+\renewcommand\fxinlineface{}
+
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
   \footnote{\color{fx#1}#2\@fxsignature}}
@@ -3176,7 +3192,7 @@
     \footnotesize\raggedright\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\color{fx#1}#2\@fxsignature}}
+  {\fxinlineface\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -3198,9 +3214,6 @@
   \else%
     \fxaddcontentsline{\color{fx#1}#2}%
   \fi}
-\renewcommand*\FXEnvLayoutPlainBegin[2]{%
-  \color{fx#1}}
-\renewcommand*\FXEnvLayoutPlainEnd[2]{\@fxdosig{#2}\@fxsignature}
 %</fxthemecolorsig>
 %    \end{macrocode}
 % \end{theme}

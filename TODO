@@ -41,3 +41,6 @@ nice to have local lists of fixmes and stuff...
 
 * See if we want more than the silent option. For instance
   silent={log,tty,summary,all}.
+
+* See to reinsert non-dependent layouts into the core (instead of being
+external) 
