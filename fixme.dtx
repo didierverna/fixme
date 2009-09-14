@@ -2843,6 +2843,49 @@
 % \appendix
 % \section{External Layouts}
 % \subsection{Environment layouts}
+% \subsubsection{The \texttt{signature} environment layout}
+% \begin{layout}{signature}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxenvlayoutsignature>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxenvlayoutsignature}
+
+%    \end{macrocode}
+%   \begin{macro}{\fxsignatureface}
+%     \mbox{}
+%    \begin{macrocode}
+\providecommand\fxsignatureface{\itshape}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxdosig}
+%     \marg{author}
+%     \begin{macro}{\@fxsignature}
+%       Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- \fxsignatureface#1}}}
+
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{macro}{\FXEnvLayoutSignatureBegin}
+%     \begin{macro}{\FXEnvLayoutSignatureEnd}
+%       \marg{type}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXEnvLayoutSignatureBegin[2]{%
+  \fxenvlayoutplainface\fxnotename{#1}: \ignorespaces}
+\newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
+\FXRegisterEnvLayout{signature}{%
+  \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
+
+%</fxenvlayoutsignature>
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{layout}
+%
 % \subsubsection{The \texttt{color} environment layout}
 % \begin{layout}{color}
 %   \mbox{}
@@ -2907,6 +2950,12 @@
 \RequirePackage{color}
 
 %    \end{macrocode}
+% \begin{macro}{\fxsignatureface}
+%   \mbox{}
+%    \begin{macrocode}
+\providecommand\fxsignatureface{\itshape}
+%    \end{macrocode}
+% \end{macro}
 %   \begin{macro}{\@fxdosig}
 %     \marg{author}
 %     \begin{macro}{\@fxsignature}
@@ -2914,7 +2963,7 @@
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- \textit{#1}}}}
+    \def\@fxsignature{ -- \fxsignatureface#1}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -2992,6 +3041,8 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{fxthemesignature}
 
+\FXRequireEnvLayout{signature}
+
 %    \end{macrocode}
 % \begin{macro}{\@fxdosig}
 %   \marg{author}
@@ -3042,9 +3093,6 @@
   \else%
     \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
-\renewcommand*\FXEnvLayoutPlainBegin[2]{%
-  \fxenvlayoutplainface\fxnotename{#1}: \ignorespaces}
-\renewcommand*\FXEnvLayoutPlainEnd[2]{\@fxdosig{#2}\@fxsignature}
 %</fxthemesignature>
 %    \end{macrocode}
 % \end{theme}
