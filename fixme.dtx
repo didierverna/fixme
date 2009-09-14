@@ -656,8 +656,11 @@
 %
 % \DescribeColor{fxtarget}
 % The \texttt{color} target layout uses the color named \texttt{fxtarget}
-% to display the target text. This layout is used in the \texttt{color} theme
-% (see section \sectionref{sec:manual:themes}).
+% to display the target text. Note that technically speaking, this layout is
+% not necessary because the same effect could be achieved by redefining
+% \cs{fxtargetlayoutplainface} to produce the color. It is however provided
+% for a practical reason: it is used in both the \texttt{color} and the
+% \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
 %
 % \subsection{Controlling the logging of \fx}
 % As well as being displayed in the document itself, all \fx notes are
