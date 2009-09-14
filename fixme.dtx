@@ -354,10 +354,10 @@
 % \fxsetup{nomargin}
 % \end{verbatim}
 %
-% \DescribeMacro{\fxlayoutinlineface}
+% \DescribeMacro{\fxinlineface}
 % By default, the \texttt{inline} layout displays its contents in bold font,
 % to distinguish the note from the surrounding text. You can modify this by
-% renew'ing the \cs{fxlayoutinlineface} command (\cs{bfseries} by default).
+% renew'ing the \cs{fxinlineface} command (\cs{bfseries} by default).
 %
 % \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
 % \DescribeOption{layout}
@@ -1621,10 +1621,10 @@
 % \end{option}
 %
 % \subsubsubsection{Inline}
-% \begin{macro}{\fxlayoutinlineface}
+% \begin{macro}{\fxinlineface}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxlayoutinlineface{\bfseries}
+\newcommand*\fxinlineface{\bfseries}
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{inline}
@@ -1634,7 +1634,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\fxlayoutinlineface\ignorespaces#3 \fxnotename{#1}: #2}}
+  {\fxinlineface\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -3020,7 +3020,7 @@
     \footnotesize\raggedright\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\fxlayoutinlineface\fxnotename{#1}: #2\@fxsignature}}
+  {\fxinlineface\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
