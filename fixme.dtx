@@ -657,16 +657,16 @@
 %   \MakeShortVerb{\|}
 % \end{center}
 %
-% \DescribeMacro{\fxtargetlayoutplainface}
+% \DescribeMacro{\fxtargetface}
 % By default, the \texttt{plain} target layout displays its contents in
-% italics. You can modify this by renew'ing the \cs{fxtargetlayoutplainface}
-% command (\cs{itshape} by default).
+% italics. You can modify this by renew'ing the \cs{fxtargetface} command
+% (\cs{itshape} by default).
 %
 % \DescribeColor{fxtarget}
 % The \texttt{color} target layout uses the color named \texttt{fxtarget}
 % to display the target text. Note that technically speaking, this layout is
 % not necessary because the same effect could be achieved by redefining
-% \cs{fxtargetlayoutplainface} to produce the color. It is however provided
+% \cs{fxtargetface} to produce the color. It is however provided
 % for a practical reason: it is used in both the \texttt{color} and the
 % \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
 %
@@ -1889,10 +1889,10 @@
 %
 % \subsubsection{Built-in target layouts}
 % \subsubsubsection{Plain}
-% \begin{macro}{\fxtargetlayoutplainface}
+% \begin{macro}{\fxtargetface}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxtargetlayoutplainface{\itshape}
+\newcommand*\fxtargetface{\itshape}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXTargetLayoutBold}
@@ -1900,7 +1900,7 @@
 %   \begin{layout}{bold}
 %     \mbox{}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutPlain[1]{\fxtargetlayoutplainface#1}
+\newcommand\FXTargetLayoutPlain[1]{\fxtargetface#1}
 \FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
 
 %    \end{macrocode}
