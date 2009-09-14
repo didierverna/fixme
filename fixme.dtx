@@ -1617,6 +1617,7 @@
 %
 % \subsubsubsection{Inline}
 % \begin{macro}{\fxlayoutinlineface}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand*\fxlayoutinlineface{\bfseries}
 %    \end{macrocode}
@@ -1775,6 +1776,7 @@
 % \subsubsection{Built-in environment layouts}
 % \subsubsubsection{Plain}
 % \begin{macro}{\fxenvlayoutplainface}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand*\fxenvlayoutplainface{\bfseries}
 %    \end{macrocode}
@@ -1783,6 +1785,7 @@
 %   \begin{macro}{\FXEnvLayoutPlainEnd}
 %     \marg{type}\marg{author}
 %     \begin{layout}{plain}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutPlainBegin[2]{%
   \fxenvlayoutplainface\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
@@ -1839,6 +1842,7 @@
 %
 % \subsubsection{Environment layout control}
 % \begin{option}{envlayout}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxdefinekey{envlayout}{envlayout}{%
   \@ifundefined{@fxenvlayout@#1@begin}{%
@@ -1873,6 +1877,7 @@
 % \subsubsection{Built-in target layouts}
 % \subsubsubsection{Plain}
 % \begin{macro}{\fxtargetlayoutplainface}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand*\fxtargetlayoutplainface{\itshape}
 %    \end{macrocode}
@@ -1880,6 +1885,7 @@
 % \begin{macro}{\FXTargetLayoutBold}
 %   \marg{target}
 %   \begin{layout}{bold}
+%     \mbox{}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutPlain[1]{\fxtargetlayoutplainface#1}
 \FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
@@ -1930,6 +1936,7 @@
 %
 % \subsubsection{Target layout control}
 % \begin{option}{targetlayout}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxdefinekey{targetlayout}{targetlayout}{%
   \@ifundefined{@fxtargetlayout@#1}{%
@@ -2448,6 +2455,7 @@
 % \subsubsection{Language definitions}
 % \subsubsubsection{English}
 % \begin{lang}{english}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxenglishnotename{Note}
 \newcommand\fxenglishnotesname{Notes}
@@ -2464,6 +2472,7 @@
 % \subsubsubsection{French}
 % \begin{lang}{french}
 %   \begin{lang}{francais}
+%     \mbox{}
 %    \begin{macrocode}
 \newcommand\fxfrenchnotename{Note}
 \newcommand\fxfrenchnotesname{Notes}
@@ -2480,6 +2489,7 @@
 %
 % \subsubsubsection{Spanish}
 % \begin{lang}{spanish}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxspanishnotename{Nota}
 \newcommand\fxspanishnotesname{Notas}
@@ -2495,6 +2505,7 @@
 %
 % \subsubsubsection{Italian}
 % \begin{lang}{italian}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxitaliannotename{Nota}
 \newcommand\fxitaliannotesname{Note}
@@ -2511,6 +2522,7 @@
 % \subsubsubsection{German}
 % \begin{lang}{german}
 %   \begin{lang}{ngerman}
+%     \mbox{}
 %    \begin{macrocode}
 \newcommand\fxgermannotename{Anm}
 \newcommand\fxgermannotesname{Anmerkungen}
@@ -2527,6 +2539,7 @@
 %
 % \subsubsubsection{Danish}
 % \begin{lang}{danish}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxdanishnotename{Note}
 \newcommand\fxdanishnotesname{Noter}
@@ -2542,6 +2555,7 @@
 %
 % \subsubsubsection{Croatian}
 % \begin{lang}{croatian}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxcroatiannotename{Poruka}
 \newcommand\fxcroatiannotesname{Poruke}
@@ -2711,6 +2725,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{theme}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxdefinekey{theme}{theme}{\fxusetheme{#1}}
 %    \end{macrocode}
@@ -2825,6 +2840,7 @@
 % \subsection{Environment layouts}
 % \subsubsection{The \texttt{color} environment layout}
 % \begin{layout}{color}
+%   \mbox{}
 %    \begin{macrocode}
 %<*fxenvlayoutcolor>
 \NeedsTeXFormat{LaTeX2e}
@@ -2877,6 +2893,7 @@
 %
 % \subsubsection{The \texttt{colorsig} environment layout}
 % \begin{layout}{colorsig}
+%   \mbox{}
 %    \begin{macrocode}
 %<*fxenvlayoutcolorsig>
 \NeedsTeXFormat{LaTeX2e}
@@ -2934,6 +2951,7 @@
 % Since targets don't include author information, this layout is usable in
 % both the \texttt{color} and \texttt{colorsig} themes.
 % \begin{layout}{color}
+%   \mbox{}
 %    \begin{macrocode}
 %<*fxtargetlayoutcolor>
 \NeedsTeXFormat{LaTeX2e}
@@ -2943,6 +2961,7 @@
 
 %    \end{macrocode}
 %   \begin{color}{fxtarget}
+%     \mbox{}
 %    \begin{macrocode}
 \definecolor{fxtarget}{rgb}{0.3725,0.6196,0.6275}
 
@@ -2962,6 +2981,7 @@
 % \section{Themes}
 % \subsection{The \texttt{signature} theme}
 % \begin{theme}{signature}
+%   \mbox{}
 %    \begin{macrocode}
 %<*fxthemesignature>
 \NeedsTeXFormat{LaTeX2e}
@@ -3026,6 +3046,7 @@
 %
 % \subsection{The \texttt{color} theme}
 % \begin{theme}{color}
+%   \mbox{}
 %    \begin{macrocode}
 %<*fxthemecolor>
 \NeedsTeXFormat{LaTeX2e}
