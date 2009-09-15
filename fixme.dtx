@@ -2884,7 +2884,7 @@
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- \fxsignatureface#1}}}
+    \def\@fxsignature{ -- {\fxsignatureface#1}}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -2982,7 +2982,7 @@
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- \fxsignatureface#1}}}
+    \def\@fxsignature{ -- {\fxsignatureface#1}}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -3088,7 +3088,7 @@
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
-      !\@nameuse{thefx#1count}: #2{\@fxsignature}}%
+      !\@nameuse{thefx#1count}: #2\@fxsignature}%
     \index{***#3@\fixmeindexname{} (#3):%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
