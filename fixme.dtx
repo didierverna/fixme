@@ -2791,7 +2791,7 @@
 %                 \begin{option}{croatian}
 %                   Create individual language options:
 %    \begin{macrocode}
-\@for\@fxlg:=\@fxlanguages,\do{
+\@for\@fxlg:=\@fxlanguages\do{
   \def\@fxexprone{\@fxdefinevoidkey{lang}}
   \edef\@fxexprtwo{{\@fxlg}{\noexpand\@fxsetkeys{lang}{lang=\@fxlg}}}
   \expandafter\@fxexprone\@fxexprtwo}
