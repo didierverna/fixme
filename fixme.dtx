@@ -251,9 +251,9 @@
 % of the long note) and behave in exactly the same way as their command
 % counterpart. The layout policy is a bit different though (see section
 % \sectionref{sec:manual:layout}): the long note (the environment's contents)
-% will always appear inline, and the \meta{summary} will obey all active
-% layout forms except for the inline one, just as if it had been passed to one
-% of the \fx note insertion commands described in the previous section.
+% will always appear inline, and the \meta{summary} will obey all active note
+% layouts except for the \texttt{inline} one, just as if it had been passed to
+% one of the \fx note insertion commands described in the previous section.
 %
 % \DescribeEnv{afixme}
 % As of version 4, the \texttt{afixme} environement is a synonym for
@@ -321,24 +321,27 @@
 %
 % \subsection{Controlling the layout of \fx notes\label{sec:manual:layout}}
 % \fx notes can appear in several forms in your document. Each of these
-% forms can be individually selected, or they can be combined together. This
-% section describes the built-in layout forms and their possible combination.
+% forms can be individually selected, or they can be combined together to some
+% extend.
 %
-% \subsubsection{Built-in layout forms}
-% The layout forms built in the core of \fx are: inline (directly in the
+% \subsubsection{Selecting a note layout}
+%
+%
+% \subsubsection{Built-in note layouts}
+% The note layouts built in the core of \fx are: inline (directly in the
 % text), marginal notes (the default), footnotes, index entries (sorted by
-% level of importance) and marginal clues. While most of these forms should be
-% self-explanatory, marginal clues deserve a bit more explanation.
+% level of importance) and marginal clues. While most of these layouts should
+% be self-explanatory, marginal clues deserve a bit more explanation.
 %
-% If your preferred layout form is inline or say, footnote, it might be
+% If your preferred note layout is inline or say, footnote, it might be
 % somewhat difficult to localize the \fx note on the page, especially its
 % vertical position. That's where marginal clues come into play. A marginal
 % clue does not display the \fx note's contents, but only an indication
 % that there is such a note at that (vertical) position. So you have to use
-% another layout form (again, typically inline or footnote) in order to get
+% another note layout (again, typically inline or footnote) in order to get
 % the actual note's contents.
 %
-% Obviously, the margin and margin clue forms are mutually exclusive, so if
+% Obviously, the margin and margin clue layouts are mutually exclusive, so if
 % you try to activate both, only the most recently activated one will be
 % enabled (and you'll get a notice in the log file and on the terminal).
 %
@@ -395,11 +398,11 @@
 % \DescribeOption{marginclue}
 % \DescribeOption{footnote}
 % \DescribeOption{index}
-% For each layout form, there is a corresponding boolean option. These options
+% For each note layout, there is a corresponding boolean option. These options
 % are understood by the package itself, the \cs{fxsetup} command and also
 % locally by every note insertion command or environment.
 %
-% To activate a layout form, use the option directly or give it a value of
+% To activate a note layout, use the option directly or give it a value of
 % \texttt{true}. For instance, these two forms are equivalent:
 % \begin{verbatim}
 % \fxnote[margin]{note...}
@@ -412,7 +415,7 @@
 % \DescribeOption{nofootnote}
 % \DescribeOption{noindex}
 % For convenience, each layout option has a counterpart that deactivates the
-% corresponding layout form. The counterpart option has the same name,
+% corresponding note layout. The counterpart option has the same name,
 % prefixed with \texttt{no}. Again, these options are understood by the
 % package itself, the \cs{fxsetup} command and also locally by every note
 % insertion command or environment. For instance, these two forms are
@@ -433,7 +436,7 @@
 %
 % While the \texttt{morelayout} options \emph{adds} to the current layout
 % configuration, the \texttt{layout} one completely overrides it. For
-% instance, knowing that by default, only the \texttt{margin} layout form is
+% instance, knowing that by default, only the \texttt{margin} layout is
 % active, the following forms are all equivalent:
 % \begin{verbatim}
 % \usepackage[nomargin,inline,index]{fixme}
@@ -504,7 +507,7 @@
 % version 4.0, \fx provides an option named \texttt{innerlayout} that
 % allows you to specify an alternate layout setting to use when \TeX{} is in
 % \emph{inner} mode. In addition to that, \fx automatically disables the
-% \texttt{margin} and \texttt{marginclue} forms.
+% \texttt{margin} and \texttt{marginclue} layouts.
 %
 % Using \texttt{innerlayout} is not as trivial as it may seem: it
 % \emph{really} is an alternate layout configuration, and as such, you can use
@@ -835,7 +838,7 @@
 % the layout. If you've tried it already, you may have noticed the following
 % points.
 % \begin{itemize}
-% \item All the built-in layout forms (index excepted) put the \fx logo in
+% \item All the built-in note layouts (index excepted) put the \fx logo in
 %   front of every note. This is also true for \fx environments. The idea
 %   is to distinguish \fx contents from the rest of the document (for
 %   instance other marginal notes or other footnotes).
