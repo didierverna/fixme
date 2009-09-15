@@ -38,6 +38,7 @@
 \doxitem{Option}{option}{options}
 \doxitem{Counter}{counter}{counters}
 \doxitem{Language}{lang}{languages}
+\doxitem{Face}{face}{faces}
 \doxitem{Color}{color}{colors}
 \doxitem{Layout}{layout}{layouts}
 \doxitem{Theme}{theme}{themes}
@@ -321,6 +322,53 @@
 % you try to activate both, only the most recently activated one will be
 % enabled (and you'll get a notice in the log file and on the terminal).
 %
+% \subsubsection{Faces}
+% In the \fx jargon, a ``face'' characterizes the visual aspect of some
+% portion of text. If you're familiar with the \textsf{[X]Emacs} editor, this
+% will come as no surprise to you. \fx provides several faces that allow you
+% to customize the layout of notes, environments, or targets. Here are the
+% first two of them.
+%
+% \subsubsubsection{The \texttt{inline} face}
+% \DescribeFace{inline}
+% By default, the \texttt{inline} layout displays its contents in bold font,
+% to distinguish the note from the surrounding text. This is controlled by the
+% \texttt{inline} face whose value is \cs{bfseries} by default.
+%
+% \subsubsubsection{The \texttt{margin} face}
+% \DescribeFace{margin}
+% By default, the \texttt{margin} and \texttt{marginclue} layouts display
+% their contents in footnote size. This is controlled by the \texttt{margin}
+% face whose value is (\cs{footnotesize} by default.
+%
+% \subsubsubsection{Setting face values}
+% There are different ways to customize a face. The first one is to use the
+% corresponding face option. For each face \meta{name}, their is a
+% \meta{name}\texttt{face} option. For instance, the \texttt{inline} face is
+% controlled by the \texttt{inlineface} option. Face options are
+% understood by the package itself, the \cs{fxsetup} command and locally by
+% all note insertion commands or environments. Here is an example:
+% \begin{verbatim}
+% \fxsetup{inlineface=\bfseries}
+% \end{verbatim}
+%
+% Since you will probably want to use \LaTeX{} commands in face values, you
+% should know that \LaTeX{} normally can't handle such commands in package
+% options. If you want this to work, you need to use the \texttt{xkvltxp}
+% package first, like this:
+% \begin{verbatim}
+% \usepackage{xkvltxp}
+% \usepackage[inlineface=\bfseries]{fixme}
+% \end{verbatim}
+%
+% \noindent\DescribeMacro{\fxsetface}\marg{name}\marg{value}\\
+% Another way to customize a face is to use the \cs{fxsetface} command by
+% providing the face name and the face value as two mandatory arguments. For
+% example:
+% \begin{verbatim}
+% \fxsetface{inline}{\bfseries}
+% \end{verbatim}
+%
 % \subsubsection{Individual control\label{sec:manual:individuallayoutcontrol}}
 % \DescribeOption{inline}
 % \DescribeOption{margin}
@@ -353,18 +401,6 @@
 % \fxsetup{margin=false}
 % \fxsetup{nomargin}
 % \end{verbatim}
-%
-% \DescribeMacro{\fxinlineface}
-% By default, the \texttt{inline} layout displays its contents in bold font,
-% to distinguish the note from the surrounding text. You can modify this by
-% renew'ing the \cs{fxinlineface} command (\cs{bfseries} by default). A
-% ``face'' is a command that is used to modify the appearance of some text. We
-% will encounter more faces as we go.
-%
-% \DescribeMacro{\fxmarginface}
-% By default, the \texttt{margin} and \texttt{marginclue} layouts display
-% their contents in footnote size. You can modify this by renew'ing the
-% \cs{fxmarginface} command (\cs{footnotesize} by default).
 %
 % \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
 % \DescribeOption{layout}
@@ -572,20 +608,22 @@
 %   \MakeShortVerb{\|}
 % \end{center}
 %
-% \DescribeMacro{\fxenvface}
+% \subsubsubsection{The \texttt{plain} environment layout}
+% \DescribeFace{env}
 % By default, the \texttt{plain} environment layout displays its contents in
 % bold font, to distinguish it from the surrounding text. You can modify this
-% by renew'ing the \cs{fxenvface} command (\cs{bfseries} by
-% default).
+% by changing the value of the \texttt{env} face (\cs{bfseries} by default).
 %
-% \DescribeMacro{\fxsignatureface}
+% \subsubsubsection{The \texttt{signature} environment layout}
+% \DescribeFace{signature}
 % The \texttt{signature} environment layout prints the author's tag (see
 % \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
-% layout honors \cs{fxenvface}, but uses \cs{fxsignatureface} on top of it for
-% the signature part (it is set to \cs{itshape} by default). This layout is
-% used by the \texttt{signature} theme (see section
+% layout honors the \texttt{env} face, and adds a \texttt{signature} face on
+% top of it for the signature part (it is set to \cs{itshape} by default).
+% This layout is used by the \texttt{signature} theme (see section
 % \sectionref{sec:manual:themes}).
 %
+% \subsubsubsection{The \texttt{color} environment layout}
 % \DescribeColor{fxnote}
 % \DescribeColor{fxwarning}
 % \DescribeColor{fxerror}
@@ -593,14 +631,15 @@
 % The \texttt{color} environment layout uses one of four colors named
 % \texttt{fx*}, according to the note's importance level, to display its
 % contents. It also avoids printing the note level, since that information is
-% already conveyed by the color. This layout honors \cs{fxenvface}, but resets
-% it to \meta{nothing} first. It is used in the \texttt{color} theme (see
-% section \sectionref{sec:manual:themes}).
+% already conveyed by the color. This layout honors the \texttt{env} face, but
+% resets it to \meta{nothing} first. It is used in the \texttt{color} theme
+% (see section \sectionref{sec:manual:themes}).
 %
+% \subsubsubsection{The \texttt{colorsig} environment layout}
 % The \texttt{colorsig} environment layout combines the features of the
-% \texttt{signature} and \texttt{color} ones. It honors \cs{fxenvface} and
-% \cs{fxsignatureface}, but resets \cs{fxenvface} to \meta{nothing} first. It
-% is used by the \texttt{colorsig} theme (see section
+% \texttt{signature} and \texttt{color} ones. It honors the \texttt{env}
+% and \texttt{signature} faces, but resets the \texttt{env} one to
+% \meta{nothing} first. It is used by the \texttt{colorsig} theme (see section
 % \sectionref{sec:manual:themes}).
 %
 % \subsection{Controlling the layout of \fx
@@ -668,17 +707,19 @@
 %   \MakeShortVerb{\|}
 % \end{center}
 %
-% \DescribeMacro{\fxtargetface}
+% \subsubsubsection{The \texttt{plain} target layout}
+% \DescribeFace{target}
 % By default, the \texttt{plain} target layout displays its contents in
-% italics. You can modify this by renew'ing the \cs{fxtargetface} command
-% (\cs{itshape} by default).
+% italics. You can modify this behavior by changing the value of the
+% \texttt{target} face (\cs{itshape} by default).
 %
+% \subsubsubsection{The \texttt{color} target layout}
 % \DescribeColor{fxtarget}
 % The \texttt{color} target layout uses the color named \texttt{fxtarget}
-% to display the target text. It honors \cs{fxtargetface} but resets it to
-% \meta{nothing} first. Note that technically speaking, this layout is not
-% necessary because the same effect could be achieved by redefining
-% \cs{fxtargetface} to produce the color. It is however provided for a
+% to display the target text. It honors the \texttt{target} face, but resets
+% it to \meta{nothing} first. Note that technically speaking, this layout is
+% not necessary because the same effect could be achieved by handling the
+% color directly in the \texttt{target} face. It is however provided for a
 % practical reason: it is used in both the \texttt{color} and the
 % \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
 %
@@ -900,14 +941,14 @@
 % \subsubsection{Available themes}
 % \fx comes with a number of predefined themes listed below.
 %
-% \subsubsubsection{signature}
+% \subsubsubsection{The \texttt{signature} theme}
 % \DescribeTheme{signature}
 % This theme uses the \texttt{signature} environment layout (see section
 % \sectionref{sec:manual:envlayoutslist}), and overrides the built-in ones to
 % display the author tags as a signature (\ie at the end of the notes) instead
 % of as a prefix. All original layout faces are honored.
 %
-% \subsubsubsection{color}
+% \subsubsubsection{The \texttt{color} theme}
 % \DescribeTheme{color}
 % This theme uses the \texttt{color} environment and target layouts (see
 % sections \sectionref{sec:manual:envlayoutslist} and
@@ -915,13 +956,13 @@
 % to use different colors for the different note levels. As a consequence, it
 % avoids printing the note names because this information is already contained
 % in the colors themselves. All original layout faces are honored, but
-% \cs{fxinlineface} is reset to \meta{nothing}.
+% the \texttt{inline} one is reset to \meta{nothing}.
 %
-% \subsubsubsection{colorsig}
+% \subsubsubsection{The \texttt{colorsig} theme}
 % \DescribeTheme{colorsig}
 % This theme combines the features of the \texttt{color} and
 % \texttt{signature} ones. All original layout faces are honored, but
-% \cs{fxinlineface} is reset to \meta{nothing}.
+% the \texttt{inline} one is reset to \meta{nothing}.
 %
 % \section{Extending \fx}
 % Hear hear, this is where you start spending more time hacking \LaTeX{} than
@@ -1508,6 +1549,20 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsection{Faces}
+% \begin{macro}{\@fxdefineface}
+%   \marg{name}
+%    \begin{macrocode}
+\newcommand*\@fxdefineface[1]{\@fxdefinecmdkey{face}{#1face}{}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\fxsetface}
+%   \marg{name}\marg{value}
+%    \begin{macrocode}
+\newcommand*\fxsetface[2]{\@fxsetkeys{face}{#1face=#2}}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsection{Layout}
 % \begin{option}{multiuser}
 %   \begin{option}{singleuser}
@@ -1598,11 +1653,12 @@
 % \end{option}
 %
 % \subsubsubsection{Margin}
-% \begin{macro}{\fxmarginface}
+% \begin{face}{margin}
+%   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxmarginface{\footnotesize}
+\@fxdefineface{margin}
 %    \end{macrocode}
-% \end{macro}
+% \end{face}
 % \begin{option}{margin}
 %   \begin{option}{nomargin}
 %     \begin{macro}{\FXLayoutMargin}
@@ -1611,8 +1667,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
-  \raggedleft\fxmarginface\ignorespaces#3 \fxnotename{#1}: #2]{%
-    \raggedright\fxmarginface\ignorespaces#3 \fxnotename{#1}: #2}}
+  \raggedleft\cmdfx@face@marginface\ignorespaces#3 \fxnotename{#1}: #2]{%
+    \raggedright\cmdfx@face@marginface\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1635,8 +1691,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[%
-  \raggedleft\fxmarginface\ignorespaces#3 \fxnotename{#1}!]{%
-    \raggedright\fxmarginface\ignorespaces#3 \fxnotename{#1}!}}
+  \raggedleft\cmdfx@face@marginface\ignorespaces#3 \fxnotename{#1}!]{%
+    \raggedright\cmdfx@face@marginface\ignorespaces#3 \fxnotename{#1}!}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -1651,12 +1707,12 @@
 % \end{option}
 %
 % \subsubsubsection{Inline}
-% \begin{macro}{\fxinlineface}
+% \begin{face}{inline}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxinlineface{\bfseries}
+\@fxdefineface{inline}
 %    \end{macrocode}
-% \end{macro}
+% \end{face}
 % \begin{option}{inline}
 %   \begin{option}{noinline}
 %     \begin{macro}{\FXLayoutInline}
@@ -1664,7 +1720,7 @@
 %         \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\fxinlineface\ignorespaces#3 \fxnotename{#1}: #2}}
+  {\cmdfx@face@inlineface\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %       \end{macro}
@@ -1810,12 +1866,12 @@
 %
 % \subsubsection{Built-in environment layouts}
 % \subsubsubsection{Plain}
-% \begin{macro}{\fxenvface}
+% \begin{face}{env}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxenvface{\bfseries}
+\@fxdefineface{env}
 %    \end{macrocode}
-% \end{macro}
+% \end{face}
 % \begin{macro}{\FXEnvLayoutPlainBegin}
 %   \begin{macro}{\FXEnvLayoutPlainEnd}
 %     \marg{type}\marg{author}
@@ -1823,7 +1879,7 @@
 %       \mbox{}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutPlainBegin[2]{%
-  \fxenvface\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
+  \cmdfx@face@envface\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutPlainEnd[2]{}
 \FXRegisterEnvLayout{plain}{\FXEnvLayoutPlainBegin}{\FXEnvLayoutPlainEnd}
 
@@ -1911,18 +1967,18 @@
 %
 % \subsubsection{Built-in target layouts}
 % \subsubsubsection{Plain}
-% \begin{macro}{\fxtargetface}
+% \begin{face}{target}
 %   \mbox{}
 %    \begin{macrocode}
-\newcommand*\fxtargetface{\itshape}
+\@fxdefineface{target}
 %    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FXTargetLayoutBold}
+% \end{face}
+% \begin{macro}{\FXTargetLayoutPlain}
 %   \marg{target}
-%   \begin{layout}{bold}
+%   \begin{layout}{plain}
 %     \mbox{}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutPlain[1]{\fxtargetface#1}
+\newcommand\FXTargetLayoutPlain[1]{\cmdfx@face@targetface#1}
 \FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
 
 %    \end{macrocode}
@@ -2211,7 +2267,7 @@
 %   \marg{type}\oarg{options}\marg{note}
 %    \begin{macrocode}
 \def\@fxnote#1[#2]#3{%
-  \@fxsetkeys{mode,status,lang,log,note,layout}{#2}%
+  \@fxsetkeys{mode,status,lang,log,note,face,layout}{#2}%
   \@@fxnote{#1}{#3}}
 
 %    \end{macrocode}
@@ -2234,7 +2290,7 @@
 %   Note the \texttt{targetlayout} family here.
 %    \begin{macrocode}
 \long\def\@fxsnote#1[#2]#3#4{%
-  \@fxsetkeys{mode,status,lang,log,note,layout,targetlayout}{#2}%
+  \@fxsetkeys{mode,status,lang,log,note,face,layout,targetlayout}{#2}%
   \@@fxsnote{#1}{#3}{#4}}
 
 %    \end{macrocode}
@@ -2314,7 +2370,7 @@
 %   \marg{type}\oarg{options}\marg{summary}
 %    \begin{macrocode}
 \def\@fxbeginenv#1[#2]#3{%
-  \@fxsetkeys{mode,status,lang,log,note,layout,envlayout}{#2,noinline}%
+  \@fxsetkeys{mode,status,lang,log,note,face,layout,envlayout}{#2,noinline}%
   \@@@fxbeginenv{#1}{#3}}
 
 %    \end{macrocode}
@@ -2344,7 +2400,7 @@
 %   Note the \texttt{targetlayout} family here.
 %    \begin{macrocode}
 \long\def\@fxbeginsenv#1[#2]#3#4{%
-  \@fxsetkeys{mode,status,lang,log,note,layout,envlayout,targetlayout}{%
+  \@fxsetkeys{mode,status,lang,log,note,face,layout,envlayout,targetlayout}{%
     #2,noinline}%
   \@@@fxbeginsenv{#1}{#3}{#4}}
 
@@ -2822,7 +2878,8 @@
 % and then we process the user ones. Note the abscence of the \texttt{theme}
 % family here.
 %    \begin{macrocode}
-\ExecuteOptionsX[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>{%
+\ExecuteOptionsX[fx]<%
+  mode,status,lang,log,note,face,layout,envlayout,targetlayout>{%
   mode=singleuser,%
   status=final,%
   lang=english,%
@@ -2834,8 +2891,13 @@
   layout=margin,%
   innerlayout={layout=inline},%
   envlayout=plain,%
-  targetlayout=plain}
-\ProcessOptionsX*[fx]<mode,status,lang,log,note,layout,envlayout,targetlayout>
+  targetlayout=plain,%
+  inlineface=\bfseries,%
+  marginface=\footnotesize,%
+  envface=\bfseries,%
+  targetface=\itshape}
+\ProcessOptionsX*[fx]<%
+  mode,status,lang,log,note,face,layout,envlayout,targetlayout>
 
 %    \end{macrocode}
 %
@@ -2847,7 +2909,8 @@
 %   where the \texttt{theme} family is processed.
 %    \begin{macrocode}
 \newcommand*\fxsetup[1]{%
-  \@fxsetkeys{mode,status,lang,log,note,theme,layout,envlayout,targetlayout}{%
+  \@fxsetkeys{%
+    mode,status,lang,log,note,face,layout,envlayout,targetlayout,theme}{%
     #1}}
 
 %    \end{macrocode}
@@ -2882,12 +2945,13 @@
 \ProvidesPackage{fxenvlayoutsignature}
 
 %    \end{macrocode}
-%   \begin{macro}{\fxsignatureface}
+%   \begin{face}{signature}
 %     \mbox{}
 %    \begin{macrocode}
-\providecommand\fxsignatureface{\itshape}
+\@fxdefineface{signature}
+\fxsetface{signature}{\itshape}
 %    \end{macrocode}
-%   \end{macro}
+%   \end{face}
 %   \begin{macro}{\@fxdosig}
 %     \marg{author}
 %     \begin{macro}{\@fxsignature}
@@ -2895,7 +2959,7 @@
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\fxsignatureface#1}}}}
+    \def\@fxsignature{ -- {\cmdfx@face@signatureface#1}}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -2905,7 +2969,7 @@
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutSignatureBegin[2]{%
-  \fxenvface\fxnotename{#1}: \ignorespaces}
+  \cmdfx@face@envface\fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
 \FXRegisterEnvLayout{signature}{%
   \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
@@ -2947,7 +3011,7 @@
 \definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
 \definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
 
-\renewcommand\fxenvface{}
+\fxsetface{env}{}
 
 %    \end{macrocode}
 %         \end{color}
@@ -2960,7 +3024,7 @@
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorBegin[2]{%
   \@fxdocolon{#2}%
-  \fxenvface\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
+  \cmdfx@face@envface\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
 \newcommand*\FXEnvLayoutColorEnd[2]{}
 \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
 %</fxenvlayoutcolor>
@@ -2980,12 +3044,13 @@
 \RequirePackage{color}
 
 %    \end{macrocode}
-% \begin{macro}{\fxsignatureface}
+% \begin{face}{signature}
 %   \mbox{}
 %    \begin{macrocode}
-\providecommand\fxsignatureface{\itshape}
+\@fxdefineface{signature}
+\fxsetface{signature}{\itshape}
 %    \end{macrocode}
-% \end{macro}
+% \end{face}
 %   \begin{macro}{\@fxdosig}
 %     \marg{author}
 %     \begin{macro}{\@fxsignature}
@@ -2993,7 +3058,7 @@
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\fxsignatureface#1}}}}
+    \def\@fxsignature{ -- {\cmdfx@face@signatureface#1}}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -3010,7 +3075,7 @@
 \definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
 \definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
 
-\renewcommand\fxenvface{}
+\fxsetface{env}{}
 
 %    \end{macrocode}
 %         \end{color}
@@ -3021,7 +3086,7 @@
 %     \begin{macro}{\FXEnvLayoutColorSigEnd}
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXEnvLayoutColorSigBegin[2]{\fxenvface\color{fx#1}}
+\newcommand*\FXEnvLayoutColorSigBegin[2]{\cmdfx@face@envface\color{fx#1}}
 \newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
 \FXRegisterEnvLayout{colorsig}{%
   \FXEnvLayoutColorSigBegin}{\FXEnvLayoutColorSigEnd}
@@ -3050,14 +3115,14 @@
 %    \begin{macrocode}
 \definecolor{fxtarget}{rgb}{0.3725,0.6196,0.6275}
 
-\renewcommand\fxtargetface{}
+\fxsetface{target}{}
 
 %    \end{macrocode}
 %   \end{color}
 %   \begin{macro}{\FXTargetLayoutColor}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutColor[1]{\fxtargetface\color{fxtarget}#1}
+\newcommand\FXTargetLayoutColor[1]{\cmdfx@face@targetface\color{fxtarget}#1}
 \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 %</fxtargetlayoutcolor>
 %    \end{macrocode}
@@ -3085,15 +3150,15 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \raggedleft\fxmarginface\fxnotename{#1}: #2\@fxsignature]{%
-    \raggedright\fxmarginface\fxnotename{#1}: #2\@fxsignature}}
+  \raggedleft\cmdfx@face@marginface\fxnotename{#1}: #2\@fxsignature]{%
+    \raggedright\cmdfx@face@marginface\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\raggedleft\fxmarginface\fxnotename{#1}!\@fxsignature]{%
-    \raggedright\fxmarginface\fxnotename{#1}!\@fxsignature}}
+  \marginpar[\raggedleft\cmdfx@face@marginface\fxnotename{#1}!\@fxsignature]{%
+    \raggedright\cmdfx@face@marginface\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\fxinlineface\fxnotename{#1}: #2\@fxsignature}}
+  {\cmdfx@face@inlineface\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -3132,7 +3197,7 @@
 \FXRequireEnvLayout{color}
 \FXRequireTargetLayout{color}
 
-\renewcommand\fxinlineface{}
+\fxsetface{inline}{}
 
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdocolon{#3}%
@@ -3140,14 +3205,14 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdocolon{#3}%
   \marginpar[%
-  \raggedleft\fxmarginface\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
-    \raggedright\fxmarginface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  \raggedleft\cmdfx@face@marginface\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
+    \raggedright\cmdfx@face@marginface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\raggedleft\fxmarginface\color{fx#1}\ignorespaces#3!]{%
-    \raggedright\fxmarginface\color{fx#1}\ignorespaces#3!}}
+  \marginpar[\raggedleft\cmdfx@face@marginface\color{fx#1}\ignorespaces#3!]{%
+    \raggedright\cmdfx@face@marginface\color{fx#1}\ignorespaces#3!}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdocolon{#3}%
-  {\fxinlineface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  {\cmdfx@face@inlineface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
@@ -3187,7 +3252,7 @@
 \FXRequireEnvLayout{colorsig}
 \FXRequireTargetLayout{color}
 
-\renewcommand\fxinlineface{}
+\fxsetface{inline}{}
 
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
@@ -3195,15 +3260,15 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \raggedleft\fxmarginface\color{fx#1}#2\@fxsignature]{%
-    \raggedright\fxmarginface\color{fx#1}#2\@fxsignature}}
+  \raggedleft\cmdfx@face@marginface\color{fx#1}#2\@fxsignature]{%
+    \raggedright\cmdfx@face@marginface\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\raggedleft\fxmarginface\color{fx#1}!\@fxsignature]{%
-    \raggedright\fxmarginface\color{fx#1}!\@fxsignature}}
+  \marginpar[\raggedleft\cmdfx@face@marginface\color{fx#1}!\@fxsignature]{%
+    \raggedright\cmdfx@face@marginface\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\fxinlineface\color{fx#1}#2\@fxsignature}}
+  {\cmdfx@face@inlineface\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
