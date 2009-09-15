@@ -361,6 +361,11 @@
 % ``face'' is a command that is used to modify the appearance of some text. We
 % will encounter more faces as we go.
 %
+% \DescribeMacro{\fxmarginface}
+% By default, the \texttt{margin} and \texttt{marginclue} layouts display
+% their contents in footnote size. You can modify this by renew'ing the
+% \cs{fxmarginface} command (\cs{footnotesize} by default).
+%
 % \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
 % \DescribeOption{layout}
 % \DescribeOption{morelayout}
@@ -909,14 +914,14 @@
 % \sectionref{sec:manual:targetlayoutslist}), and overrides the built-in ones
 % to use different colors for the different note levels. As a consequence, it
 % avoids printing the note names because this information is already contained
-% in the colors themselves. This theme also honors \cs{fxinlineface}, but
-% resets it to \meta{nothing} first.
+% in the colors themselves. All original layout faces are honored, but
+% \cs{fxinlineface} is reset to \meta{nothing}.
 %
 % \subsubsubsection{colorsig}
 % \DescribeTheme{colorsig}
 % This theme combines the features of the \texttt{color} and
-% \texttt{signature} ones. This theme also honors \cs{fxinlineface}, but
-% resets it to \meta{nothing} first.
+% \texttt{signature} ones. All original layout faces are honored, but
+% \cs{fxinlineface} is reset to \meta{nothing}.
 %
 % \section{Extending \fx}
 % Hear hear, this is where you start spending more time hacking \LaTeX{} than
@@ -1593,6 +1598,11 @@
 % \end{option}
 %
 % \subsubsubsection{Margin}
+% \begin{macro}{\fxmarginface}
+%    \begin{macrocode}
+\newcommand*\fxmarginface{\footnotesize}
+%    \end{macrocode}
+% \end{macro}
 % \begin{option}{margin}
 %   \begin{option}{nomargin}
 %     \begin{macro}{\FXLayoutMargin}
@@ -1601,8 +1611,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
-  \footnotesize\raggedleft\ignorespaces#3 \fxnotename{#1}: #2]{%
-    \footnotesize\raggedright\ignorespaces#3 \fxnotename{#1}: #2}}
+  \raggedleft\fxmarginface\ignorespaces#3 \fxnotename{#1}: #2]{%
+    \raggedright\fxmarginface\ignorespaces#3 \fxnotename{#1}: #2}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1625,8 +1635,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[%
-  \footnotesize\raggedleft\ignorespaces#3 \fxnotename{#1}!]{%
-    \footnotesize\raggedright\ignorespaces#3 \fxnotename{#1}!}}
+  \raggedleft\fxmarginface\ignorespaces#3 \fxnotename{#1}!]{%
+    \raggedright\fxmarginface\ignorespaces#3 \fxnotename{#1}!}}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -3075,12 +3085,12 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \footnotesize\raggedleft\fxnotename{#1}: #2\@fxsignature]{%
-    \footnotesize\raggedright\fxnotename{#1}: #2\@fxsignature}}
+  \raggedleft\fxmarginface\fxnotename{#1}: #2\@fxsignature]{%
+    \raggedright\fxmarginface\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\footnotesize\raggedleft\fxnotename{#1}!\@fxsignature]{%
-    \footnotesize\raggedright\fxnotename{#1}!\@fxsignature}}
+  \marginpar[\raggedleft\fxmarginface\fxnotename{#1}!\@fxsignature]{%
+    \raggedright\fxmarginface\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
   {\fxinlineface\fxnotename{#1}: #2\@fxsignature}}
@@ -3130,11 +3140,11 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdocolon{#3}%
   \marginpar[%
-  \footnotesize\raggedleft\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
-    \footnotesize\raggedright\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  \raggedleft\fxmarginface\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
+    \raggedright\fxmarginface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\footnotesize\raggedleft\color{fx#1}\ignorespaces#3!]{%
-    \footnotesize\raggedright\color{fx#1}\ignorespaces#3!}}
+  \marginpar[\raggedleft\fxmarginface\color{fx#1}\ignorespaces#3!]{%
+    \raggedright\fxmarginface\color{fx#1}\ignorespaces#3!}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdocolon{#3}%
   {\fxinlineface\color{fx#1}\ignorespaces#3\@fxcolon#2}}
@@ -3185,12 +3195,12 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \footnotesize\raggedleft\color{fx#1}#2\@fxsignature]{%
-    \footnotesize\raggedright\color{fx#1}#2\@fxsignature}}
+  \raggedleft\fxmarginface\color{fx#1}#2\@fxsignature]{%
+    \raggedright\fxmarginface\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\footnotesize\raggedleft\color{fx#1}!\@fxsignature]{%
-    \footnotesize\raggedright\color{fx#1}!\@fxsignature}}
+  \marginpar[\raggedleft\fxmarginface\color{fx#1}!\@fxsignature]{%
+    \raggedright\fxmarginface\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
   {\fxinlineface\color{fx#1}#2\@fxsignature}}
