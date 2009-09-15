@@ -357,7 +357,9 @@
 % \DescribeMacro{\fxinlineface}
 % By default, the \texttt{inline} layout displays its contents in bold font,
 % to distinguish the note from the surrounding text. You can modify this by
-% renew'ing the \cs{fxinlineface} command (\cs{bfseries} by default).
+% renew'ing the \cs{fxinlineface} command (\cs{bfseries} by default). A
+% ``face'' is a command that is used to modify the appearance of some text. We
+% will encounter more faces as we go.
 %
 % \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
 % \DescribeOption{layout}
@@ -569,8 +571,7 @@
 % By default, the \texttt{plain} environment layout displays its contents in
 % bold font, to distinguish it from the surrounding text. You can modify this
 % by renew'ing the \cs{fxenvface} command (\cs{bfseries} by
-% default). A ``face'' is a command that is used to modify the appearance of
-% some text. We will encounter more faces as we go.
+% default).
 %
 % \DescribeMacro{\fxsignatureface}
 % The \texttt{signature} environment layout prints the author's tag (see
