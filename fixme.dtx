@@ -1831,7 +1831,8 @@
 %   \marg{names}
 %    \begin{macrocode}
 \newcommand*\fxloadlayouts[1]{%
-  \@for\@fxlt:=#1\do{\usepackage{fxlayout#1}}}
+  \edef\@fxlts{\zap@space#1 \@empty}%
+  \@for\@fxlt:=\@fxlts\do{\usepackage{fxlayout#1}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -2005,7 +2006,8 @@
 %   \marg{names}
 %    \begin{macrocode}
 \newcommand*\fxloadenvlayouts[1]{%
-  \@for\@fxlt:=#1\do{\usepackage{fxenvlayout#1}}}
+  \edef\@fxlts{\zap@space#1 \@empty}%
+  \@for\@fxlt:=\@fxlts\do{\usepackage{fxenvlayout#1}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -2096,7 +2098,8 @@
 %   \marg{names}
 %    \begin{macrocode}
 \newcommand*\fxloadtargetlayouts[1]{%
-  \@for\@fxlt:=#1\do{\usepackage{fxtargetlayout#1}}}
+  \edef\@fxlts{\zap@space#1 \@empty}%
+  \@for\@fxlt:=\@fxlts\do{\usepackage{fxtargetlayout#1}}}
 
 %    \end{macrocode}
 % \end{macro}
