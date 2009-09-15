@@ -1834,13 +1834,25 @@
 % \end{macro}
 %
 % \subsubsection{Layout control}
-% \begin{macro}{\@fxsetlayoutkeys}
-%   \marg{keys}\\
-%   This macro would probably be overkill if we did not need to
-%   \cs{expandafter} it at some point (see section
-%   \sectionref{sec:code:layoutdispatch}).
+% \begin{macro}{\@fxparselayout}
+%   Utility macro to detect the \texttt{no}\meta{name} form of layout options.
+%   The drawback of this technique is that layout options must be at least 3
+%   characters long. No big deal though\ldots
 %    \begin{macrocode}
-\newcommand\@fxsetlayoutkeys{\@fxsetkeys{layout}}
+\def\@fxparselayout#1#2#3\relax{\def\@fxltprefix{#1#2}\def\@fxltrest{#3}}
+
+% \begin{macro}{\fxuselayouts}
+%   \marg{[no]names}\\
+%   First, ensure that those layouts are available, then activate them:
+%    \begin{macrocode}
+\newcommand*\fxuselayouts[1]{%
+  \@for\@fxlt:=#1\do{%
+    \expandafter\@fxparselayout\@fxlt\relax%
+    \ifthenelse{\equal{\@fxltprefix}{no}}{%
+      \let\@fxltname\@fxltrest}{%
+      \let\@fxltname\@fxlt}%
+    \@fxkeyifundefined{layout}{\@fxltname}{\fxloadlayouts{\@fxltname}}{}}%
+  \@fxsetkeys{layout}{#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{innerlayout}
@@ -1861,7 +1873,7 @@
 %   \texttt{xkeyval} error.
 %   \end{enumerate}
 %    \begin{macrocode}
-\@fxdefinekey{layout}{morelayout}{\@fxsetlayoutkeys{#1}}
+\@fxdefinekey{layout}{morelayout}{\fxuselayouts{#1}}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{layout}
@@ -1873,7 +1885,7 @@
 %    \begin{macrocode}
 \@fxdefinekey{layout}{layout}{%
   \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
-  \@fxsetlayoutkeys{#1}}
+  \fxuselayouts{#1}}
 %    \end{macrocode}
 % \end{option}
 %
@@ -2242,7 +2254,7 @@
 	\@fxpkginfo{%
 	  inner mode detected;\MessageBreak
 	  turning marginclue layout form off}}{}}%
-    \expandafter\@fxsetlayoutkeys\expandafter{%
+    \expandafter\fxuselayouts\expandafter{%
       \cmdfx@layout@innerlayout,nomargin,nomarginclue}%
   \fi}
 %    \end{macrocode}
