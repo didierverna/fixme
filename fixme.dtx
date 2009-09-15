@@ -1589,7 +1589,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Layout}
+% \subsection{Layouts}
 % \begin{option}{multiuser}
 %   \begin{option}{singleuser}
 %     \begin{option}{mode}
@@ -1613,15 +1613,6 @@
 %     \end{option}
 %   \end{option}
 % \end{option}
-% \begin{macro}{\@fxsetlayoutkeys}
-%   \marg{keys}\\
-%   This macro would probably be overkill if we did not need to
-%   \cs{expandafter} it at some point (see section
-%   \sectionref{sec:code:layoutdispatch}).
-%    \begin{macrocode}
-\newcommand\@fxsetlayoutkeys{\@fxsetkeys{layout}}
-%    \end{macrocode}
-% \end{macro}
 %
 % \subsubsection{Layout creation}
 % \begin{macro}{\@fxlayouts}
@@ -1832,7 +1823,26 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \subsubsection{Layout loading}
+% \begin{macro}{\fxloadlayouts}
+%   \marg{names}
+%    \begin{macrocode}
+\newcommand*\fxloadlayouts[1]{%
+  \@for\@fxlt:=#1\do{\usepackage{fxlayout#1}}}
+
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{Layout control}
+% \begin{macro}{\@fxsetlayoutkeys}
+%   \marg{keys}\\
+%   This macro would probably be overkill if we did not need to
+%   \cs{expandafter} it at some point (see section
+%   \sectionref{sec:code:layoutdispatch}).
+%    \begin{macrocode}
+\newcommand\@fxsetlayoutkeys{\@fxsetkeys{layout}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{option}{innerlayout}
 %   The alternate inner mode layout:
 %    \begin{macrocode}
@@ -1867,7 +1877,7 @@
 %    \end{macrocode}
 % \end{option}
 %
-% \subsection{Environment Layout}
+% \subsection{Environment Layouts}
 % \subsubsection{Environment layout creation}
 % \begin{macro}{\FXRegisterEnvLayout}
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
@@ -2005,7 +2015,7 @@
 %    \end{macrocode}
 % \end{option}
 %
-% \subsection{Target Layout}
+% \subsection{Target Layouts}
 % \subsubsection{Target layout creation}
 % \begin{macro}{\FXRegisterTargetLayout}
 %   \marg{name}\marg{funcname}\\
@@ -2832,40 +2842,6 @@
 %     \end{macro}
 %   \end{macro}
 % \end{macro}
-%
-% \subsection{Extrernal layout support}
-% \subsubsection{External layout loading}
-% \begin{macro}{\@fxloadlayout}
-%     These macros implement the loading of the different layouts.
-%    \begin{macrocode}
-\newcommand*\@fxloadlayout[1]{\RequirePackage{fxlayout#1}}
-
-%    \end{macrocode}
-% \end{macro}
-% \subsubsection{External layout activation}
-% \begin{macro}{\@fxuselayout}
-%     \marg{name}\\
-%     These macros load and activate the different layouts.
-%    \begin{macrocode}
-\newcommand*\@fxuselayout[1]{%
-  \@fxloadlayout{#1}%
-  \@fxsetlayoutkeys{#1=true}}
-%    \end{macrocode}
-% \end{macro}
-%
-% \subsubsection{External layout options}
-% \begin{option}{loadlayout}
-%     The layout loading options:
-%    \begin{macrocode}
-\@fxdefinekey{layout}{loadlayout}{\@fxloadlayout{#1}}
-%    \end{macrocode}
-% \end{option}
-% \begin{option}{uselayout}
-%     The layout activation options:
-%    \begin{macrocode}
-\@fxdefinekey{layout}{uselayout}{\@fxuselayout{#1}}
-%    \end{macrocode}
-% \end{option}
 %
 % \subsection{Theme support}
 % \begin{macro}{\fxusetheme}
