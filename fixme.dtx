@@ -1849,7 +1849,8 @@
 %   First, ensure that those layouts are available, then activate them:
 %    \begin{macrocode}
 \newcommand*\fxuselayouts[1]{%
-  \@for\@fxlt:=#1\do{%
+  \edef\@fxlts{\zap@space#1 \@empty}%
+  \@for\@fxlt:=\@fxlts\do{%
     \expandafter\@fxparselayout\@fxlt\relax%
     \ifthenelse{\equal{\@fxltprefix}{no}}{%
       \let\@fxltname\@fxltrest}{%
