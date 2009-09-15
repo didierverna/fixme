@@ -173,7 +173,17 @@
 % In order to load \fx, simply say |\usepackage[|\meta{options}|]{fixme}|
 % in the preamble of your document. There is an important number of options
 % that you can use in order to customize \fx's default or global behavior.
-% These options will be discussed when appropriate.\\
+% These options will be discussed when appropriate.
+%
+% There might be times where you would like to use \LaTeX{} commands in
+% package options (for example, see section \sectionref{sec:manual:faces}). In
+% such a case, you should know that \LaTeX{} normally can't handle this. In
+% order to make it work, you need to use the \texttt{xkvltxp} package first,
+% like this:
+% \begin{verbatim}
+% \usepackage{xkvltxp}
+% \usepackage[myoption=\mymacro]{fixme}
+% \end{verbatim}
 %
 % \subsubsection{Global setup modification}
 % \DescribeMacro{\fxsetup}\marg{options}\\
@@ -322,7 +332,7 @@
 % you try to activate both, only the most recently activated one will be
 % enabled (and you'll get a notice in the log file and on the terminal).
 %
-% \subsubsection{Faces}
+% \subsubsection{Faces\label{sec:manual:faces}}
 % In the \fx jargon, a ``face'' characterizes the visual aspect of some
 % portion of text. If you're familiar with the \textsf{[X]Emacs} editor, this
 % will come as no surprise to you. \fx provides several faces that allow you
