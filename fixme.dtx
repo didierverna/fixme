@@ -576,6 +576,11 @@
 % (not the commands!). There are some restrictions on its usage however, as
 % discussed in the next section.
 %
+% \noindent\DescribeMacro{\fxuseenvlayout}\marg{name}\\
+% An alternate way of selecting an environment layout is to use the
+% \cs{fxuseenvlayout} command, giving it the layout's name as its only,
+% mandatory, argument.
+%
 % \subsubsection{Built-in \vs external environment layouts}
 % Environments layouts are provided either in the core of \fx, or in separate
 % files loaded dynamically on demand. Simple layouts are typically built-in,
@@ -584,11 +589,10 @@
 % external layout with the \texttt{envlayout} option might involve loading the
 % relevant file first.
 %
-% \noindent\DescribeMacro{\fxuseenvlayout}\marg{name}\\
 % \DescribeMacro{\fxloadenvlayouts}\marg{names}\\
 % For technical reasons, it is not possible to do such a thing outside the
 % preamble, neither in the middle of processing \cs{usepackage} options. As a
-% result, the \texttt{envlayout} option is restricted and you have two
+% result, the \texttt{envlayout} option is restricted and you have three
 % possibilities for using an external layout:
 % \begin{enumerate}
 % \item Use the \texttt{envlayout} option in a call to \cs{fxsetup} in the
@@ -620,7 +624,7 @@
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
 %     \texttt{plain} & & Display contents as-is\\
-%     \texttt{signature} & \texttt{*} & Display signed contents\\
+%     \texttt{signature} & & Display signed contents\\
 %     \texttt{color} & \texttt{*} & Display contents in color\\
 %     \texttt{colorsig} & \texttt{*} & Display signed contents in color\\
 %     \hline
@@ -1906,6 +1910,44 @@
 %   \end{macro}
 % \end{macro}
 %
+% \subsubsubsection{Signature}
+% \begin{layout}{signature}
+%   \begin{face}{signature}
+%     \mbox{}
+%    \begin{macrocode}
+\@fxdefineface{signature}
+\fxsetface{signature}{\itshape}
+
+%    \end{macrocode}
+%   \end{face}
+%   \begin{macro}{\@fxdosig}
+%     \marg{author}
+%     \begin{macro}{\@fxsignature}
+%       Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\newcommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- {\@fxfaceuse{signature}#1}}}}
+
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{macro}{\FXEnvLayoutSignatureBegin}
+%     \begin{macro}{\FXEnvLayoutSignatureEnd}
+%       \marg{type}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXEnvLayoutSignatureBegin[2]{%
+  \@fxfaceuse{env}\fxnotename{#1}: \ignorespaces}
+\newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
+
+\FXRegisterEnvLayout{signature}{%
+  \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
+
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+% \end{layout}
+%
 % \subsubsection{Environment layout selection}
 % \begin{macro}{\@fxselectenvlayout}
 %   \marg{name}
@@ -1934,29 +1976,27 @@
 %    \begin{macrocode}
 \newcommand*\fxloadenvlayouts[1]{%
   \@for\@fxlt:=#1\do{\usepackage{fxenvlayout#1}}}
+
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsection{Environment layout control}
 % \begin{macro}{\fxuseenvlayout}
 %   \begin{macro}{\FXRequireEnvLayout}
 %     \marg{name}\\
 %     \cs{FXRequireEnvLayout} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxuseenvlayout[1]{%
-  \fxloadenvlayouts{#1}%
+  \@ifundefined{@fxenvlayout@#1@begin}{\fxloadenvlayouts{#1}}{}%
   \@fxselectenvlayout{#1}}
 \let\FXRequireEnvLayout\fxuseenvlayout
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
-%
-% \subsubsection{Environment layout control}
 % \begin{option}{envlayout}
 %   \mbox{}
 %    \begin{macrocode}
-\@fxdefinekey{envlayout}{envlayout}{%
-  \@ifundefined{@fxenvlayout@#1@begin}{%
-    \fxuseenvlayout{#1}}{%
-    \@fxselectenvlayout{#1}}}
+\@fxdefinekey{envlayout}{envlayout}{\fxuseenvlayout{#1}}
 
 %    \end{macrocode}
 % \end{option}
@@ -2954,49 +2994,6 @@
 % \appendix
 % \section{External Layouts}
 % \subsection{Environment layouts}
-% \subsubsection{The \texttt{signature} environment layout}
-% \begin{layout}{signature}
-%   \mbox{}
-%    \begin{macrocode}
-%<*fxenvlayoutsignature>
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxenvlayoutsignature}
-
-%    \end{macrocode}
-%   \begin{face}{signature}
-%     \mbox{}
-%    \begin{macrocode}
-\@fxdefineface{signature}
-\fxsetface{signature}{\itshape}
-%    \end{macrocode}
-%   \end{face}
-%   \begin{macro}{\@fxdosig}
-%     \marg{author}
-%     \begin{macro}{\@fxsignature}
-%       Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxfaceuse{signature}#1}}}}
-
-%    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\FXEnvLayoutSignatureBegin}
-%     \begin{macro}{\FXEnvLayoutSignatureEnd}
-%       \marg{type}\marg{author}
-%    \begin{macrocode}
-\newcommand*\FXEnvLayoutSignatureBegin[2]{%
-  \@fxfaceuse{env}\fxnotename{#1}: \ignorespaces}
-\newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
-\FXRegisterEnvLayout{signature}{%
-  \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
-%</fxenvlayoutsignature>
-%    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-% \end{layout}
-%
 % \subsubsection{The \texttt{color} environment layout}
 % \begin{layout}{color}
 %   \mbox{}
@@ -3160,7 +3157,7 @@
 % \cs{@fxdosig} and \cs{@fxsignature} are provided by the \texttt{signature}
 % environment layout.
 %    \begin{macrocode}
-\FXRequireEnvLayout{signature}
+\fxuseenvlayout{signature}
 
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
