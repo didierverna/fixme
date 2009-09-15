@@ -140,7 +140,7 @@
 %
 % \tableofcontents
 %
-% \section{Description}
+% \section{Introduction}
 % With \fx, you can insert different kinds of notes in your documents,
 % ranging from simple not-so-important notices to critical stuff that must
 % absolutely be fixed in the final version.\par
@@ -197,6 +197,16 @@
 % understood by the note insertion commands or environments described in
 % section \sectionref{sec:manual:insertion}. The effect is then local to that
 % particular command.
+%
+% \subsubsection{\auctex support}
+% \auctex is a powerful major mode for editing \TeX{} documents in
+% \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
+% completion of command names once they are known. \fx supports \auctex
+% by providing a style file named \texttt{fixme.el} which contains \auctex
+% definitions for the relevant commands. This file should be installed in a
+% place where \auctex can find it (usually in a subdirectory of your
+% \LaTeX{} styles directory). Please refer to the \auctex documentation for
+% more information on this.
 %
 % \subsection{Inserting \fx notes\label{sec:manual:insertion}}
 % \subsubsection{Commands}
@@ -1127,16 +1137,6 @@
 % All of these commands may be renewed, and their values will be honored by
 % \fx in all situations, including potential language changes across the
 % document.
-%
-% \section{\auctex support}
-% \auctex is a powerful major mode for editing \TeX{} documents in
-% \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
-% completion of command names once they are known. \fx supports \auctex
-% by providing a style file named \texttt{fixme.el} which contains \auctex
-% definitions for the relevant commands. This file should be installed in a
-% place where \auctex can find it (usually in a subdirectory of your
-% \LaTeX{} styles directory). Please refer to the \auctex documentation for
-% more information on this.
 %
 % \section{History}
 % \begin{itemize}
