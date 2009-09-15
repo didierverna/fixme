@@ -589,7 +589,7 @@
 % external layout with the \texttt{envlayout} option might involve loading the
 % relevant file first.
 %
-% \DescribeMacro{\fxloadenvlayouts}\marg{names}\\
+% \noindent\DescribeMacro{\fxloadenvlayouts}\marg{names}\\
 % For technical reasons, it is not possible to do such a thing outside the
 % preamble, neither in the middle of processing \cs{usepackage} options. As a
 % result, the \texttt{envlayout} option is restricted and you have three
@@ -684,6 +684,11 @@
 % (not the commands!). There are some restrictions on its usage however, as
 % discussed in the next section.
 %
+% \noindent\DescribeMacro{\fxusetargetlayout}\marg{name}\\
+% An alternate way of selecting a target layout is to use the
+% \cs{fxusetargetlayout} command, giving it the layout's name as its only,
+% mandatory, argument.
+%
 % \subsubsection{Built-in \vs external target layouts}
 % Target layouts are provided either in the core of \fx, or in separate files
 % loaded dynamically on demand. Simple layouts are typically built-in, whereas
@@ -692,8 +697,7 @@
 % with the \texttt{targetlayout} option might involve loading the relevant
 % file first.
 %
-% \noindent\DescribeMacro{\fxusetargetlayout}\marg{name}\\
-% \DescribeMacro{\fxloadtargetlayouts}\marg{names}\\
+% \noindent\DescribeMacro{\fxloadtargetlayouts}\marg{names}\\
 % For technical reasons, it is not possible to do such a thing outside the
 % preamble, neither in the middle of processing \cs{usepackage} options. As a
 % result, the \texttt{targetlayout} option is restricted and you have two
@@ -2070,27 +2074,24 @@
 
 %    \end{macrocode}
 % \end{macro}
+%
+% \subsubsection{Target layout control}
 % \begin{macro}{\fxusetargetlayout}
 %   \begin{macro}{\FXRequireTargetLayout}
 %     \marg{name}\\
 %     \cs{FXRequireTargetLayout} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxusetargetlayout[1]{%
-  \fxloadtargetlayouts{#1}%
+  \@ifundefined{@fxtargetlayout@#1}{\fxloadtargetlayouts{#1}}{}%
   \@fxselecttargetlayout{#1}}
 \let\FXRequireTargetLayout\fxusetargetlayout
 %    \end{macrocode}
 %   \end{macro}
 % \end{macro}
-%
-% \subsubsection{Target layout control}
 % \begin{option}{targetlayout}
 %   \mbox{}
 %    \begin{macrocode}
-\@fxdefinekey{targetlayout}{targetlayout}{%
-  \@ifundefined{@fxtargetlayout@#1}{%
-    \fxusetargetlayout{#1}}{%
-    \@fxselecttargetlayout{#1}}}
+\@fxdefinekey{targetlayout}{targetlayout}{\fxusetargetlayout{#1}}
 
 %    \end{macrocode}
 % \end{option}
