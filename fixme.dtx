@@ -58,6 +58,7 @@
 % \OnlyDescription
 \CodelineIndex
 % \RecordChanges
+\setcounter{secnumdepth}{4}
 \begin{document}
 \DocInput{fixme.dtx}
 \end{document}
@@ -236,16 +237,18 @@
 % highlighted.
 %
 % \subsubsection{Environments}
-% \emph{\textbf{Warning:} as of version 4.0, the environments interface has
-%   changed and is \emph{not} backward-compatible.}\\
-% \fx notes are meant to be short: consider that they are likely to go in
-% the list of fixmes and in the index for instance. If you feel the need for
-% writing longer comments, the environments described below might come in
-% handy.\\
 % \DescribeEnv{anfxnote}
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
+% \begin{quotation}
+%   \emph{\textbf{Warning:} as of version 4.0, the environments interface has
+%     changed and is \emph{not} backward-compatible.}
+% \end{quotation}
+% \fx notes are meant to be short: consider that they are likely to go in the
+% list of fixmes and in the index for instance. If you feel the need for
+% writing longer comments, the environments described below might come in
+% handy.
 % \fx provides four note environments; one for every note level. These
 % environments take one mandatory argument (meant to be a short summary
 % of the long note) and behave in exactly the same way as their command
@@ -325,107 +328,32 @@
 % extend.
 %
 % \subsubsection{Selecting a note layout}
+% \subsubsubsection{Individual control}
+% For each note layout, there is a corresponding boolean option (for instance,
+% the ``inline'' layout is controlled by the \texttt{inline} option). These
+% options are understood by the package itself, the \cs{fxsetup} command and
+% also locally by every note insertion command or environment. There are some
+% restrictions on their usage however, as discussed in the next section.
 %
-%
-% \subsubsection{Built-in note layouts}
-% The note layouts built in the core of \fx are: inline (directly in the
-% text), marginal notes (the default), footnotes, index entries (sorted by
-% level of importance) and marginal clues. While most of these layouts should
-% be self-explanatory, marginal clues deserve a bit more explanation.
-%
-% If your preferred note layout is inline or say, footnote, it might be
-% somewhat difficult to localize the \fx note on the page, especially its
-% vertical position. That's where marginal clues come into play. A marginal
-% clue does not display the \fx note's contents, but only an indication
-% that there is such a note at that (vertical) position. So you have to use
-% another note layout (again, typically inline or footnote) in order to get
-% the actual note's contents.
-%
-% Obviously, the margin and margin clue layouts are mutually exclusive, so if
-% you try to activate both, only the most recently activated one will be
-% enabled (and you'll get a notice in the log file and on the terminal).
-%
-% \subsubsection{Faces\label{sec:manual:faces}}
-% In the \fx jargon, a ``face'' characterizes the visual aspect of some
-% portion of text. If you're familiar with the \textsf{[X]Emacs} editor, this
-% will come as no surprise to you. \fx provides several faces that allow you
-% to customize the layout of notes, environments, or targets. Here are the
-% first two of them.
-%
-% \subsubsubsection{The \texttt{inline} face}
-% \DescribeFace{inline}
-% By default, the \texttt{inline} layout displays its contents in bold font,
-% to distinguish the note from the surrounding text. This is controlled by the
-% \texttt{inline} face whose value is \cs{bfseries} by default.
-%
-% \subsubsubsection{The \texttt{margin} face}
-% \DescribeFace{margin}
-% By default, the \texttt{margin} and \texttt{marginclue} layouts display
-% their contents in footnote size. This is controlled by the \texttt{margin}
-% face whose value is (\cs{footnotesize} by default.
-%
-% \subsubsubsection{Setting face values}
-% There are different ways to customize a face. The first one is to use the
-% corresponding face option. For each face \meta{name}, their is a
-% \meta{name}\texttt{face} option. For instance, the \texttt{inline} face is
-% controlled by the \texttt{inlineface} option. Face options are
-% understood by the package itself, the \cs{fxsetup} command and locally by
-% all note insertion commands or environments. Here is an example:
-% \begin{verbatim}
-% \fxsetup{inlineface=\bfseries}
-% \end{verbatim}
-%
-% Since you will probably want to use \LaTeX{} commands in face values, you
-% should know that \LaTeX{} normally can't handle such commands in package
-% options. If you want this to work, you need to use the \texttt{xkvltxp}
-% package first, like this:
-% \begin{verbatim}
-% \usepackage{xkvltxp}
-% \usepackage[inlineface=\bfseries]{fixme}
-% \end{verbatim}
-%
-% \noindent\DescribeMacro{\fxsetface}\marg{name}\marg{value}\\
-% Another way to customize a face is to use the \cs{fxsetface} command by
-% providing the face name and the face value as two mandatory arguments. For
-% example:
-% \begin{verbatim}
-% \fxsetface{inline}{\bfseries}
-% \end{verbatim}
-%
-% \subsubsection{Individual control\label{sec:manual:individuallayoutcontrol}}
-% \DescribeOption{inline}
-% \DescribeOption{margin}
-% \DescribeOption{marginclue}
-% \DescribeOption{footnote}
-% \DescribeOption{index}
-% For each note layout, there is a corresponding boolean option. These options
-% are understood by the package itself, the \cs{fxsetup} command and also
-% locally by every note insertion command or environment.
-%
-% To activate a note layout, use the option directly or give it a value of
+% To activate a note layout, use the option alone or give it a value of
 % \texttt{true}. For instance, these two forms are equivalent:
 % \begin{verbatim}
-% \fxnote[margin]{note...}
-% \fxnote[margin=true]{note...}
+% \fxnote[inline]{note...}
+% \fxnote[inline=true]{note...}
 % \end{verbatim}
-%
-% \DescribeOption{noinline}
-% \DescribeOption{nomargin}
-% \DescribeOption{nomarginclue}
-% \DescribeOption{nofootnote}
-% \DescribeOption{noindex}
 % For convenience, each layout option has a counterpart that deactivates the
 % corresponding note layout. The counterpart option has the same name,
-% prefixed with \texttt{no}. Again, these options are understood by the
-% package itself, the \cs{fxsetup} command and also locally by every note
-% insertion command or environment. For instance, these two forms are
-% equivalent:
+% prefixed with \texttt{no} (for instance, \texttt{noinline}). Again, these
+% options are understood by the package itself, the \cs{fxsetup} command and
+% also locally by every note insertion command or environment (with the same
+% usage restrictions, discussed in the next section). For instance,
+% these two forms are equivalent:
 % \begin{verbatim}
-% \fxsetup{margin=false}
-% \fxsetup{nomargin}
+% \fxsetup{inline=false}
+% \fxsetup{noinline}
 % \end{verbatim}
 %
-% \subsubsection{Global control\label{sec:manual:globallayoutcontrol}}
+% \subsubsubsection{Global control}
 % \DescribeOption{layout}
 % \DescribeOption{morelayout}
 % As of version 4.0, an even more convenient way to specify the required
@@ -434,7 +362,7 @@
 % Both of these options take a comma-separated list of the individual options
 % described above (this includes the \texttt{no}\meta{option} form as well).
 %
-% While the \texttt{morelayout} options \emph{adds} to the current layout
+% While the \texttt{morelayout} option \emph{adds} to the current layout
 % configuration, the \texttt{layout} one completely overrides it. For
 % instance, knowing that by default, only the \texttt{margin} layout is
 % active, the following forms are all equivalent:
@@ -444,55 +372,89 @@
 % \usepackage[morelayout={nomargin,inline,index}]{fixme}
 % \usepackage[layout={inline,index}]{fixme}
 % \end{verbatim}
-%
 % Again, these two options are understood by the package itself, the
 % \cs{fxsetup} command and also locally by every note insertion command or
-% environment.
+% environment (with the same usage restrictions, discussed in the next
+% section).
 %
-% \subsubsection{Corollary: floating \fx notes}
-% At some point, people suggested that it would be nice to have global \fx
-% notes, not related to any portion of the text in particular. Such notes
-% could be general comments about the whole document, and could even be issued
-% in the preamble. This is what I call ``floating'' \fx notes.
+% \noindent\DescribeMacro{\fxuselayouts}\marg{name,\ldots}\\
+% Finally, an alternate way of selecting (or deselecting) several layouts
+% simultaneously is to use the \cs{fxuselayouts} command, giving it a
+% comma-separated list of layout options as its only, mandatory, argument.
 %
-% Originally, I started writing a new set of commands to do just that, but
-% with the flexibility that \fx version 4 provides, I quickly realized that
-% such commands were an unnecessary addition.
+% \subsubsection{Built-in \vs external note layouts}
+% Note layouts are provided either in the core of \fx, or in separate files
+% loaded dynamically on demand. Simple layouts are typically built-in, whereas
+% those requiring additional packages are external, so that they don't consume
+% \TeX{} resources if not used. As a consequence, selecting an external layout
+% might involve loading the relevant file first.
 %
-% Since floating notes are not supposed to relate to any part of the text,
-% they should not be typeset anywhere in it. This is especially true if you
-% want to put some of them in the document's preamble. However, even a
-% preamble \fx note could be recorded and displayed in the index or in the
-% list of fixmes. And it turns out that you can specify all that with the
-% layout options described in sections
-% \sectionref{sec:manual:individuallayoutcontrol} and
-% \sectionref{sec:manual:globallayoutcontrol}.
+% \noindent\DescribeMacro{\fxloadlayouts}\marg{name,\ldots}\\
+% For technical reasons, it is not possible to do such a thing outside the
+% preamble, neither in the middle of processing \cs{usepackage} options. As a
+% result, layout options are restricted and you have three possibilities for
+% using an external layout:
+% \begin{enumerate}
+% \item Use its corresponding option in a call to \cs{fxsetup} in the
+%   preamble, like this: |\fxsetup{|\meta{option}|}|. This will load it
+%   \emph{and} select it immediately.
+% \item Use the \cs{fxuselayouts} command in the preamble like this:\\
+%   |\fxuselayouts{|\meta{name}|}|. This is strictly equivalent to the
+%   previous solution.
+% \item If on the other hand you want to load one or several external note
+%   layouts \emph{without} using them immediately (perhaps in order to use
+%   them locally in some \fx notes), use the \cs{fxloadlayouts} command in the
+%   preamble like this: |\fxloadlayouts{|\meta{name}|,...}|. After that,
+%   you can select any of those layouts anywhere you wish.
+% \end{enumerate}
 %
-% \DescribeOption{target}
-% The only slight problem that remains in the page number, which normally
-% appears in the list of fixmes and in the index: if you choose to reference a
-% floating \fx note that way, the page number is likely to be completely
-% meaningless. To compensate, a new option named ``target'' is provided. When
-% used, the given value will replace the page number in both the index and the
-% list of fixmes. The target can be anything you like, but should remain rather
-% short. By default, \texttt{target} is set the special value \texttt{thepage},
-% which as you guessed means to use the page number.
+% \subsubsection{Available note layouts}
+% \begingroup
+%   \makeatletter
+%   \let\@ldprintdescribeoption\PrintDescribeOption
+%   \def\PrintDescribeOption#1{\@ldprintdescribeoption{[no]#1}}
+%   \DescribeOption{inline}
+%   \DescribeOption{margin}
+%   \DescribeOption{marginclue}
+%   \DescribeOption{footnote}
+%   \DescribeOption{index}
+% \endgroup
+% The table below lists the note layouts currently distributed with \fx.
+% \begin{center}
+%   \DeleteShortVerb{\|}
+%   \begin{tabular}{|l|c|p{5cm}|}
+%     \hline
+%     \textbf{Name} & \textbf{External} & \textbf{Description}\\
+%     \hline\hline
+%     \texttt{inline} & & Display note inline\\
+%     \texttt{margin} & & Display note in the margin\\
+%     \texttt{footnote} & & Display note in a footnote\\
+%     \texttt{index} & & Display note in the index\\
+%     \texttt{marginclue} & & Display a marginal clue\\
+%     \hline
+%   \end{tabular}
+%   \MakeShortVerb{\|}
+% \end{center}
+
+% By default, only the \texttt{margin} layout is active. While most of these
+% layouts should be self-explanatory, marginal clues deserve a bit more
+% explanation.
 %
-% The name "target" bears an intentional resemblance to \fx's targeted
-% commands and environments, because we are indeed targetting the note to
-% something. The only difference is that in the case of floating notes, the
-% target is non-textual.
+% If your preferred note layout is \texttt{inline} or say, \texttt{footnote},
+% it might be somewhat difficult to localize the \fx note on the page,
+% especially its vertical position. That's where marginal clues come into
+% play. A marginal clue does not display the note's contents, but only an
+% indication that there is such a note at that (vertical) position. So you
+% need to use another layout as well (again, typically \texttt{inline} or
+% \texttt{footnote}) in order to get the actual note's contents.
 %
-% Here is an example of a floating note that would typically appear in the
-% document's preamble:
-% \begin{verbatim}
-% \usepackage{hyperref}
-% \fxfatal[layout=index,target=hyperref]{Fill in PDF fields (title etc.)}
-% \end{verbatim}
+% Obviously, the margin and margin clue layouts are mutually exclusive, so if
+% you try to activate both, only the most recently activated one will be
+% enabled (and you'll get a notice in the log file and on the terminal).
 %
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
-% particular note: creating a floating note is one of them; see section
+% particular note: creating a floating note is one of them, see also section
 % \sectionref{sec:manual:othercommonproblems} for some others. As of version
 % 4.0, one frequent reason (described below) can be handled automatically by
 % \fx.
@@ -543,25 +505,63 @@
 % encountered using \fx. Although \fx might not be directly responsible
 % for them, it is still good to keep them in mind.
 %
-% \subsubsubsection{Footnotes and margin paragraphs in floats}
-% Using footnotes in figures (and \emph{a fortiori} in a figure's caption)
-% does not work in general. Although there are some workarounds out there (for
-% instance, using \cs{footnotemark} and \cs{footnotetext} directly), there is
-% no completely reliable solution and it is not possible to detect that
-% situation automatically. Similarly, marginal paragraphs will cause problems
-% in a figure (even when not in its caption) because floats can't be nested in
+% \subparagraph{Footnotes and margin paragraphs in floats} Using footnotes in
+% figures (and \emph{a fortiori} in a figure's caption) does not work in
+% general. Although there are some workarounds out there (for instance, using
+% \cs{footnotemark} and \cs{footnotetext} directly), there is no completely
+% reliable solution and it is not possible to detect that situation
+% automatically. Similarly, marginal paragraphs will cause problems in a
+% figure (even when not in its caption) because floats can't be nested in
 % \LaTeX. Usual symptoms of these situations are: a footnote not being
 % typeset, compilation breakage with the ``Floats lost'' message \etc If
 % you're facing this problem, you need to change your layout locally.
 %
-% \subsubsubsection{Marginal paragraphs showing up on the wrong margin}
-% You want to look at the \texttt{mparhack} package.
+% \subparagraph{Marginal paragraphs showing up on the wrong margin} You want
+% to look at the \texttt{mparhack} package.
 %
-% \subsubsubsection{ACM classes compatibility}
-% The ACM \textsc{Sig} classes (\texttt{acm\_proc\_article-sp} and
-% \texttt{sig-alternate}) forbid the use of \cs{marginpar}, so if you use
-% these classes, don't forget to choose another layout for \fx, and also
-% avoid using marginal clues.
+% \subparagraph{ACM classes compatibility} The ACM \textsc{Sig} classes
+% (\texttt{acm\_proc\_article-sp} and \texttt{sig-alternate}) forbid the use
+% of \cs{marginpar}, so if you use these classes, don't forget to choose
+% another layout for \fx, and also avoid using marginal clues.
+%
+% \subsection{Corollary: floating \fx notes}
+% At some point, people suggested that it would be nice to have global \fx
+% notes, not related to any portion of the text in particular. Such notes
+% could be general comments about the whole document, and could even be issued
+% in the preamble. This is what I call ``floating'' \fx notes.
+%
+% Originally, I started writing a new set of commands to do just that, but
+% with the flexibility that \fx version 4 provides, I quickly realized that
+% such commands were an unnecessary addition.
+%
+% Since floating notes are not supposed to relate to any part of the text,
+% they should not be typeset anywhere in it. This is especially true if you
+% want to put some of them in the document's preamble. However, even a
+% preamble \fx note could be recorded and displayed in the index or in the
+% list of fixmes. And it turns out that you can specify all that with the
+% layout options described in section \sectionref{sec:manual:layout}.
+%
+% \DescribeOption{target}
+% The only slight problem that remains in the page number, which normally
+% appears in the list of fixmes and in the index: if you choose to reference a
+% floating \fx note that way, the page number is likely to be completely
+% meaningless. To compensate, a new option named ``target'' is provided. When
+% used, the given value will replace the page number in both the index and the
+% list of fixmes. The target can be anything you like, but should remain rather
+% short. By default, \texttt{target} is set the special value \texttt{thepage},
+% which as you guessed means to use the page number.
+%
+% The name "target" bears an intentional resemblance to \fx's targeted
+% commands and environments, because we are indeed targetting the note to
+% something. The only difference is that in the case of floating notes, the
+% target is non-textual.
+%
+% Here is an example of a floating note that would typically appear in the
+% document's preamble:
+% \begin{verbatim}
+% \usepackage{hyperref}
+% \fxfatal[layout=index,target=hyperref]{Fill in PDF fields (title etc.)}
+% \end{verbatim}
 %
 % \subsection{Controlling the layout of \fx
 %   environments\label{sec:manual:envlayoutcontrol}}
@@ -592,7 +592,7 @@
 % external layout with the \texttt{envlayout} option might involve loading the
 % relevant file first.
 %
-% \noindent\DescribeMacro{\fxloadenvlayouts}\marg{names}\\
+% \noindent\DescribeMacro{\fxloadenvlayouts}\marg{name,\ldots}\\
 % For technical reasons, it is not possible to do such a thing outside the
 % preamble, neither in the middle of processing \cs{usepackage} options. As a
 % result, the \texttt{envlayout} option is restricted and you have three
@@ -700,7 +700,7 @@
 % with the \texttt{targetlayout} option might involve loading the relevant
 % file first.
 %
-% \noindent\DescribeMacro{\fxloadtargetlayouts}\marg{names}\\
+% \noindent\DescribeMacro{\fxloadtargetlayouts}\marg{name,\ldots}\\
 % For technical reasons, it is not possible to do such a thing outside the
 % preamble, neither in the middle of processing \cs{usepackage} options. As a
 % result, the \texttt{targetlayout} option is restricted and you have two
@@ -753,6 +753,53 @@
 % color directly in the \texttt{target} face. It is however provided for a
 % practical reason: it is used in both the \texttt{color} and the
 % \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
+%
+% \subsection{Faces\label{sec:manual:faces}}
+% In the \fx jargon, a ``face'' characterizes the visual aspect of some
+% portion of text. If you're familiar with the \textsf{[X]Emacs} editor, this
+% will come as no surprise to you. \fx provides several faces that allow you
+% to customize the layout of notes, environments, or targets. Here are the
+% first two of them.
+%
+% \subsubsubsection{The \texttt{inline} face}
+% \DescribeFace{inline}
+% By default, the \texttt{inline} layout displays its contents in bold font,
+% to distinguish the note from the surrounding text. This is controlled by the
+% \texttt{inline} face whose value is \cs{bfseries} by default.
+%
+% \subsubsubsection{The \texttt{margin} face}
+% \DescribeFace{margin}
+% By default, the \texttt{margin} and \texttt{marginclue} layouts display
+% their contents in footnote size. This is controlled by the \texttt{margin}
+% face whose value is (\cs{footnotesize} by default.
+%
+% \subsubsubsection{Setting face values}
+% There are different ways to customize a face. The first one is to use the
+% corresponding face option. For each face \meta{name}, their is a
+% \meta{name}\texttt{face} option. For instance, the \texttt{inline} face is
+% controlled by the \texttt{inlineface} option. Face options are
+% understood by the package itself, the \cs{fxsetup} command and locally by
+% all note insertion commands or environments. Here is an example:
+% \begin{verbatim}
+% \fxsetup{inlineface=\bfseries}
+% \end{verbatim}
+%
+% Since you will probably want to use \LaTeX{} commands in face values, you
+% should know that \LaTeX{} normally can't handle such commands in package
+% options. If you want this to work, you need to use the \texttt{xkvltxp}
+% package first, like this:
+% \begin{verbatim}
+% \usepackage{xkvltxp}
+% \usepackage[inlineface=\bfseries]{fixme}
+% \end{verbatim}
+%
+% \noindent\DescribeMacro{\fxsetface}\marg{name}\marg{value}\\
+% Another way to customize a face is to use the \cs{fxsetface} command by
+% providing the face name and the face value as two mandatory arguments. For
+% example:
+% \begin{verbatim}
+% \fxsetface{inline}{\bfseries}
+% \end{verbatim}
 %
 % \subsection{Controlling the logging of \fx}
 % As well as being displayed in the document itself, all \fx notes are
@@ -1828,7 +1875,7 @@
 %
 % \subsubsection{Layout loading}
 % \begin{macro}{\fxloadlayouts}
-%   \marg{names}
+%   \marg{name,\ldots}
 %    \begin{macrocode}
 \newcommand*\fxloadlayouts[1]{%
   \edef\@fxlts{\zap@space#1 \@empty}%
@@ -1844,10 +1891,10 @@
 %   characters long. No big deal though\ldots
 %    \begin{macrocode}
 \def\@fxparselayout#1#2#3\relax{\def\@fxltprefix{#1#2}\def\@fxltrest{#3}}
-
 % \begin{macro}{\fxuselayouts}
 %   \marg{[no]names}\\
-%   First, ensure that those layouts are available, then activate them:
+%   First, ensure that those layouts are available, then activate them.
+%   \cs{\FXRequireLayouts} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxuselayouts[1]{%
   \edef\@fxlts{\zap@space#1 \@empty}%
@@ -1858,6 +1905,8 @@
       \let\@fxltname\@fxlt}%
     \@fxkeyifundefined{layout}{\@fxltname}{\fxloadlayouts{\@fxltname}}{}}%
   \@fxsetkeys{layout}{#1}}
+\let\FXRequireLayouts\fxuselayouts
+
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{innerlayout}
@@ -1891,6 +1940,7 @@
 \@fxdefinekey{layout}{layout}{%
   \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
   \fxuselayouts{#1}}
+
 %    \end{macrocode}
 % \end{option}
 %
@@ -2003,7 +2053,7 @@
 %
 % \subsubsection{Environment layout loading}
 % \begin{macro}{\fxloadenvlayouts}
-%   \marg{names}
+%   \marg{name,\ldots}
 %    \begin{macrocode}
 \newcommand*\fxloadenvlayouts[1]{%
   \edef\@fxlts{\zap@space#1 \@empty}%
@@ -2095,7 +2145,7 @@
 %
 % \subsubsection{Target layout loading}
 % \begin{macro}{\fxloadtargetlayouts}
-%   \marg{names}
+%   \marg{name,\ldots}
 %    \begin{macrocode}
 \newcommand*\fxloadtargetlayouts[1]{%
   \edef\@fxlts{\zap@space#1 \@empty}%
