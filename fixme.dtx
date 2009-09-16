@@ -99,6 +99,20 @@
 %     \normalfont\normalsize\bfseries}}
 % \makeatother
 %
+% \newcommand*\DescribeBooleanOption[1]{%
+%   {\let\oldpdo\PrintDescribeOption%
+%     \def\PrintDescribeOption##1{\oldpdo{[no]##1}}%
+%     \let\oldsoi\SpecialOptionIndex%
+%     \def\SpecialOptionIndex##1{\oldsoi{##1}\oldsoi{no##1}}%
+%     \DescribeOption{#1}}}
+%
+% \makeatletter
+% \def\DescribeMacroNoIndex{\leavevmode\@bsphack
+%   \begingroup\MakePrivateLetters\Describe@Macro@NoIndex}
+% \def\Describe@Macro@NoIndex#1{\endgroup
+%   \marginpar{\raggedleft\PrintDescribeMacro{#1}}\@esphack\ignorespaces}
+% \makeatother
+%
 % ^^A Let's not depend on varioref for just that:
 % \newcommand\sectionref[1]{\ref{#1} on page \pageref{#1}}
 %
@@ -406,17 +420,12 @@
 % \end{enumerate}
 %
 % \subsubsection{Available note layouts}
-% \begingroup
-%   \makeatletter
-%   \let\@ldprintdescribeoption\PrintDescribeOption
-%   \def\PrintDescribeOption#1{\@ldprintdescribeoption{[no]#1}}
-%   \DescribeOption{inline}
-%   \DescribeOption{margin}
-%   \DescribeOption{marginclue}
-%   \DescribeOption{footnote}
-%   \DescribeOption{index}
-% \endgroup
 % The table below lists the note layouts currently distributed with \fx.
+% \DescribeBooleanOption{inline}
+% \DescribeBooleanOption{margin}
+% \DescribeBooleanOption{marginclue}
+% \DescribeBooleanOption{footnote}
+% \DescribeBooleanOption{index}
 % \begin{center}
 %   \DeleteShortVerb{\|}
 %   \begin{tabular}{|l|c|p{5cm}|}
@@ -805,9 +814,9 @@
 % As well as being displayed in the document itself, all \fx notes are
 % ``logged'' in different ways: by default, simple notes are recorded in the
 % log file while the others are also displayed on the terminal output during
-% compilation.\par
-% \DescribeOption{silent}
-% \DescribeOption{nosilent}
+% compilation.
+%
+% \DescribeBooleanOption{silent}
 % You have the ability to suppress logging altogether by using the
 % \texttt{silent} option. This option is understood by the package itself, the
 % \cs{fxsetup} command and all note insertion commands and environments. Just
@@ -1055,38 +1064,70 @@
 % prototypes is given below.
 %
 % \subsubsection{Modifying existing note layouts}
+% \DescribeMacroNoIndex{\FXLayout\ldots}\marg{type}\marg{note}\marg{author}\\
+% \begingroup
+%   \makeatletter
+%     \let\PrintDescribeMacro\@gobble
+%     \DescribeMacro{\FXLayoutInline}
+%     \DescribeMacro{\FXLayoutMargin}
+%     \DescribeMacro{\FXLayoutFootnote}
+%     \DescribeMacro{\FXLayoutIndex}
+%     \DescribeMacro{\FXLayoutMarginClue}
+%   \makeatother
+% \endgroup
 % Each note layout is implemented as a macro taking three mandatory arguments.
 % By convention, this macro is named \cs{FXLayout}\meta{name}, for instance
-% \cs{FXLayoutInline}.
-%
-% \noindent\DescribeMacro{\FXLayout*}\marg{type}\marg{note}\marg{author}\\
-% \meta{type} is the note type. It can be one of \texttt{note},
-% \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{note} is the
-% actual note, and \meta{author} is the note author's tag.
+% \cs{FXLayoutInline}.\meta{type} is the note type. It can be one of
+% \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
+% \meta{note} is the actual note, and \meta{author} is the note author's tag.
 %
 % \subsubsection{Modifying existing environment layouts}
-% \begin{sloppypar}
+% \DescribeMacroNoIndex{\FXEnvLayout\ldots Begin}
+% \DescribeMacro{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
+% \begingroup
+%   \makeatletter
+%     \let\PrintDescribeMacro\@gobble
+%     \DescribeMacro{\FXEnvLayoutPlainBegin}
+%     \DescribeMacro{\FXEnvLayoutPlainEnd}
+%     \DescribeMacro{\FXEnvLayoutSignatureBegin}
+%     \DescribeMacro{\FXEnvLayoutSignatureEnd}
+%     \DescribeMacro{\FXEnvLayoutColorBegin}
+%     \DescribeMacro{\FXEnvLayoutColorEnd}
+%   \makeatother
+% \endgroup
+% \begin{sloppypar}\noindent
 %   Each environment layout is implemented as two macros taking two mandatory
 %   arguments. By convention, these macros are named
 %   \cs{FXEnvLayout}\meta{name}\texttt{Begin} and
 %   \cs{FXEnvLayout}\meta{name}\texttt{End}, for instance
 %   \cs{FXEnvLayoutPlainBegin} and \cs{FXEnvLayoutPlainEnd}.
+%   \meta{type} is the note type. It can be one of \texttt{note},
+%   \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
+%   note author's tag.
+%   ^^A #### This sucks, but otherwise, I get too many unprocessed floats.
+%   ^^A #### There should be a variant of Describe* avoiding the marginpar
+%   ^^A #### altogether when output is not wanted.
+%   \begingroup
+%     \makeatletter
+%       \let\PrintDescribeMacro\@gobble
+%       \DescribeMacro{\FXEnvLayoutColorSigBegin}
+%       \DescribeMacro{\FXEnvLayoutColorSigEnd}
+%     \makeatother
+%   \endgroup
 % \end{sloppypar}
 %
-% \noindent
-% \DescribeMacro{\FXEnvLayout*Begin}
-% \DescribeMacro{\FXEnvLayout*End}\marg{type}\marg{author}\\
-% \meta{type} is the note type. It can be one of \texttt{note},
-% \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
-% note author's tag.
-%
 % \subsubsection{Modifying existing target layouts}
+% \DescribeMacroNoIndex{\FXTargetLayout\ldots}\marg{target}\\
+% \begingroup
+%   \makeatletter
+%     \let\PrintDescribeMacro\@gobble
+%     \DescribeMacro{\FXTargetLayoutPlain}
+%     \DescribeMacro{\FXTargetLayoutColor}
+%   \makeatother
+% \endgroup
 % Each target layout is implemented as a macro taking one mandatory argument.
 % By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
-% instance \cs{FXTargetLayoutPlain}.
-%
-% \noindent\DescribeMacro{\FXTargetLayout*}\marg{target}\\
-% \meta{target} is the textual target.
+% instance \cs{FXTargetLayoutPlain}. \meta{target} is the textual target.
 %
 % \subsection{Creating new layouts}
 % Creating a new layout first requires that you write new layout macros as
@@ -1170,8 +1211,9 @@
 % \texttt{theme} option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
-% \DescribeMacro{\fxlang*name}
-% \DescribeMacro{\fxlang*sname}
+% \DescribeMacroNoIndex{\fxlang\ldots name}
+% \DescribeMacroNoIndex{\fxlang\ldots sname}
+% ^^A #### FIXME: reference all languages
 % \fx's language control has been described in section
 % \sectionref{sec:manual:i18n}. For every supported language \meta{lang}, a
 % number of macros define the language-dependent part of \fx. The commands
@@ -2595,9 +2637,9 @@
 %    \end{macrocode}
 % \end{macro}
 % ^^A #### FIXME: this doesn't work
-% \DoNotIndex{\fx*[*],anfx*[*]}
-% \begin{macro}{\fx*[*]}
-%   \begin{environment}{anfx*[*]}
+% \DoNotIndex{\fx...[*],anfx...[*]}
+% \begin{macro}{\fx...[*]}
+%   \begin{environment}{anfx...[*]}
 %     \makeatletter
 %       \let\PrintMacroName=\@gobble
 %       \let\PrintEnvName=\@gobble
@@ -2674,7 +2716,9 @@
 % \subsubsection{Language definitions}
 % \paragraph{English}
 % \begin{lang}{english}
-%   \mbox{}
+%   \begin{macro}{\fxenglish...[s]name}
+%     \begin{macro}{\englishlistfixmename}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxenglishnotename{Note}
 \newcommand\fxenglishnotesname{Notes}
@@ -2686,12 +2730,16 @@
 \newcommand\fxenglishfatalsname{Fatals}
 \newcommand\englishlistfixmename{List of Corrections}
 %    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
 % \end{lang}
 %
 % \paragraph{French}
 % \begin{lang}{french}
 %   \begin{lang}{francais}
-%     \mbox{}
+%   \begin{macro}{\fxfrench...[s]name}
+%     \begin{macro}{\frenchlistfixmename}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxfrenchnotename{Note}
 \newcommand\fxfrenchnotesname{Notes}
@@ -2703,12 +2751,16 @@
 \newcommand\fxfrenchfatalsname{Fatales}
 \newcommand\frenchlistfixmename{Liste des Corrections}
 %    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
 %   \end{lang}
 % \end{lang}
 %
 % \paragraph{Spanish}
 % \begin{lang}{spanish}
-%   \mbox{}
+%   \begin{macro}{\fxspanish...[s]name}
+%     \begin{macro}{\spanishlistfixmename}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxspanishnotename{Nota}
 \newcommand\fxspanishnotesname{Notas}
@@ -2720,11 +2772,15 @@
 \newcommand\fxspanishfatalsname{FIXME}
 \newcommand\spanishlistfixmename{Lista de Correcciones}
 %    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
 % \end{lang}
 %
 % \paragraph{Italian}
 % \begin{lang}{italian}
-%   \mbox{}
+%   \begin{macro}{\fxitalian...[s]name}
+%     \begin{macro}{\italianlistfixmename}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxitaliannotename{Nota}
 \newcommand\fxitaliannotesname{Note}
@@ -2736,12 +2792,16 @@
 \newcommand\fxitalianfatalsname{FIXME}
 \newcommand\italianlistfixmename{Corrigenda}
 %    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
 % \end{lang}
 %
 % \paragraph{German}
 % \begin{lang}{german}
 %   \begin{lang}{ngerman}
-%     \mbox{}
+%     \begin{macro}{\fxgerman...[s]name}
+%       \begin{macro}{\germanlistfixmename}
+%         \mbox{}
 %    \begin{macrocode}
 \newcommand\fxgermannotename{Anm}
 \newcommand\fxgermannotesname{Anmerkungen}
@@ -2753,12 +2813,16 @@
 \newcommand\fxgermanfatalsname{FIXME}
 \newcommand\germanlistfixmename{Verzeichnis der Korrekturen}
 %    \end{macrocode}
+%       \end{macro}
+%     \end{macro}
 %   \end{lang}
 % \end{lang}
 %
 % \paragraph{Danish}
 % \begin{lang}{danish}
-%   \mbox{}
+%   \begin{macro}{\fxdanish...[s]name}
+%     \begin{macro}{\danishlistfixmename}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxdanishnotename{Note}
 \newcommand\fxdanishnotesname{Noter}
@@ -2770,11 +2834,15 @@
 \newcommand\fxdanishfatalsname{FIXME}
 \newcommand\danishlistfixmename{Rettelser}
 %    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
 % \end{lang}
 %
 % \paragraph{Croatian}
 % \begin{lang}{croatian}
-%   \mbox{}
+%   \begin{macro}{\fxcroatian...[s]name}
+%     \begin{macro}{\croatianlistfixmename}
+%       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxcroatiannotename{Poruka}
 \newcommand\fxcroatiannotesname{Poruke}
@@ -2787,6 +2855,8 @@
 \newcommand\croatianlistfixmename{Popis korekcija}
 
 %    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
 % \end{lang}
 %
 % \subsubsection{Language tracking}
