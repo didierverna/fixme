@@ -99,8 +99,6 @@
 %     \normalfont\normalsize\bfseries}}
 % \makeatother
 %
-% \newcommand\subsubsubsection[1]{\paragraph{#1:}}
-%
 % ^^A Let's not depend on varioref for just that:
 % \newcommand\sectionref[1]{\ref{#1} on page \pageref{#1}}
 %
@@ -328,7 +326,7 @@
 % extend.
 %
 % \subsubsection{Selecting a note layout}
-% \subsubsubsection{Individual control}
+% \paragraph{Individual control}
 % For each note layout, there is a corresponding boolean option (for instance,
 % the ``inline'' layout is controlled by the \texttt{inline} option). These
 % options are understood by the package itself, the \cs{fxsetup} command and
@@ -353,7 +351,7 @@
 % \fxsetup{noinline}
 % \end{verbatim}
 %
-% \subsubsubsection{Global control}
+% \paragraph{Global control}
 % \DescribeOption{layout}
 % \DescribeOption{morelayout}
 % As of version 4.0, an even more convenient way to specify the required
@@ -634,40 +632,28 @@
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 % \end{center}
-%
-% \subsubsubsection{The \texttt{plain} environment layout}
-% \DescribeFace{env}
-% By default, the \texttt{plain} environment layout displays its contents in
-% bold font, to distinguish it from the surrounding text. You can modify this
-% by changing the value of the \texttt{env} face (\cs{bfseries} by default).
-%
-% \subsubsubsection{The \texttt{signature} environment layout}
-% \DescribeFace{signature}
-% The \texttt{signature} environment layout prints the author's tag (see
-% \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
-% layout honors the \texttt{env} face, and adds a \texttt{signature} face on
-% top of it for the signature part (it is set to \cs{itshape} by default).
-% This layout is used by the \texttt{signature} theme (see section
-% \sectionref{sec:manual:themes}).
-%
-% \subsubsubsection{The \texttt{color} environment layout}
-% \DescribeColor{fxnote}
-% \DescribeColor{fxwarning}
-% \DescribeColor{fxerror}
-% \DescribeColor{fxfatal}
-% The \texttt{color} environment layout uses one of four colors named
-% \texttt{fx*}, according to the note's importance level, to display its
-% contents. It also avoids printing the note level, since that information is
-% already conveyed by the color. This layout honors the \texttt{env} face, but
-% resets it to \meta{nothing} first. It is used in the \texttt{color} theme
-% (see section \sectionref{sec:manual:themes}).
-%
-% \subsubsubsection{The \texttt{colorsig} environment layout}
-% The \texttt{colorsig} environment layout combines the features of the
-% \texttt{signature} and \texttt{color} ones. It honors the \texttt{env}
-% and \texttt{signature} faces, but resets the \texttt{env} one to
-% \meta{nothing} first. It is used by the \texttt{colorsig} theme (see section
-% \sectionref{sec:manual:themes}).
+% \begin{itemize}
+% \item The \texttt{plain} environment layout prints its contents as-is, only
+%   in bold font (by default) in order to distinguish it from the surrounding
+%   text.
+% \item The \texttt{signature} environment layout prints the author's tag (see
+%   \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
+%   layout is used by the \texttt{signature} theme (see section
+%   \sectionref{sec:manual:themes}).
+% \item
+%   \DescribeColor{fxnote}
+%   \DescribeColor{fxwarning}
+%   \DescribeColor{fxerror}
+%   \DescribeColor{fxfatal}
+%   The \texttt{color} environment layout uses one of four colors named
+%   \texttt{fx}\meta{level} (according to the note's importance level) to
+%   display its contents. It also avoids printing the note level, since that
+%   information is already conveyed by the color. This layout is used by the
+%   \texttt{color} theme (see section \sectionref{sec:manual:themes}).
+% \item The \texttt{colorsig} environment layout combines the features of the
+%   \texttt{signature} and \texttt{color} ones. This layout is used by the
+%   \texttt{colorsig} theme (see section \sectionref{sec:manual:themes}).
+% \end{itemize}
 %
 % \subsection{Controlling the layout of \fx
 %   targets\label{sec:manual:targetlayoutcontrol}}
@@ -720,8 +706,7 @@
 % \end{enumerate}
 %
 % \subsubsection{Available target layouts\label{sec:manual:targetlayoutslist}}
-% The table below lists the target layouts currently distributed with
-% \fx.
+% The table below lists the target layouts currently distributed with \fx.
 %
 % \DescribeLayout{plain}
 % \DescribeLayout{color}
@@ -737,43 +722,23 @@
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 % \end{center}
-%
-% \subsubsubsection{The \texttt{plain} target layout}
-% \DescribeFace{target}
-% By default, the \texttt{plain} target layout displays its contents in
-% italics. You can modify this behavior by changing the value of the
-% \texttt{target} face (\cs{itshape} by default).
-%
-% \subsubsubsection{The \texttt{color} target layout}
-% \DescribeColor{fxtarget}
-% The \texttt{color} target layout uses the color named \texttt{fxtarget}
-% to display the target text. It honors the \texttt{target} face, but resets
-% it to \meta{nothing} first. Note that technically speaking, this layout is
-% not necessary because the same effect could be achieved by handling the
-% color directly in the \texttt{target} face. It is however provided for a
-% practical reason: it is used in both the \texttt{color} and the
-% \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
+% \begin{itemize}
+% \item The \texttt{plain} target layout displays its contents as-is, only in
+%   italics (by default) in order to distinguish it from the surrounding text.
+% \item
+%   \DescribeColor{fxtarget}
+%   The \texttt{color} target layout uses the color named \texttt{fxtarget}
+%   to display the target text. This layout is used by the \texttt{color}
+%   and \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
+% \end{itemize}
 %
 % \subsection{Faces\label{sec:manual:faces}}
 % In the \fx jargon, a ``face'' characterizes the visual aspect of some
 % portion of text. If you're familiar with the \textsf{[X]Emacs} editor, this
 % will come as no surprise to you. \fx provides several faces that allow you
-% to customize the layout of notes, environments, or targets. Here are the
-% first two of them.
+% to customize the layout of notes, environments, or targets.
 %
-% \subsubsubsection{The \texttt{inline} face}
-% \DescribeFace{inline}
-% By default, the \texttt{inline} layout displays its contents in bold font,
-% to distinguish the note from the surrounding text. This is controlled by the
-% \texttt{inline} face whose value is \cs{bfseries} by default.
-%
-% \subsubsubsection{The \texttt{margin} face}
-% \DescribeFace{margin}
-% By default, the \texttt{margin} and \texttt{marginclue} layouts display
-% their contents in footnote size. This is controlled by the \texttt{margin}
-% face whose value is (\cs{footnotesize} by default.
-%
-% \subsubsubsection{Setting face values}
+% \subsubsection{Setting face values}
 % There are different ways to customize a face. The first one is to use the
 % corresponding face option. For each face \meta{name}, their is a
 % \meta{name}\texttt{face} option. For instance, the \texttt{inline} face is
@@ -800,6 +765,42 @@
 % \begin{verbatim}
 % \fxsetface{inline}{\bfseries}
 % \end{verbatim}
+%
+% \subsubsection{Available faces}
+% \subparagraph{The \texttt{inline} face}
+% \DescribeFace{inline}
+% By default, the \texttt{inline} note layout displays its contents in bold
+% font, to distinguish the note from the surrounding text. This is controlled
+% by the \texttt{inline} face whose value is \cs{bfseries} by default.
+%
+% \subparagraph{The \texttt{margin} face}
+% \DescribeFace{margin}
+% By default, the \texttt{margin} and \texttt{marginclue} layouts display
+% their contents in footnote size. This is controlled by the \texttt{margin}
+% face whose value is \cs{footnotesize} by default.
+%
+% \subparagraph{The \texttt{env} face}
+% \DescribeFace{env}
+% By default, the \texttt{plain} environment layout displays its contents in
+% bold font, to distinguish it from the surrounding text. This is controlled
+% by the \texttt{env} face whose value is \cs{bfseries} by default. The
+% \texttt{color} and \texttt{colorsig} environment layouts honor this face as
+% well, but reset it to \meta{nothing} first.
+%
+% \subparagraph{The \texttt{signature} face}
+% \DescribeFace{signature}
+% The \texttt{signature} environment layout honors the \texttt{env} face, and
+% adds a \texttt{signature} face on top of it for the signature part. It is
+% set to \cs{itshape} by default. The \texttt{colorsig} environment layout
+% honors this face as well.
+%
+% \subparagraph{The \texttt{target} face}
+% \DescribeFace{target}
+% By default, the \texttt{plain} target layout displays its contents in
+% italics, to distinguish it from the surrounding text. This is controlled by
+% the \texttt{target} face whose value is \cs{itshape} by default. The
+% \texttt{color} target layout honors this face as well, but resets it to
+% \meta{nothing} first.
 %
 % \subsection{Controlling the logging of \fx}
 % As well as being displayed in the document itself, all \fx notes are
@@ -879,6 +880,7 @@
 % \subsection{Standalone or collaborative mode\label{sec:manual:modes}}
 % As of version 4, \fx supports collaborative annotations as well as
 % ``standalone'', single-author documents.
+%
 % \subsubsection{Standalone mode}
 % By default, \fx is in standalone mode, meaning that it assumes there is
 % only one person annotating the document. This has several implications on
@@ -926,7 +928,7 @@
 % explicitely provide the author's tag in every single note you create.
 % Fortunately, \fx offers an easier way to achieve this.
 %
-% \subsubsubsection{Registering new authors}
+% \paragraph{Registering new authors}
 % \noindent\DescribeMacro{\FXRegisterAuthor}
 % \marg{cmdprefix}\marg{envprefix}\marg{tag}\\
 % The command \cs{FXRegisterAuthor} registers a new author with \fx. It
@@ -1004,11 +1006,10 @@
 % option and give it the name of the theme you want to use. Theme are always
 % external: there are none in the  core of \fx but instead they are provided
 % as independent files. As a consequence, the \texttt{theme} option has the
-% same usage restrictions as the \texttt{envlayout} or \texttt{targetlayout}
-% ones (see sections \sectionref{sec:manual:envlayoutcontrol} and
-% \sectionref{sec:manual:targetlayoutcontrol}). Moreover, it is not possible
-% to ``maintain'' several themes and switch between them in a single document.
-% Themes can be loaded only in the preamble.
+% same usage restrictions as all the layout options we've encountered so far.
+% Moreover, it is not possible to ``maintain'' several themes and switch
+% between them in a single document. Themes can be loaded only in the
+% preamble.
 %
 % \noindent
 % \DescribeMacro{\fxusetheme}
@@ -1019,14 +1020,14 @@
 % \subsubsection{Available themes}
 % \fx comes with a number of predefined themes listed below.
 %
-% \subsubsubsection{The \texttt{signature} theme}
+% \paragraph{The \texttt{signature} theme}
 % \DescribeTheme{signature}
 % This theme uses the \texttt{signature} environment layout (see section
 % \sectionref{sec:manual:envlayoutslist}), and overrides the built-in ones to
 % display the author tags as a signature (\ie at the end of the notes) instead
 % of as a prefix. All original layout faces are honored.
 %
-% \subsubsubsection{The \texttt{color} theme}
+% \paragraph{The \texttt{color} theme}
 % \DescribeTheme{color}
 % This theme uses the \texttt{color} environment and target layouts (see
 % sections \sectionref{sec:manual:envlayoutslist} and
@@ -1034,9 +1035,11 @@
 % to use different colors for the different note levels. As a consequence, it
 % avoids printing the note names because this information is already contained
 % in the colors themselves. All original layout faces are honored, but
-% the \texttt{inline} one is reset to \meta{nothing}.
+% the \texttt{inline} one is reset to \meta{nothing}. Remember that the
+% \texttt{env} and \texttt{target} faces are reset as well (this is actually
+% done by the \texttt{color} environment and target layouts).
 %
-% \subsubsubsection{The \texttt{colorsig} theme}
+% \paragraph{The \texttt{colorsig} theme}
 % \DescribeTheme{colorsig}
 % This theme combines the features of the \texttt{color} and
 % \texttt{signature} ones. All original layout faces are honored, but
@@ -1467,7 +1470,7 @@
 % currently recognized are \texttt{article}, \texttt{report},
 % \texttt{book} and their \komascript replacements.
 %
-% \subsubsubsection{\texttt{article} version}
+% \paragraph{\texttt{article} version}
 % \begin{macro}{\@lox@prtc@article}
 %   \begin{macro}{\@lox@psttc@article}
 %     \mbox{}
@@ -1480,7 +1483,7 @@
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
-% \subsubsubsection{\texttt{report} version}
+% \paragraph{\texttt{report} version}
 % \begin{macro}{\@lox@prtc@report}
 %   \begin{macro}{\@lox@psttc@report}
 %     \mbox{}
@@ -1498,7 +1501,7 @@
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
-% \subsubsubsection{\texttt{book} version}
+% \paragraph{\texttt{book} version}
 % \begin{macro}{\@lox@prtc@book}
 %   \begin{macro}{\@lox@psttc@book}
 %     \mbox{}
@@ -1528,7 +1531,7 @@
 
 %    \end{macrocode}
 %  \end{macro}
-%  \subsubsubsection{\texttt{scrartcl} version}
+%  \paragraph{\texttt{scrartcl} version}
 %  \begin{macro}{\@lox@prtc@scrartcl}
 %    \begin{macro}{\@lox@psttc@scrartcl}
 %      \mbox{}
@@ -1542,7 +1545,7 @@
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
-% \subsubsubsection{\texttt{scrreprt} version}
+% \paragraph{\texttt{scrreprt} version}
 % \begin{macro}{\@lox@prtc@scrreprt}
 %   \begin{macro}{\@lox@psttc@scrreprt}
 %     \mbox{}
@@ -1563,7 +1566,7 @@
 %    \end{macrocode}
 %  \end{macro}
 % \end{macro}
-% \subsubsubsection{\texttt{scrbook} version}
+% \paragraph{\texttt{scrbook} version}
 % \begin{macro}{\@lox@prtc@scrbook}
 %   \begin{macro}{\@lox@psttc@scrbook}
 %     \mbox{}
@@ -1703,7 +1706,7 @@
 %
 % \subsubsection{Built-in layouts}
 % Remember that the order is important!
-% \subsubsubsection{Footnote}
+% \paragraph{Footnote}
 % \begin{option}{footnote}
 %   \begin{option}{nofootnote}
 %     \begin{macro}{\FXLayoutFootnote}
@@ -1719,7 +1722,7 @@
 %   \end{option}
 % \end{option}
 %
-% \subsubsubsection{Margin}
+% \paragraph{Margin}
 % \begin{face}{margin}
 %   \mbox{}
 %    \begin{macrocode}
@@ -1749,7 +1752,7 @@
 %   \end{option}
 % \end{option}
 %
-% \subsubsubsection{Margin clue}
+% \paragraph{Margin clue}
 % \begin{option}{marginclue}
 %   \begin{option}{nomarginclue}
 %     \begin{macro}{\FXLayoutMarginCLue}
@@ -1773,7 +1776,7 @@
 %   \end{option}
 % \end{option}
 %
-% \subsubsubsection{Inline}
+% \paragraph{Inline}
 % \begin{face}{inline}
 %   \mbox{}
 %    \begin{macrocode}
@@ -1795,7 +1798,7 @@
 %   \end{option}
 % \end{option}
 %
-% \subsubsubsection{Index}
+% \paragraph{Index}
 % \begin{macro}{\fixmeindexname}
 %   \mbox{}
 %    \begin{macrocode}
@@ -1857,7 +1860,7 @@
 %   \end{option}
 % \end{option}
 %
-% \subsubsubsection{Contents line\label{sec:code:contentslinelayout}}
+% \paragraph{Contents line\label{sec:code:contentslinelayout}}
 % \begin{macro}{\FXLayoutContentsLine}
 %   \marg{type}\marg{note}\marg{author}\\
 %   This one is not registered like the others because it is always active and
@@ -1968,7 +1971,7 @@
 % \end{macro}
 %
 % \subsubsection{Built-in environment layouts}
-% \subsubsubsection{Plain}
+% \paragraph{Plain}
 % \begin{face}{env}
 %   \mbox{}
 %    \begin{macrocode}
@@ -1991,7 +1994,7 @@
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsubsection{Signature}
+% \paragraph{Signature}
 % \begin{layout}{signature}
 %   \begin{face}{signature}
 %     \mbox{}
@@ -2106,7 +2109,7 @@
 % \end{macro}
 %
 % \subsubsection{Built-in target layouts}
-% \subsubsubsection{Plain}
+% \paragraph{Plain}
 % \begin{face}{target}
 %   \mbox{}
 %    \begin{macrocode}
@@ -2682,7 +2685,7 @@
 % \end{macro}
 %
 % \subsubsection{Language definitions}
-% \subsubsubsection{English}
+% \paragraph{English}
 % \begin{lang}{english}
 %   \mbox{}
 %    \begin{macrocode}
@@ -2698,7 +2701,7 @@
 %    \end{macrocode}
 % \end{lang}
 %
-% \subsubsubsection{French}
+% \paragraph{French}
 % \begin{lang}{french}
 %   \begin{lang}{francais}
 %     \mbox{}
@@ -2716,7 +2719,7 @@
 %   \end{lang}
 % \end{lang}
 %
-% \subsubsubsection{Spanish}
+% \paragraph{Spanish}
 % \begin{lang}{spanish}
 %   \mbox{}
 %    \begin{macrocode}
@@ -2732,7 +2735,7 @@
 %    \end{macrocode}
 % \end{lang}
 %
-% \subsubsubsection{Italian}
+% \paragraph{Italian}
 % \begin{lang}{italian}
 %   \mbox{}
 %    \begin{macrocode}
@@ -2748,7 +2751,7 @@
 %    \end{macrocode}
 % \end{lang}
 %
-% \subsubsubsection{German}
+% \paragraph{German}
 % \begin{lang}{german}
 %   \begin{lang}{ngerman}
 %     \mbox{}
@@ -2766,7 +2769,7 @@
 %   \end{lang}
 % \end{lang}
 %
-% \subsubsubsection{Danish}
+% \paragraph{Danish}
 % \begin{lang}{danish}
 %   \mbox{}
 %    \begin{macrocode}
@@ -2782,7 +2785,7 @@
 %    \end{macrocode}
 % \end{lang}
 %
-% \subsubsubsection{Croatian}
+% \paragraph{Croatian}
 % \begin{lang}{croatian}
 %   \mbox{}
 %    \begin{macrocode}
