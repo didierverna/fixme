@@ -212,8 +212,7 @@
 % \DescribeMacro{\fxnote}
 % \DescribeMacro{\fxwarning}
 % \DescribeMacro{\fxerror}
-% \DescribeMacro{\fxfatal}
-% \oarg{options}\marg{note}\\
+% \DescribeMacro{\fxfatal}\oarg{options}\marg{note}\\
 % \fx provides four note insertion commands corresponding to different
 % levels of importance (notes, warnings, errors and fatal errors).
 % \cs{fxfatal} is a bit different from the other ones, as will be explained in
@@ -929,8 +928,7 @@
 % Fortunately, \fx offers an easier way to achieve this.
 %
 % \paragraph{Registering new authors}
-% \noindent\DescribeMacro{\FXRegisterAuthor}
-% \marg{cmdprefix}\marg{envprefix}\marg{tag}\\
+% \DescribeMacro{\FXRegisterAuthor}\marg{cmdprefix}\marg{envprefix}\marg{tag}\\
 % The command \cs{FXRegisterAuthor} registers a new author with \fx. It
 % takes three arguments: the last one (\meta{tag}) is just the same as the
 % value you would pass to the \texttt{author} option: it will serve as a
@@ -1011,9 +1009,7 @@
 % between them in a single document. Themes can be loaded only in the
 % preamble.
 %
-% \noindent
-% \DescribeMacro{\fxusetheme}
-% \marg{name}\\
+% \noindent\DescribeMacro{\fxusetheme}\marg{name}\\
 % An alternative to the \texttt{theme} option is to use the \cs{fxusetheme}
 % command, which takes the theme's name as its only mandatory argument.
 %
@@ -1063,9 +1059,7 @@
 % By convention, this macro is named \cs{FXLayout}\meta{name}, for instance
 % \cs{FXLayoutInline}.
 %
-% \noindent
-% \DescribeMacro{\FXLayout*}
-% \marg{type}\marg{note}\marg{author}\\
+% \noindent\DescribeMacro{\FXLayout*}\marg{type}\marg{note}\marg{author}\\
 % \meta{type} is the note type. It can be one of \texttt{note},
 % \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{note} is the
 % actual note, and \meta{author} is the note author's tag.
@@ -1081,8 +1075,7 @@
 %
 % \noindent
 % \DescribeMacro{\FXEnvLayout*Begin}
-% \DescribeMacro{\FXEnvLayout*End}
-% \marg{type}\marg{author}\\
+% \DescribeMacro{\FXEnvLayout*End}\marg{type}\marg{author}\\
 % \meta{type} is the note type. It can be one of \texttt{note},
 % \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
 % note author's tag.
@@ -1092,9 +1085,7 @@
 % By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
 % instance \cs{FXTargetLayoutPlain}.
 %
-% \noindent
-% \DescribeMacro{\FXTargetLayout*}
-% \marg{target}\\
+% \noindent\DescribeMacro{\FXTargetLayout*}\marg{target}\\
 % \meta{target} is the textual target.
 %
 % \subsection{Creating new layouts}
@@ -1104,8 +1095,7 @@
 %
 % \subsubsection{Registering a new note layout}
 % \begin{sloppypar}
-%   \DescribeMacro{\FXRegisterLayout}
-%   \oarg{boolfunc}\marg{name}\marg{macro}\\
+%   \DescribeMacro{\FXRegisterLayout}\oarg{boolfunc}\marg{name}\marg{macro}\\
 %   In order to register a new note layout with \fx, use the command
 %   \cs{FXRegisterLayout}. This macro has two mandatory arguments: the layout
 %   \meta{name} and the associated layout \meta{macro}. For instance, the
@@ -1126,8 +1116,7 @@
 %
 % \subsubsection{Registering a new environment layout}
 % \begin{sloppypar}
-%   \DescribeMacro{\FXRegisterEnvLayout}
-%   \marg{name}\marg{begin}\marg{end}\\
+%   \DescribeMacro{\FXRegisterEnvLayout}\marg{name}\marg{begin}\marg{end}\\
 %   In order to register a new environment layout with \fx, use the command
 %   \cs{FXRegisterEnvLayout}. This macro has three mandatory arguments: the
 %   layout \meta{name} and the associated \meta{begin} and \meta{end} macros.
@@ -1146,8 +1135,7 @@
 %
 % \subsubsection{Registering a new target layout}
 % \begin{sloppypar}
-%   \DescribeMacro{\FXRegisterTargetLayout}
-%   \marg{name}\marg{macro}\\
+%   \DescribeMacro{\FXRegisterTargetLayout}\marg{name}\marg{macro}\\
 %   In order to register a new target layout with \fx, use the command
 %   \cs{FXRegisterTargetLayout}. This macro has two mandatory arguments: the
 %   layout \meta{name} and the associated \meta{macro}. For instance, the
@@ -1173,8 +1161,7 @@
 % \noindent
 % \DescribeMacro{\FXRequireLayout}
 % \DescribeMacro{\FXRequireEnvLayout}
-% \DescribeMacro{\FXRequireTargetLayout}
-% \marg{name}\\
+% \DescribeMacro{\FXRequireTargetLayout}\marg{name}\\
 % In order to use an external layout in a theme, use the commands
 % \cs{FXRequire*Layout} and give them the layout's name as argument.
 %
