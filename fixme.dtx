@@ -106,13 +106,6 @@
 %     \def\SpecialOptionIndex##1{\oldsoi{##1}\oldsoi{no##1}}%
 %     \DescribeOption{#1}}}
 %
-% \makeatletter
-% \def\DescribeMacroNoIndex{\leavevmode\@bsphack
-%   \begingroup\MakePrivateLetters\Describe@Macro@NoIndex}
-% \def\Describe@Macro@NoIndex#1{\endgroup
-%   \marginpar{\raggedleft\PrintDescribeMacro{#1}}\@esphack\ignorespaces}
-% \makeatother
-%
 % ^^A Let's not depend on varioref for just that:
 % \newcommand\sectionref[1]{\ref{#1} on page \pageref{#1}}
 %
@@ -1064,7 +1057,7 @@
 % prototypes is given below.
 %
 % \subsubsection{Modifying existing note layouts}
-% \DescribeMacroNoIndex{\FXLayout\ldots}\marg{type}\marg{note}\marg{author}\\
+% \DescribeMacro[noindex]{\FXLayout\ldots}\marg{type}\marg{note}\marg{author}\\
 % \begingroup
 %   \makeatletter
 %     \let\PrintDescribeMacro\@gobble
@@ -1082,7 +1075,7 @@
 % \meta{note} is the actual note, and \meta{author} is the note author's tag.
 %
 % \subsubsection{Modifying existing environment layouts}
-% \DescribeMacroNoIndex{\FXEnvLayout\ldots Begin}
+% \DescribeMacro[noindex]{\FXEnvLayout\ldots Begin}
 % \DescribeMacro{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
 % \begingroup
 %   \makeatletter
@@ -1117,7 +1110,7 @@
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
-% \DescribeMacroNoIndex{\FXTargetLayout\ldots}\marg{target}\\
+% \DescribeMacro[noindex]{\FXTargetLayout\ldots}\marg{target}\\
 % \begingroup
 %   \makeatletter
 %     \let\PrintDescribeMacro\@gobble
@@ -1211,8 +1204,8 @@
 % \texttt{theme} option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
-% \DescribeMacroNoIndex{\fxlang\ldots name}
-% \DescribeMacroNoIndex{\fxlang\ldots sname}
+% \DescribeMacro[noindex]{\fxlang\ldots name}
+% \DescribeMacro[noindex]{\fxlang\ldots sname}
 % ^^A #### FIXME: reference all languages
 % \fx's language control has been described in section
 % \sectionref{sec:manual:i18n}. For every supported language \meta{lang}, a
@@ -1302,7 +1295,7 @@
 %    \begin{macrocode}
 %<fixme>\NeedsTeXFormat{LaTeX2e}
 %<*header>
-\ProvidesPackage{fixme}[2009/09/16 v4.0 Insert fixme notes in your documents]
+\ProvidesPackage{fixme}[2009/09/17 v4.0 Insert fixme notes in your documents]
 
 %</header>
 %    \end{macrocode}
