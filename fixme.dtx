@@ -2609,21 +2609,16 @@
 
 %    \end{macrocode}
 % \end{macro}
-% ^^A #### FIXME: this doesn't work
-% \DoNotIndex{\fx...[*]}
-% \begin{macro}{\fx...[*]}
+% \begin{macro}[noindex]{\fx...[*]}
 %   \begin{environment}[noindex]{anfx...[*]}
-%     \makeatletter
-%       \let\PrintMacroName=\@gobble
-%     \makeatother
-%     \begin{macro}{\fxnote}
-%       \begin{macro}{\fxwarning}
-%         \begin{macro}{\fxerror}
-%           \begin{macro}{\fxfatal}
-%             \begin{macro}{\fxnote*}
-%               \begin{macro}{\fxwarning*}
-%                 \begin{macro}{\fxerror*}
-%                   \begin{macro}{\fxfatal*}
+%     \begin{macro}[noprint]{\fxnote}
+%       \begin{macro}[noprint]{\fxwarning}
+%         \begin{macro}[noprint]{\fxerror}
+%           \begin{macro}[noprint]{\fxfatal}
+%             \begin{macro}[noprint]{\fxnote*}
+%               \begin{macro}[noprint]{\fxwarning*}
+%                 \begin{macro}[noprint]{\fxerror*}
+%                   \begin{macro}[noprint]{\fxfatal*}
 %                     \begin{environment}[noprint]{anfxnote}
 %                       \begin{environment}[noprint]{anfxwarning}
 %                         \begin{environment}[noprint]{anfxerror}
