@@ -2610,12 +2610,11 @@
 %    \end{macrocode}
 % \end{macro}
 % ^^A #### FIXME: this doesn't work
-% \DoNotIndex{\fx...[*],anfx...[*]}
+% \DoNotIndex{\fx...[*]}
 % \begin{macro}{\fx...[*]}
-%   \begin{environment}{anfx...[*]}
+%   \begin{environment}[noindex]{anfx...[*]}
 %     \makeatletter
 %       \let\PrintMacroName=\@gobble
-%       \let\PrintEnvName=\@gobble
 %     \makeatother
 %     \begin{macro}{\fxnote}
 %       \begin{macro}{\fxwarning}
@@ -2625,14 +2624,14 @@
 %               \begin{macro}{\fxwarning*}
 %                 \begin{macro}{\fxerror*}
 %                   \begin{macro}{\fxfatal*}
-%                     \begin{environment}{anfxnote}
-%                       \begin{environment}{anfxwarning}
-%                         \begin{environment}{anfxerror}
-%                           \begin{environment}{anfxfatal}
-%                             \begin{environment}{anfxnote*}
-%                               \begin{environment}{anfxwarning*}
-%                                 \begin{environment}{anfxerror*}
-%                                   \begin{environment}{anfxfatal*}
+%                     \begin{environment}[noprint]{anfxnote}
+%                       \begin{environment}[noprint]{anfxwarning}
+%                         \begin{environment}[noprint]{anfxerror}
+%                           \begin{environment}[noprint]{anfxfatal}
+%                             \begin{environment}[noprint]{anfxnote*}
+%                               \begin{environment}[noprint]{anfxwarning*}
+%                                 \begin{environment}[noprint]{anfxerror*}
+%                                   \begin{environment}[noprint]{anfxfatal*}
 %     And we use it to create the \fx default user:
 %    \begin{macrocode}
 \FXRegisterAuthor{fx}{anfx}{fixme}
