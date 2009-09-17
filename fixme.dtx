@@ -3418,7 +3418,7 @@
 % ^^A \PrintChanges
 % ^^A Nobody messes up with the marks in this document, but \index@prologue.
 % ^^A That sucks.
-% \begingroup\let\markboth\relax\PrintIndex\endgroup
+% \makeatletter{\let\markboth\@gobbletwo\PrintIndex}\makeatother
 % \Finale
 %
 % ^^A fixme.dtx ends here.
