@@ -1058,16 +1058,11 @@
 %
 % \subsubsection{Modifying existing note layouts}
 % \DescribeMacro[noindex]{\FXLayout\ldots}\marg{type}\marg{note}\marg{author}\\
-% \begingroup
-%   \makeatletter
-%     \let\PrintDescribeMacro\@gobble
-%     \DescribeMacro{\FXLayoutInline}
-%     \DescribeMacro{\FXLayoutMargin}
-%     \DescribeMacro{\FXLayoutFootnote}
-%     \DescribeMacro{\FXLayoutIndex}
-%     \DescribeMacro{\FXLayoutMarginClue}
-%   \makeatother
-% \endgroup
+% \DescribeMacro[noprint]{\FXLayoutInline}
+% \DescribeMacro[noprint]{\FXLayoutMargin}
+% \DescribeMacro[noprint]{\FXLayoutFootnote}
+% \DescribeMacro[noprint]{\FXLayoutIndex}
+% \DescribeMacro[noprint]{\FXLayoutMarginClue}
 % Each note layout is implemented as a macro taking three mandatory arguments.
 % By convention, this macro is named \cs{FXLayout}\meta{name}, for instance
 % \cs{FXLayoutInline}.\meta{type} is the note type. It can be one of
@@ -1076,18 +1071,18 @@
 %
 % \subsubsection{Modifying existing environment layouts}
 % \DescribeMacro[noindex]{\FXEnvLayout\ldots Begin}
-% \DescribeMacro{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
-% \begingroup
-%   \makeatletter
-%     \let\PrintDescribeMacro\@gobble
-%     \DescribeMacro{\FXEnvLayoutPlainBegin}
-%     \DescribeMacro{\FXEnvLayoutPlainEnd}
-%     \DescribeMacro{\FXEnvLayoutSignatureBegin}
-%     \DescribeMacro{\FXEnvLayoutSignatureEnd}
-%     \DescribeMacro{\FXEnvLayoutColorBegin}
-%     \DescribeMacro{\FXEnvLayoutColorEnd}
-%   \makeatother
-% \endgroup
+% \DescribeMacro[noindex]{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
+% ^^A #### NOTE: the benefit of DoX's noprint option here is that I can have
+% ^^A as many \DescribeMacro calls as I want, without getting a "Too many
+% ^^A unprocessed floats" error.
+% \DescribeMacro[noprint]{\FXEnvLayoutPlainBegin}
+% \DescribeMacro[noprint]{\FXEnvLayoutPlainEnd}
+% \DescribeMacro[noprint]{\FXEnvLayoutSignatureBegin}
+% \DescribeMacro[noprint]{\FXEnvLayoutSignatureEnd}
+% \DescribeMacro[noprint]{\FXEnvLayoutColorBegin}
+% \DescribeMacro[noprint]{\FXEnvLayoutColorEnd}
+% \DescribeMacro[noprint]{\FXEnvLayoutColorSigBegin}
+% \DescribeMacro[noprint]{\FXEnvLayoutColorSigEnd}
 % \begin{sloppypar}\noindent
 %   Each environment layout is implemented as two macros taking two mandatory
 %   arguments. By convention, these macros are named
@@ -1097,27 +1092,12 @@
 %   \meta{type} is the note type. It can be one of \texttt{note},
 %   \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
 %   note author's tag.
-%   ^^A #### This sucks, but otherwise, I get too many unprocessed floats.
-%   ^^A #### There should be a variant of Describe* avoiding the marginpar
-%   ^^A #### altogether when output is not wanted.
-%   \begingroup
-%     \makeatletter
-%       \let\PrintDescribeMacro\@gobble
-%       \DescribeMacro{\FXEnvLayoutColorSigBegin}
-%       \DescribeMacro{\FXEnvLayoutColorSigEnd}
-%     \makeatother
-%   \endgroup
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
 % \DescribeMacro[noindex]{\FXTargetLayout\ldots}\marg{target}\\
-% \begingroup
-%   \makeatletter
-%     \let\PrintDescribeMacro\@gobble
-%     \DescribeMacro{\FXTargetLayoutPlain}
-%     \DescribeMacro{\FXTargetLayoutColor}
-%   \makeatother
-% \endgroup
+% \DescribeMacro[noprint]{\FXTargetLayoutPlain}
+% \DescribeMacro[noprint]{\FXTargetLayoutColor}
 % Each target layout is implemented as a macro taking one mandatory argument.
 % By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
 % instance \cs{FXTargetLayoutPlain}. \meta{target} is the textual target.
