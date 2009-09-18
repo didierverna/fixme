@@ -109,6 +109,14 @@
 %     \def\SpecialOptionIndex##1{\oldsoi{##1}\oldsoi{no##1}}%
 %     \DescribeOption{#1}}}
 %
+% \newenvironment{booleanoption}[1]{%
+%   \let\oldpon\PrintOptionName%
+%   \def\PrintOptionName##1{\oldpon{[no]##1}}%
+%   \let\oldsmoi\SpecialMainOptionIndex%
+%   \def\SpecialMainOptionIndex##1{\oldsmoi{##1}\oldsmoi{no##1}}%
+%   \begin{option}{#1}}{%
+%     \end{option}}
+%
 % ^^A Let's not depend on varioref for just that:
 % \newcommand\sectionref[1]{\ref{#1} on page \pageref{#1}}
 %
@@ -117,6 +125,7 @@
 % \newcommand\ie{\textit{i.e.}\xspace}
 % \newcommand\komascript{\textsc{Koma}-Script\xspace}
 % \newcommand\auctex{AUC-\TeX\xspace}
+% \newcommand\emacs{\textsf{[X]Emacs}\xspace}
 %
 % \newcommand\fx{\fixmelogo\xspace}
 % \newcommand\packagecopyright{%
@@ -254,19 +263,18 @@
 %
 % \subsubsection{Local setup modification}
 % Finally, note that unless specified otherwise, all package options are also
-% understood by the note insertion commands or environments described in
+% understood by the annotation commands or environments described in
 % section \sectionref{sec:manual:insertion}. The effect is then local to that
 % particular command.
 %
 % \subsubsection{\auctex support}
 % \auctex is a powerful major mode for editing \TeX{} documents in
-% \textsf{Emacs} or \textsf{XEmacs}. In particular, it provides automatic
-% completion of command names once they are known. \fx supports \auctex
-% by providing a style file named \texttt{fixme.el} which contains \auctex
-% definitions for the relevant commands. This file should be installed in a
-% place where \auctex can find it (usually in a subdirectory of your
-% \LaTeX{} styles directory). Please refer to the \auctex documentation for
-% more information on this.
+% \emacs. In particular, it provides automatic completion of command names
+% once they are known. \fx supports \auctex by providing a style file named
+% \texttt{fixme.el} which contains \auctex definitions for the relevant
+% commands. This file should be installed in a place where \auctex can find it
+% (usually in a subdirectory of your \LaTeX{} styles directory). Please refer
+% to the \auctex documentation for more information on this.
 %
 % \subsection{Inserting \fx notes\label{sec:manual:insertion}}
 % \subsubsection{Commands}
@@ -274,13 +282,15 @@
 % \DescribeMacro{\fxwarning}
 % \DescribeMacro{\fxerror}
 % \DescribeMacro{\fxfatal}\oarg{options}\marg{note}\\
-% \fx provides four note insertion commands corresponding to different
+% \fx provides four annotation commands corresponding to different
 % levels of importance (notes, warnings, errors and fatal errors).
 % \cs{fxfatal} is a bit different from the other ones, as will be explained in
 % section \sectionref{sec:manual:behavior}.\par
-% \DescribeMacro{\fixme}
-% As of version 4, the \cs{fixme} command is a synonym for \cs{fxfatal} and is
-% considered deprecated.\par
+% \begin{quotation}\itshape
+%   \DescribeMacro{\fixme}
+%   \textbf{Warning:} as of version 4, the \cs{fixme} command is a synonym for
+%   \cs{fxfatal} and is considered deprecated.
+% \end{quotation}
 %
 % \subsubsection{Targeted commands}
 % \DescribeMacro{\fxnote*}
@@ -290,35 +300,38 @@
 % Sometimes, you might not only want to issue a \fx note, but also
 % highlight the relevant part of the text to which it applies. This is what I
 % call ``targeting'' the note. As of version 4, \fx provides starred
-% versions of its note insertion commands to do that. In star form, these
+% versions of its annotation commands to do that. In star form, these
 % commands expect an additional mandatory argument containing the text to be
 % highlighted.
 %
 % \subsubsection{Environments}
+% \begin{quotation}\itshape
+%   \textbf{Warning:} as of version 4.0, the environment interface has changed
+%   and is \emph{not} backward-compatible.
+% \end{quotation}
 % \DescribeEnv{anfxnote}
 % \DescribeEnv{anfxwarning}
 % \DescribeEnv{anfxerror}
 % \DescribeEnv{anfxfatal}\oarg{options}\marg{summary}\\
-% \begin{quotation}
-%   \emph{\textbf{Warning:} as of version 4.0, the environments interface has
-%     changed and is \emph{not} backward-compatible.}
-% \end{quotation}
-% \fx notes are meant to be short: consider that they are likely to go in the
-% list of fixmes and in the index for instance. If you feel the need for
-% writing longer comments, the environments described below might come in
-% handy.
-% \fx provides four note environments; one for every note level. These
-% environments take one mandatory argument (meant to be a short summary
-% of the long note) and behave in exactly the same way as their command
-% counterpart. The layout policy is a bit different though (see section
-% \sectionref{sec:manual:layout}): the long note (the environment's contents)
-% will always appear inline, and the \meta{summary} will obey all active note
+% \fx annotations are normally meant to be short: consider that they are
+% likely to go in the list of fixmes and in the index for instance. If you
+% feel the need for writing longer comments, the environments described below
+% might come in handy. \fx provides four annotation environments; one for
+% every note level. These environments take one mandatory argument (meant to
+% be a short summary of the long note) and behave in exactly the same way as
+% their command counterpart. The layout policy is a bit different though (see
+% section
+% \sectionref{sec:manual:layout}): the environment's contents will always
+% appear inline, and the \meta{summary} will obey all active annotation
 % layouts except for the \texttt{inline} one, just as if it had been passed to
-% one of the \fx note insertion commands described in the previous section.
+% one of the \fx annotation commands described in the previous section.
+% \begin{quotation}\itshape
+%   \DescribeEnv{afixme}
+%   \textbf{Warning:} as of version 4, the \texttt{afixme} environement is a
+%   synonym for \texttt{anfxfatal}, and is considered deprecated.
+% \end{quotation}
 %
-% \DescribeEnv{afixme}
-% As of version 4, the \texttt{afixme} environement is a synonym for
-% \texttt{anfxfatal}, and is considered deprecated.
+%
 %
 % \subsubsection{Targeted environments}
 % \DescribeEnv{anfxnote*}
@@ -331,16 +344,16 @@
 %
 % \subsection{List of \fx's\label{sec:manual:lox}}
 % \DescribeMacro{\listoffixmes}
-% \fx remembers where you put \fx notes in a toc-like file whose
-% extension is \texttt{lox}. The \cs{listoffixmes} command generates the list
-% of all \fx notes in a manner similar to that of the ``list of figures''
-% for instance. A standard layout is automatically selected for the
-% \texttt{article}, \texttt{report}, \texttt{book} classes and their
-% \komascript replacements. If another class is used, the \texttt{article}
-% layout is selected. Also, note that if there is no \fx note left in the
-% document, this command doesn't generate an empty list, but rather stays
-% silent. It also stays silent in \texttt{final} mode, regardless of the
-% presence of remaining notes (see section \sectionref{sec:manual:behavior}).
+% \fx remembers where you put your annotations in a toc-like file whose
+% extension is \texttt{lox}. The \cs{listoffixmes} command generates the
+% annotations lists in a manner similar to that of the ``list of figures''. A
+% standard layout is automatically selected for the \texttt{article},
+% \texttt{report}, \texttt{book} classes and their \komascript replacements.
+% If another class is used, the \texttt{article} layout is selected. Also,
+% note that if there isn't any annotation left in the document, this command
+% doesn't generate an empty list, but rather stays silent. It also stays
+% silent in \texttt{final} mode, regardless of the presence of remaining
+% annotations (see section \sectionref{sec:manual:behavior}).
 %
 % \subsection{Controlling the behavior of \fx\label{sec:manual:behavior}}
 % \DescribeOption{final}
@@ -349,24 +362,24 @@
 % \texttt{final} and \texttt{draft}. These options are usually given to
 % \cs{documentclass} which in turn passes them to all packages. In addition,
 % you can also use them as options to \cs{usepackage}, in the call to
-% \cs{fxsetup}, and even to the note insertion commands and environments.
+% \cs{fxsetup}, and even to the annotation commands and environments.
 %
-% In \texttt{draft} mode, \fx notes are recorded in the log file and appear
+% In \texttt{draft} mode, annotations are recorded in the log file and appear
 % in the document as specified by the layout settings (see section
 % \sectionref{sec:manual:layout}). Additionally, warnings, errors and fatal
 % errors are also displayed on the terminal.
 %
-% In final mode, non fatal notes (those generated by \cs{fxnote},
+% In final mode, non fatal annotations (those generated by \cs{fxnote},
 % \cs{fxwarning}, \cs{fxerror} and their corresponding environments) are still
-% logged, but they're not typeset. On the other hand, fatal notes (those
+% logged, but they're not typeset. On the other hand, fatal ones (those
 % generated by the \cs{fxfatal} command and the \texttt{anfxfatal}
 % environment) will throw a \LaTeX{} error and thus interrupt or abort
 % compilation with an informative message. This will help you track down
 % forgotten important caveats in your document.
 %
-% Let me rephrase: final documents can only have notes, warnings, and (non
+% Let me rephrase: final documents can only have \fx notes, warnings, and (non
 % fatal) errors left. Of course, this is not completely true: remember that
-% these options are understood locally by all the note insertion commands and
+% these options are understood locally by all the annotation commands and
 % environments, so even in \texttt{final} mode, you can use something like
 % this:
 % \begin{verbatim}
@@ -380,18 +393,19 @@
 % to do this is to use the \texttt{status} option, and give it the value
 % \texttt{final} or \texttt{draft}.
 %
-% \subsection{Controlling the layout of \fx notes\label{sec:manual:layout}}
-% \fx notes can appear in several forms in your document. Each of these
+% \subsection{Controlling the layout of annotations\label{sec:manual:layout}}
+% Annotations can appear in several forms in your document. Each of these
 % forms can be individually selected, or they can be combined together to some
 % extend.
 %
-% \subsubsection{Selecting a note layout}
+% \subsubsection{Selecting a layout}
 % \paragraph{Individual control}
-% For each note layout, there is a corresponding boolean option (for instance,
-% the ``inline'' layout is controlled by the \texttt{inline} option). These
-% options are understood by the package itself, the \cs{fxsetup} command and
-% also locally by every note insertion command or environment. There are some
-% restrictions on their usage however, as discussed in the next section.
+% For each annotation layout, there is a corresponding boolean option (for
+% instance, the ``inline'' layout is controlled by the \texttt{inline}
+% option). These options are understood by the package itself, the
+% \cs{fxsetup} command and also locally by every annotation command or
+% environment. There are some restrictions on their usage however, as
+% discussed in the next section.
 %
 % To activate a note layout, use the option alone or give it a value of
 % \texttt{true}. For instance, these two forms are equivalent:
@@ -400,12 +414,12 @@
 % \fxnote[inline=true]{note...}
 % \end{verbatim}
 % For convenience, each layout option has a counterpart that deactivates the
-% corresponding note layout. The counterpart option has the same name,
-% prefixed with \texttt{no} (for instance, \texttt{noinline}). Again, these
-% options are understood by the package itself, the \cs{fxsetup} command and
-% also locally by every note insertion command or environment (with the same
-% usage restrictions, discussed in the next section). For instance,
-% these two forms are equivalent:
+% corresponding layout. The counterpart option has the same name, prefixed
+% with \texttt{no} (for instance, \texttt{noinline}). Again, these options are
+% understood by the package itself, the \cs{fxsetup} command and also locally
+% by every annotation command or environment (with the same usage
+% restrictions, discussed in the next section). For instance, these two forms
+% are equivalent:
 % \begin{verbatim}
 % \fxsetup{inline=false}
 % \fxsetup{noinline}
@@ -414,11 +428,11 @@
 % \paragraph{Global control}
 % \DescribeOption{layout}
 % \DescribeOption{morelayout}
-% As of version 4.0, an even more convenient way to specify the required
-% layout is to use the \texttt{layout} and \texttt{morelayout} options. In
-% fact, the use of individual control is considered more or less deprecated.
-% Both of these options take a comma-separated list of the individual options
-% described above (this includes the \texttt{no}\meta{option} form as well).
+% An even more convenient way to specify the required layout is to use the
+% \texttt{layout} and \texttt{morelayout} options. In fact, the use of
+% individual control is considered more or less deprecated. Both of these
+% options take a comma-separated list of the individual options described
+% above (this includes the \texttt{no}\meta{option} form as well).
 %
 % While the \texttt{morelayout} option \emph{adds} to the current layout
 % configuration, the \texttt{layout} one completely overrides it. For
@@ -431,21 +445,21 @@
 % \usepackage[layout={inline,index}]{fixme}
 % \end{verbatim}
 % Again, these two options are understood by the package itself, the
-% \cs{fxsetup} command and also locally by every note insertion command or
+% \cs{fxsetup} command and also locally by every annotation command or
 % environment (with the same usage restrictions, discussed in the next
 % section).
 %
 % \noindent\DescribeMacro{\fxuselayouts}\marg{name,\ldots}\\
-% Finally, an alternate way of selecting (or deselecting) several layouts
+% Finally, an alternative way of selecting (or deselecting) several layouts
 % simultaneously is to use the \cs{fxuselayouts} command, giving it a
 % comma-separated list of layout options as its only, mandatory, argument.
 %
-% \subsubsection{Built-in \vs external note layouts}
-% Note layouts are provided either in the core of \fx, or in separate files
-% loaded dynamically on demand. Simple layouts are typically built-in, whereas
-% those requiring additional packages are external, so that they don't consume
-% \TeX{} resources if not used. As a consequence, selecting an external layout
-% might involve loading the relevant file first.
+% \subsubsection{Built-in \vs external layouts}
+% Annotation layouts are provided either in the core of \fx, or in separate
+% files loaded dynamically on demand. Simple layouts are typically built-in,
+% whereas those requiring additional packages are external, so that they don't
+% consume \TeX{} resources if not used. As a consequence, selecting an
+% external layout might involve loading the relevant file first.
 %
 % \noindent\DescribeMacro{\fxloadlayouts}\marg{name,\ldots}\\
 % For technical reasons, it is not possible to do such a thing outside the
@@ -459,26 +473,31 @@
 % \item Use the \cs{fxuselayouts} command in the preamble like this:\\
 %   |\fxuselayouts{|\meta{name}|}|. This is strictly equivalent to the
 %   previous solution.
-% \item If on the other hand you want to load one or several external note
-%   layouts \emph{without} using them immediately (perhaps in order to use
-%   them locally in some \fx notes), use the \cs{fxloadlayouts} command in the
-%   preamble like this: |\fxloadlayouts{|\meta{name}|,...}|. After that,
-%   you can select any of those layouts anywhere you wish.
+% \item If on the other hand you want to load one or several external layouts
+%   \emph{without} using them immediately (perhaps in order to use them
+%   locally in some specific annotation), use the \cs{fxloadlayouts} command
+%   in the preamble like this: |\fxloadlayouts{|\meta{name}|,...}|. After
+%   that, you can select any of those layouts anywhere you wish.
 % \end{enumerate}
 %
-% \subsubsection{Available note layouts}
-% The table below lists the note layouts currently distributed with \fx.
-% \DescribeLayout[noprint]{inline}
-% \DescribeLayout[noprint]{margin}
-% \DescribeLayout[noprint]{marginclue}
-% \DescribeLayout[noprint]{footnote}
-% \DescribeLayout[noprint]{index}
+% \newpage
+% \subsubsection{Available layouts}
 % \DescribeBooleanOption{inline}
 % \DescribeBooleanOption{margin}
 % \DescribeBooleanOption{marginclue}
 % \DescribeBooleanOption{footnote}
 % \DescribeBooleanOption{index}
-% \begin{center}
+% \DescribeLayout[noprint]{inline}
+% \DescribeLayout[noprint]{margin}
+% \DescribeLayout[noprint]{marginclue}
+% \DescribeLayout[noprint]{footnote}
+% \DescribeLayout[noprint]{index}
+% Table \ref{table:layouts} lists the annotation layouts currently distributed
+% with \fx. By default, only the \texttt{margin} layout is active. While most
+% of these layouts should be self-explanatory, marginal clues deserve a bit
+% more explanation.
+% \begin{table}
+%   \centering
 %   \DeleteShortVerb{\|}
 %   \begin{tabular}{|l|c|p{5cm}|}
 %     \hline
@@ -492,19 +511,16 @@
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
-% \end{center}
-
-% By default, only the \texttt{margin} layout is active. While most of these
-% layouts should be self-explanatory, marginal clues deserve a bit more
-% explanation.
-%
-% If your preferred note layout is \texttt{inline} or say, \texttt{footnote},
-% it might be somewhat difficult to localize the \fx note on the page,
+%   \caption{Available annotation layouts}
+%   \label{table:layouts}
+% \end{table}
+% If your preferred layout is \texttt{inline} or say, \texttt{footnote},it
+% might be somewhat difficult to localize the annotation on the page,
 % especially its vertical position. That's where marginal clues come into
-% play. A marginal clue does not display the note's contents, but only an
-% indication that there is such a note at that (vertical) position. So you
-% need to use another layout as well (again, typically \texttt{inline} or
-% \texttt{footnote}) in order to get the actual note's contents.
+% play. A marginal clue does not display the annotation's contents, but only
+% an indication that there is one at that (vertical) position. So you need to
+% use another layout as well (again, typically \texttt{inline} or
+% \texttt{footnote}) in order to get the actual annotation.
 %
 % Obviously, the margin and margin clue layouts are mutually exclusive, so if
 % you try to activate both, only the most recently activated one will be
@@ -512,10 +528,9 @@
 %
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
-% particular note: creating a floating note is one of them, see also section
-% \sectionref{sec:manual:othercommonproblems} for some others. As of version
-% 4.0, one frequent reason (described below) can be handled automatically by
-% \fx.
+% particular annotation: creating a floating one is an example, see also
+% section \sectionref{sec:manual:othercommonproblems} for some others. One
+% frequent reason (described below) can be handled automatically by \fx.
 %
 % Remember that the default layout is to use margin paragraphs. Unfortunately,
 % margin paragraphs are forbidden by \TeX{} in several situations, like a
@@ -523,17 +538,17 @@
 % in outer par mode'' error message.
 %
 % \DescribeOption{innerlayout}
-% The good news is that this situation can be detected automatically. As of
-% version 4.0, \fx provides an option named \texttt{innerlayout} that
-% allows you to specify an alternate layout setting to use when \TeX{} is in
-% \emph{inner} mode. In addition to that, \fx automatically disables the
-% \texttt{margin} and \texttt{marginclue} layouts.
+% The good news is that this situation can be detected automatically. \fx
+% provides an option named \texttt{innerlayout} that allows you to specify an
+% alternative layout setting to use when \TeX{} is in \emph{inner} mode. In
+% addition to that, \fx automatically disables the \texttt{margin} and
+% \texttt{marginclue} layouts.
 %
 % Using \texttt{innerlayout} is not as trivial as it may seem: it
-% \emph{really} is an alternate layout configuration, and as such, you can use
-% any combination you like of individual layout options, or you can even use
-% the \texttt{layout} and \texttt{morelayout} options. This means that your
-% alternate layout can either \emph{add} to the existing one, or
+% \emph{really} is an alternative layout configuration, and as such, you can
+% use any combination you like of individual layout options, or you can even
+% use the \texttt{layout} and \texttt{morelayout} options. This means that
+% your alternative layout can either \emph{add} to the existing one, or
 % \emph{override} it. Here are some examples to clarify things a little. You
 % should try to understand them.
 % \begin{itemize}
@@ -582,67 +597,74 @@
 % of \cs{marginpar}, so if you use these classes, don't forget to choose
 % another layout for \fx, and also avoid using marginal clues.
 %
-% \subsection{Corollary: floating \fx notes}
-% At some point, people suggested that it would be nice to have global \fx
-% notes, not related to any portion of the text in particular. Such notes
-% could be general comments about the whole document, and could even be issued
-% in the preamble. This is what I call ``floating'' \fx notes.
+% \subparagraph{Annotation indexing}
+% Remember that some characters are special in an index entry (the \texttt{!}
+% for instance). \fx currently does nothing to escape those characters, so
+% avoid using them in your annotations.
 %
-% Originally, I started writing a new set of commands to do just that, but
-% with the flexibility that \fx version 4 provides, I quickly realized that
-% such commands were an unnecessary addition.
+% \subsection{Corollary: floating annotations}
+% At some point, people suggested that it would be nice to have global
+% annotations, not related to any portion of the text in particular. Such
+% annotations could be general comments about the whole document, and could
+% even be issued in the preamble. This is what I call ``floating''
+% annotations.
 %
-% Since floating notes are not supposed to relate to any part of the text,
-% they should not be typeset anywhere in it. This is especially true if you
-% want to put some of them in the document's preamble. However, even a
-% preamble \fx note could be recorded and displayed in the index or in the
+% I know you don't care, but originally, I started writing a new set of
+% commands to do just that. However, with the flexibility that \fx 4.0
+% provides, I quickly realized that such commands were an unnecessary
+% addition.
+%
+% Since floating anotations are not supposed to relate to any part of the
+% text, they should not be typeset anywhere in it. This is especially true if
+% you want to put some of them in the document's preamble. However, even a
+% preamble annotation could be recorded and displayed in the index or in the
 % list of fixmes. And it turns out that you can specify all that with the
 % layout options described in section \sectionref{sec:manual:layout}.
 %
 % \DescribeOption{target}
-% The only slight problem that remains in the page number, which normally
-% appears in the list of fixmes and in the index: if you choose to reference a
-% floating \fx note that way, the page number is likely to be completely
-% meaningless. To compensate, a new option named ``target'' is provided. When
-% used, the given value will replace the page number in both the index and the
-% list of fixmes. The target can be anything you like, but should remain rather
-% short. By default, \texttt{target} is set the special value \texttt{thepage},
-% which as you guessed means to use the page number.
+% The only remaining problem is the page number, which normally appears in the
+% list of fixmes and in the index: if you choose to reference a floating
+% annotation that way, the page number is likely to be completely meaningless.
+% To compensate, a new option named \texttt{target} is provided. When used,
+% the given value will replace the page number in both the index and the list
+% of fixmes. The target can be anything you like, but should remain rather
+% short. By default, \texttt{target} is set the special value
+% \texttt{thepage}, which as you guessed means to use the page number.
 %
 % The name "target" bears an intentional resemblance to \fx's targeted
 % commands and environments, because we are indeed targetting the note to
-% something. The only difference is that in the case of floating notes, the
-% target is non-textual.
+% something. The only difference is that in the case of floating annotations,
+% the target is non-textual.
 %
-% Here is an example of a floating note that would typically appear in the
-% document's preamble:
+% Here is an example of a floating annotation that would typically appear in
+% the document's preamble:
 % \begin{verbatim}
 % \usepackage{hyperref}
 % \fxfatal[layout=index,target=hyperref]{Fill in PDF fields (title etc.)}
 % \end{verbatim}
 %
-% \subsection{Controlling the layout of \fx
+% \subsection{Controlling the layout of
 %   environments\label{sec:manual:envlayoutcontrol}}
 % As discussed in section \sectionref{sec:manual:insertion}, the contents of a
-% \fx environment (a long note) always appears inline. However, the exact
-% way this contents is typeset (in draft mode only) is subject to a layout of
-% its own, called the ``environment layout''.
+% \fx environment (a longer annotation) always appears inline. However, the
+% exact way this contents is typeset (in draft mode only) is subject to a
+% layout of its own, called the ``environment layout''.
 %
-% \subsubsection{Selecting an environment layout}
+% \subsubsection{Selecting a layout}
 % \DescribeOption{envlayout}
 % The desired environment layout can be selected with the \texttt{envlayout}
-% option. Contrary to the note layouts, only one environment layout can be
-% active at a time. The \texttt{envlayout} option is understood by the package
-% itself, the \cs{fxsetup} command and all the note insertion environments
+% option. Contrary to the annotation layouts, only one environment layout can
+% be active at a time. The \texttt{envlayout} option is understood by the
+% package itself, the \cs{fxsetup} command and all the annotation environments
 % (not the commands!). There are some restrictions on its usage however, as
 % discussed in the next section.
 %
 % \noindent\DescribeMacro{\fxuseenvlayout}\marg{name}\\
-% An alternate way of selecting an environment layout is to use the
+% An alternative way of selecting an environment layout is to use the
 % \cs{fxuseenvlayout} command, giving it the layout's name as its only,
 % mandatory, argument.
 %
-% \subsubsection{Built-in \vs external environment layouts}
+% \subsubsection{Built-in \vs external layouts}
 % Environments layouts are provided either in the core of \fx, or in separate
 % files loaded dynamically on demand. Simple layouts are typically built-in,
 % whereas those requiring additional packages are external, so that they don't
@@ -664,21 +686,42 @@
 %   solution.
 % \item If on the other hand you want to load one or several environment
 %   layouts \emph{without} using them immediately (perhaps in order to use
-%   them locally in some \fx notes), use the \cs{fxloadenvlayouts} command in
-%   the preamble like this: |\fxloadenvlayouts{name,...}|. After that, you can
-%   select any of those layouts anywhere you wish.
+%   them locally in some specific annotation), use the \cs{fxloadenvlayouts}
+%   command in the preamble like this: |\fxloadenvlayouts{|\meta{name}|,...}|.
+%   After that, you can select any of those layouts anywhere you wish.
 % \end{enumerate}
 %
-% \subsubsection{Available environment
-%   layouts\label{sec:manual:envlayoutslist}}
-% The table below lists the environment layouts currently distributed with
-% \fx.
-%
-% \DescribeEnvLayout{plain}
-% \DescribeEnvLayout{signature}
-% \DescribeEnvLayout{color}
-% \DescribeEnvLayout{colorsig}
-% \begin{center}
+% \subsubsection{Available layouts\label{sec:manual:envlayoutslist}}
+% Table \ref{table:envlayouts} lists the environment layouts currently
+% distributed with \fx.
+% \begin{itemize}
+% \item \DescribeEnvLayout{plain}
+%   The \texttt{plain} environment layout prints its contents as-is, only
+%   in bold font (by default) in order to distinguish it from the surrounding
+%   text.
+% \item \DescribeEnvLayout{signature}
+%   The \texttt{signature} environment layout prints the author's tag (see
+%   \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
+%   layout is used by the \texttt{signature} theme (see section
+%   \sectionref{sec:manual:themes}).
+% \item \DescribeEnvLayout{color}
+%   \DescribeColor{fxnote}
+%   \DescribeColor{fxwarning}
+%   \DescribeColor{fxerror}
+%   \DescribeColor{fxfatal}
+%   The \texttt{color} environment layout uses one of four colors named
+%   \texttt{fx}\meta{level} (according to the annotation's importance level)
+%   to display its contents. It also avoids printing the annotation level,
+%   since that information is already conveyed by the color. This layout is
+%   used by the \texttt{color} theme (see section
+%   \sectionref{sec:manual:themes}).
+% \item  \DescribeEnvLayout{colorsig}
+%   The \texttt{colorsig} environment layout combines the features of the
+%   \texttt{signature} and \texttt{color} ones. This layout is used by the
+%   \texttt{colorsig} theme (see section \sectionref{sec:manual:themes}).
+% \end{itemize}
+% \begin{table}
+%   \centering
 %   \DeleteShortVerb{\|}
 %   \begin{tabular}{|l|c|p{5cm}|}
 %     \hline
@@ -691,54 +734,33 @@
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
-% \end{center}
-% \begin{itemize}
-% \item The \texttt{plain} environment layout prints its contents as-is, only
-%   in bold font (by default) in order to distinguish it from the surrounding
-%   text.
-% \item The \texttt{signature} environment layout prints the author's tag (see
-%   \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
-%   layout is used by the \texttt{signature} theme (see section
-%   \sectionref{sec:manual:themes}).
-% \item
-%   \DescribeColor{fxnote}
-%   \DescribeColor{fxwarning}
-%   \DescribeColor{fxerror}
-%   \DescribeColor{fxfatal}
-%   The \texttt{color} environment layout uses one of four colors named
-%   \texttt{fx}\meta{level} (according to the note's importance level) to
-%   display its contents. It also avoids printing the note level, since that
-%   information is already conveyed by the color. This layout is used by the
-%   \texttt{color} theme (see section \sectionref{sec:manual:themes}).
-% \item The \texttt{colorsig} environment layout combines the features of the
-%   \texttt{signature} and \texttt{color} ones. This layout is used by the
-%   \texttt{colorsig} theme (see section \sectionref{sec:manual:themes}).
-% \end{itemize}
+%   \caption{Available environment layouts}
+%   \label{table:envlayouts}
+% \end{table}
 %
-% \subsection{Controlling the layout of \fx
+% \subsection{Controlling the layout of
 %   targets\label{sec:manual:targetlayoutcontrol}}
 % As discussed in section \sectionref{sec:manual:insertion}, the starred
-% versions of the \fx note insertion commands and environments let you
-% highlight a portion of text which is relevant to the current \fx note.
-% The exact way this textual target is typeset (in draft mode only; otherwise
-% it is typeset as-is) is subject to a layout of its own, called the ``target
-% layout''.
+% versions of the \fx annotation commands and environments let you highlight a
+% portion of text which is relevant to the current annotation. The exact way
+% this textual target is typeset (in draft mode only; otherwise it is typeset
+% as-is) is subject to a layout of its own, called the ``target layout''.
 %
-% \subsubsection{Selecting a target layout}
+% \subsubsection{Selecting a layout}
 % \DescribeOption{targetlayout}
-% The desired target layout can be selected with the \texttt{targetlayout}
-% option. Contrary to the note layouts, only one target layout can be active
-% at a time. The \texttt{targetlayout} option is understood by the package
-% itself, the \cs{fxsetup} command and all the note insertion environments
-% (not the commands!). There are some restrictions on its usage however, as
-% discussed in the next section.
+% The desired layout can be selected with the \texttt{targetlayout} option.
+% Contrary to the annotation layouts, only one target layout can be active at
+% a time. The \texttt{targetlayout} option is understood by the package
+% itself, the \cs{fxsetup} command and all the starred versions of the
+% annotation commands and environments. There are some restrictions on its
+% usage however, as discussed in the next section.
 %
 % \noindent\DescribeMacro{\fxusetargetlayout}\marg{name}\\
-% An alternate way of selecting a target layout is to use the
+% An alternative way of selecting a target layout is to use the
 % \cs{fxusetargetlayout} command, giving it the layout's name as its only,
 % mandatory, argument.
 %
-% \subsubsection{Built-in \vs external target layouts}
+% \subsubsection{Built-in \vs external layouts}
 % Target layouts are provided either in the core of \fx, or in separate files
 % loaded dynamically on demand. Simple layouts are typically built-in, whereas
 % those requiring additional packages are external, so that they don't consume
@@ -759,18 +781,16 @@
 %   |\fxusetargetlayout{name}|. This is strictly equivalent to the previous
 %   solution.
 % \item If on the other hand you want to load one or several target layouts
-%   \emph{without} using them immediately (perhaps in order to use
-%   them locally in some \fx notes), use the \cs{fxloadtargetlayouts} command
-%   in the preamble like this: |\fxloadtargetlayouts{name,...}|. After that,
-%   you can select any of those layouts anywhere you wish.
+%   \emph{without} using them immediately (perhaps in order to use them
+%   locally in some specific annotation), use the \cs{fxloadtargetlayouts}
+%   command in the preamble like this:
+%   |\fxloadtargetlayouts{|\meta{name}|,...}|. After that, you can select any
+%   of those layouts anywhere you wish.
 % \end{enumerate}
 %
-% \subsubsection{Available target layouts\label{sec:manual:targetlayoutslist}}
-% The table below lists the target layouts currently distributed with \fx.
-%
-% \DescribeTargetLayout{plain}
-% \DescribeTargetLayout{color}
-% \begin{center}
+% \subsubsection{Available layouts\label{sec:manual:targetlayoutslist}}
+% \begin{table}
+%   \centering
 %   \DeleteShortVerb{\|}
 %   \begin{tabular}{|l|c|p{5cm}|}
 %     \hline
@@ -780,12 +800,17 @@
 %     \texttt{color} & \texttt{*} & Display target in color\\
 %     \hline
 %   \end{tabular}
+%   \caption{Available target layouts}
+%   \label{table:targetlayouts}
 %   \MakeShortVerb{\|}
-% \end{center}
+% \end{table}
+% Table \ref{table:targetlayouts} lists the target layouts currently
+% distributed with \fx.
 % \begin{itemize}
-% \item The \texttt{plain} target layout displays its contents as-is, only in
+% \item \DescribeTargetLayout{plain}
+%   The \texttt{plain} target layout displays its contents as-is, only in
 %   italics (by default) in order to distinguish it from the surrounding text.
-% \item
+% \item \DescribeTargetLayout{color}
 %   \DescribeColor{fxtarget}
 %   The \texttt{color} target layout uses the color named \texttt{fxtarget}
 %   to display the target text. This layout is used by the \texttt{color}
@@ -794,17 +819,17 @@
 %
 % \subsection{Faces\label{sec:manual:faces}}
 % In the \fx jargon, a ``face'' characterizes the visual aspect of some
-% portion of text. If you're familiar with the \textsf{[X]Emacs} editor, this
-% will come as no surprise to you. \fx provides several faces that allow you
-% to customize the layout of notes, environments, or targets.
+% portion of text. If you're familiar with the \emacs editor, this will come
+% as no surprise to you. \fx provides several faces that allow you to further
+% customize the layout of annotations or their targets.
 %
 % \subsubsection{Setting face values}
 % There are different ways to customize a face. The first one is to use the
 % corresponding face option. For each face \meta{name}, their is a
-% \meta{name}\texttt{face} option. For instance, the \texttt{inline} face is
+% \meta{name}\texttt{face} option. For instance, the ``inline'' face is
 % controlled by the \texttt{inlineface} option. Face options are
 % understood by the package itself, the \cs{fxsetup} command and locally by
-% all note insertion commands or environments. Here is an example:
+% all annotation commands or environments. Here is an example:
 % \begin{verbatim}
 % \fxsetup{inlineface=\bfseries}
 % \end{verbatim}
@@ -829,9 +854,10 @@
 % \subsubsection{Available faces}
 % \subparagraph{The \texttt{inline} face}
 % \DescribeFace{inline}
-% By default, the \texttt{inline} note layout displays its contents in bold
-% font, to distinguish the note from the surrounding text. This is controlled
-% by the \texttt{inline} face whose value is \cs{bfseries} by default.
+% By default, the \texttt{inline} annotation layout displays its contents in
+% bold font, to distinguish the note from the surrounding text. This is
+% controlled by the \texttt{inline} face whose value is \cs{bfseries} by
+% default.
 %
 % \subparagraph{The \texttt{margin} face}
 % \DescribeFace{margin}
@@ -845,7 +871,9 @@
 % bold font, to distinguish it from the surrounding text. This is controlled
 % by the \texttt{env} face whose value is \cs{bfseries} by default. The
 % \texttt{color} and \texttt{colorsig} environment layouts honor this face as
-% well, but reset it to \meta{nothing} first.
+% well, but reset it to \meta{nothing} first. You should probably keep the
+% same value for the \texttt{inline} and \texttt{env} faces, since they are
+% both used to display annotations within the document's body.
 %
 % \subparagraph{The \texttt{signature} face}
 % \DescribeFace{signature}
@@ -862,16 +890,16 @@
 % \texttt{color} target layout honors this face as well, but resets it to
 % \meta{nothing} first.
 %
-% \subsection{Controlling the logging of \fx}
-% As well as being displayed in the document itself, all \fx notes are
+% \subsection{Controlling the logging of annotations}
+% As well as being displayed in the document itself, all annotations are
 % ``logged'' in different ways: by default, simple notes are recorded in the
-% log file while the others are also displayed on the terminal output during
-% compilation.
+% log file while the others (warnings, errors and fatal errors) are also
+% displayed on the terminal output during compilation.
 %
 % \DescribeBooleanOption{silent}
 % You have the ability to suppress logging altogether by using the
 % \texttt{silent} option. This option is understood by the package itself, the
-% \cs{fxsetup} command and all note insertion commands and environments. Just
+% \cs{fxsetup} command and all annotation commands and environments. Just
 % as individual layout options, \texttt{silent} is a boolean option, so all
 % those forms are possible: \texttt{silent}, equivalent to
 % \texttt{silent=true}, and \texttt{nosilent}, equivalent to
@@ -892,9 +920,9 @@
 % German, Danish and Croatian. You can select your preferred language by using
 % the corresponding language option. These options usually appear in the call
 % to \cs{documentclass} or \cs{usepackage}, but they are also understood by
-% \cs{fxsetup} and all the note insertion commands or environments. This
+% \cs{fxsetup} and all the annotation commands or environments. This
 % allows you to change the selected language either globally or locally, and
-% at any popint in the document. The \texttt{french} and \texttt{francais}
+% at any point in the document. The \texttt{french} and \texttt{francais}
 % options are synonyms. The \texttt{german} and \texttt{ngerman} options are
 % currently equivalent.
 %
@@ -912,9 +940,9 @@
 % If the document you're working on has parts written in different languages,
 % it might be the case that \fx notes should follow the current language as
 % well (especially if you're in collaborative mode; see section
-% \sectionref{sec:manual:modes}). As of version 4, \fx provides a boolean
-% option named \texttt{langtrack}. When specified, \fx assumes that you're
-% using \texttt{babel} and automatically switches to the current language (as
+% \sectionref{sec:manual:modes}). \fx provides a boolean option named
+% \texttt{langtrack}. When specified, \fx assumes that you're using
+% \texttt{babel} and automatically switches to the current language (as
 % specified by \texttt{babel}'s \cs{languagename} command), without requiring
 % an explicit language option.
 %
@@ -926,7 +954,7 @@
 % support for this new language (see section \sectionref{sec:code:i18n}).
 %
 % Finally, note that specifying a language explicitely (by means of a language
-% option) in the note insertion commands and environments always takes
+% option) in the annotation commands and environments always takes
 % precedence over the language tracking behavior.
 %
 % \subsubsection{Indexing in different languages}
@@ -938,8 +966,8 @@
 % and one called ``Avertissements''.
 %
 % \subsection{Standalone or collaborative mode\label{sec:manual:modes}}
-% As of version 4, \fx supports collaborative annotations as well as
-% ``standalone'', single-author documents.
+% \fx supports collaborative annotations as well as ``standalone'',
+% single-author documents.
 %
 % \subsubsection{Standalone mode}
 % By default, \fx is in standalone mode, meaning that it assumes there is
@@ -947,28 +975,28 @@
 % the layout. If you've tried it already, you may have noticed the following
 % points.
 % \begin{itemize}
-% \item All the built-in note layouts (index excepted) put the \fx logo in
-%   front of every note. This is also true for \fx environments. The idea
-%   is to distinguish \fx contents from the rest of the document (for
-%   instance other marginal notes or other footnotes).
-% \item All notes are indexed under the main \fx category, and sorted by
-%   importance level, but the \fx logo is not repeated at every note (that
-%   would be useless).
+% \item All the built-in annotation layouts (index excepted) put the \fx logo
+%   in front of every note. This is also true for the environments. The idea
+%   is to distinguish \fx contents from the rest of the document (for instance
+%   other marginal notes or footnotes).
+% \item All annotations are indexed under the main \fx category, and sorted by
+%   importance level, but the \fx logo is not repeated constantly (that would
+%   be useless).
 % \item Similarly, the list of fixmes does not clutter itself with the logo,
-% because we already know that its contents is specific to \fx.
+%   because we already know that its contents is specific to \fx.
 % \end{itemize}
-% As a matter of fact, when you see the \fx logo appear somewhere, you're
-% not actually contemplating it, but rather the note's \emph{author}. It just
-% happens that by default (meaning in standalone mode), the only note author
+% As a matter of fact, when you see the \fx logo appear somewhere, you're not
+% actually contemplating it, but rather the annotation's \emph{author}. It
+% just happens that by default (meaning in standalone mode), the only author
 % is \fx itself.
 %
 % \DescribeOption{author}
 % In standalone mode, you might be annoyed by this orgy of \fx logos. This
 % might happen if for instance you're using the \texttt{margin} layout and you
-% \emph{know} there is nothing but \fx notes in there. In such a case, you
-% will most likely want to change the notes author to \emph{nothing}. This can
+% \emph{know} there is nothing but \fx annotations in there. In such a case,
+% you will most likely want to change the author to \emph{nothing}. This can
 % be acomplished by using the \texttt{author} option, which is understood by
-% the package itself, the \cs{fxsetup} command and all the note insertion
+% the package itself, the \cs{fxsetup} command and all the annotation
 % commands or environments. Doing something like the following will get rid of
 % the damn logo for good:
 % \begin{verbatim}
@@ -977,24 +1005,24 @@
 %
 % \subsubsection{Collaborative mode}
 % If, on the other hand, you're working in collaboration with other people,
-% every potential ``fixer'' might want to tag his or her own notes. So
+% every potential ``fixer'' might want to tag his or her own annotations. So
 % assuming that John Doe is another author, he would most likely do something
 % like this:
 % \begin{verbatim}
 % \fxfatal[author=JD]{rephrase this}
 % \end{verbatim}
-% And suddenly, John's fatal note will be prefixed with his initials. This is
-% not a very satisfactory solution however, because it would require you to
+% And suddenly, John's fatal comment will be prefixed with his initials. This
+% is not a very satisfactory solution however, because it would require you to
 % explicitely provide the author's tag in every single note you create.
 % Fortunately, \fx offers an easier way to achieve this.
 %
 % \paragraph{Registering new authors}
 % \DescribeMacro{\FXRegisterAuthor}\marg{cmdprefix}\marg{envprefix}\marg{tag}\\
-% The command \cs{FXRegisterAuthor} registers a new author with \fx. It
-% takes three arguments: the last one (\meta{tag}) is just the same as the
-% value you would pass to the \texttt{author} option: it will serve as a
-% prefix for John's notes. In addition to that, a complete new set of
-% user-level commands (prefixed with \meta{cmdprefix}) and environments
+% The command \cs{FXRegisterAuthor} registers a new author with \fx. It takes
+% three arguments: the last one (\meta{tag}) is just the same as the value you
+% would pass to the \texttt{author} option: it will serve as a prefix (or
+% signature) for John's annotations. In addition to that, a complete new set
+% of user-level commands (prefixed with \meta{cmdprefix}) and environments
 % (prefixed with \meta{envprefix}) will be created. To clarify, suppose that
 % we have registered John like this:
 % \begin{verbatim}
@@ -1016,12 +1044,12 @@
 % work by \emph{presetting} the author option to the specified \meta{tag}.
 % This means that it is still possible to override it explicitely like this:
 % \begin{verbatim}
-% \jdfatal[author=XX]{rephrase this}
+% \jdfatal[author=Anonymous]{For $500.00, you got your Ph.D.}
 % \end{verbatim}
-% The only case I can figure at in which you would want to do that is if
-% you're at war and want to plot a gigantic con against a fixer you hate.
+% I don't see any good reason for doing it though, the above example
+% notwithstanding.
 %
-% The other remark is about the default \texttt{fx*} user interface: the
+% The final remark is about the default \texttt{fx*} user interface: the
 % \texttt{fixme} default user is special in that it is the only registered
 % user to honor a global \texttt{author} option (provided in the call to
 % \cs{usepackage} or \cs{fxsetup}). The intended use of this is that the
@@ -1046,23 +1074,23 @@
 % \texttt{mode} option takes a value of either \texttt{singleuser} or
 % \texttt{multiuser}. This is the preferred way to switch the mode. These
 % options are understood globally by \cs{usepackage} or \cs{fxsetup}, and also
-% locally by the note insertion commands or environments.
+% locally by the annotation commands or environments.
 %
-% When collaborative mode is active, \fx adjusts the list of fixmes layout
-% to display the authors tags as well. Additionally, \fx notes are indexed
-% as before, but additional index entries, sorted by author, and generated as
+% When collaborative mode is active, \fx adjusts the list of fixmes layout to
+% display the authors tags as well. Additionally, \fx notes are indexed as
+% before, but additional index entries, sorted by author, are generated as
 % well.
 %
 % \subsection{Themes\label{sec:manual:themes}}
-% \fx 4.0 comes with support for themes. Themes are orthogonal to layouts:
-% they provide a way to modify the overall appearance of \fx by overriding the
-% existing layouts and/or by providing new ones. In fact, a theme can be any
-% kind of customization that you would otherwise put in your preamble.
+% Themes are orthogonal to layouts: they provide a way to modify the overall
+% appearance of \fx by overriding the existing layouts and/or by providing new
+% ones. In fact, a theme can be any kind of customization that you would
+% otherwise put in your preamble.
 %
 % \subsubsection{Using themes}
 % \DescribeOption{theme}
 % The interface for using a theme is quite simple: use the \texttt{theme}
-% option and give it the name of the theme you want to use. Theme are always
+% option and give it the name of the theme you want to use. Themes are always
 % external: there are none in the  core of \fx but instead they are provided
 % as independent files. As a consequence, the \texttt{theme} option has the
 % same usage restrictions as all the layout options we've encountered so far.
@@ -1081,20 +1109,21 @@
 % \DescribeTheme{signature}
 % This theme uses the \texttt{signature} environment layout (see section
 % \sectionref{sec:manual:envlayoutslist}), and overrides the built-in ones to
-% display the author tags as a signature (\ie at the end of the notes) instead
-% of as a prefix. All original layout faces are honored.
+% display the author tags as a signature (\ie at the end of the annotations)
+% instead of as a prefix. All original layout faces are honored.
 %
 % \paragraph{The \texttt{color} theme}
 % \DescribeTheme{color}
 % This theme uses the \texttt{color} environment and target layouts (see
 % sections \sectionref{sec:manual:envlayoutslist} and
 % \sectionref{sec:manual:targetlayoutslist}), and overrides the built-in ones
-% to use different colors for the different note levels. As a consequence, it
-% avoids printing the note names because this information is already contained
-% in the colors themselves. All original layout faces are honored, but
-% the \texttt{inline} one is reset to \meta{nothing}. Remember that the
-% \texttt{env} and \texttt{target} faces are reset as well (this is actually
-% done by the \texttt{color} environment and target layouts).
+% to use different colors for the different annotation levels. As a
+% consequence, it also avoids printing the annotation names because this
+% information is already contained in the colors themselves. All original
+% layout faces are honored, but the \texttt{inline} one is reset to
+% \meta{nothing}. Remember that the \texttt{env} and \texttt{target} faces are
+% reset as well (this is actually done by the \texttt{color} environment and
+% target layouts).
 %
 % \paragraph{The \texttt{colorsig} theme}
 % \DescribeTheme{colorsig}
@@ -1107,33 +1136,32 @@
 % actually writing your document\ldots
 %
 % \subsection{Modifying existing layouts}
-% \fx note, environment and target layouts are implemented as a (set of)
-% commands conforming to strict prototypes. If you're not happy with the way
-% they perform, you have the possibility to \cs{renewcommand} them (in fact,
-% you should use \cs{renewcommand*} for note and environment layouts). In such
-% a case, it is probably best to have a look at the code in order to figure
-% out how the original ones are written. However, a description of their
-% prototypes is given below.
+% \fx annotations, environment and target layouts are implemented as a (set
+% of) commands conforming to strict prototypes. If you're not happy with the
+% way they perform, you have the possibility to \cs{renewcommand} them (in
+% fact, you should use \cs{renewcommand*} for annotation and environment
+% layouts). In such a case, it is probably best to have a look at the code in
+% order to figure out how the original ones are written. However, a
+% description of their prototypes is given below.
 %
-% \subsubsection{Modifying existing note layouts}
-% \DescribeMacro[noindex]{\FXLayout\ldots}\marg{type}\marg{note}\marg{author}\\
+% \subsubsection{Modifying existing annotation layouts}
+% \DescribeMacro[noindex]{\FXLayout\ldots}
+% \marg{type}\marg{annotation}\marg{author}\\
 % \DescribeMacro[noprint]{\FXLayoutInline}
 % \DescribeMacro[noprint]{\FXLayoutMargin}
 % \DescribeMacro[noprint]{\FXLayoutFootnote}
 % \DescribeMacro[noprint]{\FXLayoutIndex}
 % \DescribeMacro[noprint]{\FXLayoutMarginClue}
-% Each note layout is implemented as a macro taking three mandatory arguments.
-% By convention, this macro is named \cs{FXLayout}\meta{name}, for instance
-% \cs{FXLayoutInline}.\meta{type} is the note type. It can be one of
+% Each annotation layout is implemented as a macro taking three mandatory
+% arguments. By convention, this macro is named \cs{FXLayout}\meta{name}, for
+% instance \cs{FXLayoutInline}.\meta{type} is the note type. It can be one of
 % \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
-% \meta{note} is the actual note, and \meta{author} is the note author's tag.
+% \meta{annotation} is the annotation itself, and \meta{author} is the
+% author's tag.
 %
 % \subsubsection{Modifying existing environment layouts}
 % \DescribeMacro[noindex]{\FXEnvLayout\ldots Begin}
 % \DescribeMacro[noindex]{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
-% ^^A #### NOTE: the benefit of DoX's noprint option here is that I can have
-% ^^A as many \DescribeMacro calls as I want, without getting a "Too many
-% ^^A unprocessed floats" error.
 % \DescribeMacro[noprint]{\FXEnvLayoutPlainBegin}
 % \DescribeMacro[noprint]{\FXEnvLayoutPlainEnd}
 % \DescribeMacro[noprint]{\FXEnvLayoutSignatureBegin}
@@ -1150,7 +1178,7 @@
 %   \cs{FXEnvLayoutPlainBegin} and \cs{FXEnvLayoutPlainEnd}.
 %   \meta{type} is the note type. It can be one of \texttt{note},
 %   \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
-%   note author's tag.
+%   author's tag.
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
@@ -1166,13 +1194,14 @@
 % described in the previous section. Once you've done that, the next step is
 % to make \fx aware of this addition. This is called ``registering'' a layout.
 %
-% \subsubsection{Registering a new note layout}
+% \subsubsection{Registering a new annotation layout}
 % \begin{sloppypar}
 %   \DescribeMacro{\FXRegisterLayout}\oarg{boolfunc}\marg{name}\marg{macro}\\
 %   In order to register a new note layout with \fx, use the command
 %   \cs{FXRegisterLayout}. This macro has two mandatory arguments: the layout
-%   \meta{name} and the associated layout \meta{macro}. For instance, the
-%   \texttt{inline} layout is registered like this:
+%   \meta{name} (at least 3 characters long) and the associated layout
+%   \meta{macro}. For instance, the \texttt{inline} layout is registered like
+%   this:
 % \end{sloppypar}
 % \begin{verbatim}
 % \FXRegisterLayout{inline}{\FXLayoutInline}
@@ -1182,10 +1211,11 @@
 % exclusion between the \texttt{margin} and \texttt{marginclue} layouts.
 %
 % Once registered, the new layout gets a boolean option \meta{name} and is
-% also recognized by the \texttt{layout} and \texttt{morelayout} options as
-% \meta{name}.
-%
-% If you want to save your layout externally,
+% also recognized by the \texttt{layout} and \texttt{morelayout} options, as
+% well as by the \cs{fxuselayouts} command as \meta{name}. If you want to save
+% your layout externally, you need to store it in a file named
+% \texttt{fxlayout}\meta{name}\texttt{.sty}. It will then be recognized by the
+% \cs{fxloadlayouts} command as \meta{name}.
 %
 % \subsubsection{Registering a new environment layout}
 % \begin{sloppypar}
@@ -1199,12 +1229,10 @@
 % \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
 % \end{verbatim}
 % Once registered, the new layout is recognized by the \texttt{envlayout}
-% option as \meta{name}.
-%
-% If you want to save your layout externally, you need to store it in a file
-% named \texttt{fxenvlayout}\meta{name}\texttt{.sty}. It will then be
-% recognized by the \cs{fxloadenvlayouts} and \cs{fxuseenvlayout} commands as
-% \meta{name}.
+% option and by the \cs{fxuseenvlayout} command as \meta{name}. If you want to
+% save your layout externally, you need to store it in a file named
+% \texttt{fxenvlayout}\meta{name}\texttt{.sty}. It will then be recognized by
+% the \cs{fxloadenvlayouts} commands as \meta{name}.
 %
 % \subsubsection{Registering a new target layout}
 % \begin{sloppypar}
@@ -1218,12 +1246,10 @@
 % \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 % \end{verbatim}
 % Once registered, the new layout is recognized by the \texttt{targetlayout}
-% option as \meta{name}.
-%
-% If you want to save your layout externally, you need to store it in a file
-% named \texttt{fxtargetlayout}\meta{name}\texttt{.sty}. It will then be
-% recognized by the \cs{fxloadtargetlayouts} and \cs{fxusetargetlayout}
-% commands.
+% option and by the \cs{fxusetargetlayout} as \meta{name}. If you want to save
+% your layout externally, you need to store it in a file named
+% \texttt{fxtargetlayout}\meta{name}\texttt{.sty}. It will then be recognized
+% by the \cs{fxloadtargetlayouts} commands as \meta{name}.
 %
 % \subsection{Creating a new theme}
 % Creating a new theme may involve anything from using (by way of
@@ -1243,16 +1269,78 @@
 % \texttt{theme} option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
-% \DescribeMacro[noindex]{\fxlang\ldots name}
-% \DescribeMacro[noindex]{\fxlang\ldots sname}
-% ^^A #### FIXME: reference all languages
+% \DescribeMacro[noindex]{\fx\ldots name}
+% \DescribeMacro[noindex]{\fx\ldots sname}
+% \DescribeMacro[noprint]{\fxenglishnotename}
+% \DescribeMacro[noprint]{\fxenglishnotesname}
+% \DescribeMacro[noprint]{\fxenglishwarningname}
+% \DescribeMacro[noprint]{\fxenglishwarningsname}
+% \DescribeMacro[noprint]{\fxenglisherrorname}
+% \DescribeMacro[noprint]{\fxenglisherrorsname}
+% \DescribeMacro[noprint]{\fxenglishfatalname}
+% \DescribeMacro[noprint]{\fxenglishfatalssname}
+% \DescribeMacro[noprint]{\englishlistfixmename}
+% \DescribeMacro[noprint]{\fxfrenchnotename}
+% \DescribeMacro[noprint]{\fxfrenchnotesname}
+% \DescribeMacro[noprint]{\fxfrenchwarningname}
+% \DescribeMacro[noprint]{\fxfrenchwarningsname}
+% \DescribeMacro[noprint]{\fxfrencherrorname}
+% \DescribeMacro[noprint]{\fxfrencherrorsname}
+% \DescribeMacro[noprint]{\fxfrenchfatalname}
+% \DescribeMacro[noprint]{\fxfrenchfatalssname}
+% \DescribeMacro[noprint]{\frenchlistfixmename}
+% \DescribeMacro[noprint]{\fxspanishnotename}
+% \DescribeMacro[noprint]{\fxspanishnotesname}
+% \DescribeMacro[noprint]{\fxspanishwarningname}
+% \DescribeMacro[noprint]{\fxspanishwarningsname}
+% \DescribeMacro[noprint]{\fxspanisherrorname}
+% \DescribeMacro[noprint]{\fxspanisherrorsname}
+% \DescribeMacro[noprint]{\fxspanishfatalname}
+% \DescribeMacro[noprint]{\fxspanishfatalssname}
+% \DescribeMacro[noprint]{\spanishlistfixmename}
+% \DescribeMacro[noprint]{\fxitaliannotename}
+% \DescribeMacro[noprint]{\fxitaliannotesname}
+% \DescribeMacro[noprint]{\fxitalianwarningname}
+% \DescribeMacro[noprint]{\fxitalianwarningsname}
+% \DescribeMacro[noprint]{\fxitalianerrorname}
+% \DescribeMacro[noprint]{\fxitalianerrorsname}
+% \DescribeMacro[noprint]{\fxitalianfatalname}
+% \DescribeMacro[noprint]{\fxitalianfatalssname}
+% \DescribeMacro[noprint]{\italianlistfixmename}
+% \DescribeMacro[noprint]{\fxgermannotename}
+% \DescribeMacro[noprint]{\fxgermannotesname}
+% \DescribeMacro[noprint]{\fxgermanwarningname}
+% \DescribeMacro[noprint]{\fxgermanwarningsname}
+% \DescribeMacro[noprint]{\fxgermanerrorname}
+% \DescribeMacro[noprint]{\fxgermanerrorsname}
+% \DescribeMacro[noprint]{\fxgermanfatalname}
+% \DescribeMacro[noprint]{\fxgermanfatalssname}
+% \DescribeMacro[noprint]{\germanlistfixmename}
+% \DescribeMacro[noprint]{\fxdanishnotename}
+% \DescribeMacro[noprint]{\fxdanishnotesname}
+% \DescribeMacro[noprint]{\fxdanishwarningname}
+% \DescribeMacro[noprint]{\fxdanishwarningsname}
+% \DescribeMacro[noprint]{\fxdanisherrorname}
+% \DescribeMacro[noprint]{\fxdanisherrorsname}
+% \DescribeMacro[noprint]{\fxdanishfatalname}
+% \DescribeMacro[noprint]{\fxdanishfatalssname}
+% \DescribeMacro[noprint]{\danishlistfixmename}
+% \DescribeMacro[noprint]{\fxcroatiannotename}
+% \DescribeMacro[noprint]{\fxcroatiannotesname}
+% \DescribeMacro[noprint]{\fxcroatianwarningname}
+% \DescribeMacro[noprint]{\fxcroatianwarningsname}
+% \DescribeMacro[noprint]{\fxcroatianerrorname}
+% \DescribeMacro[noprint]{\fxcroatianerrorsname}
+% \DescribeMacro[noprint]{\fxcroatianfatalname}
+% \DescribeMacro[noprint]{\fxcroatianfatalssname}
+% \DescribeMacro[noprint]{\croatianlistfixmename}
 % \fx's language control has been described in section
 % \sectionref{sec:manual:i18n}. For every supported language \meta{lang}, a
 % number of macros define the language-dependent part of \fx. The commands
 % \cs{fx}\meta{lang}\texttt{notename}, \cs{fx}\meta{lang}\texttt{notesname},
 % and their equivalent for the other note levels define the singular and
 % plural forms of the note names.\\
-% \DescribeMacro{\langlistfixmename}
+% \DescribeMacro{\...listfixmename}
 % The title for the list of fixmes is defined by the command
 % \cs{}\meta{lang}\texttt{listfixmename}.
 %
@@ -1268,8 +1356,8 @@
 %   text), suggested by Mark Edgington.\\
 %   Support for ``floating notes'' (not specific to any portion of text),
 %   suggested by Rasmus Villemoes.\\
-%   Support for alternate layout autoswitch in \TeX's inner mode, suggested by
-%   Will Robertson.\\
+%   Support for alternative layout autoswitch in \TeX's inner mode, suggested
+%   by Will Robertson.\\
 %   Support for automatic language tracking in multilingual documents.\\
 %   Support for themes.\\
 %   Extended support for user-provided layouts.\\
@@ -1302,9 +1390,9 @@
 %   contents of lox file.
 % \item[v3.1] Fix bug reported by Arnold Beckmann: the environments were
 %   visible in final mode.
-% \item[v3.0] Added environments corresponding to the note insertion
+% \item[v3.0] Added environments corresponding to the annotation
 %   commands.\\
-%   Added an optional first argument to the note insertion commands
+%   Added an optional first argument to the annotation commands
 %   to change the layout locally.\\
 %   Fix bug reported by Akim Demaille: marginal notes could mess up the
 %   document's layout by flushing it right.
@@ -1703,7 +1791,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsection{Layouts}
+% \subsection{Annotation layouts}
 % \begin{option}{multiuser}
 %   \begin{option}{singleuser}
 %     \begin{option}{mode}
@@ -1768,38 +1856,45 @@
 % \subsubsection{Built-in layouts}
 % Remember that the order is important!
 % \paragraph{Footnote}
-% \begin{option}{footnote}
-%   \begin{option}{nofootnote}
-%     \begin{macro}{\FXLayoutFootnote}
-%       \begin{macro}{\@fxlayout@footnote}
-%         \marg{type}\marg{note}\marg{author}
+% \begin{layout}[noprint]{footnote}
+%   \begin{macro}{\FXLayoutFootnote}
+%     \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutFootnote[3]{%
   \footnote{\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxlayout@footnote}
+%     \begin{booleanoption}{footnote}
+%       \mbox{}
+%    \begin{macrocode}
 \FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{option}
-% \end{option}
+%     \end{booleanoption}
+%   \end{macro}
+% \end{layout}
 %
 % \paragraph{Margin}
-% \begin{face}{margin}
-%   \mbox{}
+% \begin{layout}[noprint]{margin}
+%   \begin{face}{margin}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdefineface{margin}
 %    \end{macrocode}
-% \end{face}
-% \begin{option}{margin}
-%   \begin{option}{nomargin}
-%     \begin{macro}{\FXLayoutMargin}
-%       \begin{macro}{\@fxlayout@margin}
-%         \marg{type}\marg{note}\marg{author}
+%   \end{face}
+%   \begin{macro}{\FXLayoutMargin}
+%     \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
   \raggedleft\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
     \raggedright\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxlayout@margin}
+%     \begin{booleanoption}{margin}
+%       \mbox{}
+%    \begin{macrocode}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
@@ -1808,22 +1903,25 @@
     \fx@layout@marginclue{false}}]{%
     margin}{\FXLayoutMargin}
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{option}
-% \end{option}
+%     \end{booleanoption}
+%   \end{macro}
+% \end{layout}
 %
 % \paragraph{Margin clue}
-% \begin{option}{marginclue}
-%   \begin{option}{nomarginclue}
-%     \begin{macro}{\FXLayoutMarginCLue}
-%       \begin{macro}{\@fxlayout@marginclue}
-%         \marg{type}\marg{note}\marg{author}
+% \begin{layout}[noprint]{marginclue}
+%   \begin{macro}{\FXLayoutMarginCLue}
+%     \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[%
   \raggedleft\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}!]{%
     \raggedright\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}!}}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxlayout@marginclue}
+%     \begin{booleanoption}{marginclue}
+%       \mbox{}
+%    \begin{macrocode}
 \FXRegisterLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
@@ -1832,45 +1930,48 @@
     \fx@layout@margin{false}}]{%
     marginclue}{\FXLayoutMarginClue}
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{option}
-% \end{option}
+%     \end{booleanoption}
+%   \end{macro}
+% \end{layout}
 %
 % \paragraph{Inline}
-% \begin{face}{inline}
-%   \mbox{}
+% \begin{layout}[noprint]{inline}
+%   \begin{face}{inline}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdefineface{inline}
 %    \end{macrocode}
-% \end{face}
-% \begin{option}{inline}
-%   \begin{option}{noinline}
-%     \begin{macro}{\FXLayoutInline}
-%       \begin{macro}{\@fxlayout@inline}
-%         \marg{type}\marg{note}\marg{author}
+%   \end{face}
+%   \begin{macro}{\FXLayoutInline}
+%     \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
   {\@fxfaceuse{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxlayout@inline}
+%     \begin{booleanoption}{inline}
+%       \mbox{}
+%    \begin{macrocode}
 \FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{option}
-% \end{option}
+%     \end{booleanoption}
+%   \end{macro}
+% \end{layout}
 %
 % \paragraph{Index}
-% \begin{macro}{\fixmeindexname}
-%   \mbox{}
+% \begin{layout}[noprint]{index}
+%   \begin{macro}{\fixmeindexname}
+%     \mbox{}
 %    \begin{macrocode}
 \newcommand\fixmeindexname{\fixmelogo}
 %    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@wrindex}
-%   \marg{contents}\\
-%   A replacement for \LaTeX's standard \cs{@wrindex} macro to deal with the
-%   \texttt{target} option. When given, it is supposed to replace the page
-%   number, just as in the list of fixmes.
+%   \end{macro}
+%   \begin{macro}{\@wrindex}
+%     \marg{contents}\\
+%     A replacement for \LaTeX's standard \cs{@wrindex} macro to deal with the
+%     \texttt{target} option. When given, it is supposed to replace the page
+%     number, just as in the list of fixmes.
 %    \begin{macrocode}
 \def\@wrindex#1{%
   \ifthenelse{\equal{\cmdfx@note@target}{thepage}}{%
@@ -1879,27 +1980,24 @@
   \endgroup
   \@esphack}
 %    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxnotekey}
-%   \begin{macro}{\@fxwarningkey}
-%     \begin{macro}{\@fxerrorkey}
-%       \begin{macro}{\@fxfatalkey}
-%         The keys used to sort indexed \fx notes by importance level:
+%   \end{macro}
+%   \begin{macro}{\@fxnotekey}
+%     \begin{macro}{\@fxwarningkey}
+%       \begin{macro}{\@fxerrorkey}
+%         \begin{macro}{\@fxfatalkey}
+%           The keys used to sort indexed \fx notes by importance level:
 %    \begin{macrocode}
 \newcommand\@fxnotekey{***a}
 \newcommand\@fxwarningkey{***b}
 \newcommand\@fxerrorkey{***c}
 \newcommand\@fxfatalkey{***d}
 %    \end{macrocode}
+%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{macro}
-% \end{macro}
-% \begin{option}{index}
-%   \begin{option}{noindex}
-%     \begin{macro}{\FXLayoutIndex}
-%       \begin{macro}{\@fxlayout@index}
-%         \marg{type}\marg{note}\marg{author}
+%   \begin{macro}{\FXLayoutIndex}
+%     \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
@@ -1914,12 +2012,17 @@
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
   \fi}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxlayout@index}
+%     \begin{booleanoption}{index}
+%       \mbox{}
+%    \begin{macrocode}
 \FXRegisterLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{option}
-% \end{option}
+%     \end{booleanoption}
+%   \end{macro}
+% \end{layout}
 %
 % \paragraph{Contents line\label{sec:code:contentslinelayout}}
 % \begin{macro}{\FXLayoutContentsLine}
@@ -1974,7 +2077,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{option}{innerlayout}
-%   The alternate inner mode layout:
+%   The alternative inner mode layout:
 %    \begin{macrocode}
 \@fxdefinecmdkey{layout}{innerlayout}{}
 %    \end{macrocode}
@@ -2009,7 +2112,7 @@
 % \end{option}
 %
 % \subsection{Environment Layouts}
-% \subsubsection{Environment layout creation}
+% \subsubsection{Layout creation}
 % \begin{macro}{\FXRegisterEnvLayout}
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
 %   Register a new environment layout with \fx. This currently only involves
@@ -2031,38 +2134,42 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Built-in environment layouts}
+% \subsubsection{Built-in layouts}
 % \paragraph{Plain}
-% \begin{face}{env}
-%   \mbox{}
+% \begin{envlayout}[noprint]{plain}
+%   \begin{face}{env}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdefineface{env}
 %    \end{macrocode}
-% \end{face}
-% \begin{macro}{\FXEnvLayoutPlainBegin}
-%   \begin{macro}{\FXEnvLayoutPlainEnd}
-%     \marg{type}\marg{author}
-%     \begin{layout}{plain}
-%       \mbox{}
+%   \end{face}
+%   \begin{macro}{\FXEnvLayoutPlainBegin}
+%     \begin{macro}{\FXEnvLayoutPlainEnd}
+%       \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutPlainBegin[2]{%
   \@fxfaceuse{env}\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutPlainEnd[2]{}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{macro}{\@fxenvlayout@plain@begin}
+%     \begin{macro}{\@fxenvlayout@plain@end}
+%    \begin{macrocode}
 \FXRegisterEnvLayout{plain}{\FXEnvLayoutPlainBegin}{\FXEnvLayoutPlainEnd}
 
 %    \end{macrocode}
-%     \end{layout}
+%     \end{macro}
 %   \end{macro}
-% \end{macro}
+% \end{envlayout}
 %
 % \paragraph{Signature}
-% \begin{layout}{signature}
+% \begin{envlayout}{signature}
 %   \begin{face}{signature}
 %     \mbox{}
 %    \begin{macrocode}
 \@fxdefineface{signature}
 \fxsetface{signature}{\itshape}
-
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\@fxdosig}
@@ -2073,7 +2180,6 @@
 \newcommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
     \def\@fxsignature{ -- {\@fxfaceuse{signature}#1}}}}
-
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
@@ -2084,14 +2190,20 @@
 \newcommand*\FXEnvLayoutSignatureBegin[2]{%
   \@fxfaceuse{env}\fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
-
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{macro}{\@fxenvlayout@signature@begin}
+%     \begin{macro}{\@fxenvlayout@signature@end}
+%       \mbox{}
+%    \begin{macrocode}
 \FXRegisterEnvLayout{signature}{%
   \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
 
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
-% \end{layout}
+% \end{envlayout}
 %
 % \subsubsection{Environment layout selection}
 % \begin{macro}{\@fxselectenvlayout}
@@ -2307,15 +2419,13 @@
 % \end{macro}
 %
 % \subsubsection{Logging control}
-% \begin{option}{silent}
-%   \begin{option}{nosilent}
-%     Whether to log \fx notes:
+% \begin{booleanoption}{silent}
+%   Whether to log \fx notes:
 %    \begin{macrocode}
 \@fxdefineboolkey{log}{silent}
 
 %    \end{macrocode}
-%   \end{option}
-% \end{option}
+% \end{booleanoption}
 %
 % \subsection{\fx notes}
 % \subsubsection{Note parameters}
@@ -2357,13 +2467,13 @@
 %
 % \subsubsection{Layout dispatch\label{sec:code:layoutdispatch}}
 % \begin{macro}{\@fxhandleinnermode}
-%   Handle the case where \TeX{} is in inner mode. We use the alternate layout
-%   provided by the \texttt{innerlayout} option, and we make sure to disable
-%   both the \texttt{margin} and \texttt{marginclue} layout forms. This is
-%   done by appending \texttt{nomargin} and \texttt{nomarginclue} to the inner
-%   layout value (this also renders nasty user settings harmless). Before
-%   that, we provide some informative message if risky layout forms were
-%   active.
+%   Handle the case where \TeX{} is in inner mode. We use the alternative
+%   layout provided by the \texttt{innerlayout} option, and we make sure to
+%   disable both the \texttt{margin} and \texttt{marginclue} layout forms.
+%   This is done by appending \texttt{nomargin} and \texttt{nomarginclue} to
+%   the inner layout value (this also renders nasty user settings harmless).
+%   Before that, we provide some informative message if risky layout forms
+%   were active.
 %    \begin{macrocode}
 \newcommand\@fxhandleinnermode{%
   \ifinner%
@@ -3018,7 +3128,7 @@
 % argue that it is not optimal to handle this here. However, it would be
 % incorrect to do it in the \texttt{draft} option code because this option can
 % be switched at any point in the document (remember that it is understood
-% even by the note insertion macros and environments) and the stuff below
+% even by the annotation macros and environments) and the stuff below
 % should only be executed once. Besides, \cs{@ifclassloaded} is an
 % \cs{@onlypreamble} macro\ldots
 %
