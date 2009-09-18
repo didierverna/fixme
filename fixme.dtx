@@ -1278,7 +1278,7 @@
 % \DescribeMacro[noprint]{\fxenglisherrorname}
 % \DescribeMacro[noprint]{\fxenglisherrorsname}
 % \DescribeMacro[noprint]{\fxenglishfatalname}
-% \DescribeMacro[noprint]{\fxenglishfatalssname}
+% \DescribeMacro[noprint]{\fxenglishfatalsname}
 % \DescribeMacro[noprint]{\englishlistfixmename}
 % \DescribeMacro[noprint]{\fxfrenchnotename}
 % \DescribeMacro[noprint]{\fxfrenchnotesname}
@@ -1287,7 +1287,7 @@
 % \DescribeMacro[noprint]{\fxfrencherrorname}
 % \DescribeMacro[noprint]{\fxfrencherrorsname}
 % \DescribeMacro[noprint]{\fxfrenchfatalname}
-% \DescribeMacro[noprint]{\fxfrenchfatalssname}
+% \DescribeMacro[noprint]{\fxfrenchfatalsname}
 % \DescribeMacro[noprint]{\frenchlistfixmename}
 % \DescribeMacro[noprint]{\fxspanishnotename}
 % \DescribeMacro[noprint]{\fxspanishnotesname}
@@ -1296,7 +1296,7 @@
 % \DescribeMacro[noprint]{\fxspanisherrorname}
 % \DescribeMacro[noprint]{\fxspanisherrorsname}
 % \DescribeMacro[noprint]{\fxspanishfatalname}
-% \DescribeMacro[noprint]{\fxspanishfatalssname}
+% \DescribeMacro[noprint]{\fxspanishfatalsname}
 % \DescribeMacro[noprint]{\spanishlistfixmename}
 % \DescribeMacro[noprint]{\fxitaliannotename}
 % \DescribeMacro[noprint]{\fxitaliannotesname}
@@ -1305,7 +1305,7 @@
 % \DescribeMacro[noprint]{\fxitalianerrorname}
 % \DescribeMacro[noprint]{\fxitalianerrorsname}
 % \DescribeMacro[noprint]{\fxitalianfatalname}
-% \DescribeMacro[noprint]{\fxitalianfatalssname}
+% \DescribeMacro[noprint]{\fxitalianfatalsname}
 % \DescribeMacro[noprint]{\italianlistfixmename}
 % \DescribeMacro[noprint]{\fxgermannotename}
 % \DescribeMacro[noprint]{\fxgermannotesname}
@@ -1314,7 +1314,7 @@
 % \DescribeMacro[noprint]{\fxgermanerrorname}
 % \DescribeMacro[noprint]{\fxgermanerrorsname}
 % \DescribeMacro[noprint]{\fxgermanfatalname}
-% \DescribeMacro[noprint]{\fxgermanfatalssname}
+% \DescribeMacro[noprint]{\fxgermanfatalsname}
 % \DescribeMacro[noprint]{\germanlistfixmename}
 % \DescribeMacro[noprint]{\fxdanishnotename}
 % \DescribeMacro[noprint]{\fxdanishnotesname}
@@ -1323,7 +1323,7 @@
 % \DescribeMacro[noprint]{\fxdanisherrorname}
 % \DescribeMacro[noprint]{\fxdanisherrorsname}
 % \DescribeMacro[noprint]{\fxdanishfatalname}
-% \DescribeMacro[noprint]{\fxdanishfatalssname}
+% \DescribeMacro[noprint]{\fxdanishfatalsname}
 % \DescribeMacro[noprint]{\danishlistfixmename}
 % \DescribeMacro[noprint]{\fxcroatiannotename}
 % \DescribeMacro[noprint]{\fxcroatiannotesname}
@@ -1332,7 +1332,7 @@
 % \DescribeMacro[noprint]{\fxcroatianerrorname}
 % \DescribeMacro[noprint]{\fxcroatianerrorsname}
 % \DescribeMacro[noprint]{\fxcroatianfatalname}
-% \DescribeMacro[noprint]{\fxcroatianfatalssname}
+% \DescribeMacro[noprint]{\fxcroatianfatalsname}
 % \DescribeMacro[noprint]{\croatianlistfixmename}
 % \fx's language control has been described in section
 % \sectionref{sec:manual:i18n}. For every supported language \meta{lang}, a
@@ -2206,7 +2206,7 @@
 %   \end{macro}
 % \end{envlayout}
 %
-% \subsubsection{Environment layout selection}
+% \subsubsection{Layout selection}
 % \begin{macro}{\@fxselectenvlayout}
 %   \marg{name}
 %   \begin{macro}{\@fxenvlayout@begin}
@@ -2228,7 +2228,7 @@
 %   \end{macro}
 % \end{macro}
 %
-% \subsubsection{Environment layout loading}
+% \subsubsection{Layout loading}
 % \begin{macro}{\fxloadenvlayouts}
 %   \marg{name,\ldots}
 %    \begin{macrocode}
@@ -2239,7 +2239,7 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Environment layout control}
+% \subsubsection{Layout control}
 % \begin{macro}{\fxuseenvlayout}
 %   \begin{macro}{\FXRequireEnvLayout}
 %     \marg{name}\\
@@ -2261,7 +2261,7 @@
 % \end{option}
 %
 % \subsection{Target Layouts}
-% \subsubsection{Target layout creation}
+% \subsubsection{Layout creation}
 % \begin{macro}{\FXRegisterTargetLayout}
 %   \marg{name}\marg{funcname}\\
 %   Register a new target layout with \fx. This currently only involves
@@ -2282,27 +2282,30 @@
 %    \end{macrocode}
 % \end{macro}
 %
-% \subsubsection{Built-in target layouts}
+% \subsubsection{Built-in layouts}
 % \paragraph{Plain}
-% \begin{face}{target}
-%   \mbox{}
+% \begin{targetlayout}[noprint]{plain}
+%   \begin{face}{target}
+%     \mbox{}
 %    \begin{macrocode}
 \@fxdefineface{target}
 %    \end{macrocode}
-% \end{face}
-% \begin{macro}{\FXTargetLayoutPlain}
-%   \marg{target}
-%   \begin{layout}{plain}
-%     \mbox{}
+%   \end{face}
+%   \begin{macro}{\FXTargetLayoutPlain}
+%     \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutPlain[1]{\@fxfaceuse{target}#1}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxtargetlayout@plain}
+%    \begin{macrocode}
 \FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
 
 %    \end{macrocode}
-%   \end{layout}
-% \end{macro}
+%   \end{macro}
+% \end{targetlayout}
 %
-% \subsubsection{Target layout selection}
+% \subsubsection{Layout selection}
 % \begin{macro}{\@fxselecttargetlayout}
 %   \marg{name}
 %   \begin{macro}{\@@fxtargetlayout}
@@ -2853,9 +2856,17 @@
 % \subsubsection{Language definitions}
 % \paragraph{English}
 % \begin{lang}{english}
-%   \begin{macro}{\fxenglish...[s]name}
-%     \begin{macro}{\englishlistfixmename}
-%       \mbox{}
+%   \begin{macro}[noindex]{\fxenglish...[s]name}
+%     \begin{macro}[noprint]{\fxenglishnotename}
+%       \begin{macro}[noprint]{\fxenglishnotesname}
+%         \begin{macro}[noprint]{\fxenglishwarningname}
+%           \begin{macro}[noprint]{\fxenglishwarningsname}
+%             \begin{macro}[noprint]{\fxenglisherrorname}
+%               \begin{macro}[noprint]{\fxenglisherrorsname}
+%                 \begin{macro}[noprint]{\fxenglishfatalname}
+%                   \begin{macro}[noprint]{\fxenglishfatalsname}
+%                     \begin{macro}{\englishlistfixmename}
+%                       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxenglishnotename{Note}
 \newcommand\fxenglishnotesname{Notes}
@@ -2866,7 +2877,16 @@
 \newcommand\fxenglishfatalname{Fatal}
 \newcommand\fxenglishfatalsname{Fatals}
 \newcommand\englishlistfixmename{List of Corrections}
+
 %    \end{macrocode}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{lang}
@@ -2874,9 +2894,17 @@
 % \paragraph{French}
 % \begin{lang}{french}
 %   \begin{lang}{francais}
-%   \begin{macro}{\fxfrench...[s]name}
-%     \begin{macro}{\frenchlistfixmename}
-%       \mbox{}
+%     \begin{macro}[noindex]{\fxfrench...[s]name}
+%       \begin{macro}[noprint]{\fxfrenchnotename}
+%         \begin{macro}[noprint]{\fxfrenchnotesname}
+%           \begin{macro}[noprint]{\fxfrenchwarningname}
+%             \begin{macro}[noprint]{\fxfrenchwarningsname}
+%               \begin{macro}[noprint]{\fxfrencherrorname}
+%                 \begin{macro}[noprint]{\fxfrencherrorsname}
+%                   \begin{macro}[noprint]{\fxfrenchfatalname}
+%                     \begin{macro}[noprint]{\fxfrenchfatalsname}
+%                       \begin{macro}{\frenchlistfixmename}
+%                         \mbox{}
 %    \begin{macrocode}
 \newcommand\fxfrenchnotename{Note}
 \newcommand\fxfrenchnotesname{Notes}
@@ -2887,7 +2915,16 @@
 \newcommand\fxfrenchfatalname{Fatal}
 \newcommand\fxfrenchfatalsname{Fatales}
 \newcommand\frenchlistfixmename{Liste des Corrections}
+
 %    \end{macrocode}
+%                       \end{macro}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{lang}
@@ -2895,9 +2932,17 @@
 %
 % \paragraph{Spanish}
 % \begin{lang}{spanish}
-%   \begin{macro}{\fxspanish...[s]name}
-%     \begin{macro}{\spanishlistfixmename}
-%       \mbox{}
+%   \begin{macro}[noindex]{\fxspanish...[s]name}
+%     \begin{macro}[noprint]{\fxspanishnotename}
+%       \begin{macro}[noprint]{\fxspanishnotesname}
+%         \begin{macro}[noprint]{\fxspanishwarningname}
+%           \begin{macro}[noprint]{\fxspanishwarningsname}
+%             \begin{macro}[noprint]{\fxspanisherrorname}
+%               \begin{macro}[noprint]{\fxspanisherrorsname}
+%                 \begin{macro}[noprint]{\fxspanishfatalname}
+%                   \begin{macro}[noprint]{\fxspanishfatalsname}
+%                     \begin{macro}{\spanishlistfixmename}
+%                       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxspanishnotename{Nota}
 \newcommand\fxspanishnotesname{Notas}
@@ -2908,16 +2953,33 @@
 \newcommand\fxspanishfatalname{FIXME}
 \newcommand\fxspanishfatalsname{FIXME}
 \newcommand\spanishlistfixmename{Lista de Correcciones}
+
 %    \end{macrocode}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{lang}
 %
 % \paragraph{Italian}
 % \begin{lang}{italian}
-%   \begin{macro}{\fxitalian...[s]name}
-%     \begin{macro}{\italianlistfixmename}
-%       \mbox{}
+%   \begin{macro}[noindex]{\fxitalian...[s]name}
+%     \begin{macro}[noprint]{\fxitaliannotename}
+%       \begin{macro}[noprint]{\fxitaliannotesname}
+%         \begin{macro}[noprint]{\fxitalianwarningname}
+%           \begin{macro}[noprint]{\fxitalianwarningsname}
+%             \begin{macro}[noprint]{\fxitalianerrorname}
+%               \begin{macro}[noprint]{\fxitalianerrorsname}
+%                 \begin{macro}[noprint]{\fxitalianfatalname}
+%                   \begin{macro}[noprint]{\fxitalianfatalsname}
+%                     \begin{macro}{\italianlistfixmename}
+%                       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxitaliannotename{Nota}
 \newcommand\fxitaliannotesname{Note}
@@ -2928,7 +2990,16 @@
 \newcommand\fxitalianfatalname{FIXME}
 \newcommand\fxitalianfatalsname{FIXME}
 \newcommand\italianlistfixmename{Corrigenda}
+
 %    \end{macrocode}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{lang}
@@ -2936,9 +3007,17 @@
 % \paragraph{German}
 % \begin{lang}{german}
 %   \begin{lang}{ngerman}
-%     \begin{macro}{\fxgerman...[s]name}
-%       \begin{macro}{\germanlistfixmename}
-%         \mbox{}
+%     \begin{macro}[noindex]{\fxgerman...[s]name}
+%       \begin{macro}[noprint]{\fxgermannotename}
+%         \begin{macro}[noprint]{\fxgermannotesname}
+%           \begin{macro}[noprint]{\fxgermanwarningname}
+%             \begin{macro}[noprint]{\fxgermanwarningsname}
+%               \begin{macro}[noprint]{\fxgermanerrorname}
+%                 \begin{macro}[noprint]{\fxgermanerrorsname}
+%                   \begin{macro}[noprint]{\fxgermanfatalname}
+%                     \begin{macro}[noprint]{\fxgermanfatalsname}
+%                       \begin{macro}{\germanlistfixmename}
+%                         \mbox{}
 %    \begin{macrocode}
 \newcommand\fxgermannotename{Anm}
 \newcommand\fxgermannotesname{Anmerkungen}
@@ -2949,7 +3028,16 @@
 \newcommand\fxgermanfatalname{FIXME}
 \newcommand\fxgermanfatalsname{FIXME}
 \newcommand\germanlistfixmename{Verzeichnis der Korrekturen}
+
 %    \end{macrocode}
+%                       \end{macro}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
 %       \end{macro}
 %     \end{macro}
 %   \end{lang}
@@ -2957,9 +3045,17 @@
 %
 % \paragraph{Danish}
 % \begin{lang}{danish}
-%   \begin{macro}{\fxdanish...[s]name}
-%     \begin{macro}{\danishlistfixmename}
-%       \mbox{}
+%   \begin{macro}[noindex]{\fxdanish...[s]name}
+%     \begin{macro}[noprint]{\fxdanishnotename}
+%       \begin{macro}[noprint]{\fxdanishnotesname}
+%         \begin{macro}[noprint]{\fxdanishwarningname}
+%           \begin{macro}[noprint]{\fxdanishwarningsname}
+%             \begin{macro}[noprint]{\fxdanisherrorname}
+%               \begin{macro}[noprint]{\fxdanisherrorsname}
+%                 \begin{macro}[noprint]{\fxdanishfatalname}
+%                   \begin{macro}[noprint]{\fxdanishfatalsname}
+%                     \begin{macro}{\danishlistfixmename}
+%                       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxdanishnotename{Note}
 \newcommand\fxdanishnotesname{Noter}
@@ -2970,16 +3066,33 @@
 \newcommand\fxdanishfatalname{FIXME}
 \newcommand\fxdanishfatalsname{FIXME}
 \newcommand\danishlistfixmename{Rettelser}
+
 %    \end{macrocode}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{lang}
 %
 % \paragraph{Croatian}
 % \begin{lang}{croatian}
-%   \begin{macro}{\fxcroatian...[s]name}
-%     \begin{macro}{\croatianlistfixmename}
-%       \mbox{}
+%   \begin{macro}[noindex]{\fxcroatian...[s]name}
+%     \begin{macro}[noprint]{\fxcroatiannotename}
+%       \begin{macro}[noprint]{\fxcroatiannotesname}
+%         \begin{macro}[noprint]{\fxcroatianwarningname}
+%           \begin{macro}[noprint]{\fxcroatianwarningsname}
+%             \begin{macro}[noprint]{\fxcroatianerrorname}
+%               \begin{macro}[noprint]{\fxcroatianerrorsname}
+%                 \begin{macro}[noprint]{\fxcroatianfatalname}
+%                   \begin{macro}[noprint]{\fxcroatianfatalsname}
+%                     \begin{macro}{\croatianlistfixmename}
+%                       \mbox{}
 %    \begin{macrocode}
 \newcommand\fxcroatiannotename{Poruka}
 \newcommand\fxcroatiannotesname{Poruke}
@@ -2992,6 +3105,14 @@
 \newcommand\croatianlistfixmename{Popis korekcija}
 
 %    \end{macrocode}
+%                     \end{macro}
+%                   \end{macro}
+%                 \end{macro}
+%               \end{macro}
+%             \end{macro}
+%           \end{macro}
+%         \end{macro}
+%       \end{macro}
 %     \end{macro}
 %   \end{macro}
 % \end{lang}
@@ -3143,6 +3264,7 @@
 % submitted). Oh boy, these classes are a mess.
 % \begin{macro}{\@lox@prtc}
 %   \begin{macro}{\@lox@psttc}
+%     \begin{macro}{\@lox@draft}
 %    \begin{macrocode}
 \@ifclassloaded{article}{%
   \let\@lox@prtc\@lox@prtc@article%
@@ -3171,6 +3293,7 @@
 		\let\@lox@psttc\@lox@psttc@article}}}}}}}}
 
 %    \end{macrocode}
+%     \end{macro}
 %   \end{macro}
 % \end{macro}
 %
@@ -3237,8 +3360,8 @@
 % \appendix
 % \section{External Layouts}
 % \subsection{Environment layouts}
-% \subsubsection{The \texttt{color} environment layout}
-% \begin{layout}{color}
+% \subsubsection{The \texttt{color} layout}
+% \begin{envlayout}{color}
 %   \mbox{}
 %    \begin{macrocode}
 %<*fxenvlayoutcolor>
@@ -3284,15 +3407,21 @@
   \@fxdocolon{#2}%
   \@fxfaceuse{env}\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
 \newcommand*\FXEnvLayoutColorEnd[2]{}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{macro}{\@fxenvlayout@color@begin}
+%     \begin{macro}{\@fxenvlayout@color@end}
+%    \begin{macrocode}
 \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
 %</fxenvlayoutcolor>
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
-% \end{layout}
+% \end{envlayout}
 %
-% \subsubsection{The \texttt{colorsig} environment layout}
-% \begin{layout}{colorsig}
+% \subsubsection{The \texttt{colorsig} layout}
+% \begin{envlayout}{colorsig}
 %   \mbox{}
 %    \begin{macrocode}
 %<*fxenvlayoutcolorsig>
@@ -3345,19 +3474,25 @@
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorSigBegin[2]{\@fxfaceuse{env}\color{fx#1}}
 \newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
+%    \end{macrocode}
+%     \end{macro}
+%   \end{macro}
+%   \begin{macro}{\@fxenvlayout@colorsig@begin}
+%     \begin{macro}{\@fxenvlayout@colorsig@end}
+%    \begin{macrocode}
 \FXRegisterEnvLayout{colorsig}{%
   \FXEnvLayoutColorSigBegin}{\FXEnvLayoutColorSigEnd}
 %</fxenvlayoutcolorsig>
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
-% \end{layout}
+% \end{envlayout}
 %
 % \subsection{Target Layouts}
-% \subsubsection{The \texttt{color} target layout}
+% \subsubsection{The \texttt{color} layout}
 % Since targets don't include author information, this layout is usable in
 % both the \texttt{color} and \texttt{colorsig} themes.
-% \begin{layout}{color}
+% \begin{targetlayout}{color}
 %   \mbox{}
 %    \begin{macrocode}
 %<*fxtargetlayoutcolor>
@@ -3380,11 +3515,15 @@
 %     \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutColor[1]{\@fxfaceuse{target}\color{fxtarget}#1}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxtargetlayout@color}
+%    \begin{macrocode}
 \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 %</fxtargetlayoutcolor>
 %    \end{macrocode}
 %   \end{macro}
-% \end{layout}
+% \end{targetlayout}
 %
 % \section{Themes}
 % \subsection{The \texttt{signature} theme}
