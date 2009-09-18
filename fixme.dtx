@@ -1770,17 +1770,19 @@
 % \end{macro}
 %
 % \subsection{Faces}
-% \begin{macro}{\@fxdefineface}
-%   \marg{name}\\
-%   A face is just a command key:
-%    \begin{macrocode}
-\newcommand*\@fxdefineface[1]{\@fxdefinecmdkey{face}{#1face}{}}
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\fxsetface}
 %   \marg{name}\marg{value}
 %    \begin{macrocode}
 \newcommand*\fxsetface[2]{\@fxsetkeys{face}{#1face=#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxdefineface}
+%   \oarg{default}\marg{name}\\
+%   A face is just a command key:
+%    \begin{macrocode}
+\newcommand*\@fxdefineface[2][]{%
+  \@fxdefinecmdkey{face}{#2face}{}%
+  \fxsetface{#2}{#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxfaceuse}
@@ -2168,8 +2170,7 @@
 %   \begin{face}{signature}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefineface{signature}
-\fxsetface{signature}{\itshape}
+\@fxdefineface[\itshape]{signature}
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\@fxdosig}
@@ -3304,8 +3305,7 @@
 % \begin{face}{signature}
 %   \mbox{}
 %    \begin{macrocode}
-\@fxdefineface{signature}
-\fxsetface{signature}{\itshape}
+\@fxdefineface[\itshape]{signature}
 %    \end{macrocode}
 % \end{face}
 %   \begin{macro}{\@fxdosig}
