@@ -34,13 +34,16 @@
 \documentclass[a4paper]{ltxdoc}
 \usepackage{xspace}
 
-\usepackage{dox}
-\doxitem{Option}{option}{options}
-\doxitem{Counter}{counter}{counters}
-\doxitem{Language}{lang}{languages}
+\usepackage{dox}[2009/09/17]
+\doxitem[idxtype=env.]{Env}{environment}{environments}
+\doxitem[idxtype=opt.]{Option}{option}{options}
+\doxitem[idxtype=cnt.]{Counter}{counter}{counters}
+\doxitem[idxtype=lang.]{Lang}{lang}{languages}
 \doxitem{Face}{face}{faces}
 \doxitem{Color}{color}{colors}
-\doxitem{Layout}{layout}{layouts}
+\doxitem[idxtype={note lt.}]{Layout}{layout}{note layouts}
+\doxitem[idxtype={env. lt.}]{EnvLayout}{envlayout}{env. layouts}
+\doxitem[idxtype={target lt.}]{TargetLayout}{targetlayout}{target layouts}
 \doxitem{Theme}{theme}{themes}
 
 % #### NOTE: I don't want to \usepackage{fixme} just for getting the file
@@ -125,8 +128,7 @@
 % \fxmarkright
 %
 % \date{\texttt{\fileversion{} (\filedate)}}
-% \title{\fx{} -- a \LaTeXe{} package for inserting fixme notes in your
-%   documents}
+% \title{\fx{} -- Collaborative annotation tool for \LaTeX{}}
 % \author{Didier Verna\\
 %   \texttt{mailto:didier@lrde.epita.fr}\\
 %   \texttt{http://www.lrde.epita.fr/\~{}didier/}}
@@ -134,37 +136,86 @@
 %
 %
 % \begin{abstract}
-%   In the process of writing a long document, it is a common practice to
-%   leave some parts unwritten or uncomplete, and come back to them later. In
-%   such cases, you probably want to stick clues about which parts need to be
-%   ``fixed'', where they are located, and what needs to be done. This is what
-%   I call ``fixme notes''. The purpose of this package is to provide you with
-%   convenient ways to insert such notes in your documents.\par
+%   \fx is a collaborative annotation tool for \LaTeX{} documents. Annotating
+%   a document here refers to inserting meta-notes, that is, notes that do not
+%   belong to the document itself, but rather to its development or reviewing
+%   process. Such notes may involve things of different importance levels,
+%   ranging from simple ``fix the spelling'' flags to critical ``this
+%   paragraph is a lie'' mentions. Annotations like this should be visible
+%   during the development or reviewing phase, but should normally disapear in
+%   the final version of the document.
+%
+%   \fx is designed to ease and automate the process of managing collaborative
+%   annotations, by offering a set of predefined note levels and layouts, the
+%   possibility to register multiple note authors, to reference annotations by
+%   listing and indexing \etc \fx is extensible, giving you the possibility to
+%   create new layouts or even complete ``themes'', and also comes with
+%   support for \auctex.
+%
 %   The \fx package is \packagecopyright{}, and distributed under the
 %   terms of the LPPL license.
 % \end{abstract}
 %
 % \tableofcontents
 %
-% \section{Introduction}
-% With \fx, you can insert different kinds of notes in your documents,
-% ranging from simple not-so-important notices to critical stuff that must
-% absolutely be fixed in the final version.\par
-% \fx gives you full control on the layout of these notes: they can be
-% displayed inline (directly in the text), as marginal paragraphs (the
-% default), as footnotes and even as index entries. All these possibilities
-% can be mixed together. Additionally, you can summarize all \fx notes in
-% a ``list of fixme's''.\par
-% \fx notes are also recorded in the log file, and (depending on their
-% importance level) some of them are displayed on the terminal during
-% compilation. A final summary is also created at the end of the compilation
-% process.\par
-% All these features are actually available when you're working in
-% \texttt{draft} mode. In \texttt{final} mode, the behavior is slightly
-% different: any remaining critical note generates an error (the compilation
-% aborts), while non critical ones are just removed from the document's body
-% (they're still recorded in the log file though).
+% \section{Installation}
+% \subsection{Extraction}
+% If you are building \fx from the tarball you need to execute the following
+% steps in order to extract the necessary files:
+% \begin{verbatim}
+% [pdf]latex fixme.ins
+% [pdf]latex fixme.dtx
+% [pdf]latex fixme.dtx
+% makeindex -s gind fixme.dtx
+% [pdf]latex fixme.dtx
+% [pdf]latex fixme.dtx
+% \end{verbatim}
+% After that, you need to install the generated documentation and style files
+% to a location where \LaTeX{} can find them.
 %
+% \subsection{TDS-compliant layout}
+% For a TDS-compliant layout, the following locations are suggested:
+% \begin{verbatim}
+% [TEXMF]/tex/latex/fixme/fixme.sty
+% [TEXMF]/tex/latex/fixme/layouts/fxlayout*.sty
+% [TEXMF]/tex/latex/fixme/layouts/env/fxenvlayout*.sty
+% [TEXMF]/tex/latex/fixme/layouts/target/fxtargetlayout*.sty
+% [TEXMF]/tex/latex/fixme/themes/fxtheme*.sty
+% [TEXMF]/doc/latex/fixme/fixme.[pdf|dvi]
+% \end{verbatim}
+%
+% \section{Features summary}
+% If you're new to \fx, you might be interested in a brief summary of the
+% features it provides. Otherwise, you may only take a look at the History
+% section (section \sectionref{sec:manual:history}) to see what's new.
+% \subparagraph{Annotation levels} \fx annotations may be of four different
+% importance levels, ranging from simple not-so-important notices to critical
+% things that must absolutely be fixed in the final version.
+% \subparagraph{Layouts and themes} \fx gives you full and extensible control
+% on the layout of these annotations: they can be displayed inline, as
+% marginal paragraphs, as footnotes and also in any kind of user-defined way.
+% All these ``layouts'' may be combined together. \fx also comes with support
+% for ``themes'', globally modifying existing layouts, or providing new ones.
+% \subparagraph{Annotation targets} Annotations may be ``targeted'' to a
+% specific portion of text that will be highlighted, and on the contrary
+% ``floating'' around, in which case they may even appear in the document's
+% preamble.
+% \subparagraph{Listing and indexing} Annotations may be indexed and
+% summarized in a ``list of fixmes''.
+% \subparagraph{Logging} Annotations are recorded in the log file, and
+% (depending on their importance level) some of them are displayed on the
+% terminal during compilation. A final summary is also created at the end of
+% the compilation process.
+% \subparagraph{Modes} All these features are actually available when you're
+% working in \texttt{draft} mode. In \texttt{final} mode, the behavior is
+% slightly different: any remaining critical note generates an error (the
+% compilation aborts), while non critical ones are just removed from the
+% document's body (they're still recorded in the log file though).
+% \subparagraph{Authoring} \fx provides support for collaborative annotating
+% by allowing you to ``register'' several authors.
+% \subparagraph{Internationalization} \fx currently supports 7 different
+% languages and features automatic language tracking for multilingual
+% documents.
 %
 % \section{Using \fx}
 % \subsection{Initialization}
@@ -173,7 +224,10 @@
 % packages. You don't have to load them explicitly though. As long as
 % \LaTeX{} can locate them, they will be used automatically. \fx currently
 % depends on \texttt{xspace}, \texttt{ifthen}, \texttt{verbatim} and
-% \texttt{xkeyval} no older than release date 2006/11/18.
+% \texttt{xkeyval} (version 2.5f, release date 2006/11/18 or later).
+%
+% \fx also requires the \textsf{DoX} package (version 2.0, release date
+% 2009/09/21 or later), but only for the build phase.
 %
 % \subsubsection{Loading the package}
 % In order to load \fx, simply say |\usepackage[|\meta{options}|]{fixme}|
@@ -414,6 +468,11 @@
 %
 % \subsubsection{Available note layouts}
 % The table below lists the note layouts currently distributed with \fx.
+% \DescribeLayout[noprint]{inline}
+% \DescribeLayout[noprint]{margin}
+% \DescribeLayout[noprint]{marginclue}
+% \DescribeLayout[noprint]{footnote}
+% \DescribeLayout[noprint]{index}
 % \DescribeBooleanOption{inline}
 % \DescribeBooleanOption{margin}
 % \DescribeBooleanOption{marginclue}
@@ -615,10 +674,10 @@
 % The table below lists the environment layouts currently distributed with
 % \fx.
 %
-% \DescribeLayout{plain}
-% \DescribeLayout{signature}
-% \DescribeLayout{color}
-% \DescribeLayout{colorsig}
+% \DescribeEnvLayout{plain}
+% \DescribeEnvLayout{signature}
+% \DescribeEnvLayout{color}
+% \DescribeEnvLayout{colorsig}
 % \begin{center}
 %   \DeleteShortVerb{\|}
 %   \begin{tabular}{|l|c|p{5cm}|}
@@ -709,8 +768,8 @@
 % \subsubsection{Available target layouts\label{sec:manual:targetlayoutslist}}
 % The table below lists the target layouts currently distributed with \fx.
 %
-% \DescribeLayout{plain}
-% \DescribeLayout{color}
+% \DescribeTargetLayout{plain}
+% \DescribeTargetLayout{color}
 % \begin{center}
 %   \DeleteShortVerb{\|}
 %   \begin{tabular}{|l|c|p{5cm}|}
@@ -1201,7 +1260,7 @@
 % \fx in all situations, including potential language changes across the
 % document.
 %
-% \section{History}
+% \section{History\label{sec:manual:history}}
 % \begin{itemize}
 % \item[v4.0] Support for collaborative annotations, suggested by Michael
 %   Kubovy.\\
