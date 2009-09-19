@@ -3,7 +3,7 @@
 
 
 Copyright (C) 1998, 1999, 2000, 2001, 2002, 2004, 2005, 2006 Didier Verna
-Copyright (C) 2007 Didier Verna
+Copyright (C) 2007, 2009 Didier Verna
 
 This file is part of FiXme.
 
@@ -28,34 +28,62 @@ FiXme consists of the following files:
 * Description
 =============
 
-	This package provides you with a way of inserting fixme notes in your
-documents. Such notes can appear inline, as marginal notes, footnotes, index
-entries, in the log file and as warnings on stdout. It is also possible to
-summarize them in a list. When you switch from draft to final mode, any
-remaining fixme note will be logged, but removed from the document's body.
-Additionally, critical notes will abort compilation with an informative
-message. FiXme also comes with support for AUC-TeX.
+FiXme is a collaborative annotation tool for LaTeX documents. Annotating a
+document refers here to inserting meta-notes, that is, notes that do not
+belong to the document itself, but rather to its development or reviewing
+process. Such notes may involve things of different importance levels, ranging
+from simple "fix the spelling" flags to critical "this paragraph is a lie"
+mentions. Annotations like this should be visible during the development or
+reviewing phase, but should normally disapear in the final version of the
+document.
+
+FiXme is designed to ease and automate the process of managing collaborative
+annotations, by offering a set of predefined note levels and layouts, the
+possibility to register multiple note authors, to reference annotations by
+listing and indexing etc. FiXme is extensible, giving you the possibility to
+create new layouts or even complete "themes", and also comes with support for
+AUC-TeX.
+
+FiXme homepage: http://www.lrde.epita.fr/~didier/software/latex.php#fixme
 
 
 * Installation
 ==============
 
-	To install the package, please follow these steps:
+If you are building FiXme from the tarball you need to execute the following
+steps in order to extract the necessary files. FiXme also requires the DoX
+package (version 2.0, release date 2009/09/21 or later), to build. It is not
+required to use the paclage.
 
-- Run LaTeX on the file `fixme.ins' to create the style file `fixme.sty'.
-- Run LaTeX on the file `fixme.dtx' to create the doc   file `fixme.dvi'.
-- Install these files anywhere you see fit.
+[pdf]latex fixme.ins 
+[pdf]latex fixme.dtx 
+[pdf]latex fixme.dtx 
+makeindex -s gind fixme.dtx 
+[pdf]latex fixme.dtx 
+[pdf]latex fixme.dtx 
 
-	If you're an AUC-TeX user, you can also install the file `fixme.el' in
-a suitable AUC-TeX style directory.
+After that, you need to install the generated documentation and style files to
+a location where LATEX can find them. For a TDS-compliant layout, the
+following locations are suggested: 
+
+[TEXMF]/tex/latex/fixme/fixme.sty
+[TEXMF]/tex/latex/fixme/layouts/fxlayout*.sty
+[TEXMF]/tex/latex/fixme/layouts/env/fxenvlayout*.sty
+[TEXMF]/tex/latex/fixme/layouts/target/fxtargetlayout*.sty
+[TEXMF]/tex/latex/fixme/themes/fxtheme*.sty
+[TEXMF]/doc/latex/fixme/fixme.[pdf|dvi]
+
+If you're an AUC-TeX user, you may also install the file 'fixme.el' in a
+suitable AUC-TeX style directory.
+
 
 	Have fun!
 
 --
-Didier Verna, didier@lrde.epita.fr, http://www.lrde.epita.fr/~didier
+Didier Verna <didier@lrde.epita.fr>
 
-EPITA / LRDE, 14-16 rue Voltaire   Tel.+33 (0)1 44 08 01 85
-94276 Le Kremlin-Bicêtre, France   Fax.+33 (0)1 53 14 59 22
+Sientific site:    http://www.lrde.epita.fr/~didier
+Music (Jazz) site: http://www.didierverna.com
 
 
 
