@@ -5,7 +5,7 @@
 ;; Author:        Didier Verna <didier@lrde.epita.fr>
 ;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
 ;; Created:       Tue Apr 18 14:49:29 2000
-;; Last Revision: Wed Aug 26 13:30:10 2009
+;; Last Revision: Sat Sep 19 14:19:30 2009
 ;; Keywords:      tex abbrev data
 
 
@@ -34,52 +34,119 @@
   (function
    (lambda ()
      (TeX-add-symbols
-      ;; Commands		Deprecated / Obsolete / Legacy versions
-      '("fixmelogo")
+      '("fxsetup")
 
-      '("listoffixmes")
-      '("listfixmename")
+      '("fxnote"    ["Options"] "Annotation")
+      '("fxwarning" ["Options"] "Annotation")
+      '("fxerror"   ["Options"] "Annotation")
+      '("fxfatal"   ["Options"] "Annotation")
+      '("fixme"     ["Options"] "Annotation")
 
-      '("FXLayoutInline")	'("FXInline")		'("FiXmeInline")
-      '("FXLayoutMargin")	'("FXMargin")		'("FiXmeMargin")
-      '("FXLayoutMarginClue")	'("FXMarginClue")
-      '("FXLayoutFootnote")	'("FXFootnote")		'("FiXmeFootnote")
-      '("FXLayoutUser")		'("FXUser")		'("FiXmeUser")
-      '("fixmeindexname")
-      '("FXLayoutIndex")	'("FXIndex")		'("FiXmeIndex")
+      '("fxnote*"    ["Options"] "Annotation" t)
+      '("fxwarning*" ["Options"] "Annotation" t)
+      '("fxerror*"   ["Options"] "Annotation" t)
+      '("fxfatal*"   ["Options"] "Annotation" t)
 
-      '("FXLogNote")		'("FXNote")		'("FiXmeInfo")
-      '("FXLogWarning")		'("FXWarning")		'("FiXmeWarning")
-      '("FXLogError")		'("FXError")
-      '("FXLogFatal")		'("FXFatal")
+      '("listoffixmes" 0)
 
-      '("fxnoteprefix")		'("fixmenoteprefix")
-      '("fxnoteindexname")	'("fixmenoteindexname")
-      '("fxwarningprefix")	'("fixmewarningprefix")
-      '("fxwarningindexname")	'("fixmewarningindexname")
-      '("fxerrorprefix")	'("fixmeerrorprefix")
-      '("fxerrorindexname")	'("fixmeerrorindexname")
-      '("fxfatalprefix")	'("fixmefatalprefix")
-      '("fxfatalindexname")	'("fixmefatalindexname")
+      '("fxuselayouts"  t)
+      '("fxloadlayouts" t)
+      '("fxuseenvlayout"   t)
+      '("fxloadenvlayouts" t)
+      '("fxusetargetlayout"   t)
+      '("fxloadtargetlayouts" t)
 
-      '("thefixmecount")
-      '("thefxnotecount")	'("thefixmenotecount")
-      '("thefxwarningcount")	'("thefixmewarningcount")
-      '("thefxerrorcount")	'("thefixmeerrorcount")
-      '("thefxfatalcount")	'("thefixmefatalcount")
+      '("fxsetface" "Face" "Value")
 
-      '("fxnote" [ "Layout" ] "Note")
-      '("fxwarning" [ "Layout" ] "Warning")
-      '("fxerror" [ "Layout" ] "Error")
-      '("fxfatal" [ "Layout" ] "Fatal")	'("fixme" [ "Layout" ] "FiXme"))
+      '("FXRegisterAuthor" "Command prefix" "Environment prefix" "Tag")
+
+      '("fxusetheme" "Theme")
+
+      '("FXRegisterLayout"       "Name" "Macro")
+      '("FXRegisterEnvLayout"    "Name" "Opening macro" "Closing macro")
+      '("FXRegisterTargetLayout" "Name" "Macro")
+
+      '("FXRequireLayout"       "Name")
+      '("FXRequireEnvLayout"    "Name")
+      '("FXRequireTargetLayout" "Name")
+
+      '("fxenglishnotename" 0)
+      '("fxenglishnotesname" 0)
+      '("fxenglishwarningname" 0)
+      '("fxenglishwarningsname" 0)
+      '("fxenglisherrorname" 0)
+      '("fxenglisherrorsname" 0)
+      '("fxenglishfatalname" 0)
+      '("fxenglishfatalsname" 0)
+      '("fxfrenchnotename" 0)
+      '("fxfrenchnotesname" 0)
+      '("fxfrenchwarningname" 0)
+      '("fxfrenchwarningsname" 0)
+      '("fxfrencherrorname" 0)
+      '("fxfrencherrorsname" 0)
+      '("fxfrenchfatalname" 0)
+      '("fxfrenchfatalsname" 0)
+      '("fxspanishnotename" 0)
+      '("fxspanishnotesname" 0)
+      '("fxspanishwarningname" 0)
+      '("fxspanishwarningsname" 0)
+      '("fxspanisherrorname" 0)
+      '("fxspanisherrorsname" 0)
+      '("fxspanishfatalname" 0)
+      '("fxspanishfatalsname" 0)
+      '("fxitaliannotename" 0)
+      '("fxitaliannotesname" 0)
+      '("fxitalianwarningname" 0)
+      '("fxitalianwarningsname" 0)
+      '("fxitalianerrorname" 0)
+      '("fxitalianerrorsname" 0)
+      '("fxitalianfatalname" 0)
+      '("fxitalianfatalsname" 0)
+      '("fxgermannotename" 0)
+      '("fxgermannotesname" 0)
+      '("fxgermanwarningname" 0)
+      '("fxgermanwarningsname" 0)
+      '("fxgermanerrorname" 0)
+      '("fxgermanerrorsname" 0)
+      '("fxgermanfatalname" 0)
+      '("fxgermanfatalsname" 0)
+      '("fxdanishnotename" 0)
+      '("fxdanishnotesname" 0)
+      '("fxdanishwarningname" 0)
+      '("fxdanishwarningsname" 0)
+      '("fxdanisherrorname" 0)
+      '("fxdanisherrorsname" 0)
+      '("fxdanishfatalname" 0)
+      '("fxdanishfatalsname" 0)
+      '("fxcroatiannotename" 0)
+      '("fxcroatiannotesname" 0)
+      '("fxcroatianwarningname" 0)
+      '("fxcroatianwarningsname" 0)
+      '("fxcroatianerrorname" 0)
+      '("fxcroatianerrorsname" 0)
+      '("fxcroatianfatalname" 0)
+      '("fxcroatianfatalsname" 0)
+
+      '("englishlistfixmename" 0)
+      '("frenchlistfixmename" 0)
+      '("spanishlistfixmename" 0)
+      '("italianlistfixmename" 0)
+      '("germanlistfixmename" 0)
+      '("danishlistfixmename" 0)
+      '("croatianlistfixmename" 0))
 
      (LaTeX-add-environments
-      ;; Environments		Deprecated / Obsolete / Legacy versions
-      '("anfxnote")
-      '("anfxwarning")
-      '("anfxerror")
-      '("anfxfatal")		'("afixme")))))
+      '("anfxnote"    ["Options"] "Summary")
+      '("anfxwarning" ["Options"] "Summary")
+      '("anfxerror"   ["Options"] "Summary")
+      '("anfxfatal"   ["Options"] "Summary")
+      '("afixme"      ["Options"] "Summary")
 
+      ;; #### NOTE: I would like to insert a couple of braces here.
+      '("anfxnote*"    ["Options"] "Summary")
+      '("anfxwarning*" ["Options"] "Summary")
+      '("anfxerror*"   ["Options"] "Summary")
+      '("anfxfatal*"   ["Options"] "Summary")))))
 
 
 
