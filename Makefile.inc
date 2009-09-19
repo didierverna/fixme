@@ -15,7 +15,8 @@
 
 ### Code:
 
-TEXMFDIR = ${HOME}/.texmf
+TEXMFDIR  = ${HOME}/.texmf
+AUCTEXDIR = ${HOME}/etc/auctex
 
 DST_EMPTY_DIRS = themes layouts layouts/env layouts/target
 
