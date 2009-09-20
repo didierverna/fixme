@@ -1794,19 +1794,19 @@
 \newcommand*\fxsetface[2]{\@fxsetkeys{face}{#1face=#2}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxdefineface}
+% \begin{macro}{\@fxnewface}
 %   \oarg{default}\marg{name}\\
 %   A face is just a command key:
 %    \begin{macrocode}
-\newcommand*\@fxdefineface[2][]{%
+\newcommand*\@fxnewface[2][]{%
   \@fxdefinecmdkey{face}{#2face}{}%
   \fxsetface{#2}{#1}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxfaceuse}
+% \begin{macro}{\@fxuseface}
 %   \marg{name}
 %    \begin{macrocode}
-\newcommand*\@fxfaceuse[1]{\@nameuse{cmdfx@face@#1face}}
+\newcommand*\@fxuseface[1]{\@nameuse{cmdfx@face@#1face}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1905,7 +1905,7 @@
 %   \begin{face}{margin}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefineface{margin}
+\@fxnewface{margin}
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\FXLayoutMargin}
@@ -1913,8 +1913,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
-  \raggedleft\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
-    \raggedright\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
+  \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
+    \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxlayout@margin}
@@ -1940,8 +1940,8 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[%
-  \raggedleft\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}!]{%
-    \raggedright\@fxfaceuse{margin}\ignorespaces#3 \fxnotename{#1}!}}
+  \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!]{%
+    \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!}}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxlayout@marginclue}
@@ -1965,14 +1965,14 @@
 %   \begin{face}{inline}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefineface{inline}
+\@fxnewface{inline}
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\FXLayoutInline}
 %     \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\@fxfaceuse{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
+  {\@fxuseface{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxlayout@inline}
@@ -2172,7 +2172,7 @@
 %   \begin{face}{env}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefineface{env}
+\@fxnewface{env}
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\FXEnvLayoutPlainBegin}
@@ -2180,7 +2180,7 @@
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutPlainBegin[2]{%
-  \@fxfaceuse{env}\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
+  \@fxuseface{env}\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutPlainEnd[2]{}
 %    \end{macrocode}
 %     \end{macro}
@@ -2200,7 +2200,7 @@
 %   \begin{face}{signature}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefineface[\itshape]{signature}
+\@fxnewface[\itshape]{signature}
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\@fxdosig}
@@ -2210,7 +2210,7 @@
 %    \begin{macrocode}
 \newcommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxfaceuse{signature}#1}}}}
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
 %    \end{macrocode}
 %     \end{macro}
 %   \end{macro}
@@ -2219,7 +2219,7 @@
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutSignatureBegin[2]{%
-  \@fxfaceuse{env}\fxnotename{#1}: \ignorespaces}
+  \@fxuseface{env}\fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
 %    \end{macrocode}
 %     \end{macro}
@@ -2324,13 +2324,13 @@
 %   \begin{face}{target}
 %     \mbox{}
 %    \begin{macrocode}
-\@fxdefineface{target}
+\@fxnewface{target}
 %    \end{macrocode}
 %   \end{face}
 %   \begin{macro}{\FXTargetLayoutPlain}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutPlain[2]{\@fxfaceuse{target}#2}
+\newcommand\FXTargetLayoutPlain[2]{\@fxuseface{target}#2}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxtargetlayout@plain}
@@ -3447,7 +3447,7 @@
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorBegin[2]{%
   \@fxdocolon{#2}%
-  \@fxfaceuse{env}\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
+  \@fxuseface{env}\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
 \newcommand*\FXEnvLayoutColorEnd[2]{}
 %    \end{macrocode}
 %     \end{macro}
@@ -3476,7 +3476,7 @@
 % \begin{face}{signature}
 %   \mbox{}
 %    \begin{macrocode}
-\@fxdefineface[\itshape]{signature}
+\@fxnewface[\itshape]{signature}
 %    \end{macrocode}
 % \end{face}
 %   \begin{macro}{\@fxdosig}
@@ -3486,7 +3486,7 @@
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxfaceuse{signature}#1}}}}
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
 
 %    \end{macrocode}
 %     \end{macro}
@@ -3514,7 +3514,7 @@
 %     \begin{macro}{\FXEnvLayoutColorSigEnd}
 %       \marg{type}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXEnvLayoutColorSigBegin[2]{\@fxfaceuse{env}\color{fx#1}}
+\newcommand*\FXEnvLayoutColorSigBegin[2]{\@fxuseface{env}\color{fx#1}}
 \newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
 %    \end{macrocode}
 %     \end{macro}
@@ -3550,7 +3550,7 @@
 %   \begin{macro}{\FXTargetLayoutChangeBar}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutChangeBar[2]{\cbstart\@fxfaceuse{target}#2\cbend}
+\newcommand\FXTargetLayoutChangeBar[2]{\cbstart\@fxuseface{target}#2\cbend}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxtargetlayout@changebar}
@@ -3588,7 +3588,7 @@
 %   \begin{macro}{\FXTargetLayoutColor}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutColor[2]{\@fxfaceuse{target}\color{fxtarget}#2}
+\newcommand\FXTargetLayoutColor[2]{\@fxuseface{target}\color{fxtarget}#2}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxtargetlayout@color}
@@ -3618,7 +3618,7 @@
 %     \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutColorCB[2]{%
-  \cbstart\cbcolor{fx#1}\@fxfaceuse{target}#2\cbend}
+  \cbstart\cbcolor{fx#1}\@fxuseface{target}#2\cbend}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxtargetlayout@colorcb}
@@ -3650,15 +3650,15 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \raggedleft\@fxfaceuse{margin}\fxnotename{#1}: #2\@fxsignature]{%
-    \raggedright\@fxfaceuse{margin}\fxnotename{#1}: #2\@fxsignature}}
+  \raggedleft\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature]{%
+    \raggedright\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\raggedleft\@fxfaceuse{margin}\fxnotename{#1}!\@fxsignature]{%
-    \raggedright\@fxfaceuse{margin}\fxnotename{#1}!\@fxsignature}}
+  \marginpar[\raggedleft\@fxuseface{margin}\fxnotename{#1}!\@fxsignature]{%
+    \raggedright\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\@fxfaceuse{inline}\fxnotename{#1}: #2\@fxsignature}}
+  {\@fxuseface{inline}\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -3705,14 +3705,14 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdocolon{#3}%
   \marginpar[%
-  \raggedleft\@fxfaceuse{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
-    \raggedright\@fxfaceuse{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  \raggedleft\@fxuseface{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
+    \raggedright\@fxuseface{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\raggedleft\@fxfaceuse{margin}\color{fx#1}\ignorespaces#3!]{%
-    \raggedright\@fxfaceuse{margin}\color{fx#1}\ignorespaces#3!}}
+  \marginpar[\raggedleft\@fxuseface{margin}\color{fx#1}\ignorespaces#3!]{%
+    \raggedright\@fxuseface{margin}\color{fx#1}\ignorespaces#3!}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdocolon{#3}%
-  {\@fxfaceuse{inline}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  {\@fxuseface{inline}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
@@ -3760,15 +3760,15 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \raggedleft\@fxfaceuse{margin}\color{fx#1}#2\@fxsignature]{%
-    \raggedright\@fxfaceuse{margin}\color{fx#1}#2\@fxsignature}}
+  \raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature]{%
+    \raggedright\@fxuseface{margin}\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\raggedleft\@fxfaceuse{margin}\color{fx#1}!\@fxsignature]{%
-    \raggedright\@fxfaceuse{margin}\color{fx#1}!\@fxsignature}}
+  \marginpar[\raggedleft\@fxuseface{margin}\color{fx#1}!\@fxsignature]{%
+    \raggedright\@fxuseface{margin}\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\@fxfaceuse{inline}\color{fx#1}#2\@fxsignature}}
+  {\@fxuseface{inline}\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
