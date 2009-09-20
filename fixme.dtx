@@ -500,7 +500,7 @@
 % \begin{table}
 %   \centering
 %   \DeleteShortVerb{\|}
-%   \begin{tabular}{|l|c|p{5cm}|}
+%   \begin{tabular}{|l|c|p{7cm}|}
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
@@ -724,7 +724,7 @@
 % \begin{table}
 %   \centering
 %   \DeleteShortVerb{\|}
-%   \begin{tabular}{|l|c|p{5cm}|}
+%   \begin{tabular}{|l|c|p{7cm}|}
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
@@ -793,11 +793,12 @@
 % \begin{table}
 %   \centering
 %   \DeleteShortVerb{\|}
-%   \begin{tabular}{|l|c|p{5cm}|}
+%   \begin{tabular}{|l|c|p{7cm}|}
 %     \hline
 %     \textbf{Name} & \textbf{External} & \textbf{Description}\\
 %     \hline\hline
 %     \texttt{plain} & & Display target as-is\\
+%     \texttt{changebar} & \texttt{*} & Display a vertical bar aside target\\
 %     \texttt{color} & \texttt{*} & Display target in color\\
 %     \hline
 %   \end{tabular}
@@ -811,6 +812,9 @@
 % \item \DescribeTargetLayout{plain}
 %   The \texttt{plain} target layout displays its contents as-is, only in
 %   italics (by default) in order to distinguish it from the surrounding text.
+% \item \DescribeTargetLayout{changebar}
+%   The \texttt{changebar} target layout displays a vertical bar in the
+%   margin, on the side of the target text.
 % \item \DescribeTargetLayout{color}
 %   \DescribeColor{fxtarget}
 %   The \texttt{color} target layout uses the color named \texttt{fxtarget}
@@ -888,8 +892,8 @@
 % By default, the \texttt{plain} target layout displays its contents in
 % italics, to distinguish it from the surrounding text. This is controlled by
 % the \texttt{target} face whose value is \cs{itshape} by default. The
-% \texttt{color} target layout honors this face as well, but resets it to
-% \meta{nothing} first.
+% \texttt{changebar} and \texttt{color} target layouts honor this face as
+% well, but reset it to \meta{nothing} first.
 %
 % \subsection{Controlling the logging of annotations}
 % As well as being displayed in the document itself, all annotations are
@@ -3492,9 +3496,37 @@
 % \end{envlayout}
 %
 % \subsection{Target Layouts}
+% Since target layouts don't include author information, they're orthogonal to
+% (and hence usable in) prefix/signature display.
+%
+% \subsubsection{The \texttt{changebar} layout}
+% \begin{targetlayout}{changebar}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxtargetlayoutchangebar>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxtargetlayoutchangebar}
+
+\RequirePackage{changebar}
+\setlength{\changebarsep}{5pt}
+
+\fxsetface{target}{}
+%    \end{macrocode}
+%   \begin{macro}{\FXTargetLayoutChangeBar}
+%     \marg{target}
+%    \begin{macrocode}
+\newcommand\FXTargetLayoutChangeBar[2]{\cbstart\@fxfaceuse{target}#2\cbend}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxtargetlayout@changebar}
+%    \begin{macrocode}
+\FXRegisterTargetLayout{changebar}{\FXTargetLayoutChangeBar}
+%</fxtargetlayoutchangebar>
+%    \end{macrocode}
+%   \end{macro}
+% \end{targetlayout}
+%
 % \subsubsection{The \texttt{color} layout}
-% Since targets don't include author information, this layout is usable in
-% both the \texttt{color} and \texttt{colorsig} themes.
 % \begin{targetlayout}{color}
 %   \mbox{}
 %    \begin{macrocode}
