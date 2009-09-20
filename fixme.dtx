@@ -1846,6 +1846,12 @@
 \let\@fxlayouts\empty
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\FXProvidesLayout}
+%   \marg{name}\oarg{info}
+%    \begin{macrocode}
+\newcommand*\FXProvidesLayout[1]{\ProvidesPackage{fxlayout#1}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\FXRegisterLayout}
 %   \oarg{boolfunc}\marg{name}\marg{funcname}\\
 %   Register a new layout with \fx. This currently involves creating the
@@ -2133,6 +2139,12 @@
 %
 % \subsection{Environment Layouts}
 % \subsubsection{Layout creation}
+% \begin{macro}{\FXProvidesEnvLayout}
+%   \marg{name}\oarg{info}
+%    \begin{macrocode}
+\newcommand*\FXProvidesEnvLayout[1]{\ProvidesPackage{fxenvlayout#1}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\FXRegisterEnvLayout}
 %   \marg{name}\marg{beginfuncname}\marg{endfuncname}\\
 %   Register a new environment layout with \fx. This currently only involves
@@ -2280,6 +2292,12 @@
 %
 % \subsection{Target Layouts}
 % \subsubsection{Layout creation}
+% \begin{macro}{\FXProvidesTargetLayout}
+%   \marg{name}\oarg{info}
+%    \begin{macrocode}
+\newcommand*\FXProvidesTargetLayout[1]{\ProvidesPackage{fxtargetlayout#1}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\FXRegisterTargetLayout}
 %   \marg{name}\marg{funcname}\\
 %   Register a new target layout with \fx. This currently only involves
@@ -3249,6 +3267,12 @@
 % \end{macro}
 %
 % \subsection{Theme support}
+% \begin{macro}{\FXProvidesTheme}
+%   \marg{name}\oarg{info}
+%    \begin{macrocode}
+\newcommand*\FXProvidesTheme[1]{\ProvidesPackage{fxtheme#1}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\fxusetheme}
 %   \marg{name}
 %    \begin{macrocode}
@@ -3384,7 +3408,7 @@
 %    \begin{macrocode}
 %<*fxenvlayoutcolor>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxenvlayoutcolor}
+\FXProvidesEnvLayout{color}
 
 \RequirePackage{color}
 
@@ -3444,7 +3468,7 @@
 %    \begin{macrocode}
 %<*fxenvlayoutcolorsig>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxenvlayoutcolorsig}
+\FXProvidesEnvLayout{colorsig}
 
 \RequirePackage{color}
 
@@ -3516,7 +3540,7 @@
 %    \begin{macrocode}
 %<*fxtargetlayoutchangebar>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxtargetlayoutchangebar}
+\FXProvidesTargetLayout{changebar}
 
 \RequirePackage{changebar}
 \setlength{\changebarsep}{5pt}
@@ -3543,7 +3567,7 @@
 %    \begin{macrocode}
 %<*fxtargetlayoutcolor>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxtargetlayoutcolor}
+\FXProvidesTargetLayout{color}
 
 \RequirePackage{color}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
@@ -3581,7 +3605,7 @@
 %    \begin{macrocode}
 %<*fxtargetlayoutcolorcb>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxtargetlayoutcolorcb}
+\FXProvidesTargetLayout{colorcb}
 
 \RequirePackage{color}
 
@@ -3612,7 +3636,7 @@
 %    \begin{macrocode}
 %<*fxthemesignature>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxthemesignature}
+\FXProvidesTheme{signature}
 
 %    \end{macrocode}
 % \cs{@fxdosig} and \cs{@fxsignature} are provided by the \texttt{signature}
@@ -3666,7 +3690,7 @@
 %    \begin{macrocode}
 %<*fxthemecolor>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxthemecolor}
+\FXProvidesTheme{color}
 
 \RequirePackage{color}
 
@@ -3721,7 +3745,7 @@
 %    \begin{macrocode}
 %<*fxthemecolorsig>
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{fxthemecolorsig}
+\FXProvidesTheme{colorsig}
 
 \RequirePackage{color}
 
