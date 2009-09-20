@@ -1183,12 +1183,14 @@
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
-% \DescribeMacro[noindex]{\FXTargetLayout\ldots}\marg{target}\\
+% \DescribeMacro[noindex]{\FXTargetLayout\ldots}\marg{type}\marg{target}\\
 % \DescribeMacro[noprint]{\FXTargetLayoutPlain}
 % \DescribeMacro[noprint]{\FXTargetLayoutColor}
-% Each target layout is implemented as a macro taking one mandatory argument.
+% Each target layout is implemented as a macro taking two mandatory arguments.
 % By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
-% instance \cs{FXTargetLayoutPlain}. \meta{target} is the textual target.
+% instance \cs{FXTargetLayoutPlain}. \meta{type} is the note type. It can be
+% one of \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
+% \meta{target} is the textual target.
 %
 % \subsection{Creating new layouts}
 % Creating a new layout first requires that you write new layout macros as
@@ -2295,7 +2297,7 @@
 %   \begin{macro}{\FXTargetLayoutPlain}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutPlain[1]{\@fxfaceuse{target}#1}
+\newcommand\FXTargetLayoutPlain[2]{\@fxfaceuse{target}#2}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxtargetlayout@plain}
@@ -2363,9 +2365,9 @@
 %     In \texttt{final} mode, the target is typeset as-is. In \texttt{draft}
 %     mode, we use the selected layout.
 %    \begin{macrocode}
-\newcommand\@fxtargetlayout@final[1]{#1}
-\newcommand\@fxtargetlayout@draft[1]{%
-  \begingroup\@@fxtargetlayout{#1}\endgroup}
+\newcommand\@fxtargetlayout@final[2]{#2}
+\newcommand\@fxtargetlayout@draft[2]{%
+  \begingroup\@@fxtargetlayout{#1}{#2}\endgroup}
 
 %    \end{macrocode}
 %   \end{macro}
@@ -2599,7 +2601,7 @@
 %    \begin{macrocode}
 \long\def\@@fxsnote#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
-  \@fxtargetlayout{#3}\@@fxnote{#1}{#2}}
+  \@fxtargetlayout{#1}{#3}\@@fxnote{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxsnote}
@@ -3515,7 +3517,7 @@
 %   \begin{macro}{\FXTargetLayoutColor}
 %     \marg{target}
 %    \begin{macrocode}
-\newcommand\FXTargetLayoutColor[1]{\@fxfaceuse{target}\color{fxtarget}#1}
+\newcommand\FXTargetLayoutColor[2]{\@fxfaceuse{target}\color{fxtarget}#2}
 %    \end{macrocode}
 %   \end{macro}
 %   \begin{macro}{\@fxtargetlayout@color}
