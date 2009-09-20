@@ -790,22 +790,6 @@
 % \end{enumerate}
 %
 % \subsubsection{Available layouts\label{sec:manual:targetlayoutslist}}
-% \begin{table}
-%   \centering
-%   \DeleteShortVerb{\|}
-%   \begin{tabular}{|l|c|p{7cm}|}
-%     \hline
-%     \textbf{Name} & \textbf{External} & \textbf{Description}\\
-%     \hline\hline
-%     \texttt{plain} & & Display target as-is\\
-%     \texttt{changebar} & \texttt{*} & Display a vertical bar aside target\\
-%     \texttt{color} & \texttt{*} & Display target in color\\
-%     \hline
-%   \end{tabular}
-%   \caption{Available target layouts}
-%   \label{table:targetlayouts}
-%   \MakeShortVerb{\|}
-% \end{table}
 % Table \ref{table:targetlayouts} lists the target layouts currently
 % distributed with \fx.
 % \begin{itemize}
@@ -820,7 +804,34 @@
 %   The \texttt{color} target layout uses the color named \texttt{fxtarget}
 %   to display the target text. This layout is used by the \texttt{color}
 %   and \texttt{colorsig} themes (see section \sectionref{sec:manual:themes}).
+% \item \DescribeTargetLayout{colorcb}
+%   \DescribeColor{fxnote}
+%   \DescribeColor{fxwarning}
+%   \DescribeColor{fxerror}
+%   \DescribeColor{fxfatal}
+%   The \texttt{colorcb} target layout uses one of four colors named
+%   \texttt{fx}\meta{level} (according to the annotation's importance
+%   level) to display a colored vertical bar in the margin, on the side of the
+%   target text.
 % \end{itemize}
+% \begin{table}
+%   \centering
+%   \DeleteShortVerb{\|}
+%   \begin{tabular}{|l|c|p{7cm}|}
+%     \hline
+%     \textbf{Name} & \textbf{External} & \textbf{Description}\\
+%     \hline\hline
+%     \texttt{plain} & & Display target as-is\\
+%     \texttt{changebar} & \texttt{*} & Display a vertical bar aside target\\
+%     \texttt{color} & \texttt{*} & Display target in color\\
+%     \texttt{colorcb} & \texttt{*} & Display a colored vertical bar aside
+%     target\\
+%     \hline
+%   \end{tabular}
+%   \caption{Available target layouts}
+%   \label{table:targetlayouts}
+%   \MakeShortVerb{\|}
+% \end{table}
 %
 % \subsection{Faces\label{sec:manual:faces}}
 % In the \fx jargon, a ``face'' characterizes the visual aspect of some
@@ -892,8 +903,8 @@
 % By default, the \texttt{plain} target layout displays its contents in
 % italics, to distinguish it from the surrounding text. This is controlled by
 % the \texttt{target} face whose value is \cs{itshape} by default. The
-% \texttt{changebar} and \texttt{color} target layouts honor this face as
-% well, but reset it to \meta{nothing} first.
+% \texttt{changebar}, \texttt{color} and \texttt{colorcb} target layouts honor
+% this face as well, but reset it to \meta{nothing} first.
 %
 % \subsection{Controlling the logging of annotations}
 % As well as being displayed in the document itself, all annotations are
@@ -3535,6 +3546,10 @@
 \ProvidesPackage{fxtargetlayoutcolor}
 
 \RequirePackage{color}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
 
 %    \end{macrocode}
 %   \begin{color}{fxtarget}
@@ -3556,6 +3571,36 @@
 %    \begin{macrocode}
 \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 %</fxtargetlayoutcolor>
+%    \end{macrocode}
+%   \end{macro}
+% \end{targetlayout}
+%
+% \subsubsection{The \texttt{colorcb} layout}
+% \begin{targetlayout}{colorcb}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxtargetlayoutcolorcb>
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fxtargetlayoutcolorcb}
+
+\RequirePackage{color}
+
+\RequirePackage[color]{changebar}
+\setlength{\changebarsep}{5pt}
+
+\fxsetface{target}{}
+%    \end{macrocode}
+%   \begin{macro}{\FXTargetLayoutColorCB}
+%     \marg{target}
+%    \begin{macrocode}
+\newcommand\FXTargetLayoutColorCB[2]{%
+  \cbstart\cbcolor{fx#1}\@fxfaceuse{target}#2\cbend}
+%    \end{macrocode}
+%   \end{macro}
+%   \begin{macro}{\@fxtargetlayout@colorcb}
+%    \begin{macrocode}
+\FXRegisterTargetLayout{colorcb}{\FXTargetLayoutColorCB}
+%</fxtargetlayoutcolorcb>
 %    \end{macrocode}
 %   \end{macro}
 % \end{targetlayout}
