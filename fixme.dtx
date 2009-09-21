@@ -2655,11 +2655,29 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxendgroup}
-%   This macro is used in \cs{@@fxnote} below to close the group opened at the
-%   user level. Since environments need the group opened for a longer time,
-%   they rebind it to \cs{relax} and close the group themselves later on.
+%   This macro is used in \cs{@@fxnote@late} below to close the group opened
+%   at the user level. Since environments need the group opened for a longer
+%   time, they rebind it to \cs{relax} and close the group themselves later
+%   on.
 %    \begin{macrocode}
 \let\@fxendgroup\endgroup
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@@fxnote@early}
+%   \marg{type}\marg{note}\\
+%    \begin{macrocode}
+\def\@@fxnote@early#1#2{%
+    \@fxpostconfigure%
+    \stepcounter{fixmecount}%
+    \stepcounter{fx#1count}%
+    \@@@fxnote@early{#1}{#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@@fxnote@late}
+%    \begin{macrocode}
+\def\@@fxnote@late#1#2{%
+    \@@@fxnote@late{#1}{#2}%
+  \@fxendgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@@fxnote}
@@ -2668,12 +2686,8 @@
 %   updated regardless of the document status.
 %    \begin{macrocode}
 \def\@@fxnote#1#2{%
-    \@fxpostconfigure%
-    \stepcounter{fixmecount}%
-    \stepcounter{fx#1count}%
-    \@@@fxnote@early{#1}{#2}%
-    \@@@fxnote@late{#1}{#2}%
-  \@fxendgroup}
+  \@@fxnote@early{#1}{#2}%
+  \@@fxnote@late{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxnote}
@@ -2711,7 +2725,7 @@
 %    \begin{macrocode}
 \long\def\@@fxsnote#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
-  \@fxtargetlayout{#1}{#3}\@@fxnote{#1}{#2}}
+  \@@fxnote@early{#1}{#2}\@fxtargetlayout{#1}{#3}\@@fxnote@late{#1}{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxsnote}
