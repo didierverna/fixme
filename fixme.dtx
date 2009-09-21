@@ -1063,7 +1063,7 @@
 % \jdfatal[author=Anonymous]{For $500.00, you got your Ph.D.}
 % \end{verbatim}
 % I don't see any good reason for doing it though, the above example
-% notwithstanding.
+% notwithstanding.^^A $ AUC-TeX hack to prevent math-mode
 %
 % The final remark is about the default \texttt{fx*} user interface: the
 % \texttt{fixme} default user is special in that it is the only registered
@@ -1213,9 +1213,27 @@
 % to make \fx aware of this addition. This is called ``registering'' a layout.
 %
 % \subsubsection{Registering a new annotation layout}
+% \paragraph{Early \vs late layouts} Normally, \fx typesets your annotations
+% at the current position in the text, using a sensible order for built-in
+% layouts. For instance, the \texttt{footnote} layout, if active, is performed
+% before the \texttt{inline} one, so that the footnote mark is sticked to the
+% preceding text and not to the annotation. When using targeted commands or
+% environments, the situation is a bit more complex: some layouts make more
+% sense at the beginning of the textual target, and some others at the end.
+% The former ones are called ``early layouts'' and the later ones are called
+% ``late layouts''. A typical example of an early layout is the
+% \texttt{margin} one: if you're highlighting a long portion of text, it is
+% more convenient to see the marginal note appear near the top of that text,
+% rather than near the end of it (a nice illustration of this is to combine
+% the \texttt{changebar} target layout and \texttt{margin} annotation layout).
+% As for built-in layouts, only the \texttt{margin} and \texttt{marginclue}
+% ones are early. All others are late. When you create a new layout, you need
+% to decide whether it is an early or a late one.
+%
+% \paragraph{Registering late layouts}
 % \begin{sloppypar}
 %   \DescribeMacro{\FXRegisterLayout}\oarg{boolfunc}\marg{name}\marg{macro}\\
-%   In order to register a new note layout with \fx, use the command
+%   In order to register a late annotation layout with \fx, use the command
 %   \cs{FXRegisterLayout}. This macro has two mandatory arguments: the layout
 %   \meta{name} (at least 3 characters long) and the associated layout
 %   \meta{macro}. For instance, the \texttt{inline} layout is registered like
@@ -1231,17 +1249,12 @@
 % recognized by the \texttt{layout} and \texttt{morelayout} options, as well
 % as by the \cs{fxuselayouts} command as \meta{name}.
 %
-% \noindent
+% \paragraph{Registering early layouts}
 % \DescribeMacro{\FXRegisterLayout*}\oarg{boolfunc}\marg{name}\marg{macro}\\
-% Layouts registered in this fashion are called ``late layouts''; this is the
-% default behavior. When an annotation is inserted in the document, the
-% typesetting of such active layouts is performed at the current position in
-% the text. There might be times, however, when you would prefer some layouts
-% to occur earlier, and this is precisely the case when you use a targeted
-% command or environment: when an important portion of the original text is
-% highlighted (targeted),
+% In order to register an early annotation layout with \fx, use the starred
+% form of \cs{FXRegisterLayout}. Everything else behaves the same.
 %
-% \noindent
+% \paragraph{Providing a layout}
 % \DescribeMacro{\FXProvidesLayout}\marg{name}\oarg{release information}\\
 % If you want to save your layout externally, you need to store it in a file
 % named \texttt{fxlayout}\meta{name}\texttt{.sty} and advertise it by calling
@@ -1904,6 +1917,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXRegisterLayout}
+% \begin{macro}{\FXRegisterLayout*}
 %   \meta{\texttt{*}}\oarg{boolfunc}\marg{name}\marg{funcname}\\
 %   And the use-level interface:
 %    \begin{macrocode}
@@ -1915,6 +1929,7 @@
     {\@FXRegisterLayout{late}}{\@FXRegisterLayout{late}[]}}}
 
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Built-in layouts}
