@@ -1852,14 +1852,14 @@
 % \end{option}
 %
 % \subsubsection{Layout creation}
-% \begin{macro}{\@fxlayouts}
-%   A comma-separated list of available layouts. The order in which we add the
-%   built-in layouts is important: we start with the footnote layout, so that
-%   it is sticked properly to the preceding text if active. Next we handle
-%   marginal layouts so that they are also close to the text to fix.
+% \begin{macro}{\@fxearlylayouts}
+% \begin{macro}{\@fxlatelayouts}
+%   Comma-separated lists of available early and late layouts.
 %    \begin{macrocode}
-\let\@fxlayouts\empty
+\let\@fxearlylayouts\empty
+\let\@fxlatelayouts\empty
 %    \end{macrocode}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\FXProvidesLayout}
 %   \marg{name}\oarg{release information}
@@ -1875,18 +1875,34 @@
 %   list. The translation macro can't be \cs{let} to the real one, because
 %   themes might want to redefine latter.
 %    \begin{macrocode}
-\newcommand*\FXRegisterLayout[3][]{%
+\newcommand*\FXRegisterEarlyLayout[3][]{%
   \@fxkeyifundefined{layout}{#2}{%
     \@fxdefineboolkey[#1]{layout}{#2}%
     \expandafter\def\csname @fxlayout@#2\endcsname{#3}%
-    \ifx\@fxlayouts\empty%
-      \g@addto@macro\@fxlayouts{#2}%
+    \ifx\@fxearlylayouts\empty%
+      \g@addto@macro\@fxearlylayouts{#2}%
     \else%
-      \g@addto@macro\@fxlayouts{,#2}%
+      \g@addto@macro\@fxearlylayouts{,#2}%
     \fi}{%
     \@fxpkgerror{layout '#2' already registered}{%
-      You have called \string\FXRegisterLayout\space with a name already in
-      use.\MessageBreak
+      You have called \string\FXRegisterEarlyLayout\space with a name already
+      in use.\MessageBreak
+      If you want to modify an existing layout, renew its
+      command.\MessageBreak
+      Otherwise, you must choose a different name.}}}
+
+\newcommand*\FXRegisterLateLayout[3][]{%
+  \@fxkeyifundefined{layout}{#2}{%
+    \@fxdefineboolkey[#1]{layout}{#2}%
+    \expandafter\def\csname @fxlayout@#2\endcsname{#3}%
+    \ifx\@fxlatelayouts\empty%
+      \g@addto@macro\@fxlatelayouts{#2}%
+    \else%
+      \g@addto@macro\@fxlatelayouts{,#2}%
+    \fi}{%
+    \@fxpkgerror{layout '#2' already registered}{%
+      You have called \string\FXRegisterLateLayout\space with a name already
+      in use.\MessageBreak
       If you want to modify an existing layout, renew its
       command.\MessageBreak
       Otherwise, you must choose a different name.}}}
@@ -1909,7 +1925,7 @@
 %     \begin{booleanoption}{footnote}
 %       \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout{footnote}{\FXLayoutFootnote}
+\FXRegisterLateLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 %     \end{booleanoption}
 %   \end{macro}
@@ -1936,7 +1952,7 @@
 %     \begin{booleanoption}{margin}
 %       \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout[%
+\FXRegisterEarlyLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
       marginal notes requested;\MessageBreak
@@ -1963,7 +1979,7 @@
 %     \begin{booleanoption}{marginclue}
 %       \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout[%
+\FXRegisterEarlyLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
       marginal clues requested;\MessageBreak
@@ -1994,7 +2010,7 @@
 %     \begin{booleanoption}{inline}
 %       \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout{inline}{\FXLayoutInline}
+\FXRegisterLateLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 %     \end{booleanoption}
 %   \end{macro}
@@ -2059,7 +2075,7 @@
 %     \begin{booleanoption}{index}
 %       \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout{index}{\FXLayoutIndex}
+\FXRegisterLateLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
 %     \end{booleanoption}
 %   \end{macro}
@@ -2146,7 +2162,9 @@
 %   effect.
 %    \begin{macrocode}
 \@fxdefinekey{layout}{layout}{%
-  \@for\@fxlt:=\@fxlayouts\do{\@nameuse{fx@layout@\@fxlt}{false}}%
+  \edef\@fxlayouts{\@fxearlylayouts,\@fxlatelayouts}%
+  \@for\@fxlt:=\@fxlayouts\do{%
+    \@nameuse{fx@layout@\@fxlt}{false}}%
   \fxuselayouts{#1}}
 
 %    \end{macrocode}
@@ -2549,9 +2567,14 @@
 %   \marg{type}\marg{note}\\
 %   Dispatch to all active draft mode layouts.
 %    \begin{macrocode}
-\newcommand*\@fxissuedraftlayouts[2]{%
+\newcommand*\@fxissueearlydraftlayouts[2]{%
   \@fxhandleinnermode%
-  \@for\@fxlt:=\@fxlayouts\do{%
+  \@for\@fxlt:=\@fxearlylayouts\do{%
+    \@nameuse{iffx@layout@\@fxlt}%
+      \@nameuse{@fxlayout@\@fxlt}{#1}{#2}{\cmdfx@note@author}%
+    \fi}}
+\newcommand*\@fxissuelatedraftlayouts[2]{%
+  \@for\@fxlt:=\@fxlatelayouts\do{%
     \@nameuse{iffx@layout@\@fxlt}%
       \@nameuse{@fxlayout@\@fxlt}{#1}{#2}{\cmdfx@note@author}%
     \fi}}
@@ -2577,26 +2600,33 @@
 % \end{macro}
 %
 % \subsubsection{Status-dependent implementation\label{sec:code:lowlevelcmd}}
-% \begin{macro}{\@@@fxnote@final}
-%   \begin{macro}{\@@@fxnote@draft}
-%     \marg{type}\marg{note}\\
-%     The lower-level macros that perform the real job:
+% \begin{macro}{\@@@fxnote@early@final}
+% \begin{macro}{\@@@fxnote@late@final}
+% \begin{macro}{\@@@fxnote@early@draft}
+% \begin{macro}{\@@@fxnote@late@draft}
+%   \marg{type}\marg{note}\\
+%   The lower-level macros that perform the real job:
 %    \begin{macrocode}
-\newcommand*\@@@fxnote@final[2]{%
+\newcommand*\@@@fxnote@early@final[2]{%
   \ifthenelse{\equal{#1}{fatal}}{%
     \@fxpkgerror{'#2' fatal error left in final version}{%
       You are currently processing in final mode,\MessageBreak
       but you still have some FiXme fatal errors left behind.\MessageBreak
       Type X to quit, fix your document (or switch back to draft
       mode),\MessageBreak
-      and rerun LaTeX.}}{%
-    \@fxissuecommonlayouts{#1}{#2}}}
-\newcommand*\@@@fxnote@draft[2]{%
-  \@fxissuedraftlayouts{#1}{#2}%
+      and rerun LaTeX.}}{}}
+\newcommand*\@@@fxnote@late@final[2]{\@fxissuecommonlayouts{#1}{#2}}
+
+\newcommand*\@@@fxnote@early@draft[2]{%
+  \@fxissueearlydraftlayouts{#1}{#2}}
+\newcommand*\@@@fxnote@late@draft[2]{%
+  \@fxissuelatedraftlayouts{#1}{#2}%
   \@fxissuecommonlayouts{#1}{#2}}
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Standard version}
@@ -2641,7 +2671,8 @@
     \@fxpostconfigure%
     \stepcounter{fixmecount}%
     \stepcounter{fx#1count}%
-    \@@@fxnote{#1}{#2}%
+    \@@@fxnote@early{#1}{#2}%
+    \@@@fxnote@late{#1}{#2}%
   \@fxendgroup}
 %    \end{macrocode}
 % \end{macro}
@@ -3277,25 +3308,28 @@
 % \end{macro}
 %
 % \subsection{Document status processing}
-% \begin{macro}{\@@@fxnote}
-%   \begin{macro}{\@@@@fxbeginenv}
-%     \begin{macro}{\@fxendenv}
-%       \begin{macro}{\@fxtargetlayout}
-%         \begin{macro}{\listoffixmes}
-%           \begin{option}{final}
-%             \begin{option}{draft}
-%               \begin{option}{status}
-%                 Select draft or final versions of internal macros (some of
-%                 them also depending on the document class):
+% \begin{macro}{\@@@fxnote@early}
+% \begin{macro}{\@@@fxnote@late}
+% \begin{macro}{\@@@@fxbeginenv}
+% \begin{macro}{\@fxendenv}
+% \begin{macro}{\@fxtargetlayout}
+% \begin{macro}{\listoffixmes}
+%   \begin{option}{final}
+%     \begin{option}{draft}
+%       \begin{option}{status}
+%         Select draft or final versions of internal macros (some of
+%         them also depending on the document class):
 %    \begin{macrocode}
 \@fxdefinevoidkey{status}{final}{%
-  \let\@@@fxnote\@@@fxnote@final%
+  \let\@@@fxnote@early\@@@fxnote@early@final%
+  \let\@@@fxnote@late\@@@fxnote@late@final%
   \let\@@@@fxbeginenv\@@@@fxbeginenv@final
   \let\@fxendenv\@fxendenv@final%
   \let\@fxtargetlayout\@fxtargetlayout@final%
   \let\listoffixmes\lox@final}
 \@fxdefinevoidkey{status}{draft}{%
-  \let\@@@fxnote\@@@fxnote@draft%
+  \let\@@@fxnote@early\@@@fxnote@early@draft%
+  \let\@@@fxnote@late\@@@fxnote@late@draft%
   \let\@@@@fxbeginenv\@@@@fxbeginenv@draft
   \let\@fxendenv\@fxendenv@draft%
   \let\@fxtargetlayout\@fxtargetlayout@draft%
@@ -3303,20 +3337,21 @@
 \@fxdefinechoicekey{status}{status}{final,draft}{\@fxsetkeys{status}{#1}}
 
 %    \end{macrocode}
-%               \end{option}
-%             \end{option}
-%           \end{option}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+%       \end{option}
+%     \end{option}
+%   \end{option}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsection{Theme support}
 % \begin{macro}{\FXProvidesTheme}
 %   \marg{name}\oarg{release information}
 %    \begin{macrocode}
-\newcommand*\FXProvidesTheme[1]{\ProvidesPackage{fxtheme#1}}
+ \newcommand*\FXProvidesTheme[1]{\ProvidesPackage{fxtheme#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\fxusetheme}
