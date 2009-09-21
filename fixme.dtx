@@ -2545,16 +2545,33 @@
   \fi}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxlayout}
+% \begin{macro}{\@fxissuedraftlayouts}
 %   \marg{type}\marg{note}\\
-%   Dispatch to all active layouts.
+%   Dispatch to all active draft mode layouts.
 %    \begin{macrocode}
-\newcommand*\@fxlayout[2]{%
+\newcommand*\@fxissuedraftlayouts[2]{%
   \@fxhandleinnermode%
   \@for\@fxlt:=\@fxlayouts\do{%
     \@nameuse{iffx@layout@\@fxlt}%
       \@nameuse{@fxlayout@\@fxlt}{#1}{#2}{\cmdfx@note@author}%
     \fi}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxissuecommonlayouts}
+%   \marg{type}\marg{note}\\
+%   Dispatch to all mode-independent layouts (actually, ``layout'' is to be
+%   taken in a slightly broader sense here). This macro executes all
+%   operations that need to be performed regardless of the document status.
+%   This includes updating the \texttt{lox} file and logging the note. Note
+%   that even in \texttt{final} more, the \texttt{lox} file is updated. This
+%   is to maintain a coherent state if the user goes from \texttt{final} to
+%   \texttt{draft} or the other way around. In \texttt{final} mode, the list
+%   of fixmes does not appears because \cs{listoffixmes} is \cs{let} to
+%   \cs{relax}.
+%    \begin{macrocode}
+\newcommand*\@fxissuecommonlayouts[2]{%
+  \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
+  \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}
 
 %    \end{macrocode}
 % \end{macro}
@@ -2573,12 +2590,10 @@
       Type X to quit, fix your document (or switch back to draft
       mode),\MessageBreak
       and rerun LaTeX.}}{%
-    \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
-    \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}}
+    \@fxissuecommonlayouts{#1}{#2}}}
 \newcommand*\@@@fxnote@draft[2]{%
-  \@fxlayout{#1}{#2}%
-  \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
-  \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}
+  \@fxissuedraftlayouts{#1}{#2}%
+  \@fxissuecommonlayouts{#1}{#2}}
 
 %    \end{macrocode}
 %  \end{macro}
@@ -2641,6 +2656,22 @@
 % \end{macro}
 %
 % \subsubsection{Starred version}
+% In starred version, some annotation layouts should appear \emph{before} the
+% target (for instance marginal layouts, so that they can be aligned with the
+% beginning of the target text) and some others after (like the footnote
+% layouts and the inline one, although that could be discussed).
+% \begin{macro}{\@@fxnote@early}
+%   \marg{type}\marg{note}\\
+%    \begin{macrocode}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@@fxnote@late}
+%   \marg{type}\marg{note}\\
+%    \begin{macrocode}
+
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@@fxsnote}
 %   \marg{type}\marg{note}\marg{text}\\
 %   Post-configuration is done here (it's the code path confluent for all
