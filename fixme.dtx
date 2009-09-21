@@ -1481,15 +1481,15 @@
 % \subsection{Utilities}
 % \subsubsection{Miscellaneous}
 % \begin{macro}{\@fxpkginfo}
-%   \begin{macro}{\@fxpkgwarning}
-%     \marg{msg}\\
-%     Issue a \fx package info or warning:
+% \begin{macro}{\@fxpkgwarning}
+%   \marg{msg}\\
+%   Issue a \fx package info or warning:
 %    \begin{macrocode}
 %<*fixme>
 \newcommand\@fxpkginfo{\PackageInfo{FiXme}}
 \newcommand\@fxpkgwarning{\PackageWarning{FiXme}}
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxpkgerror}
 %   \marg{shortmsg}\marg{longmsg}\\
@@ -1648,14 +1648,14 @@
 % \end{macro}
 %
 % \subsubsection{List headers}
-% Lists are output in a document class dependant fashion. Classes
-% currently recognized are \texttt{article}, \texttt{report},
-% \texttt{book} and their \komascript replacements.
+% Lists are output in a document class dependant fashion. Classes currently
+% recognized are \texttt{article}, \texttt{report}, \texttt{book} and their
+% \komascript replacements.
 %
 % \paragraph{\texttt{article} version}
 % \begin{macro}{\@lox@prtc@article}
-%   \begin{macro}{\@lox@psttc@article}
-%     \mbox{}
+% \begin{macro}{\@lox@psttc@article}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@article{%
   \section*{\@fxlistfixmename%
@@ -1663,12 +1663,12 @@
 \let\@lox@psttc@article\relax
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 % \end{macro}
 % \paragraph{\texttt{report} version}
 % \begin{macro}{\@lox@prtc@report}
-%   \begin{macro}{\@lox@psttc@report}
-%     \mbox{}
+% \begin{macro}{\@lox@psttc@report}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@report{%
   \if@twocolumn
@@ -1681,12 +1681,12 @@
 \newcommand\@lox@psttc@report{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 % \end{macro}
 % \paragraph{\texttt{book} version}
 % \begin{macro}{\@lox@prtc@book}
-%   \begin{macro}{\@lox@psttc@book}
-%     \mbox{}
+% \begin{macro}{\@lox@psttc@book}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@book{%
   \if@twocolumn
@@ -1699,7 +1699,7 @@
 \newcommand\@lox@psttc@book{\if@restonecol\twocolumn\fi}
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % The code below (version 3.3) mimics \komascript version 2006/07/30 v2.95b.
@@ -1712,11 +1712,11 @@
 \newcommand\lox@heading{\float@listhead{\@fxlistfixmename}}
 
 %    \end{macrocode}
-%  \end{macro}
-%  \paragraph{\texttt{scrartcl} version}
-%  \begin{macro}{\@lox@prtc@scrartcl}
-%    \begin{macro}{\@lox@psttc@scrartcl}
-%      \mbox{}
+% \end{macro}
+% \paragraph{\texttt{scrartcl} version}
+% \begin{macro}{\@lox@prtc@scrartcl}
+% \begin{macro}{\@lox@psttc@scrartcl}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@scrartcl{%
   \begingroup%
@@ -1725,12 +1725,12 @@
 \let\@lox@psttc@scrartcl\endgroup
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 % \end{macro}
 % \paragraph{\texttt{scrreprt} version}
 % \begin{macro}{\@lox@prtc@scrreprt}
-%   \begin{macro}{\@lox@psttc@scrreprt}
-%     \mbox{}
+% \begin{macro}{\@lox@psttc@scrreprt}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@scrreprt{%
   \begingroup%
@@ -1746,12 +1746,12 @@
   \endgroup}
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 % \end{macro}
 % \paragraph{\texttt{scrbook} version}
 % \begin{macro}{\@lox@prtc@scrbook}
-%   \begin{macro}{\@lox@psttc@scrbook}
-%     \mbox{}
+% \begin{macro}{\@lox@psttc@scrbook}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\@lox@prtc@scrbook{%
   \begingroup%
@@ -1767,20 +1767,20 @@
   \endgroup}
 
 %    \end{macrocode}
-%  \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Status/class-dependent implementation}
 % \begin{macro}{\lox@final}
-%   \begin{macro}{\lox@draft}
-%     In order to prevent the List of Fixme's heading from being generated
-%     when there are no \fx notes, a test on the existence of the
-%     \texttt{lox} file is performed. There's a slight bug left however:
-%     after removing the last fixme note, one ends up with an empty
-%     \texttt{lox} file, so the heading still appears. Previously, this
-%     was done by checking if some \fx notes were given, but that was
-%     buggy: the List of Fixme's could not appear before the first fixme
-%     note\ldots I should try to detect whether the file is empty.
+% \begin{macro}{\lox@draft}
+%   In order to prevent the List of Fixme's heading from being generated when
+%   there are no \fx notes, a test on the existence of the \texttt{lox} file
+%   is performed. There's a slight bug left however: after removing the last
+%   fixme note, one ends up with an empty \texttt{lox} file, so the heading
+%   still appears. Previously, this was done by checking if some \fx notes
+%   were given, but that was buggy: the List of Fixme's could not appear
+%   before the first fixme note\ldots I should try to detect whether the file
+%   is empty.
 %    \begin{macrocode}
 \let\lox@final\relax
 \newcommand\lox@draft{%
@@ -1790,7 +1790,7 @@
     \@lox@psttc}{%
     \@starttoc{lox}}}
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\lox@draft@ams}
 %   The \texttt{amsbook} and \texttt{amsart} classes have the very ugly idea
@@ -1828,11 +1828,10 @@
 %
 % \subsection{Annotation layouts}
 % \begin{option}{multiuser}
-%   \begin{option}{singleuser}
-%     \begin{option}{mode}
-%       These options specify whether \fx should function in standalone or
-%       collaborative mode, allowing the different layouts to tweak their
-%       output.
+% \begin{option}{singleuser}
+% \begin{option}{mode}
+%   These options specify whether \fx should function in standalone or
+%   collaborative mode, allowing the different layouts to tweak their output.
 %    \begin{macrocode}
 \@fxdefineboolkey[%
   \ifthenelse{\equal{#1}{true}}{%
@@ -1847,8 +1846,8 @@
 \@fxdefinechoicekey{mode}{mode}{multiuser,singleuser}{\@fxsetkeys{mode}{#1}}
 
 %    \end{macrocode}
-%     \end{option}
-%   \end{option}
+% \end{option}
+% \end{option}
 % \end{option}
 %
 % \subsubsection{Layout creation}
@@ -1914,43 +1913,43 @@
 % Remember that the order is important!
 % \paragraph{Footnote}
 % \begin{layout}[noprint]{footnote}
-%   \begin{macro}{\FXLayoutFootnote}
-%     \marg{type}\marg{note}\marg{author}
+% \begin{macro}{\FXLayoutFootnote}
+%   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutFootnote[3]{%
   \footnote{\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxlayout@footnote}
-%     \begin{booleanoption}{footnote}
-%       \mbox{}
+% \end{macro}
+% \begin{macro}{\@fxlayout@footnote}
+%   \begin{booleanoption}{footnote}
+%     \mbox{}
 %    \begin{macrocode}
 \FXRegisterLateLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
-%     \end{booleanoption}
-%   \end{macro}
+% \end{booleanoption}
+% \end{macro}
 % \end{layout}
 %
 % \paragraph{Margin}
 % \begin{layout}[noprint]{margin}
-%   \begin{face}{margin}
-%     \mbox{}
+% \begin{face}{margin}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxnewface{margin}
 %    \end{macrocode}
-%   \end{face}
-%   \begin{macro}{\FXLayoutMargin}
-%     \marg{type}\marg{note}\marg{author}
+% \end{face}
+% \begin{macro}{\FXLayoutMargin}
+%   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
   \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
     \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxlayout@margin}
-%     \begin{booleanoption}{margin}
-%       \mbox{}
+% \end{macro}
+% \begin{macro}{\@fxlayout@margin}
+%   \begin{booleanoption}{margin}
+%     \mbox{}
 %    \begin{macrocode}
 \FXRegisterEarlyLayout[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
@@ -1960,24 +1959,24 @@
     \fx@layout@marginclue{false}}]{%
     margin}{\FXLayoutMargin}
 %    \end{macrocode}
-%     \end{booleanoption}
-%   \end{macro}
+% \end{booleanoption}
+% \end{macro}
 % \end{layout}
 %
 % \paragraph{Margin clue}
 % \begin{layout}[noprint]{marginclue}
-%   \begin{macro}{\FXLayoutMarginCLue}
-%     \marg{type}\marg{note}\marg{author}
+% \begin{macro}{\FXLayoutMarginCLue}
+%   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[%
   \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!]{%
     \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!}}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxlayout@marginclue}
-%     \begin{booleanoption}{marginclue}
-%       \mbox{}
+% \end{macro}
+% \begin{macro}{\@fxlayout@marginclue}
+%   \begin{booleanoption}{marginclue}
+%     \mbox{}
 %    \begin{macrocode}
 \FXRegisterEarlyLayout[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
@@ -1987,48 +1986,48 @@
     \fx@layout@margin{false}}]{%
     marginclue}{\FXLayoutMarginClue}
 %    \end{macrocode}
-%     \end{booleanoption}
-%   \end{macro}
+% \end{booleanoption}
+% \end{macro}
 % \end{layout}
 %
 % \paragraph{Inline}
 % \begin{layout}[noprint]{inline}
-%   \begin{face}{inline}
-%     \mbox{}
+% \begin{face}{inline}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxnewface{inline}
 %    \end{macrocode}
-%   \end{face}
-%   \begin{macro}{\FXLayoutInline}
-%     \marg{type}\marg{note}\marg{author}
+% \end{face}
+% \begin{macro}{\FXLayoutInline}
+%   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
   {\@fxuseface{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxlayout@inline}
-%     \begin{booleanoption}{inline}
-%       \mbox{}
+% \end{macro}
+% \begin{macro}{\@fxlayout@inline}
+%   \begin{booleanoption}{inline}
+%     \mbox{}
 %    \begin{macrocode}
 \FXRegisterLateLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
-%     \end{booleanoption}
-%   \end{macro}
+% \end{booleanoption}
+% \end{macro}
 % \end{layout}
 %
 % \paragraph{Index}
 % \begin{layout}[noprint]{index}
-%   \begin{macro}{\fixmeindexname}
-%     \mbox{}
+% \begin{macro}{\fixmeindexname}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fixmeindexname{\fixmelogo}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@wrindex}
-%     \marg{contents}\\
-%     A replacement for \LaTeX's standard \cs{@wrindex} macro to deal with the
-%     \texttt{target} option. When given, it is supposed to replace the page
-%     number, just as in the list of fixmes.
+% \end{macro}
+% \begin{macro}{\@wrindex}
+%   \marg{contents}\\
+%   A replacement for \LaTeX's standard \cs{@wrindex} macro to deal with the
+%   \texttt{target} option. When given, it is supposed to replace the page
+%   number, just as in the list of fixmes.
 %    \begin{macrocode}
 \def\@wrindex#1{%
   \ifthenelse{\equal{\cmdfx@note@target}{thepage}}{%
@@ -2037,24 +2036,24 @@
   \endgroup
   \@esphack}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxnotekey}
-%     \begin{macro}{\@fxwarningkey}
-%       \begin{macro}{\@fxerrorkey}
-%         \begin{macro}{\@fxfatalkey}
-%           The keys used to sort indexed \fx notes by importance level:
+% \end{macro}
+% \begin{macro}{\@fxnotekey}
+% \begin{macro}{\@fxwarningkey}
+% \begin{macro}{\@fxerrorkey}
+% \begin{macro}{\@fxfatalkey}
+%   The keys used to sort indexed \fx notes by importance level:
 %    \begin{macrocode}
 \newcommand\@fxnotekey{***a}
 \newcommand\@fxwarningkey{***b}
 \newcommand\@fxerrorkey{***c}
 \newcommand\@fxfatalkey{***d}
 %    \end{macrocode}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\FXLayoutIndex}
-%     \marg{type}\marg{note}\marg{author}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\FXLayoutIndex}
+%   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
@@ -2070,15 +2069,15 @@
       !\@nameuse{thefx#1count}: #2}%
   \fi}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxlayout@index}
-%     \begin{booleanoption}{index}
-%       \mbox{}
+% \end{macro}
+% \begin{macro}{\@fxlayout@index}
+%   \begin{booleanoption}{index}
+%     \mbox{}
 %    \begin{macrocode}
 \FXRegisterLateLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
-%     \end{booleanoption}
-%   \end{macro}
+% \end{booleanoption}
+% \end{macro}
 % \end{layout}
 %
 % \paragraph{Contents line\label{sec:code:contentslinelayout}}
@@ -2148,7 +2147,7 @@
 %     \texttt{no}\meta{layout} form. For example,
 %     |morelayout={inline,nomargin}| will work.
 %   \item A wrong layout name (for instance, misspelled) will trigger an
-%   \texttt{xkeyval} error.
+%     \texttt{xkeyval} error.
 %   \end{enumerate}
 %    \begin{macrocode}
 \@fxdefinekey{layout}{morelayout}{\fxuselayouts{#1}}
@@ -2202,83 +2201,83 @@
 % \subsubsection{Built-in layouts}
 % \paragraph{Plain}
 % \begin{envlayout}[noprint]{plain}
-%   \begin{face}{env}
-%     \mbox{}
+% \begin{face}{env}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxnewface{env}
 %    \end{macrocode}
-%   \end{face}
-%   \begin{macro}{\FXEnvLayoutPlainBegin}
-%     \begin{macro}{\FXEnvLayoutPlainEnd}
-%       \marg{type}\marg{author}
+% \end{face}
+% \begin{macro}{\FXEnvLayoutPlainBegin}
+% \begin{macro}{\FXEnvLayoutPlainEnd}
+%   \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutPlainBegin[2]{%
   \@fxuseface{env}\ignorespaces#2 \fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutPlainEnd[2]{}
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\@fxenvlayout@plain@begin}
-%     \begin{macro}{\@fxenvlayout@plain@end}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxenvlayout@plain@begin}
+% \begin{macro}{\@fxenvlayout@plain@end}
 %    \begin{macrocode}
 \FXRegisterEnvLayout{plain}{\FXEnvLayoutPlainBegin}{\FXEnvLayoutPlainEnd}
 
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{envlayout}
 %
 % \paragraph{Signature}
 % \begin{envlayout}{signature}
-%   \begin{face}{signature}
-%     \mbox{}
+% \begin{face}{signature}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxnewface[\itshape]{signature}
 %    \end{macrocode}
-%   \end{face}
-%   \begin{macro}{\@fxdosig}
-%     \marg{author}
-%     \begin{macro}{\@fxsignature}
-%       Use a signature of the form ``-- sig'', unless author is empty.
+% \end{face}
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsignature}
+%   Use a signature of the form ``-- sig'', unless author is empty.
 %    \begin{macrocode}
 \newcommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
     \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\FXEnvLayoutSignatureBegin}
-%     \begin{macro}{\FXEnvLayoutSignatureEnd}
-%       \marg{type}\marg{author}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\FXEnvLayoutSignatureBegin}
+% \begin{macro}{\FXEnvLayoutSignatureEnd}
+%   \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutSignatureBegin[2]{%
   \@fxuseface{env}\fxnotename{#1}: \ignorespaces}
 \newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\@fxenvlayout@signature@begin}
-%     \begin{macro}{\@fxenvlayout@signature@end}
-%       \mbox{}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxenvlayout@signature@begin}
+% \begin{macro}{\@fxenvlayout@signature@end}
+%   \mbox{}
 %    \begin{macrocode}
 \FXRegisterEnvLayout{signature}{%
   \FXEnvLayoutSignatureBegin}{\FXEnvLayoutSignatureEnd}
 
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{envlayout}
 %
 % \subsubsection{Layout selection}
 % \begin{macro}{\@fxselectenvlayout}
 %   \marg{name}
-%   \begin{macro}{\@fxenvlayout@begin}
-%     \begin{macro}{\@fxenvlayout@end}
-%       \marg{type}\marg{author}\\
-%       This is much simpler than standard layout management because only one
-%       environment layout at a time is possible. Using a specific environment
-%       layout boils down to possibly loading it, and binding the beginning
-%       and ending macros to the proper translation ones.
+% \begin{macro}{\@fxenvlayout@begin}
+% \begin{macro}{\@fxenvlayout@end}
+%   \marg{type}\marg{author}\\
+%   This is much simpler than standard layout management because only one
+%   environment layout at a time is possible. Using a specific environment
+%   layout boils down to possibly loading it, and binding the beginning and
+%   ending macros to the proper translation ones.
 %    \begin{macrocode}
 \newcommand*\@fxselectenvlayout[1]{%
   \expandafter\let\expandafter\@fxenvlayout@begin%
@@ -2287,8 +2286,8 @@
     \csname @fxenvlayout@#1@end\endcsname}
 
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Layout loading}
@@ -2304,16 +2303,16 @@
 %
 % \subsubsection{Layout control}
 % \begin{macro}{\fxuseenvlayout}
-%   \begin{macro}{\FXRequireEnvLayout}
-%     \marg{name}\\
-%     \cs{FXRequireEnvLayout} is a better style for theme programming.
+% \begin{macro}{\FXRequireEnvLayout}
+%   \marg{name}\\
+%   \cs{FXRequireEnvLayout} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxuseenvlayout[1]{%
   \@ifundefined{@fxenvlayout@#1@begin}{\fxloadenvlayouts{#1}}{}%
   \@fxselectenvlayout{#1}}
 \let\FXRequireEnvLayout\fxuseenvlayout
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{option}{envlayout}
 %   \mbox{}
@@ -2354,42 +2353,42 @@
 % \subsubsection{Built-in layouts}
 % \paragraph{Plain}
 % \begin{targetlayout}[noprint]{plain}
-%   \begin{face}{target}
-%     \mbox{}
+% \begin{face}{target}
+%   \mbox{}
 %    \begin{macrocode}
 \@fxnewface{target}
 %    \end{macrocode}
-%   \end{face}
-%   \begin{macro}{\FXTargetLayoutPlain}
-%     \marg{target}
+% \end{face}
+% \begin{macro}{\FXTargetLayoutPlain}
+%   \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutPlain[2]{\@fxuseface{target}#2}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxtargetlayout@plain}
+% \end{macro}
+% \begin{macro}{\@fxtargetlayout@plain}
 %    \begin{macrocode}
 \FXRegisterTargetLayout{plain}{\FXTargetLayoutPlain}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{targetlayout}
 %
 % \subsubsection{Layout selection}
 % \begin{macro}{\@fxselecttargetlayout}
 %   \marg{name}
-%   \begin{macro}{\@@fxtargetlayout}
-%     \marg{target}\\
-%     This is much simpler than standard layout management because only one
-%     target layout at a time is possible. Using a specific target layout
-%     boils down to possibly loading it, and binding the layout macro to the
-%     proper translation one.
+% \begin{macro}{\@@fxtargetlayout}
+%   \marg{target}\\
+%   This is much simpler than standard layout management because only one
+%   target layout at a time is possible. Using a specific target layout boils
+%   down to possibly loading it, and binding the layout macro to the proper
+%   translation one.
 %    \begin{macrocode}
 \newcommand*\@fxselecttargetlayout[1]{%
   \expandafter\let\expandafter\@@fxtargetlayout%
     \csname @fxtargetlayout@#1\endcsname}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Target layout loading}
@@ -2405,16 +2404,16 @@
 %
 % \subsubsection{Target layout control}
 % \begin{macro}{\fxusetargetlayout}
-%   \begin{macro}{\FXRequireTargetLayout}
-%     \marg{name}\\
-%     \cs{FXRequireTargetLayout} is a better style for theme programming.
+% \begin{macro}{\FXRequireTargetLayout}
+%   \marg{name}\\
+%   \cs{FXRequireTargetLayout} is a better style for theme programming.
 %    \begin{macrocode}
 \newcommand*\fxusetargetlayout[1]{%
   \@ifundefined{@fxtargetlayout@#1}{\fxloadtargetlayouts{#1}}{}%
   \@fxselecttargetlayout{#1}}
 \let\FXRequireTargetLayout\fxusetargetlayout
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{option}{targetlayout}
 %   \mbox{}
@@ -2426,26 +2425,26 @@
 %
 % \subsubsection{Status-dependant versions}
 % \begin{macro}{\@fxtargetlayout@final}
-%   \begin{macro}{\@fxtargetlayout@draft}
-%     \marg{target}\\
-%     In \texttt{final} mode, the target is typeset as-is. In \texttt{draft}
-%     mode, we use the selected layout.
+% \begin{macro}{\@fxtargetlayout@draft}
+%   \marg{target}\\
+%   In \texttt{final} mode, the target is typeset as-is. In \texttt{draft}
+%   mode, we use the selected layout.
 %    \begin{macrocode}
 \newcommand\@fxtargetlayout@final[2]{#2}
 \newcommand\@fxtargetlayout@draft[2]{%
   \begingroup\@@fxtargetlayout{#1}{#2}\endgroup}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsection{Logging}
 % \subsubsection{Logging macros}
 % \begin{macro}{\FXLogNote}
-%   \begin{macro}{\FXLogWarning}
-%     \begin{macro}{\FXLogerror}
-%       \begin{macro}{\FXLogFatal}
-%         \marg{msg}
+% \begin{macro}{\FXLogWarning}
+% \begin{macro}{\FXLogerror}
+% \begin{macro}{\FXLogFatal}
+%   \marg{msg}
 %    \begin{macrocode}
 \newcommand*\FXLogNote[1]{%
   \GenericInfo{%
@@ -2465,20 +2464,19 @@
     FiXme Fatal Error: '#1'}}
 
 %    \end{macrocode}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxlog@note}
-%   \begin{macro}{\@fxlog@warning}
-%     \begin{macro}{\@fxlog@error}
-%       \begin{macro}{\@fxlog@fatal}
-%         In order for the generic note dispatcher to be able to call the
-%         logging macros (see section \sectionref{sec:code:lowlevelcmd}), we
-%         need an easier translation mechanism from the note type to the
-%         actual macro name. The translation macros in question can't be
-%         \cs{let} to the real one, because users might want to redefine
-%         the actual log macros later.
+% \begin{macro}{\@fxlog@warning}
+% \begin{macro}{\@fxlog@error}
+% \begin{macro}{\@fxlog@fatal}
+%   In order for the generic note dispatcher to be able to call the logging
+%   macros (see section \sectionref{sec:code:lowlevelcmd}), we need an easier
+%   translation mechanism from the note type to the actual macro name. The
+%   translation macros in question can't be \cs{let} to the real one, because
+%   users might want to redefine the actual log macros later.
 %    \begin{macrocode}
 \def\@fxlog@note{\FXLogNote}
 \def\@fxlog@warning{\FXLogWarning}
@@ -2486,9 +2484,9 @@
 \def\@fxlog@fatal{\FXLogFatal}
 
 %    \end{macrocode}
-%      \end{macro}
-%    \end{macro}
-%  \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Logging control}
@@ -2503,12 +2501,12 @@
 % \subsection{\fx notes}
 % \subsubsection{Note parameters}
 % \begin{counter}{fixmecount}
-%   \begin{counter}{fxnotecount}
-%     \begin{counter}{fxwarningcount}
-%       \begin{counter}{fxerrorcount}
-%         \begin{counter}{fxfatalcount}
-%           \texttt{fixmecount} maintains the total of all notes, regardless
-%           of their level. Each note type also gets its own counter:
+% \begin{counter}{fxnotecount}
+% \begin{counter}{fxwarningcount}
+% \begin{counter}{fxerrorcount}
+% \begin{counter}{fxfatalcount}
+%   \texttt{fixmecount} maintains the total of all notes, regardless
+%   of their level. Each note type also gets its own counter:
 %    \begin{macrocode}
 \newcounter{fixmecount}
 \newcounter{fxnotecount}
@@ -2517,14 +2515,14 @@
 \newcounter{fxfatalcount}
 
 %    \end{macrocode}
-%           \end{counter}
-%         \end{counter}
-%       \end{counter}
-%     \end{counter}
-%   \end{counter}
+% \end{counter}
+% \end{counter}
+% \end{counter}
+% \end{counter}
+% \end{counter}
 % \begin{option}{author}
-%   A \fx note's ``author'' allows to distinguish notes from different
-%   persons in collaborative mode.
+%   A \fx note's ``author'' allows to distinguish notes from different persons
+%   in collaborative mode.
 %    \begin{macrocode}
 \@fxdefinecmdkey{note}{author}{}
 %    \end{macrocode}
@@ -2701,22 +2699,6 @@
 % \end{macro}
 %
 % \subsubsection{Starred version}
-% In starred version, some annotation layouts should appear \emph{before} the
-% target (for instance marginal layouts, so that they can be aligned with the
-% beginning of the target text) and some others after (like the footnote
-% layouts and the inline one, although that could be discussed).
-% \begin{macro}{\@@fxnote@early}
-%   \marg{type}\marg{note}\\
-%    \begin{macrocode}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@@fxnote@late}
-%   \marg{type}\marg{note}\\
-%    \begin{macrocode}
-
-%    \end{macrocode}
-% \end{macro}
 % \begin{macro}{\@@fxsnote}
 %   \marg{type}\marg{note}\marg{text}\\
 %   Post-configuration is done here (it's the code path confluent for all
@@ -2775,12 +2757,12 @@
 % \texttt{noinline} to the end of the options list.
 % \subsubsection{Status-dependent implementation}
 % \begin{macro}{\@@@@fxbeginenv@final}
-%   \begin{macro}{\@@@@fxbeginenv@draft}
-%     \begin{macro}{\@fxendenv@final}
-%       \begin{macro}{\@fxendenv@draft}
-%         \marg{type}\\
-%         In final mode, \texttt{verbatim}'s \texttt{comment} environment is
-%         used to suppress output.
+% \begin{macro}{\@@@@fxbeginenv@draft}
+% \begin{macro}{\@fxendenv@final}
+% \begin{macro}{\@fxendenv@draft}
+%   \marg{type}\\
+%   In final mode, \texttt{verbatim}'s \texttt{comment} environment is used to
+%   suppress output.
 %    \begin{macrocode}
 \def\@@@@fxbeginenv@final#1{\comment}
 \def\@@@@fxbeginenv@draft#1{\@fxenvlayout@begin{#1}{\cmdfx@note@author}}
@@ -2788,16 +2770,16 @@
 \def\@fxendenv@draft#1{\@fxenvlayout@end{#1}{\cmdfx@note@author}}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Standard versions}
 % \begin{macro}{\@@@fxbeginenv}
-%   \begin{macro}{\@@fxbeginenv}
-%     \marg{type}\marg{summary}\\
-%     Post-configuration is done here (it's the code path confluent for all
-%     non-starred environments). Relaxing post-configuration afterwards is to
-%     prevent \cs{@@fxnote} from doing it again.
+% \begin{macro}{\@@fxbeginenv}
+%   \marg{type}\marg{summary}\\
+%   Post-configuration is done here (it's the code path confluent for all
+%   non-starred environments). Relaxing post-configuration afterwards is to
+%   prevent \cs{@@fxnote} from doing it again.
 %    \begin{macrocode}
 \def\@@@fxbeginenv#1#2{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
@@ -2807,7 +2789,7 @@
   \@fxsetkeys{layout}{noinline}%
   \@@@fxbeginenv{#1}{#2}}
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxbeginenv}
 %   \marg{type}\oarg{options}\marg{summary}
@@ -2817,16 +2799,16 @@
   \@@@fxbeginenv{#1}{#3}}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Starred versions}
 % \begin{macro}{\@@@fxbeginsenv}
-%   \begin{macro}{\@@fxbeginsenv}
-%     \marg{type}\marg{summary}\marg{text}\\
-%     Post-configuration is done here (it's the code path confluent for all
-%     starred environments). Relaxing post-configuration afterwards is to
-%     prevent \cs{@@fxsnote} from doing it again.
+% \begin{macro}{\@@fxbeginsenv}
+%   \marg{type}\marg{summary}\marg{text}\\
+%   Post-configuration is done here (it's the code path confluent for all
+%   starred environments). Relaxing post-configuration afterwards is to
+%   prevent \cs{@@fxsnote} from doing it again.
 %    \begin{macrocode}
 \long\def\@@@fxbeginsenv#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
@@ -2836,7 +2818,7 @@
   \@fxsetkeys{layout}{noinline}%
   \@@@fxbeginsenv{#1}{#2}{#3}}
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxbeginenv}
 %   \marg{type}\oarg{options}\marg{summary}\marg{text}\\
@@ -2848,7 +2830,7 @@
   \@@@fxbeginsenv{#1}{#3}{#4}}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{User-level interface generation}
@@ -2910,44 +2892,44 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}[noindex]{\fx...[*]}
-%   \begin{environment}[noindex]{anfx...[*]}
-%     \begin{macro}[noprint]{\fxnote}
-%       \begin{macro}[noprint]{\fxwarning}
-%         \begin{macro}[noprint]{\fxerror}
-%           \begin{macro}[noprint]{\fxfatal}
-%             \begin{macro}[noprint]{\fxnote*}
-%               \begin{macro}[noprint]{\fxwarning*}
-%                 \begin{macro}[noprint]{\fxerror*}
-%                   \begin{macro}[noprint]{\fxfatal*}
-%                     \begin{environment}[noprint]{anfxnote}
-%                       \begin{environment}[noprint]{anfxwarning}
-%                         \begin{environment}[noprint]{anfxerror}
-%                           \begin{environment}[noprint]{anfxfatal}
-%                             \begin{environment}[noprint]{anfxnote*}
-%                               \begin{environment}[noprint]{anfxwarning*}
-%                                 \begin{environment}[noprint]{anfxerror*}
-%                                   \begin{environment}[noprint]{anfxfatal*}
-%     And we use it to create the \fx default user:
+% \begin{environment}[noindex]{anfx...[*]}
+% \begin{macro}[noprint]{\fxnote}
+% \begin{macro}[noprint]{\fxwarning}
+% \begin{macro}[noprint]{\fxerror}
+% \begin{macro}[noprint]{\fxfatal}
+% \begin{macro}[noprint]{\fxnote*}
+% \begin{macro}[noprint]{\fxwarning*}
+% \begin{macro}[noprint]{\fxerror*}
+% \begin{macro}[noprint]{\fxfatal*}
+% \begin{environment}[noprint]{anfxnote}
+% \begin{environment}[noprint]{anfxwarning}
+% \begin{environment}[noprint]{anfxerror}
+% \begin{environment}[noprint]{anfxfatal}
+% \begin{environment}[noprint]{anfxnote*}
+% \begin{environment}[noprint]{anfxwarning*}
+% \begin{environment}[noprint]{anfxerror*}
+% \begin{environment}[noprint]{anfxfatal*}
+%   And we use it to create the \fx default user:
 %    \begin{macrocode}
 \FXRegisterAuthor{fx}{anfx}{fixme}
 %    \end{macrocode}
-%                                   \end{environment}
-%                                 \end{environment}
-%                               \end{environment}
-%                             \end{environment}
-%                           \end{environment}
-%                         \end{environment}
-%                       \end{environment}
-%                     \end{environment}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{environment}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{environment}
 % \end{macro}
 % \begin{macro}{\fixme}
 %   \oarg{options}\marg{note}\\
@@ -2983,17 +2965,17 @@
 % \subsubsection{Language definitions}
 % \paragraph{English}
 % \begin{lang}{english}
-%   \begin{macro}[noindex]{\fxenglish...[s]name}
-%     \begin{macro}[noprint]{\fxenglishnotename}
-%       \begin{macro}[noprint]{\fxenglishnotesname}
-%         \begin{macro}[noprint]{\fxenglishwarningname}
-%           \begin{macro}[noprint]{\fxenglishwarningsname}
-%             \begin{macro}[noprint]{\fxenglisherrorname}
-%               \begin{macro}[noprint]{\fxenglisherrorsname}
-%                 \begin{macro}[noprint]{\fxenglishfatalname}
-%                   \begin{macro}[noprint]{\fxenglishfatalsname}
-%                     \begin{macro}{\englishlistfixmename}
-%                       \mbox{}
+% \begin{macro}[noindex]{\fxenglish...[s]name}
+% \begin{macro}[noprint]{\fxenglishnotename}
+% \begin{macro}[noprint]{\fxenglishnotesname}
+% \begin{macro}[noprint]{\fxenglishwarningname}
+% \begin{macro}[noprint]{\fxenglishwarningsname}
+% \begin{macro}[noprint]{\fxenglisherrorname}
+% \begin{macro}[noprint]{\fxenglisherrorsname}
+% \begin{macro}[noprint]{\fxenglishfatalname}
+% \begin{macro}[noprint]{\fxenglishfatalsname}
+% \begin{macro}{\englishlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxenglishnotename{Note}
 \newcommand\fxenglishnotesname{Notes}
@@ -3006,32 +2988,32 @@
 \newcommand\englishlistfixmename{List of Corrections}
 
 %    \end{macrocode}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{lang}
 %
 % \paragraph{French}
 % \begin{lang}{french}
-%   \begin{lang}{francais}
-%     \begin{macro}[noindex]{\fxfrench...[s]name}
-%       \begin{macro}[noprint]{\fxfrenchnotename}
-%         \begin{macro}[noprint]{\fxfrenchnotesname}
-%           \begin{macro}[noprint]{\fxfrenchwarningname}
-%             \begin{macro}[noprint]{\fxfrenchwarningsname}
-%               \begin{macro}[noprint]{\fxfrencherrorname}
-%                 \begin{macro}[noprint]{\fxfrencherrorsname}
-%                   \begin{macro}[noprint]{\fxfrenchfatalname}
-%                     \begin{macro}[noprint]{\fxfrenchfatalsname}
-%                       \begin{macro}{\frenchlistfixmename}
-%                         \mbox{}
+% \begin{lang}{francais}
+% \begin{macro}[noindex]{\fxfrench...[s]name}
+% \begin{macro}[noprint]{\fxfrenchnotename}
+% \begin{macro}[noprint]{\fxfrenchnotesname}
+% \begin{macro}[noprint]{\fxfrenchwarningname}
+% \begin{macro}[noprint]{\fxfrenchwarningsname}
+% \begin{macro}[noprint]{\fxfrencherrorname}
+% \begin{macro}[noprint]{\fxfrencherrorsname}
+% \begin{macro}[noprint]{\fxfrenchfatalname}
+% \begin{macro}[noprint]{\fxfrenchfatalsname}
+% \begin{macro}{\frenchlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxfrenchnotename{Note}
 \newcommand\fxfrenchnotesname{Notes}
@@ -3044,32 +3026,32 @@
 \newcommand\frenchlistfixmename{Liste des Corrections}
 
 %    \end{macrocode}
-%                       \end{macro}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{lang}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{lang}
 % \end{lang}
 %
 % \paragraph{Spanish}
 % \begin{lang}{spanish}
-%   \begin{macro}[noindex]{\fxspanish...[s]name}
-%     \begin{macro}[noprint]{\fxspanishnotename}
-%       \begin{macro}[noprint]{\fxspanishnotesname}
-%         \begin{macro}[noprint]{\fxspanishwarningname}
-%           \begin{macro}[noprint]{\fxspanishwarningsname}
-%             \begin{macro}[noprint]{\fxspanisherrorname}
-%               \begin{macro}[noprint]{\fxspanisherrorsname}
-%                 \begin{macro}[noprint]{\fxspanishfatalname}
-%                   \begin{macro}[noprint]{\fxspanishfatalsname}
-%                     \begin{macro}{\spanishlistfixmename}
-%                       \mbox{}
+% \begin{macro}[noindex]{\fxspanish...[s]name}
+% \begin{macro}[noprint]{\fxspanishnotename}
+% \begin{macro}[noprint]{\fxspanishnotesname}
+% \begin{macro}[noprint]{\fxspanishwarningname}
+% \begin{macro}[noprint]{\fxspanishwarningsname}
+% \begin{macro}[noprint]{\fxspanisherrorname}
+% \begin{macro}[noprint]{\fxspanisherrorsname}
+% \begin{macro}[noprint]{\fxspanishfatalname}
+% \begin{macro}[noprint]{\fxspanishfatalsname}
+% \begin{macro}{\spanishlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxspanishnotename{Nota}
 \newcommand\fxspanishnotesname{Notas}
@@ -3082,31 +3064,31 @@
 \newcommand\spanishlistfixmename{Lista de Correcciones}
 
 %    \end{macrocode}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{lang}
 %
 % \paragraph{Italian}
 % \begin{lang}{italian}
-%   \begin{macro}[noindex]{\fxitalian...[s]name}
-%     \begin{macro}[noprint]{\fxitaliannotename}
-%       \begin{macro}[noprint]{\fxitaliannotesname}
-%         \begin{macro}[noprint]{\fxitalianwarningname}
-%           \begin{macro}[noprint]{\fxitalianwarningsname}
-%             \begin{macro}[noprint]{\fxitalianerrorname}
-%               \begin{macro}[noprint]{\fxitalianerrorsname}
-%                 \begin{macro}[noprint]{\fxitalianfatalname}
-%                   \begin{macro}[noprint]{\fxitalianfatalsname}
-%                     \begin{macro}{\italianlistfixmename}
-%                       \mbox{}
+% \begin{macro}[noindex]{\fxitalian...[s]name}
+% \begin{macro}[noprint]{\fxitaliannotename}
+% \begin{macro}[noprint]{\fxitaliannotesname}
+% \begin{macro}[noprint]{\fxitalianwarningname}
+% \begin{macro}[noprint]{\fxitalianwarningsname}
+% \begin{macro}[noprint]{\fxitalianerrorname}
+% \begin{macro}[noprint]{\fxitalianerrorsname}
+% \begin{macro}[noprint]{\fxitalianfatalname}
+% \begin{macro}[noprint]{\fxitalianfatalsname}
+% \begin{macro}{\italianlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxitaliannotename{Nota}
 \newcommand\fxitaliannotesname{Note}
@@ -3119,32 +3101,32 @@
 \newcommand\italianlistfixmename{Corrigenda}
 
 %    \end{macrocode}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{lang}
 %
 % \paragraph{German}
 % \begin{lang}{german}
-%   \begin{lang}{ngerman}
-%     \begin{macro}[noindex]{\fxgerman...[s]name}
-%       \begin{macro}[noprint]{\fxgermannotename}
-%         \begin{macro}[noprint]{\fxgermannotesname}
-%           \begin{macro}[noprint]{\fxgermanwarningname}
-%             \begin{macro}[noprint]{\fxgermanwarningsname}
-%               \begin{macro}[noprint]{\fxgermanerrorname}
-%                 \begin{macro}[noprint]{\fxgermanerrorsname}
-%                   \begin{macro}[noprint]{\fxgermanfatalname}
-%                     \begin{macro}[noprint]{\fxgermanfatalsname}
-%                       \begin{macro}{\germanlistfixmename}
-%                         \mbox{}
+% \begin{lang}{ngerman}
+% \begin{macro}[noindex]{\fxgerman...[s]name}
+% \begin{macro}[noprint]{\fxgermannotename}
+% \begin{macro}[noprint]{\fxgermannotesname}
+% \begin{macro}[noprint]{\fxgermanwarningname}
+% \begin{macro}[noprint]{\fxgermanwarningsname}
+% \begin{macro}[noprint]{\fxgermanerrorname}
+% \begin{macro}[noprint]{\fxgermanerrorsname}
+% \begin{macro}[noprint]{\fxgermanfatalname}
+% \begin{macro}[noprint]{\fxgermanfatalsname}
+% \begin{macro}{\germanlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxgermannotename{Anm}
 \newcommand\fxgermannotesname{Anmerkungen}
@@ -3157,32 +3139,32 @@
 \newcommand\germanlistfixmename{Verzeichnis der Korrekturen}
 
 %    \end{macrocode}
-%                       \end{macro}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{lang}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{lang}
 % \end{lang}
 %
 % \paragraph{Danish}
 % \begin{lang}{danish}
-%   \begin{macro}[noindex]{\fxdanish...[s]name}
-%     \begin{macro}[noprint]{\fxdanishnotename}
-%       \begin{macro}[noprint]{\fxdanishnotesname}
-%         \begin{macro}[noprint]{\fxdanishwarningname}
-%           \begin{macro}[noprint]{\fxdanishwarningsname}
-%             \begin{macro}[noprint]{\fxdanisherrorname}
-%               \begin{macro}[noprint]{\fxdanisherrorsname}
-%                 \begin{macro}[noprint]{\fxdanishfatalname}
-%                   \begin{macro}[noprint]{\fxdanishfatalsname}
-%                     \begin{macro}{\danishlistfixmename}
-%                       \mbox{}
+% \begin{macro}[noindex]{\fxdanish...[s]name}
+% \begin{macro}[noprint]{\fxdanishnotename}
+% \begin{macro}[noprint]{\fxdanishnotesname}
+% \begin{macro}[noprint]{\fxdanishwarningname}
+% \begin{macro}[noprint]{\fxdanishwarningsname}
+% \begin{macro}[noprint]{\fxdanisherrorname}
+% \begin{macro}[noprint]{\fxdanisherrorsname}
+% \begin{macro}[noprint]{\fxdanishfatalname}
+% \begin{macro}[noprint]{\fxdanishfatalsname}
+% \begin{macro}{\danishlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxdanishnotename{Note}
 \newcommand\fxdanishnotesname{Noter}
@@ -3195,31 +3177,31 @@
 \newcommand\danishlistfixmename{Rettelser}
 
 %    \end{macrocode}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{lang}
 %
 % \paragraph{Croatian}
 % \begin{lang}{croatian}
-%   \begin{macro}[noindex]{\fxcroatian...[s]name}
-%     \begin{macro}[noprint]{\fxcroatiannotename}
-%       \begin{macro}[noprint]{\fxcroatiannotesname}
-%         \begin{macro}[noprint]{\fxcroatianwarningname}
-%           \begin{macro}[noprint]{\fxcroatianwarningsname}
-%             \begin{macro}[noprint]{\fxcroatianerrorname}
-%               \begin{macro}[noprint]{\fxcroatianerrorsname}
-%                 \begin{macro}[noprint]{\fxcroatianfatalname}
-%                   \begin{macro}[noprint]{\fxcroatianfatalsname}
-%                     \begin{macro}{\croatianlistfixmename}
-%                       \mbox{}
+% \begin{macro}[noindex]{\fxcroatian...[s]name}
+% \begin{macro}[noprint]{\fxcroatiannotename}
+% \begin{macro}[noprint]{\fxcroatiannotesname}
+% \begin{macro}[noprint]{\fxcroatianwarningname}
+% \begin{macro}[noprint]{\fxcroatianwarningsname}
+% \begin{macro}[noprint]{\fxcroatianerrorname}
+% \begin{macro}[noprint]{\fxcroatianerrorsname}
+% \begin{macro}[noprint]{\fxcroatianfatalname}
+% \begin{macro}[noprint]{\fxcroatianfatalsname}
+% \begin{macro}{\croatianlistfixmename}
+%   \mbox{}
 %    \begin{macrocode}
 \newcommand\fxcroatiannotename{Poruka}
 \newcommand\fxcroatiannotesname{Poruke}
@@ -3232,16 +3214,16 @@
 \newcommand\croatianlistfixmename{Popis korekcija}
 
 %    \end{macrocode}
-%                     \end{macro}
-%                   \end{macro}
-%                 \end{macro}
-%               \end{macro}
-%             \end{macro}
-%           \end{macro}
-%         \end{macro}
-%       \end{macro}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{lang}
 %
 % \subsubsection{Language tracking}
@@ -3262,9 +3244,9 @@
 %
 % \subsubsection{Language options}
 % \begin{option}{lang}
-%   \begin{macro}{\@fxlang}
-%     Store the current language in \cs{@fxlang} after having handled language
-%     aliases, and disable language tracking:
+% \begin{macro}{\@fxlang}
+%   Store the current language in \cs{@fxlang} after having handled language
+%   aliases, and disable language tracking:
 %    \begin{macrocode}
 \def\@fxexpr{\@fxdefinechoicekey{lang}{lang}[\@fxlang]}
 \expandafter\@fxexpr\expandafter{\@fxlanguages}{%
@@ -3273,18 +3255,18 @@
   \@fxsetkeys{lang}{langtrack=false}}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{option}
 % \begin{option}{english}
-%   \begin{option}{french}
-%     \begin{option}{francais}
-%       \begin{option}{spanish}
-%         \begin{option}{italian}
-%           \begin{option}{german}
-%             \begin{option}{ngerman}
-%               \begin{option}{danish}
-%                 \begin{option}{croatian}
-%                   Create individual language options:
+% \begin{option}{french}
+% \begin{option}{francais}
+% \begin{option}{spanish}
+% \begin{option}{italian}
+% \begin{option}{german}
+% \begin{option}{ngerman}
+% \begin{option}{danish}
+% \begin{option}{croatian}
+%   Create individual language options:
 %    \begin{macrocode}
 \@for\@fxlg:=\@fxlanguages\do{
   \def\@fxexprone{\@fxdefinevoidkey{lang}}
@@ -3292,14 +3274,14 @@
   \expandafter\@fxexprone\@fxexprtwo}
 
 %    \end{macrocode}
-%                 \end{option}
-%               \end{option}
-%             \end{option}
-%           \end{option}
-%         \end{option}
-%       \end{option}
-%     \end{option}
-%   \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
 % \end{option}
 %
 % \subsubsection{Language abstraction layer}
@@ -3310,15 +3292,15 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\fxnotename}
-%   \begin{macro}{\fxnotesname}
-%     \marg{type}\\
-%     Construct the notes names in a language dependent fashion:
+% \begin{macro}{\fxnotesname}
+%   \marg{type}\\
+%   Construct the notes names in a language dependent fashion:
 %    \begin{macrocode}
 \newcommand*\fxnotename[1]{\@nameuse{fx\@fxlang#1name}}
 \newcommand*\fxnotesname[1]{\@nameuse{fx\@fxlang#1sname}}
 
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsection{Document status processing}
@@ -3328,11 +3310,11 @@
 % \begin{macro}{\@fxendenv}
 % \begin{macro}{\@fxtargetlayout}
 % \begin{macro}{\listoffixmes}
-%   \begin{option}{final}
-%     \begin{option}{draft}
-%       \begin{option}{status}
-%         Select draft or final versions of internal macros (some of
-%         them also depending on the document class):
+% \begin{option}{final}
+% \begin{option}{draft}
+% \begin{option}{status}
+%   Select draft or final versions of internal macros (some of
+%   them also depending on the document class):
 %    \begin{macrocode}
 \@fxdefinevoidkey{status}{final}{%
   \let\@@@fxnote@early\@@@fxnote@early@final%
@@ -3351,9 +3333,9 @@
 \@fxdefinechoicekey{status}{status}{final,draft}{\@fxsetkeys{status}{#1}}
 
 %    \end{macrocode}
-%       \end{option}
-%     \end{option}
-%   \end{option}
+% \end{option}
+% \end{option}
+% \end{option}
 % \end{macro}
 % \end{macro}
 % \end{macro}
@@ -3365,7 +3347,7 @@
 % \begin{macro}{\FXProvidesTheme}
 %   \marg{name}\oarg{release information}
 %    \begin{macrocode}
- \newcommand*\FXProvidesTheme[1]{\ProvidesPackage{fxtheme#1}}
+\newcommand*\FXProvidesTheme[1]{\ProvidesPackage{fxtheme#1}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\fxusetheme}
@@ -3400,8 +3382,8 @@
 % and the error actually triggers a stack overflow in \LaTeX\ldots (patch
 % submitted). Oh boy, these classes are a mess.
 % \begin{macro}{\@lox@prtc}
-%   \begin{macro}{\@lox@psttc}
-%     \begin{macro}{\@lox@draft}
+% \begin{macro}{\@lox@psttc}
+% \begin{macro}{\@lox@draft}
 %    \begin{macrocode}
 \@ifclassloaded{article}{%
   \let\@lox@prtc\@lox@prtc@article%
@@ -3430,8 +3412,8 @@
 		\let\@lox@psttc\@lox@psttc@article}}}}}}}}
 
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Options Processing}
@@ -3508,21 +3490,21 @@
 \RequirePackage{color}
 
 %    \end{macrocode}
-%   \begin{macro}{\@fxdocolon}
-%     \marg{author}\\
-%     Add a colon after the author tag, unless empty.
+% \begin{macro}{\@fxdocolon}
+%   \marg{author}\\
+%   Add a colon after the author tag, unless empty.
 %    \begin{macrocode}
 \providecommand*\@fxdocolon[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxcolon{}}{\def\@fxcolon{: }}}
 
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{color}{fxnote}
-%     \begin{color}{fxwarning}
-%       \begin{color}{fxerror}
-%         \begin{color}{fxfatal}
-%           Environments use the same colors as the notes themselves because
-%           their contents really is a longer note.
+% \end{macro}
+% \begin{color}{fxnote}
+% \begin{color}{fxwarning}
+% \begin{color}{fxerror}
+% \begin{color}{fxfatal}
+%   Environments use the same colors as the notes themselves because
+%   their contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
@@ -3532,29 +3514,29 @@
 \fxsetface{env}{}
 
 %    \end{macrocode}
-%         \end{color}
-%       \end{color}
-%     \end{color}
-%   \end{color}
-%   \begin{macro}{\FXEnvLayoutColorBegin}
-%     \begin{macro}{\FXEnvLayoutColorEnd}
-%       \marg{type}\marg{author}
+% \end{color}
+% \end{color}
+% \end{color}
+% \end{color}
+% \begin{macro}{\FXEnvLayoutColorBegin}
+% \begin{macro}{\FXEnvLayoutColorEnd}
+%   \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorBegin[2]{%
   \@fxdocolon{#2}%
   \@fxuseface{env}\color{fx#1}\ignorespaces#2\@fxcolon\ignorespaces}
 \newcommand*\FXEnvLayoutColorEnd[2]{}
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\@fxenvlayout@color@begin}
-%     \begin{macro}{\@fxenvlayout@color@end}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxenvlayout@color@begin}
+% \begin{macro}{\@fxenvlayout@color@end}
 %    \begin{macrocode}
 \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
 %</fxenvlayoutcolor>
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{envlayout}
 %
 % \subsubsection{The \texttt{colorsig} layout}
@@ -3574,24 +3556,24 @@
 \@fxnewface[\itshape]{signature}
 %    \end{macrocode}
 % \end{face}
-%   \begin{macro}{\@fxdosig}
-%     \marg{author}
-%     \begin{macro}{\@fxsignature}
-%       Use a signature of the form ``-- sig'', unless author is empty.
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsignature}
+%   Use a signature of the form ``-- sig'', unless author is empty.
 %    \begin{macrocode}
 \providecommand*\@fxdosig[1]{%
   \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
     \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
 
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{color}{fxnote}
-%     \begin{color}{fxwarning}
-%       \begin{color}{fxerror}
-%         \begin{color}{fxfatal}
-%           Environments use the same colors as the notes themselves because
-%           their contents really is a longer note.
+% \end{macro}
+% \end{macro}
+% \begin{color}{fxnote}
+% \begin{color}{fxwarning}
+% \begin{color}{fxerror}
+% \begin{color}{fxfatal}
+%   Environments use the same colors as the notes themselves because
+%   their contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
@@ -3601,28 +3583,28 @@
 \fxsetface{env}{}
 
 %    \end{macrocode}
-%         \end{color}
-%       \end{color}
-%     \end{color}
-%   \end{color}
-%   \begin{macro}{\FXEnvLayoutColorSigBegin}
-%     \begin{macro}{\FXEnvLayoutColorSigEnd}
-%       \marg{type}\marg{author}
+% \end{color}
+% \end{color}
+% \end{color}
+% \end{color}
+% \begin{macro}{\FXEnvLayoutColorSigBegin}
+% \begin{macro}{\FXEnvLayoutColorSigEnd}
+%   \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorSigBegin[2]{\@fxuseface{env}\color{fx#1}}
 \newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
-%   \begin{macro}{\@fxenvlayout@colorsig@begin}
-%     \begin{macro}{\@fxenvlayout@colorsig@end}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\@fxenvlayout@colorsig@begin}
+% \begin{macro}{\@fxenvlayout@colorsig@end}
 %    \begin{macrocode}
 \FXRegisterEnvLayout{colorsig}{%
   \FXEnvLayoutColorSigBegin}{\FXEnvLayoutColorSigEnd}
 %</fxenvlayoutcolorsig>
 %    \end{macrocode}
-%     \end{macro}
-%   \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{envlayout}
 %
 % \subsection{Target Layouts}
@@ -3642,18 +3624,18 @@
 
 \fxsetface{target}{}
 %    \end{macrocode}
-%   \begin{macro}{\FXTargetLayoutChangeBar}
-%     \marg{target}
+% \begin{macro}{\FXTargetLayoutChangeBar}
+%   \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutChangeBar[2]{\cbstart\@fxuseface{target}#2\cbend}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxtargetlayout@changebar}
+% \end{macro}
+% \begin{macro}{\@fxtargetlayout@changebar}
 %    \begin{macrocode}
 \FXRegisterTargetLayout{changebar}{\FXTargetLayoutChangeBar}
 %</fxtargetlayoutchangebar>
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{targetlayout}
 %
 % \subsubsection{The \texttt{color} layout}
@@ -3671,27 +3653,27 @@
 \definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
 
 %    \end{macrocode}
-%   \begin{color}{fxtarget}
-%     \mbox{}
+% \begin{color}{fxtarget}
+%   \mbox{}
 %    \begin{macrocode}
 \definecolor{fxtarget}{rgb}{0.3725,0.6196,0.6275}
 
 \fxsetface{target}{}
 
 %    \end{macrocode}
-%   \end{color}
-%   \begin{macro}{\FXTargetLayoutColor}
-%     \marg{target}
+% \end{color}
+% \begin{macro}{\FXTargetLayoutColor}
+%   \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutColor[2]{\@fxuseface{target}\color{fxtarget}#2}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxtargetlayout@color}
+% \end{macro}
+% \begin{macro}{\@fxtargetlayout@color}
 %    \begin{macrocode}
 \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 %</fxtargetlayoutcolor>
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{targetlayout}
 %
 % \subsubsection{The \texttt{colorcb} layout}
@@ -3709,19 +3691,19 @@
 
 \fxsetface{target}{}
 %    \end{macrocode}
-%   \begin{macro}{\FXTargetLayoutColorCB}
-%     \marg{target}
+% \begin{macro}{\FXTargetLayoutColorCB}
+%   \marg{target}
 %    \begin{macrocode}
 \newcommand\FXTargetLayoutColorCB[2]{%
   \cbstart\cbcolor{fx#1}\@fxuseface{target}#2\cbend}
 %    \end{macrocode}
-%   \end{macro}
-%   \begin{macro}{\@fxtargetlayout@colorcb}
+% \end{macro}
+% \begin{macro}{\@fxtargetlayout@colorcb}
 %    \begin{macrocode}
 \FXRegisterTargetLayout{colorcb}{\FXTargetLayoutColorCB}
 %</fxtargetlayoutcolorcb>
 %    \end{macrocode}
-%   \end{macro}
+% \end{macro}
 % \end{targetlayout}
 %
 % \section{Themes}
@@ -3895,4 +3877,8 @@
 % \makeatletter{\let\markboth\@gobbletwo\PrintIndex}\makeatother
 % \Finale
 %
+% ^^A Local variables:
+% ^^A eval: (doxitems "option" "counter" "lang" "face" "color")
+% ^^A eval: (doxitem "\\(env\\|target\\)?layout")
+% ^^A End:
 % ^^A fixme.dtx ends here.
