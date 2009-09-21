@@ -1226,14 +1226,17 @@
 % \end{verbatim}
 % The first (optional) argument may provide code that will be executed when
 % the layout is activated (it is used for instance to implement mutual
-% exclusion between the \texttt{margin} and \texttt{marginclue} layouts.
+% exclusion between the \texttt{margin} and \texttt{marginclue} layouts. Once
+% registered, the new layout gets a boolean option \meta{name} and is also
+% recognized by the \texttt{layout} and \texttt{morelayout} options, as well
+% as by the \cs{fxuselayouts} command as \meta{name}.
 %
-% Once registered, the new layout gets a boolean option \meta{name} and is
-% also recognized by the \texttt{layout} and \texttt{morelayout} options, as
-% well as by the \cs{fxuselayouts} command as \meta{name}. If you want to save
-% your layout externally, you need to store it in a file named
-% \texttt{fxlayout}\meta{name}\texttt{.sty}. It will then be recognized by the
-% \cs{fxloadlayouts} command as \meta{name}.
+% \noindent
+% \DescribeMacro{\FXProvidesLayout}\marg{name}\oarg{release information}\\
+% If you want to save your layout externally, you need to store it in a file
+% named \texttt{fxlayout}\meta{name}\texttt{.sty} and advertise it by calling
+% \cs{FXProvidesLayout}. It will then be recognized by the \cs{fxloadlayouts}
+% command as \meta{name}.
 %
 % \subsubsection{Registering a new environment layout}
 % \begin{sloppypar}
@@ -1247,10 +1250,14 @@
 % \FXRegisterEnvLayout{color}{\FXEnvLayoutColorBegin}{\FXEnvLayoutColorEnd}
 % \end{verbatim}
 % Once registered, the new layout is recognized by the \texttt{envlayout}
-% option and by the \cs{fxuseenvlayout} command as \meta{name}. If you want to
-% save your layout externally, you need to store it in a file named
-% \texttt{fxenvlayout}\meta{name}\texttt{.sty}. It will then be recognized by
-% the \cs{fxloadenvlayouts} commands as \meta{name}.
+% option and by the \cs{fxuseenvlayout} command as \meta{name}.
+%
+% \noindent
+% \DescribeMacro{\FXProvidesEnvLayout}\marg{name}\oarg{release information}\\
+% If you want to save your layout externally, you need to store it in a file
+% named \texttt{fxenvlayout}\meta{name}\texttt{.sty} and advertise it by
+% calling \cs{FXProvidesEnvLayout}. It will then be recognized by the
+% \cs{fxloadenvlayouts} commands as \meta{name}.
 %
 % \subsubsection{Registering a new target layout}
 % \begin{sloppypar}
@@ -1264,10 +1271,15 @@
 % \FXRegisterTargetLayout{color}{\FXTargetLayoutColor}
 % \end{verbatim}
 % Once registered, the new layout is recognized by the \texttt{targetlayout}
-% option and by the \cs{fxusetargetlayout} as \meta{name}. If you want to save
-% your layout externally, you need to store it in a file named
-% \texttt{fxtargetlayout}\meta{name}\texttt{.sty}. It will then be recognized
-% by the \cs{fxloadtargetlayouts} commands as \meta{name}.
+% option and by the \cs{fxusetargetlayout} as \meta{name}.
+%
+% \noindent
+% \DescribeMacro{\FXProvidesTargetLayout}\marg{name}\oarg{release
+%   information}\\
+% If you want to save your layout externally, you need to store it in a file
+% named \texttt{fxtargetlayout}\meta{name}\texttt{.sty} and advertise it by
+% calling \cs{FXProvidesTargetLayout}. It will then be recognized by the
+% \cs{fxloadtargetlayouts} commands as \meta{name}.
 %
 % \subsection{Creating a new theme}
 % Creating a new theme may involve anything from using (by way of
@@ -1282,9 +1294,12 @@
 % In order to use an external layout in a theme, use the commands
 % \cs{FXRequire*Layout} and give them the layout's name as argument.
 %
+% \noindent
+% \DescribeMacro{\FXProvidesTheme}\marg{name}\oarg{release information}\\
 % A theme should be saved in a file named
-% \texttt{fxtheme}\meta{name}\texttt{.sty}. It will then be recognized by the
-% \texttt{theme} option and the \cs{fxusetheme} command.
+% \texttt{fxtheme}\meta{name}\texttt{.sty} and advertised by calling
+% \cs{FXProvidesTheme}. It will then be recognized by the \texttt{theme}
+% option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
 % \DescribeMacro[noindex]{\fx\ldots name}
@@ -1847,7 +1862,7 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\FXProvidesLayout}
-%   \marg{name}\oarg{info}
+%   \marg{name}\oarg{release information}
 %    \begin{macrocode}
 \newcommand*\FXProvidesLayout[1]{\ProvidesPackage{fxlayout#1}}
 %    \end{macrocode}
@@ -2140,7 +2155,7 @@
 % \subsection{Environment Layouts}
 % \subsubsection{Layout creation}
 % \begin{macro}{\FXProvidesEnvLayout}
-%   \marg{name}\oarg{info}
+%   \marg{name}\oarg{release information}
 %    \begin{macrocode}
 \newcommand*\FXProvidesEnvLayout[1]{\ProvidesPackage{fxenvlayout#1}}
 %    \end{macrocode}
@@ -2293,7 +2308,7 @@
 % \subsection{Target Layouts}
 % \subsubsection{Layout creation}
 % \begin{macro}{\FXProvidesTargetLayout}
-%   \marg{name}\oarg{info}
+%   \marg{name}\oarg{release information}
 %    \begin{macrocode}
 \newcommand*\FXProvidesTargetLayout[1]{\ProvidesPackage{fxtargetlayout#1}}
 %    \end{macrocode}
@@ -3268,7 +3283,7 @@
 %
 % \subsection{Theme support}
 % \begin{macro}{\FXProvidesTheme}
-%   \marg{name}\oarg{info}
+%   \marg{name}\oarg{release information}
 %    \begin{macrocode}
 \newcommand*\FXProvidesTheme[1]{\ProvidesPackage{fxtheme#1}}
 %    \end{macrocode}
