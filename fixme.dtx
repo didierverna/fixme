@@ -1851,6 +1851,8 @@
 % \end{option}
 %
 % \subsubsection{Layout creation}
+% Separating between ``early'' and ``late'' layouts is needed in starred
+% context, that is, when we are using targeted commands or environments.
 % \begin{macro}{\@fxearlylayouts}
 % \begin{macro}{\@fxlatelayouts}
 %   Comma-separated lists of available early and late layouts.
@@ -1870,9 +1872,9 @@
 %   \oarg{boolfunc}\marg{name}\marg{funcname}\\
 %   Register a new layout with \fx. This currently involves creating the
 %   boolean layout option with an optional function argument, constructing the
-%   translation macro to call the actual layout macro, and updating the layout
-%   list. The translation macro can't be \cs{let} to the real one, because
-%   themes might want to redefine latter.
+%   translation macro to call the actual layout macro, and updating the
+%   appropriate layout list. The translation macro can't be \cs{let} to the
+%   real one, because themes might want to redefine latter.
 %    \begin{macrocode}
 \newcommand*\FXRegisterEarlyLayout[3][]{%
   \@fxkeyifundefined{layout}{#2}{%
@@ -1910,26 +1912,7 @@
 % \end{macro}
 %
 % \subsubsection{Built-in layouts}
-% Remember that the order is important!
-% \paragraph{Footnote}
-% \begin{layout}[noprint]{footnote}
-% \begin{macro}{\FXLayoutFootnote}
-%   \marg{type}\marg{note}\marg{author}
-%    \begin{macrocode}
-\newcommand*\FXLayoutFootnote[3]{%
-  \footnote{\ignorespaces#3 \fxnotename{#1}: #2}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxlayout@footnote}
-%   \begin{booleanoption}{footnote}
-%     \mbox{}
-%    \begin{macrocode}
-\FXRegisterLateLayout{footnote}{\FXLayoutFootnote}
-%    \end{macrocode}
-% \end{booleanoption}
-% \end{macro}
-% \end{layout}
-%
+% Let's deal start with the early layouts, and continue with the late ones.
 % \paragraph{Margin}
 % \begin{layout}[noprint]{margin}
 % \begin{face}{margin}
@@ -1985,6 +1968,25 @@
       turning marginal notes off}%
     \fx@layout@margin{false}}]{%
     marginclue}{\FXLayoutMarginClue}
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
+% \paragraph{Footnote}
+% \begin{layout}[noprint]{footnote}
+% \begin{macro}{\FXLayoutFootnote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutFootnote[3]{%
+  \footnote{\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@footnote}
+%   \begin{booleanoption}{footnote}
+%     \mbox{}
+%    \begin{macrocode}
+\FXRegisterLateLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 % \end{booleanoption}
 % \end{macro}
@@ -2561,9 +2563,13 @@
   \fi}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxissuedraftlayouts}
+% \begin{macro}{\@fxissueearlydraftlayouts}
+% \begin{macro}{\@fxissuelatedraftlayouts}
 %   \marg{type}\marg{note}\\
-%   Dispatch to all active draft mode layouts.
+%   Dispatch all active draft mode layouts. \cs{@fxissueearlydraftlayouts}
+%   takes care of dispatching early layouts, but before that, handles the
+%   inner mode case. \cs{@fxissuelatedraftlayouts} just dispatches late
+%   layouts.
 %    \begin{macrocode}
 \newcommand*\@fxissueearlydraftlayouts[2]{%
   \@fxhandleinnermode%
@@ -2578,14 +2584,15 @@
     \fi}}
 %    \end{macrocode}
 % \end{macro}
+% \end{macro}
 % \begin{macro}{\@fxissuecommonlayouts}
 %   \marg{type}\marg{note}\\
-%   Dispatch to all mode-independent layouts (actually, ``layout'' is to be
-%   taken in a slightly broader sense here). This macro executes all
-%   operations that need to be performed regardless of the document status.
-%   This includes updating the \texttt{lox} file and logging the note. Note
-%   that even in \texttt{final} more, the \texttt{lox} file is updated. This
-%   is to maintain a coherent state if the user goes from \texttt{final} to
+%   Dispatch all mode-independent layouts (actually, ``layout'' is to be taken
+%   in a slightly broader sense here). This macro executes all operations that
+%   need to be performed regardless of the document status. This includes
+%   updating the \texttt{lox} file and logging the annotation. Note that even
+%   in \texttt{final} mode, the \texttt{lox} file is updated. This is to
+%   maintain a coherent state if the user goes from \texttt{final} to
 %   \texttt{draft} or the other way around. In \texttt{final} mode, the list
 %   of fixmes does not appears because \cs{listoffixmes} is \cs{let} to
 %   \cs{relax}.
@@ -2603,7 +2610,9 @@
 % \begin{macro}{\@@@fxnote@early@draft}
 % \begin{macro}{\@@@fxnote@late@draft}
 %   \marg{type}\marg{note}\\
-%   The lower-level macros that perform the real job:
+%   The lower-level macros that perform the real job. In \texttt{final} mode,
+%   early work is only to check for remaining fatal annotations and late work
+%   is to dispatch common layouts.
 %    \begin{macrocode}
 \newcommand*\@@@fxnote@early@final[2]{%
   \ifthenelse{\equal{#1}{fatal}}{%
@@ -2614,7 +2623,10 @@
       mode),\MessageBreak
       and rerun LaTeX.}}{}}
 \newcommand*\@@@fxnote@late@final[2]{\@fxissuecommonlayouts{#1}{#2}}
-
+%    \end{macrocode}
+% In \texttt{draft} mode, early work is to dispatch early layouts, while late
+% work is to dispatch both late \emph{and} common layouts.
+%    \begin{macrocode}
 \newcommand*\@@@fxnote@early@draft[2]{%
   \@fxissueearlydraftlayouts{#1}{#2}}
 \newcommand*\@@@fxnote@late@draft[2]{%
@@ -2629,15 +2641,15 @@
 %
 % \subsubsection{Standard version}
 % \begin{macro}{\@fxpostconfigure}
-%   This macro is used in \cs{@@fxnote} below, after processing user options
-%   (even when there is none), to postconfigure some aspects of the notes.
-%   Currently, this involves two things: setting the author to \cs{fixmelogo}
-%   if it still is \texttt{fixme}, and automatically tracking the current
-%   language if required (note that all other language options turn tracking
-%   off, meaning that one can override language tracking locally by providing
-%   a language explicitely). Since environments need the post-configuration
-%   done sooner, they perform it themselves and rebind this macro to
-%   \cs{relax}.
+%   This macro is used in \cs{@@fxnote@early} below, after processing user
+%   options (even when there is none), to postconfigure some aspects of the
+%   notes. Currently, this involves two things: setting the author to
+%   \cs{fixmelogo} if it still is \texttt{fixme}, and automatically tracking
+%   the current language if required (note that all other language options
+%   turn tracking off, meaning that one can override language tracking locally
+%   by providing a language explicitely). Since environments need the
+%   post-configuration done sooner, they perform it themselves and rebind this
+%   macro to \cs{relax}.
 %    \begin{macrocode}
 \newcommand*\@fxpostconfigure{%
   \ifthenelse{\equal{\cmdfx@note@author}{fixme}}{%
@@ -2663,6 +2675,7 @@
 % \end{macro}
 % \begin{macro}{\@@fxnote@early}
 %   \marg{type}\marg{note}\\
+%   Counters need to be updated regardless of the mode.
 %    \begin{macrocode}
 \def\@@fxnote@early#1#2{%
     \@fxpostconfigure%
@@ -2680,8 +2693,8 @@
 % \end{macro}
 % \begin{macro}{\@@fxnote}
 %   \marg{type}\marg{note}\\
-%   This level of indirection is needed because the counters need to be
-%   updated regardless of the document status.
+%   This macro is used everywhere outside a starred context, because in that
+%   case, we do early and late work in a row.
 %    \begin{macrocode}
 \def\@@fxnote#1#2{%
   \@@fxnote@early{#1}{#2}%
@@ -2701,9 +2714,10 @@
 % \subsubsection{Starred version}
 % \begin{macro}{\@@fxsnote}
 %   \marg{type}\marg{note}\marg{text}\\
-%   Post-configuration is done here (it's the code path confluent for all
-%   starred commands). Relaxing post-configuration afterwards is to prevent
-%   \cs{@@fxnote} from doing it again.
+%   Post-configuration is done here because it's the code path confluent for
+%   all starred commands. Relaxing post-configuration afterwards is to prevent
+%   \cs{@@fxnote@early} from doing it again. Note that this is the only place
+%   where we actually do early and late work not in a row.
 %    \begin{macrocode}
 \long\def\@@fxsnote#1#2#3{%
   \@fxpostconfigure\let\@fxpostconfigure\relax%
