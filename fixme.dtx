@@ -1232,6 +1232,16 @@
 % as by the \cs{fxuselayouts} command as \meta{name}.
 %
 % \noindent
+% \DescribeMacro{\FXRegisterLayout*}\oarg{boolfunc}\marg{name}\marg{macro}\\
+% Layouts registered in this fashion are called ``late layouts''; this is the
+% default behavior. When an annotation is inserted in the document, the
+% typesetting of such active layouts is performed at the current position in
+% the text. There might be times, however, when you would prefer some layouts
+% to occur earlier, and this is precisely the case when you use a targeted
+% command or environment: when an important portion of the original text is
+% highlighted (targeted),
+%
+% \noindent
 % \DescribeMacro{\FXProvidesLayout}\marg{name}\oarg{release information}\\
 % If you want to save your layout externally, you need to store it in a file
 % named \texttt{fxlayout}\meta{name}\texttt{.sty} and advertise it by calling
