@@ -1868,45 +1868,41 @@
 \newcommand*\FXProvidesLayout[1]{\ProvidesPackage{fxlayout#1}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\FXRegisterLayout}
-%   \oarg{boolfunc}\marg{name}\marg{funcname}\\
+% \begin{macro}{\@FXRegisterLayout}
+%   \marg{when}\oarg{boolfunc}\marg{name}\marg{funcname}\\
 %   Register a new layout with \fx. This currently involves creating the
 %   boolean layout option with an optional function argument, constructing the
 %   translation macro to call the actual layout macro, and updating the
-%   appropriate layout list. The translation macro can't be \cs{let} to the
-%   real one, because themes might want to redefine latter.
+%   appropriate layout list (early or late). The translation macro can't be
+%   \cs{let} to the real one, because themes might want to redefine latter.
 %    \begin{macrocode}
-\newcommand*\FXRegisterEarlyLayout[3][]{%
-  \@fxkeyifundefined{layout}{#2}{%
-    \@fxdefineboolkey[#1]{layout}{#2}%
-    \expandafter\def\csname @fxlayout@#2\endcsname{#3}%
-    \ifx\@fxearlylayouts\empty%
-      \g@addto@macro\@fxearlylayouts{#2}%
+\def\@FXRegisterLayout#1[#2]#3#4{%
+  \@fxkeyifundefined{layout}{#3}{%
+    \@fxdefineboolkey[#2]{layout}{#3}%
+    \expandafter\def\csname @fxlayout@#3\endcsname{#4}%
+    \expandafter\ifx\csname @fx#1layouts\endcsname\empty%
+      \expandafter\g@addto@macro\csname @fx#1layouts\endcsname{#3}%
     \else%
-      \g@addto@macro\@fxearlylayouts{,#2}%
+      \expandafter\g@addto@macro\csname @fx#1layouts\endcsname{,#3}%
     \fi}{%
-    \@fxpkgerror{layout '#2' already registered}{%
-      You have called \string\FXRegisterEarlyLayout\space with a name already
+    \@fxpkgerror{layout '#3' already registered}{%
+      You have called \string\FXRegisterLayout\space with a name already
       in use.\MessageBreak
       If you want to modify an existing layout, renew its
       command.\MessageBreak
       Otherwise, you must choose a different name.}}}
-
-\newcommand*\FXRegisterLateLayout[3][]{%
-  \@fxkeyifundefined{layout}{#2}{%
-    \@fxdefineboolkey[#1]{layout}{#2}%
-    \expandafter\def\csname @fxlayout@#2\endcsname{#3}%
-    \ifx\@fxlatelayouts\empty%
-      \g@addto@macro\@fxlatelayouts{#2}%
-    \else%
-      \g@addto@macro\@fxlatelayouts{,#2}%
-    \fi}{%
-    \@fxpkgerror{layout '#2' already registered}{%
-      You have called \string\FXRegisterLateLayout\space with a name already
-      in use.\MessageBreak
-      If you want to modify an existing layout, renew its
-      command.\MessageBreak
-      Otherwise, you must choose a different name.}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXRegisterLayout}
+%   \meta{\texttt{*}}\oarg{boolfunc}\marg{name}\marg{funcname}\\
+%   And the use-level interface:
+%    \begin{macrocode}
+\newcommand\FXRegisterLayout{%
+  \@ifstar{%
+    \@ifnextchar[%]
+    {\@FXRegisterLayout{early}}{\@FXRegisterLayout{early}[]}}{%
+    \@ifnextchar[%]
+    {\@FXRegisterLayout{late}}{\@FXRegisterLayout{late}[]}}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -1934,7 +1930,7 @@
 %   \begin{booleanoption}{margin}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterEarlyLayout[%
+\FXRegisterLayout*[%
   \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
     \@fxpkgwarning{%
       marginal notes requested;\MessageBreak
@@ -1961,7 +1957,7 @@
 %   \begin{booleanoption}{marginclue}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterEarlyLayout[%
+\FXRegisterLayout*[%
   \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
     \@fxpkgwarning{%
       marginal clues requested;\MessageBreak
@@ -1986,7 +1982,7 @@
 %   \begin{booleanoption}{footnote}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterLateLayout{footnote}{\FXLayoutFootnote}
+\FXRegisterLayout{footnote}{\FXLayoutFootnote}
 %    \end{macrocode}
 % \end{booleanoption}
 % \end{macro}
@@ -2011,7 +2007,7 @@
 %   \begin{booleanoption}{inline}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterLateLayout{inline}{\FXLayoutInline}
+\FXRegisterLayout{inline}{\FXLayoutInline}
 %    \end{macrocode}
 % \end{booleanoption}
 % \end{macro}
@@ -2076,7 +2072,7 @@
 %   \begin{booleanoption}{index}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterLateLayout{index}{\FXLayoutIndex}
+\FXRegisterLayout{index}{\FXLayoutIndex}
 %    \end{macrocode}
 % \end{booleanoption}
 % \end{macro}
