@@ -58,7 +58,7 @@ required to use the paclage.
 [pdf]latex fixme.ins 
 [pdf]latex fixme.dtx 
 [pdf]latex fixme.dtx 
-makeindex -s gind fixme.dtx 
+makeindex -s gind fixme.idx 
 [pdf]latex fixme.dtx 
 [pdf]latex fixme.dtx 
 

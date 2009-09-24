@@ -63,12 +63,17 @@
       '("fxusetheme" "Theme")
 
       '("FXRegisterLayout"       "Name" "Macro")
+      '("FXRegisterLayout*"      "Name" "Macro")
       '("FXRegisterEnvLayout"    "Name" "Opening macro" "Closing macro")
       '("FXRegisterTargetLayout" "Name" "Macro")
 
       '("FXRequireLayout"       "Name")
       '("FXRequireEnvLayout"    "Name")
       '("FXRequireTargetLayout" "Name")
+
+      '("FXProvidesLayout"       "Name" ["Release information"])
+      '("FXProvidesEnvLayout"    "Name" ["Release information"])
+      '("FXProvidesTargetLayout" "Name" ["Release information"])
 
       '("fxenglishnotename" 0)
       '("fxenglishnotesname" 0)
