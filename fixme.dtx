@@ -1054,6 +1054,13 @@
 % \FXRegisterAuthor{fx}{anfx}{fixme}
 % \end{verbatim}
 %
+% \textbf{Warning!} \meta{cmdprefix} and \meta{envprefix} need to be
+% different, or you will get very strange errors. The technical reason is that
+% in \LaTeX, an environment named \texttt{foo} is defined in terms of two
+% commands: \cs{foo} and \cs{endfoo} (yes, this is silly; the first one should
+% really be \cs{beginfoo}). As a consequence, if you use the same prefix, you
+% will get a name clash between the annotation commands and environments.
+%
 % \paragraph{Fun with the \texttt{author} option}
 % Some precisions about the author option are in order here. When a new
 % author is registered with \fx, the generated commands and environments
