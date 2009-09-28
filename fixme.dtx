@@ -3920,7 +3920,7 @@
 % \Finale
 %
 % ^^A Local variables:
-% ^^A eval: (doxitems "option" "counter" "lang" "face" "color")
-% ^^A eval: (doxitem "\\(env\\|target\\)?layout")
+% ^^A eval : (add-hook 'TeX-update-style-hook (lambda () (doxitems "option" "counter" "lang" "face" "color")) nil t)
+% ^^A eval: (add-hook 'TeX-update-style-hook (lambda () (doxitem "\\(env\\|target\\)?layout")) nil t)
 % ^^A End:
 % ^^A fixme.dtx ends here.
