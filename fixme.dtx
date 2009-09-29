@@ -2138,6 +2138,14 @@
 % \end{macro}
 %
 % \subsubsection{Layout control}
+% \begin{macro}{\@fxsetlayoutkeys}
+%   \marg{keys}
+%   This macro would probably be overkill if we didn't need to
+%   \cs{expandafter} it at some point (See \cs{@fxhandleinnermode}).
+%    \begin{macrocode}
+\newcommand\@fxsetlayoutkeys{\@fxsetkeys{layout}}
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@fxparselayout}
 %   Utility macro to detect the \texttt{no}\meta{name} form of layout options.
 %   The drawback of this technique is that layout options must be at least 3
@@ -2586,7 +2594,7 @@
 	\@fxpkginfo{%
 	  inner mode detected;\MessageBreak
 	  turning marginclue layout form off}}{}}%
-    \expandafter\fxuselayouts\expandafter{%
+    \expandafter\@fxsetlayoutkeys\expandafter{%
       \cmdfx@layout@innerlayout,nomargin,nomarginclue}%
   \fi}
 %    \end{macrocode}
