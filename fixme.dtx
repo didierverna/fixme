@@ -589,6 +589,12 @@
 %   What would happen if you didn't provide the \texttt{innerlayout} option?
 % \end{itemize}
 %
+% One final remark on the \texttt{innerlayout} option: this option is not
+% processed immediately when you specify it, but instead, its value is stored
+% and used only when needed. As a result, if you plan to use an external
+% layout in inner mode (typically, \texttt{marginnote})~, you need to load it
+% explicitely in the preamble first. Use \cs{fxloadlayouts} for that.
+%
 % \subsubsection{Other common layout
 %   problems\label{sec:manual:othercommonproblems}}
 % This section describes some other common problems that people have
