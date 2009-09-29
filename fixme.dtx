@@ -485,18 +485,20 @@
 % \subsubsection{Available layouts}
 % \DescribeBooleanOption{inline}
 % \DescribeBooleanOption{margin}
-% \DescribeBooleanOption{marginclue}
 % \DescribeBooleanOption{footnote}
 % \DescribeBooleanOption{index}
+% \DescribeBooleanOption{marginclue}
+% \DescribeBooleanOption{marginnote}
 % \DescribeLayout[noprint]{inline}
 % \DescribeLayout[noprint]{margin}
-% \DescribeLayout[noprint]{marginclue}
 % \DescribeLayout[noprint]{footnote}
 % \DescribeLayout[noprint]{index}
+% \DescribeLayout[noprint]{marginclue}
+% \DescribeLayout[noprint]{marginnote}
 % Table \ref{table:layouts} lists the annotation layouts currently distributed
 % with \fx. By default, only the \texttt{margin} layout is active. While most
-% of these layouts should be self-explanatory, marginal clues deserve a bit
-% more explanation.
+% of these layouts should be self-explanatory, the last two of them  deserve a
+% bit more explanation.
 % \begin{table}
 %   \centering
 %   \DeleteShortVerb{\|}
@@ -509,12 +511,15 @@
 %     \texttt{footnote} & & Display note in a footnote\\
 %     \texttt{index} & & Display note in the index\\
 %     \texttt{marginclue} & & Display a marginal clue\\
+%     \texttt{marginnote} & \texttt{*} & Display non-floating note in the
+%     margin\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
 %   \caption{Available annotation layouts}
 %   \label{table:layouts}
 % \end{table}
+% \paragraph{\texttt{marginclue}}
 % If your preferred layout is \texttt{inline} or say, \texttt{footnote},it
 % might be somewhat difficult to localize the annotation on the page,
 % especially its vertical position. That's where marginal clues come into
@@ -526,6 +531,15 @@
 % Obviously, the margin and margin clue layouts are mutually exclusive, so if
 % you try to activate both, only the most recently activated one will be
 % enabled (and you'll get a notice in the log file and on the terminal).
+%
+% \paragraph{\texttt{marginnote}}
+% The \texttt{marginnote} layout is an alternate (external) way to display
+% annotations in the margin, using the eponymous package. Contrary to \LaTeX's
+% standard marginal paragraphs, the ones issued by \texttt{marginnote} are
+% constructed in a non-floating way. This might be an advantage in some
+% situations but \texttt{marginnote} also comes with some disadvantages of its
+% own. For more information, please refer to \texttt{marginnote}'s
+% documentation, and also read the next section.
 %
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
@@ -543,7 +557,9 @@
 % provides an option named \texttt{innerlayout} that allows you to specify an
 % alternative layout setting to use when \TeX{} is in \emph{inner} mode. In
 % addition to that, \fx automatically disables the \texttt{margin} and
-% \texttt{marginclue} layouts.
+% \texttt{marginclue} layouts. If you really want to use marginal paragraphs
+% in inner mode, a good idea is then to set your inner layout to
+% \texttt{marginnote} (see the previous section).
 %
 % Using \texttt{innerlayout} is not as trivial as it may seem: it
 % \emph{really} is an alternative layout configuration, and as such, you can
