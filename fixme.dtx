@@ -1561,10 +1561,14 @@
 %   but this is not currently done.
 %    \begin{macrocode}
 \newcommand*\@fxaddtolist[2]{%
-  \expandafter\ifx\csname #1\endcsname\empty%
-    \expandafter\g@addto@macro\csname #1\endcsname{#2}%
+  \expandafter\ifx\csname #1\endcsname\relax%
+    \expandafter\def\csname #1\endcsname{#2}%
   \else%
-    \expandafter\g@addto@macro\csname #1\endcsname{,#2}%
+    \expandafter\ifx\csname #1\endcsname\empty%
+      \expandafter\g@addto@macro\csname #1\endcsname{#2}%
+    \else%
+      \expandafter\g@addto@macro\csname #1\endcsname{,#2}%
+    \fi%
   \fi}
 
 %    \end{macrocode}
