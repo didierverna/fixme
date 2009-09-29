@@ -70,7 +70,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{1613}
+% ^^A\CheckSum{1613}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -3520,6 +3520,52 @@
 %
 % \appendix
 % \section{External Layouts}
+% \subsection{Annotation layouts}
+% \subsubsection{The \texttt{marginnote} layout}
+% \begin{layout}{marginnote}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutmarginnote>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{marginnote}
+
+\RequirePackage{marginnote}
+
+%    \end{macrocode}
+% \begin{macro}{\FXLayoutMarginNote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutMarginNote[3]{%
+  \marginnote[%
+  \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
+    \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@marginnote}
+%   \begin{booleanoption}{marginnote}
+%     Currently, there is no easy way to define mutual exclusions between
+%     layouts. We can have this one turn off the other (built-in) marginal
+%     layouts, but not the other way around.
+%    \begin{macrocode}
+\FXRegisterLayout*[%
+  \ifthenelse{\boolean{fx@layout@marginnote}}{%
+    \ifthenelse{\boolean{fx@layout@margin}}{%
+      \@fxpkgwarning{%
+        marginnote layout requested;\MessageBreak
+        turning margin layout off}%
+      \fx@layout@margin{false}}{}%
+    \ifthenelse{\boolean{fx@layout@marginclue}}{%
+      \@fxpkgwarning{%
+        marginnote layout requested;\MessageBreak
+        turning marginclue layout off}%
+      \fx@layout@marginclue{false}}{}}{}]{%
+    marginnote}{\FXLayoutMarginNote}
+%</fxlayoutmarginnote>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
 % \subsection{Environment layouts}
 % \subsubsection{The \texttt{color} layout}
 % \begin{envlayout}{color}
