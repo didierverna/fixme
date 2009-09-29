@@ -18,6 +18,11 @@ version 1999/06/01 or later.
 FiXme consists of the files listed in the file `README'.
 
 
+* Version 4.1
+=============
+** New annotation layout: marginnote
+** Fix bug in inner layout processing
+
 * Version 4.0
 =============
 ** Support for collaborative annotations
