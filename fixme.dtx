@@ -3667,7 +3667,7 @@
   \pdfcomment[author=#3]{\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxlayout@pdfnnote}
+% \begin{macro}{\@fxlayout@pdfnote}
 %   \begin{booleanoption}{pdfnote}
 %    \begin{macrocode}
 \FXRegisterLayout*{pdfnote}{\FXLayoutPDFNote}
@@ -3737,7 +3737,7 @@
   \pdfcomment[author=#3]{\fxnotename{#1}: #2\@fxsignature}}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxlayout@pdfsignnote}
+% \begin{macro}{\@fxlayout@pdfsignote}
 %   \begin{booleanoption}{pdfsignote}
 %    \begin{macrocode}
 \FXRegisterLayout*[pdfnote]{pdfsignote}{\FXLayoutPDFSigNote}
@@ -4089,7 +4089,7 @@
 
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdocolon{#3}%
-  \footnote{\color{fx#1}\ignorespaces#3\@fxcolon #2}}
+  \footnote{\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdocolon{#3}%
   \marginpar[%
