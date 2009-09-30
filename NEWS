@@ -20,28 +20,29 @@ FiXme consists of the files listed in the file `README'.
 
 * Version 4.1
 =============
-** 8 new PDF-specific annotation layouts
+** 8 new PDF-specific annotation layouts.
 ** New annotation layout: marginnote
-** Better mechanism for handling layout mutual exclusion
-** Fix bug in inner layout processing
+suggested by Sébastien Mengin.
+** Better mechanism for handling layout mutual exclusion.
+** Fix bug in inner layout processing.
 
 * Version 4.0
 =============
 ** Support for collaborative annotations
-suggested by Michael Kubovy
+suggested by Michael Kubovy.
 ** Support for "targeted" notes and environments
 (highlighting a portion of text), suggested by Mark Edgington.
 ** Support for "floating" notes
 (not specific to any portion of text), suggested by Rasmus Villemoes.
 ** Support for alternate layout autoswitch in TeX's inner mode
 suggested by Will Robertson.
-** Support for automatic language tracking in multilingual documents
-** Support for themes
-** Extended support for user-provided layouts
-** Support for key=value argument syntax in the whole user interface
-** New command \fxsetup
-** Homogenize log and console messages
-** Heavy internals refactoring
+** Support for automatic language tracking in multilingual documents.
+** Support for themes.
+** Extended support for user-provided layouts.
+** Support for key=value argument syntax in the whole user interface.
+** New command \fxsetup.
+** Homogenize log and console messages.
+** Heavy internals refactoring.
 
 * Version 3.4
 =============
