@@ -3789,6 +3789,239 @@
 % \end{macro}
 % \end{layout}
 %
+% \subsubsection{The \texttt{pdfcnote} layout}
+% \begin{layout}{pdfcnote}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfcnote>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfcnote}
+
+\RequirePackage{pdfcomment}
+\RequirePackage{xcolor}
+
+%    \end{macrocode}
+% \begin{color}{fxnote}
+% \begin{color}{fxwarning}
+% \begin{color}{fxerror}
+% \begin{color}{fxfatal}
+%   Environments use the same colors as the notes themselves because
+%   their contents really is a longer note.
+%    \begin{macrocode}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
+
+%    \end{macrocode}
+% \end{color}
+% \end{color}
+% \end{color}
+% \end{color}
+% \begin{macro}{\@fxdocolon}
+%   \marg{author}\\
+%   Add a colon after the author tag, unless empty.
+%    \begin{macrocode}
+\providecommand*\@fxdocolon[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxcolon{}}{\def\@fxcolon{: }}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXLayoutPDFCNote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFCNote[3]{%
+  \@fxdocolon{#3}%
+  \pdfcomment[author=#3,color=fx#1]{\ignorespaces#3\@fxcolon#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfcnote}
+%   \begin{booleanoption}{pdfcnote}
+%    \begin{macrocode}
+\FXRegisterLayout[pdfnote]{pdfcnote}{\FXLayoutPDFCNote}
+%</fxlayoutpdfcnote>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
+% \subsubsection{The \texttt{pdfcmargin} layout}
+% \begin{layout}{pdfcmargin}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfcmargin>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfcmargin}
+
+\RequirePackage{pdfcomment}
+\RequirePackage{xcolor}
+
+%    \end{macrocode}
+% \begin{color}{fxnote}
+% \begin{color}{fxwarning}
+% \begin{color}{fxerror}
+% \begin{color}{fxfatal}
+%   Environments use the same colors as the notes themselves because
+%   their contents really is a longer note.
+%    \begin{macrocode}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
+
+%    \end{macrocode}
+% \end{color}
+% \end{color}
+% \end{color}
+% \end{color}
+% \begin{macro}{\@fxdocolon}
+%   \marg{author}\\
+%   Add a colon after the author tag, unless empty.
+%    \begin{macrocode}
+\providecommand*\@fxdocolon[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxcolon{}}{\def\@fxcolon{: }}}
+
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXLayoutPDFCMargin}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFCMargin[3]{%
+  \@fxdocolon{#3}%
+  \pdfmargincomment[author=#3,color=fx#1]{\ignorespaces#3\@fxcolon#2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfcmargin}
+%   \begin{booleanoption}{pdfcmargin}
+%    \begin{macrocode}
+\FXRegisterLayout*[margin,marginclue,marginnote,pdfmargin]{pdfcmargin}{%
+  \FXLayoutPDFCMargin}
+%</fxlayoutpdfcmargin>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
+% \subsubsection{The \texttt{pdfcsignote} layout}
+% \begin{layout}{pdfcsignote}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfcsignote>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfcsignote}
+
+\RequirePackage{pdfcomment}
+\RequirePackage{xcolor}
+
+%    \end{macrocode}
+% \begin{color}{fxnote}
+% \begin{color}{fxwarning}
+% \begin{color}{fxerror}
+% \begin{color}{fxfatal}
+%   Environments use the same colors as the notes themselves because
+%   their contents really is a longer note.
+%    \begin{macrocode}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
+
+%    \end{macrocode}
+% \end{color}
+% \end{color}
+% \end{color}
+% \end{color}
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsignature}
+%   Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\FXLayoutPDFCSigNote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFCSigNote[3]{%
+  \@fxdosig{#3}%
+  \pdfcomment[author=#3,color=fx#1]{#2\@fxsignature}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfcsignote}
+%   \begin{booleanoption}{pdfcsignote}
+%    \begin{macrocode}
+\FXRegisterLayout[pdfnote,pdfcnote]{pdfcsignote}{\FXLayoutPDFCSigNote}
+%</fxlayoutpdfcsignote>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
+% \subsubsection{The \texttt{pdfcsigmargin} layout}
+% \begin{layout}{pdfcsigmargin}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfcsigmargin>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfcsigmargin}
+
+\RequirePackage{pdfcomment}
+\RequirePackage{xcolor}
+
+%    \end{macrocode}
+% \begin{color}{fxnote}
+% \begin{color}{fxwarning}
+% \begin{color}{fxerror}
+% \begin{color}{fxfatal}
+%   Environments use the same colors as the notes themselves because
+%   their contents really is a longer note.
+%    \begin{macrocode}
+\definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
+\definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
+\definecolor{fxerror}{rgb}{1.0000,0.2706,0.0000}
+\definecolor{fxfatal}{rgb}{1.0000,0.0000,0.0000}
+
+%    \end{macrocode}
+% \end{color}
+% \end{color}
+% \end{color}
+% \end{color}
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsignature}
+%   Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\FXLayoutPDFCSigMargin}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFCSigMargin[3]{%
+  \@fxdosig{#3}%
+  \pdfmargincomment[author=#3,color=fx#1]{#2\@fxsignature}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfcsigmargin}
+%   \begin{booleanoption}{pdfcsigmargin}
+%    \begin{macrocode}
+\FXRegisterLayout*[margin,marginclue,marginnote,pdfmargin,pdfsigmargin]{%
+  pdfcsigmargin}{%
+  \FXLayoutPDFCSigMargin}
+%</fxlayoutpdfcsigmargin>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
 % \subsection{Environment layouts}
 % \subsubsection{The \texttt{color} layout}
 % \begin{envlayout}{color}
