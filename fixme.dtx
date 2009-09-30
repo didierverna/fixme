@@ -8,7 +8,7 @@
 % Author:        Didier Verna <didier@lrde.epita.fr>
 % Maintainer:    Didier Verna <didier@lrde.epita.fr>
 % Created:       Thu Dec 10 16:04:01 1998
-% Last Revision: Thu Jul 16 19:55:00 2009
+% Last Revision: Wed Sep 30 18:01:02 2009
 %
 % This file is part of FiXme.
 %
@@ -515,6 +515,14 @@
 %     \texttt{pdfnote}\\
 %     \texttt{pdfsigmargin} & \texttt{*} & Display signed note ala
 %     \texttt{pdfmargin}\\
+%     \texttt{pdfcnote} & \texttt{*} & Display colored note ala
+%     \texttt{pdfnote}\\
+%     \texttt{pdfcmargin} & \texttt{*} & Display colored note ala
+%     \texttt{pdfmargin}\\
+%     \texttt{pdfcsignote} & \texttt{*} & Display colored note ala
+%     \texttt{pdfcsignote}\\
+%     \texttt{pdfcsigmargin} & \texttt{*} & Display colored note ala
+%     \texttt{pdfsigmargin}\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
@@ -558,14 +566,28 @@
 % \DescribeLayout[noprint]{pdfsignote}
 % \DescribeBooleanOption{pdfsigmargin}
 % \DescribeLayout[noprint]{pdfsigmargin}
+% \DescribeBooleanOption{pdfcnote}
+% \DescribeLayout[noprint]{pdfcnote}
+% \DescribeBooleanOption{pdfcmargin}
+% \DescribeLayout[noprint]{pdfcmargin}
+% \DescribeBooleanOption{pdfcsignote}
+% \DescribeLayout[noprint]{pdfcsignote}
+% \DescribeBooleanOption{pdfcsigmargin}
+% \DescribeLayout[noprint]{pdfcsigmargin}
 % The PDF format comes with a concept of \emph{comment}, which \fx can use to
 % display its own annotations. Support for PDF comments varies across PDF
 % viewers. Acrobat Reader is usually considered a reference, and MacOS X's
 % Preview supports them reasonably well. The \texttt{pdfnote} and
 % \texttt{pdfmargin} layouts use the \texttt{pdfcomment} package to display
-% annotations as PDF inline or marginal comments. The \texttt{sig} versions
-% additionally display the author's tag (see \sectionref{sec:manual:modes}) as
-% a signature instead of as a prefix.
+% annotations as PDF inline or marginal comments.
+%
+% The \texttt{sig} versions additionally display the author's tag (see
+% \sectionref{sec:manual:modes}) as a signature instead of as a prefix.
+%
+% The versions with a \texttt{c} in their name (as in \textbf{c}olor) use one
+% of four different colors named \texttt{fx}\meta{level} (according to the
+% annotation's importance level). They also avoid printing the annotation's
+% level since this information is already conveyed by the color.
 %
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
@@ -1466,7 +1488,7 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
-% \item[v4.1] 4 new PDF-specific annotation layouts\\
+% \item[v4.1] 8 new PDF-specific annotation layouts\\
 %   New annotation layout: \texttt{marginnote}.\\
 %   Better mechanism for handling layout mutual exclusion.\\
 %   Fix bug in inner layout processing.
