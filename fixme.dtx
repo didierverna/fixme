@@ -481,24 +481,15 @@
 %   that, you can select any of those layouts anywhere you wish.
 % \end{enumerate}
 %
-% \newpage
 % \subsubsection{Available layouts}
 % \DescribeBooleanOption{inline}
 % \DescribeBooleanOption{margin}
 % \DescribeBooleanOption{footnote}
 % \DescribeBooleanOption{index}
-% \DescribeBooleanOption{marginclue}
-% \DescribeBooleanOption{marginnote}
-% \DescribeBooleanOption{pdfnote}
-% \DescribeBooleanOption{pdfmargin}
 % \DescribeLayout[noprint]{inline}
 % \DescribeLayout[noprint]{margin}
 % \DescribeLayout[noprint]{footnote}
 % \DescribeLayout[noprint]{index}
-% \DescribeLayout[noprint]{marginclue}
-% \DescribeLayout[noprint]{marginnote}
-% \DescribeLayout[noprint]{pdfnote}
-% \DescribeLayout[noprint]{pdfmargin}
 % Table \ref{table:layouts} lists the annotation layouts currently distributed
 % with \fx. By default, only the \texttt{margin} layout is active. Most of
 % these layouts should be self-explanatory, but some precisions are given
@@ -517,9 +508,13 @@
 %     \texttt{marginclue} & & Display a marginal clue\\
 %     \texttt{marginnote} & \texttt{*} & Display non-floating note in the
 %     margin\\
-%     \texttt{pdfnote} & \texttt{*} & Display note as inline PDF annotation\\
+%     \texttt{pdfnote} & \texttt{*} & Display note as inline PDF comment\\
 %     \texttt{pdfmargin} & \texttt{*} & Display note as marginal PDF
-%     annotation\\
+%     comment\\
+%     \texttt{pdfsignote} & \texttt{*} & Display signed note ala
+%     \texttt{pdfnote}\\
+%     \texttt{pdfsigmargin} & \texttt{*} & Display signed note ala
+%     \texttt{pdfmargin}\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
@@ -527,6 +522,8 @@
 %   \label{table:layouts}
 % \end{table}
 % \paragraph{\texttt{marginclue}}
+% \DescribeBooleanOption{marginclue}
+% \DescribeLayout[noprint]{marginclue}
 % If your preferred layout is \texttt{inline} or say, \texttt{footnote},it
 % might be somewhat difficult to localize the annotation on the page,
 % especially its vertical position. That's where marginal clues come into
@@ -540,6 +537,8 @@
 % enabled (and you'll get a notice in the log file and on the terminal).
 %
 % \paragraph{\texttt{marginnote}}
+% \DescribeBooleanOption{marginnote}
+% \DescribeLayout[noprint]{marginnote}
 % The \texttt{marginnote} layout is an alternate (external) way to display
 % annotations in the margin, using the eponymous package. Contrary to \LaTeX's
 % standard marginal paragraphs, the ones issued by \texttt{marginnote} are
@@ -550,13 +549,23 @@
 % currently possible to pass options to the \cs{marginnote} command through
 % this layout.
 %
-% \paragraph{PDF annotations}
+% \paragraph{PDF comments}
+% \DescribeBooleanOption{pdfnote}
+% \DescribeLayout[noprint]{pdfnote}
+% \DescribeBooleanOption{pdfmargin}
+% \DescribeLayout[noprint]{pdfmargin}
+% \DescribeBooleanOption{pdfsignote}
+% \DescribeLayout[noprint]{pdfsignote}
+% \DescribeBooleanOption{pdfsigmargin}
+% \DescribeLayout[noprint]{pdfsigmargin}
 % The PDF format comes with a concept of \emph{comment}, which \fx can use to
 % display its own annotations. Support for PDF comments varies across PDF
 % viewers. Acrobat Reader is usually considered a reference, and MacOS X's
 % Preview supports them reasonably well. The \texttt{pdfnote} and
 % \texttt{pdfmargin} layouts use the \texttt{pdfcomment} package to display
-% annotations as PDF inline or marginal comments.
+% annotations as PDF inline or marginal comments. The \texttt{sig} versions
+% additionally display the author's tag (see \sectionref{sec:manual:modes}) as
+% a signature instead of as a prefix.
 %
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
@@ -1457,7 +1466,8 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
-% \item[v4.1] New annotation layout: \texttt{marginnote}.\\
+% \item[v4.1] 4 new PDF-specific annotation layouts\\
+%   New annotation layout: \texttt{marginnote}.\\
 %   Better mechanism for handling layout mutual exclusion.\\
 %   Fix bug in inner layout processing.
 % \item[v4.0] Support for collaborative annotations, suggested by Michael
