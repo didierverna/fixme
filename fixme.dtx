@@ -1263,7 +1263,7 @@
 %
 % \paragraph{Registering late layouts}
 % \begin{sloppypar}
-%   \DescribeMacro{\FXRegisterLayout}\oarg{boolfunc}\marg{name}\marg{macro}\\
+%   \DescribeMacro{\FXRegisterLayout}\oarg{mutex}\marg{name}\marg{macro}\\
 %   In order to register a late annotation layout with \fx, use the command
 %   \cs{FXRegisterLayout}. This macro has two mandatory arguments: the layout
 %   \meta{name} (at least 3 characters long) and the associated layout
@@ -1273,12 +1273,17 @@
 % \begin{verbatim}
 % \FXRegisterLayout{inline}{\FXLayoutInline}
 % \end{verbatim}
-% The first (optional) argument may provide code that will be executed when
-% the layout is activated (it is used for instance to implement mutual
-% exclusion between the \texttt{margin} and \texttt{marginclue} layouts. Once
-% registered, the new layout gets a boolean option \meta{name} and is also
-% recognized by the \texttt{layout} and \texttt{morelayout} options, as well
-% as by the \cs{fxuselayouts} command as \meta{name}.
+% Once registered, the new layout gets a boolean option \meta{name} and is
+% also recognized by the \texttt{layout} and \texttt{morelayout} options, as
+% well as by the \cs{fxuselayouts} command as \meta{name}.
+%
+% The first (optional) argument \meta{mutex} is a comma-separated list of
+% other layout names that should be in mutual exclusion with the layout we are
+% registering (for example, the \texttt{margin} and \texttt{marginclue}
+% layouts are in mutual exclusion). Note that mutual exclusion between two
+% layouts need only be registered once. In other words, a previsouly
+% registered layout will automatically be made aware of subsequent mutex
+% declarations.
 %
 % \paragraph{Registering early layouts}
 % \DescribeMacro{\FXRegisterLayout*}\oarg{boolfunc}\marg{name}\marg{macro}\\
@@ -1438,6 +1443,7 @@
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
 % \item[v4.1] New annotation layout: \texttt{marginnote}.\\
+%   Better mechanism for handling layout mutual exclusion.\\
 %   Fix bug in inner layout processing.
 % \item[v4.0] Support for collaborative annotations, suggested by Michael
 %   Kubovy.\\
@@ -3609,9 +3615,6 @@
 % \end{macro}
 % \begin{macro}{\@fxlayout@marginnote}
 %   \begin{booleanoption}{marginnote}
-%     Currently, there is no easy way to define mutual exclusions between
-%     layouts. We can have this one turn off the other (built-in) marginal
-%     layouts, but not the other way around.
 %    \begin{macrocode}
 \FXRegisterLayout*[margin,marginclue]{marginnote}{\FXLayoutMarginNote}
 %</fxlayoutmarginnote>

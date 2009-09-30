@@ -21,6 +21,7 @@ FiXme consists of the files listed in the file `README'.
 * Version 4.1
 =============
 ** New annotation layout: marginnote
+** Better mechanism for handling layout mutual exclusion
 ** Fix bug in inner layout processing
 
 * Version 4.0
