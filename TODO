@@ -38,8 +38,6 @@ nice to have local lists of fixmes and stuff...
 * See if we want more than the silent option. For instance
   silent={log,tty,summary,all}.
 
-* Implement a more general mechanism for layout mutual exclusion.
-
 * There are still some "Floats Lost" problems despite the inner mode handling.
 This happens notably with the warning level, apparently because "warning" is
 longer than the other prefixes.

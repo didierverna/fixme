@@ -1941,17 +1941,48 @@
 \newcommand*\FXProvidesLayout[1]{\ProvidesPackage{fxlayout#1}}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxrecordlayoutmutex}
+%   \marg{layout}\marg{layouts}\\
+%   Record mutual exclusion between \meta{layout} and the comma-separated list
+%   of \meta{layouts}. For each \meta{layout}, the mutual exclusion list is
+%   stored in \cs{@fxlayout@}\meta{layout}\texttt{@mutex}.
+%    \begin{macrocode}
+\newcommand*\@fxrecordlayoutmutex[2]{%
+  \edef\@fxlts{\zap@space#2 \@empty}%
+  \def\@fxexpr{\@fxaddtolist{@fxlayout@#1@mutex}}%
+  \expandafter\@fxexpr\expandafter{\@fxlts}%
+  \@for\@fxlt:=\@fxlts\do{\@fxaddtolist{@fxlayout@\@fxlt @mutex}{#1}}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxhandlelayoutmutex}
+%   \marg{layout}\\
+%   Handle \meta{layout}'s mutual exclusion list.
+%    \begin{macrocode}
+\newcommand*\@fxhandlelayoutmutex[1]{%
+  \ifthenelse{\boolean{fx@layout@#1}}{%
+    \def\@fxexpr{\@for\@fxlt:=}%
+    \expandafter\@fxexpr\csname @fxlayout@#1@mutex\endcsname\do{%
+      \ifthenelse{\boolean{fx@layout@\@fxlt}}{%
+        \@fxpkgwarning{%
+          #1 layout requested;\MessageBreak
+          turning \@fxlt\space layout off}%
+        \@nameuse{fx@layout@\@fxlt}{false}}{}}}{}}
+
+%    \end{macrocode}
+% \end{macro}
 % \begin{macro}{\@FXRegisterLayout}
-%   \marg{when}\oarg{boolfunc}\marg{name}\marg{funcname}\\
+%   \marg{when}\oarg{mutex}\marg{name}\marg{funcname}\\
 %   Register a new layout with \fx. This currently involves creating the
 %   boolean layout option with an optional function argument, constructing the
 %   translation macro to call the actual layout macro, and updating the
 %   appropriate layout list (early or late). The translation macro can't be
-%   \cs{let} to the real one, because themes might want to redefine latter.
+%   \cs{let} to the real one, because themes might want to redefine latter. An
+%   optional mutual exclusion list may also be given.
 %    \begin{macrocode}
 \def\@FXRegisterLayout#1[#2]#3#4{%
   \@fxkeyifundefined{layout}{#3}{%
-    \@fxdefineboolkey[#2]{layout}{#3}%
+    \@fxrecordlayoutmutex{#3}{#2}%
+    \@fxdefineboolkey[\@fxhandlelayoutmutex{#3}]{layout}{#3}%
     \expandafter\def\csname @fxlayout@#3\endcsname{#4}%
     \@fxaddtolist{@fx#1layouts}{#3}}{%
     \@fxpkgerror{layout '#3' already registered}{%
@@ -2001,13 +2032,7 @@
 %   \begin{booleanoption}{margin}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout*[%
-  \ifthenelse{\boolean{fx@layout@margin}\and\boolean{fx@layout@marginclue}}{%
-    \@fxpkgwarning{%
-      marginal notes requested;\MessageBreak
-      turning marginal clues off}%
-    \fx@layout@marginclue{false}}]{%
-    margin}{\FXLayoutMargin}
+\FXRegisterLayout*{margin}{\FXLayoutMargin}
 %    \end{macrocode}
 % \end{booleanoption}
 % \end{macro}
@@ -2028,13 +2053,7 @@
 %   \begin{booleanoption}{marginclue}
 %     \mbox{}
 %    \begin{macrocode}
-\FXRegisterLayout*[%
-  \ifthenelse{\boolean{fx@layout@marginclue}\and\boolean{fx@layout@margin}}{%
-    \@fxpkgwarning{%
-      marginal clues requested;\MessageBreak
-      turning marginal notes off}%
-    \fx@layout@margin{false}}]{%
-    marginclue}{\FXLayoutMarginClue}
+\FXRegisterLayout*[margin]{marginclue}{\FXLayoutMarginClue}
 %    \end{macrocode}
 % \end{booleanoption}
 % \end{macro}
@@ -3594,19 +3613,7 @@
 %     layouts. We can have this one turn off the other (built-in) marginal
 %     layouts, but not the other way around.
 %    \begin{macrocode}
-\FXRegisterLayout*[%
-  \ifthenelse{\boolean{fx@layout@marginnote}}{%
-    \ifthenelse{\boolean{fx@layout@margin}}{%
-      \@fxpkgwarning{%
-        marginnote layout requested;\MessageBreak
-        turning margin layout off}%
-      \fx@layout@margin{false}}{}%
-    \ifthenelse{\boolean{fx@layout@marginclue}}{%
-      \@fxpkgwarning{%
-        marginnote layout requested;\MessageBreak
-        turning marginclue layout off}%
-      \fx@layout@marginclue{false}}{}}{}]{%
-    marginnote}{\FXLayoutMarginNote}
+\FXRegisterLayout*[margin,marginclue]{marginnote}{\FXLayoutMarginNote}
 %</fxlayoutmarginnote>
 %    \end{macrocode}
 % \end{booleanoption}
