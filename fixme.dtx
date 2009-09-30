@@ -3623,6 +3623,63 @@
 % \end{macro}
 % \end{layout}
 %
+% \subsubsection{The \texttt{pdfnote} layout}
+% \begin{layout}{pdfnote}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfnote>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfnote}
+
+\RequirePackage{pdfcomment}
+
+%    \end{macrocode}
+% \begin{macro}{\FXLayoutPDFNote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFNote[3]{%
+  \pdfcomment[author=#3]{\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfnnote}
+%   \begin{booleanoption}{pdfnote}
+%    \begin{macrocode}
+\FXRegisterLayout*{pdfnote}{\FXLayoutPDFNote}
+%</fxlayoutpdfnote>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
+% \subsubsection{The \texttt{pdfmarginnote} layout}
+% \begin{layout}{pdfmarginnote}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfmarginnote>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfmarginnote}
+
+\RequirePackage{pdfcomment}
+
+%    \end{macrocode}
+% \begin{macro}{\FXLayoutPDFMarginNote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFMarginNote[3]{%
+  \pdfmargincomment[author=#3]{\ignorespaces#3 \fxnotename{#1}: #2}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfmarginnote}
+%   \begin{booleanoption}{pdfmarginnote}
+%    \begin{macrocode}
+\FXRegisterLayout*[margin,marginclue,marginnote]{pdfmarginnote}{%
+  \FXLayoutPDFMarginNote}
+%</fxlayoutpdfmarginnote>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
 % \subsection{Environment layouts}
 % \subsubsection{The \texttt{color} layout}
 % \begin{envlayout}{color}
