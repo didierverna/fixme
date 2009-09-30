@@ -489,16 +489,20 @@
 % \DescribeBooleanOption{index}
 % \DescribeBooleanOption{marginclue}
 % \DescribeBooleanOption{marginnote}
+% \DescribeBooleanOption{pdfnote}
+% \DescribeBooleanOption{pdfmargin}
 % \DescribeLayout[noprint]{inline}
 % \DescribeLayout[noprint]{margin}
 % \DescribeLayout[noprint]{footnote}
 % \DescribeLayout[noprint]{index}
 % \DescribeLayout[noprint]{marginclue}
 % \DescribeLayout[noprint]{marginnote}
+% \DescribeLayout[noprint]{pdfnote}
+% \DescribeLayout[noprint]{pdfmargin}
 % Table \ref{table:layouts} lists the annotation layouts currently distributed
-% with \fx. By default, only the \texttt{margin} layout is active. While most
-% of these layouts should be self-explanatory, the last two of them  deserve a
-% bit more explanation.
+% with \fx. By default, only the \texttt{margin} layout is active. Most of
+% these layouts should be self-explanatory, but some precisions are given
+% below.
 % \begin{table}
 %   \centering
 %   \DeleteShortVerb{\|}
@@ -513,6 +517,9 @@
 %     \texttt{marginclue} & & Display a marginal clue\\
 %     \texttt{marginnote} & \texttt{*} & Display non-floating note in the
 %     margin\\
+%     \texttt{pdfnote} & \texttt{*} & Display note as inline PDF annotation\\
+%     \texttt{pdfmargin} & \texttt{*} & Display note as marginal PDF
+%     annotation\\
 %     \hline
 %   \end{tabular}
 %   \MakeShortVerb{\|}
@@ -542,6 +549,14 @@
 % documentation, and also read the next section. Also, note that it is not
 % currently possible to pass options to the \cs{marginnote} command through
 % this layout.
+%
+% \paragraph{PDF annotations}
+% The PDF format comes with a concept of \emph{comment}, which \fx can use to
+% display its own annotations. Support for PDF comments varies across PDF
+% viewers. Acrobat Reader is usually considered a reference, and MacOS X's
+% Preview supports them reasonably well. The \texttt{pdfnote} and
+% \texttt{pdfmargin} layouts use the \texttt{pdfcomment} package to display
+% annotations as PDF inline or marginal comments.
 %
 % \subsubsection{Inner layout}
 % There might be various reasons for you to change the layout locally for one
