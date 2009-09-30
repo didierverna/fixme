@@ -3696,6 +3696,89 @@
 % \end{macro}
 % \end{layout}
 %
+% \subsubsection{The \texttt{pdfsignote} layout}
+% \begin{layout}{pdfsignote}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfsignote>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfsignote}
+
+\RequirePackage{pdfcomment}
+
+%    \end{macrocode}
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsignature}
+%   Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\FXLayoutPDFSigNote}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFSigNote[3]{%
+  \@fxdosig{#3}%
+  \pdfcomment[author=#3]{\fxnotename{#1}: #2\@fxsignature}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfsignnote}
+%   \begin{booleanoption}{pdfsignote}
+%    \begin{macrocode}
+\FXRegisterLayout*[pdfnote]{pdfsignote}{\FXLayoutPDFSigNote}
+%</fxlayoutpdfsignote>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
+% \subsubsection{The \texttt{pdfsigmargin} layout}
+% \begin{layout}{pdfsigmargin}
+%   \mbox{}
+%    \begin{macrocode}
+%<*fxlayoutpdfsigmargin>
+\NeedsTeXFormat{LaTeX2e}
+\FXProvidesLayout{pdfsigmargin}
+
+\RequirePackage{pdfcomment}
+
+%    \end{macrocode}
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsignature}
+%   Use a signature of the form ``-- sig'', unless author is empty.
+%    \begin{macrocode}
+\providecommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}{\FXLayoutPDFSigMargin}
+%   \marg{type}\marg{note}\marg{author}
+%    \begin{macrocode}
+\newcommand*\FXLayoutPDFSigMargin[3]{%
+  \@fxdosig{#3}%
+  \pdfmargincomment[author=#3]{\fxnotename{#1}: #2\@fxsignature}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxlayout@pdfsigmargin}
+%   \begin{booleanoption}{pdfsigmargin}
+%    \begin{macrocode}
+\FXRegisterLayout*[margin,marginclue,marginnote,pdfmargin]{pdfsigmargin}{%
+  \FXLayoutPDFSigMargin}
+%</fxlayoutpdfsigmargin>
+%    \end{macrocode}
+% \end{booleanoption}
+% \end{macro}
+% \end{layout}
+%
 % \subsection{Environment layouts}
 % \subsubsection{The \texttt{color} layout}
 % \begin{envlayout}{color}
