@@ -1983,11 +1983,12 @@
   \ifthenelse{\boolean{fx@layout@#1}}{%
     \def\@fxexpr{\@for\@fxlt:=}%
     \expandafter\@fxexpr\csname @fxlayout@#1@mutex\endcsname\do{%
-      \ifthenelse{\boolean{fx@layout@\@fxlt}}{%
-        \@fxpkgwarning{%
-          #1 layout requested;\MessageBreak
-          turning \@fxlt\space layout off}%
-        \@nameuse{fx@layout@\@fxlt}{false}}{}}}{}}
+      \@ifundefined{iffx@layout@\@fxlt}{}{%
+        \ifthenelse{\boolean{fx@layout@\@fxlt}}{%
+          \@fxpkgwarning{%
+            #1 layout requested;\MessageBreak
+            turning \@fxlt\space layout off}%
+          \@nameuse{fx@layout@\@fxlt}{false}}{}}}}{}}
 
 %    \end{macrocode}
 % \end{macro}
