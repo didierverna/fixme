@@ -1730,8 +1730,8 @@
      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
      {#4}\nobreak
      \leaders\hbox{$\m@th
-	\mkern \@dotsep mu\hbox{.}\mkern \@dotsep
-	mu$}\hfill
+       \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+       mu$}\hfill
      \nobreak
      #5\par}%
   \fi}
@@ -2698,12 +2698,12 @@
   \ifinner%
     \ifthenelse{\boolean{fx@layout@margin}}{%
       \@fxpkginfo{%
-	inner mode detected;\MessageBreak
-	turning margin layout form off}}{%
+        inner mode detected;\MessageBreak
+        turning margin layout form off}}{%
       \ifthenelse{\boolean{fx@layout@marginclue}}{%
-	\@fxpkginfo{%
-	  inner mode detected;\MessageBreak
-	  turning marginclue layout form off}}{}}%
+        \@fxpkginfo{%
+          inner mode detected;\MessageBreak
+          turning marginclue layout form off}}{}}%
     \expandafter\@fxsetlayoutkeys\expandafter{%
       \cmdfx@layout@innerlayout,nomargin,nomarginclue}%
   \fi}
@@ -3555,21 +3555,21 @@
       \let\@lox@prtc\@lox@prtc@book%
       \let\@lox@psttc\@lox@psttc@book}{%
       \@ifclassloaded{scrartcl}{%
-	\let\@lox@prtc\@lox@prtc@scrartcl%
-	\let\@lox@psttc\@lox@psttc@scrartcl}{%
-	\@ifclassloaded{scrreprt}{%
-	  \let\@lox@prtc\@lox@prtc@scrreprt%
-	  \let\@lox@psttc\@lox@psttc@scrreprt}{%
-	  \@ifclassloaded{scrbook}{%
-	    \let\@lox@prtc\@lox@prtc@scrbook%
-	    \let\@lox@psttc\@lox@psttc@scrbook}{%
-	    \@ifclassloaded{amsbook}{%
-	      \let\lox@draft\lox@draft@ams}{%
-	      \@ifclassloaded{amsart}{%
-		\let\lox@draft\lox@draft@ams}{%
-		%% Use the article layout by default.
-		\let\@lox@prtc\@lox@prtc@article%
-		\let\@lox@psttc\@lox@psttc@article}}}}}}}}
+        \let\@lox@prtc\@lox@prtc@scrartcl%
+        \let\@lox@psttc\@lox@psttc@scrartcl}{%
+        \@ifclassloaded{scrreprt}{%
+          \let\@lox@prtc\@lox@prtc@scrreprt%
+          \let\@lox@psttc\@lox@psttc@scrreprt}{%
+          \@ifclassloaded{scrbook}{%
+            \let\@lox@prtc\@lox@prtc@scrbook%
+            \let\@lox@psttc\@lox@psttc@scrbook}{%
+            \@ifclassloaded{amsbook}{%
+              \let\lox@draft\lox@draft@ams}{%
+              \@ifclassloaded{amsart}{%
+                \let\lox@draft\lox@draft@ams}{%
+                %% Use the article layout by default.
+                \let\@lox@prtc\@lox@prtc@article%
+                \let\@lox@psttc\@lox@psttc@article}}}}}}}}
 
 %    \end{macrocode}
 % \end{macro}
