@@ -2,11 +2,9 @@
 
 ;; Copyright (C) 2000, 2002, 2004, 2006, 2009 Didier Verna.
 
-;; Author:        Didier Verna <didier@lrde.epita.fr>
-;; Maintainer:    Didier Verna <didier@lrde.epita.fr>
-;; Created:       Tue Apr 18 14:49:29 2000
-;; Last Revision: Sat Sep 19 14:19:30 2009
-;; Keywords:      tex abbrev data
+;; Author: Didier Verna <didier@didierverna.net>
+;; Created: Tue Apr 18 14:49:29 2000
+;; Keywords: tex abbrev data
 
 
 ;; This file is part of FiXme.
