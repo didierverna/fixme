@@ -1,6 +1,6 @@
 ;;; fixme.el --- AUC-TeX style file for FiXme
 
-;; Copyright (C) 2000, 2002, 2004, 2006, 2009 Didier Verna.
+;; Copyright (C) 2000, 2002, 2004, 2006, 2009 Didier Verna
 
 ;; Author: Didier Verna <didier@didierverna.net>
 ;; Created: Tue Apr 18 14:49:29 2000
