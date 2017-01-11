@@ -2173,7 +2173,7 @@
 \def\@wrindex#1{%
   \ifthenelse{\equal{\cmdfx@note@target}{thepage}}{%
     \protected@write\@indexfile{}{\string\indexentry{#1}{\thepage}}}{%
-    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@note@target}}}
+    \protected@write\@indexfile{}{\string\indexentry{#1}{\cmdfx@note@target}}}%
   \endgroup
   \@esphack}
 %    \end{macrocode}
