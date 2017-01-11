@@ -17,6 +17,11 @@ version 1999/06/01 or later.
 
 FiXme consists of the files listed in the file `README'.
 
+* Version 4.2
+** Improve Danish translation
+thanks to Lars Madsen.
+** Fix buglet in redefinition of \@wrindex
+reported by Norman Gray.
 
 * Version 4.1
 ** 8 new PDF-specific annotation layouts.
