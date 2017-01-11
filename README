@@ -26,7 +26,6 @@ FiXme consists of the following files:
 
 
 * Description
-=============
 
 FiXme is a collaborative annotation tool for LaTeX documents. Annotating a
 document refers here to inserting meta-notes, that is, notes that do not
@@ -48,23 +47,22 @@ FiXme homepage: http://www.lrde.epita.fr/~didier/software/latex.php#fixme
 
 
 * Installation
-==============
 
 If you are building FiXme from the tarball you need to execute the following
 steps in order to extract the necessary files. FiXme also requires the DoX
 package (version 2.0, release date 2009/09/21 or later), to build. It is not
 required to use the paclage.
 
-[pdf]latex fixme.ins 
-[pdf]latex fixme.dtx 
-[pdf]latex fixme.dtx 
-makeindex -s gind fixme.idx 
-[pdf]latex fixme.dtx 
-[pdf]latex fixme.dtx 
+[pdf]latex fixme.ins
+[pdf]latex fixme.dtx
+[pdf]latex fixme.dtx
+makeindex -s gind fixme.idx
+[pdf]latex fixme.dtx
+[pdf]latex fixme.dtx
 
 After that, you need to install the generated documentation and style files to
 a location where LATEX can find them. For a TDS-compliant layout, the
-following locations are suggested: 
+following locations are suggested:
 
 [TEXMF]/tex/latex/fixme/fixme.sty
 [TEXMF]/tex/latex/fixme/layouts/fxlayout*.sty
@@ -75,15 +73,6 @@ following locations are suggested:
 
 If you're an AUC-TeX user, you may also install the file 'fixme.el' in a
 suitable AUC-TeX style directory.
-
-
-	Have fun!
-
---
-Didier Verna <didier@lrde.epita.fr>
-
-Sientific site:    http://www.lrde.epita.fr/~didier
-Music (Jazz) site: http://www.didierverna.com
 
 
 
