@@ -1482,7 +1482,9 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
-% \item[v4.x.x] Fix several parsing problems when passing optional arguments
+% \item[v4.3] Separate inline notes from the text they follow, suggested by
+%   Victor Porton.\\
+%   Fix several parsing problems when passing optional arguments
 %   containing brackets, thanks to Joseph Wright and Lars Madsen.
 % \item[v4.2] Improve Danish translation, thanks to Lars Madsen.\\
 %   Fix buglet in \cs{@wrindex} redefinition, reported by Norman
@@ -2143,7 +2145,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutInline[3]{%
-  {\@fxuseface{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
+  { \@fxuseface{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@inline}
@@ -4300,7 +4302,7 @@
     \raggedright\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\@fxuseface{inline}\fxnotename{#1}: #2\@fxsignature}}
+  { \@fxuseface{inline}\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -4354,7 +4356,7 @@
     \raggedright\@fxuseface{margin}\color{fx#1}\ignorespaces#3!}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdocolon{#3}%
-  {\@fxuseface{inline}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
+  { \@fxuseface{inline}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutIndex[3]{%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
@@ -4410,7 +4412,7 @@
     \raggedright\@fxuseface{margin}\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  {\@fxuseface{inline}\color{fx#1}#2\@fxsignature}}
+  { \@fxuseface{inline}\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
