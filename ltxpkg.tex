@@ -1,0 +1,71 @@
+%%% ltxpkg.tex --- DocStrip overrides for extracting package dependencies
+
+%% Copyright (C) 2017 Didier Verna
+
+%% Author: Didier Verna <didier@didierverna.net>
+
+%% This file is part of LtxPkg.
+
+%% Permission to use, copy, modify, and distribute this software for any
+%% purpose with or without fee is hereby granted, provided that the above
+%% copyright notice and this permission notice appear in all copies.
+
+%% THIS SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+%% WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+%% MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+%% ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+%% WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+%% ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+%% OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+%%% Commentary:
+
+% LtxPkg is a generic infrastructure for maintaining LaTeX packages.  This
+% file overrides the \@from DocString command to output Makefile lines. Each
+% line starts with ltxpkg:<space> for easy grepping.
+
+%% Usage:
+
+% Every ins file should contain the following line, just after
+% \input docstrip.tex:
+% \InputIfFileExists{ltxpkg.tex}{}{}
+% The `ltxpkg-install' installation script automates that.
+
+
+%%% Code:
+
+\newwrite\@makefile
+\immediate\openout\@makefile\jobname.mak
+\def\@@makoutput#1{\immediate\write\@makefile{#1}}
+\bgroup\catcode9=12
+  \global\def\@makoutput#1{\@@makoutput{^^09#1}}
+\egroup
+\def\makoutput{\@ifstar{\@makoutput}{\@@makoutput}}
+
+\def\filename@ext@cls{cls}
+\def\filename@ext@sty{sty}
+
+\let\@old@from\@from
+\def\@from#1#2{
+  \begingroup
+    \filename@parse{\@pathname}
+    \ifx\filename@ext\filename@ext@cls
+      \makoutput{CLS_FILES += \@pathname}
+    \else
+      \ifx\filename@ext\filename@ext@sty
+       \makoutput{STY_FILES += \@pathname} % wrong indent to prevent a TAB
+      \fi
+    \fi
+  \endgroup
+  \makoutput{GEN_FILES += \@pathname}
+  \makoutput{\@pathname: #1}
+  \makeatletter\makoutput*{@echo "Building $@..."}\makeatother
+  \makoutput*{$(LATEX) \jobname.ins}
+  \@old@from{#1}{#2}}
+
+\let\@old@reporttotals\ReportTotals
+\def\ReportTotals{\immediate\closeout\@makefile\@old@reporttotals}
+
+
+%%% ltxpkg.tex ends here
