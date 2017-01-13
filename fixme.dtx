@@ -2078,7 +2078,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
   \marginpar[%
-  \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
+  {\raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}]{%
     \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 % \end{macro}
@@ -2099,7 +2099,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginClue[3]{%
   \marginpar[%
-  \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!]{%
+  {\raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!}]{%
     \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}!}}
 %    \end{macrocode}
 % \end{macro}
@@ -3657,7 +3657,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginNote[3]{%
   \marginnote[%
-  \raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2]{%
+  {\raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}]{%
     \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 % \end{macro}
@@ -3686,7 +3686,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFNote[3]{%
-  \pdfcomment[author=#3]{\ignorespaces#3 \fxnotename{#1}: #2}}
+  \pdfcomment[author={#3}]{\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfnote}
@@ -3714,7 +3714,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFMargin[3]{%
-  \pdfmargincomment[author=#3]{\ignorespaces#3 \fxnotename{#1}: #2}}
+  \pdfmargincomment[author={#3}]{\ignorespaces#3 \fxnotename{#1}: #2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfmargin}
@@ -3756,7 +3756,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigNote[3]{%
   \@fxdosig{#3}%
-  \pdfcomment[author=#3]{\fxnotename{#1}: #2\@fxsignature}}
+  \pdfcomment[author={#3}]{\fxnotename{#1}: #2\@fxsignature}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsignote}
@@ -3797,7 +3797,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigMargin[3]{%
   \@fxdosig{#3}%
-  \pdfmargincomment[author=#3]{\fxnotename{#1}: #2\@fxsignature}}
+  \pdfmargincomment[author={#3}]{\fxnotename{#1}: #2\@fxsignature}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsigmargin}
@@ -3854,7 +3854,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFCNote[3]{%
   \@fxdocolon{#3}%
-  \pdfcomment[author=#3,color=fx#1]{\ignorespaces#3\@fxcolon#2}}
+  \pdfcomment[author={#3},color={fx#1}]{\ignorespaces#3\@fxcolon#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfcnote}
@@ -3910,7 +3910,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFCMargin[3]{%
   \@fxdocolon{#3}%
-  \pdfmargincomment[author=#3,color=fx#1]{\ignorespaces#3\@fxcolon#2}}
+  \pdfmargincomment[author={#3},color={fx#1}]{\ignorespaces#3\@fxcolon#2}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfcmargin}
@@ -3970,7 +3970,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFCSigNote[3]{%
   \@fxdosig{#3}%
-  \pdfcomment[author=#3,color=fx#1]{#2\@fxsignature}}
+  \pdfcomment[author={#3},color={fx#1}]{#2\@fxsignature}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfcsignote}
@@ -4029,7 +4029,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFCSigMargin[3]{%
   \@fxdosig{#3}%
-  \pdfmargincomment[author=#3,color=fx#1]{#2\@fxsignature}}
+  \pdfmargincomment[author={#3},color={fx#1}]{#2\@fxsignature}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfcsigmargin}
@@ -4293,11 +4293,11 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \raggedleft\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature]{%
+  {\raggedleft\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature}]{%
     \raggedright\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\raggedleft\@fxuseface{margin}\fxnotename{#1}!\@fxsignature]{%
+  \marginpar[{\raggedleft\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}]{%
     \raggedright\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
@@ -4348,10 +4348,10 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdocolon{#3}%
   \marginpar[%
-  \raggedleft\@fxuseface{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2]{%
+  {\raggedleft\@fxuseface{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2}]{%
     \raggedright\@fxuseface{margin}\color{fx#1}\ignorespaces#3\@fxcolon#2}}
 \renewcommand*\FXLayoutMarginClue[3]{%
-  \marginpar[\raggedleft\@fxuseface{margin}\color{fx#1}\ignorespaces#3!]{%
+  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}\ignorespaces#3!}]{%
     \raggedright\@fxuseface{margin}\color{fx#1}\ignorespaces#3!}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdocolon{#3}%
@@ -4403,11 +4403,11 @@
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
   \marginpar[%
-  \raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature]{%
+  {\raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature}]{%
     \raggedright\@fxuseface{margin}\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
-  \marginpar[\raggedleft\@fxuseface{margin}\color{fx#1}!\@fxsignature]{%
+  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}!\@fxsignature}]{%
     \raggedright\@fxuseface{margin}\color{fx#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
