@@ -1,9 +1,8 @@
 %%% fixme.ins --- Installation file for FiXme
 
-%% Copyright (C) 1998-2002, 2004, 2007, 2009, 2013 Didier Verna
+%% Copyright (C) 1998-2002, 2004, 2007, 2009, 2013, 2017 Didier Verna
 
 %% Author: Didier Verna <didier@didierverna.net>
-%% Created: Thu Dec 10 16:04:01 1998
 
 %% This file is part of FiXme.
 
@@ -20,8 +19,6 @@
 
 %%% Commentary:
 
-%% Contents management by FCM version 0.1.
-
 
 %%% Code:
 
@@ -33,7 +30,7 @@
 
 \preamble
 ^^J^^J
-Copyright (C) 1998-2002, 2004-2007, 2009, 2013 Didier Verna^^J
+Copyright (C) 1998-2002, 2004-2007, 2009, 2013, 2017 Didier Verna^^J
 This file is part of FiXme.^^J
 FiXme may be distributed and/or modified under the
 conditions of the LaTeX Project Public License, either version 1.1
@@ -54,13 +51,22 @@ FiXme consists of the files listed in the file `README'.^^J
 \generate{
   \file{header.inc}{\from{fixme.dtx}{header}}
   \file{fixme.sty}{\from{fixme.dtx}{header,fixme}}}
+\generate{\usedir{themes}
+  \file{fxthemesignature.sty}{\from{fixme.dtx}{fxthemesignature}}
+  \file{fxthemecolor.sty}{\from{fixme.dtx}{fxthemecolor}}
+  \file{fxthemecolorsig.sty}{\from{fixme.dtx}{fxthemecolorsig}}}
+%% #### FIXME: it seems that too many commands in \generate breaks ltxpkg (I
+%% don't understand why): after a couple of outputs, the rest happens on
+%% stdout instead of on the \newwrite, so I've split the command below in 3.
 \generate{\usedir{layouts}
   \file{fxlayoutmarginnote.sty}{\from{fixme.dtx}{fxlayoutmarginnote}}
   \file{fxlayoutpdfnote.sty}{\from{fixme.dtx}{fxlayoutpdfnote}}
-  \file{fxlayoutpdfmargin.sty}{\from{fixme.dtx}{fxlayoutpdfmargin}}
+  \file{fxlayoutpdfmargin.sty}{\from{fixme.dtx}{fxlayoutpdfmargin}}}
+\generate{\usedir{layouts}
   \file{fxlayoutpdfsignote.sty}{\from{fixme.dtx}{fxlayoutpdfsignote}}
   \file{fxlayoutpdfsigmargin.sty}{\from{fixme.dtx}{fxlayoutpdfsigmargin}}
-  \file{fxlayoutpdfcnote.sty}{\from{fixme.dtx}{fxlayoutpdfcnote}}
+  \file{fxlayoutpdfcnote.sty}{\from{fixme.dtx}{fxlayoutpdfcnote}}}
+\generate{\usedir{layouts}
   \file{fxlayoutpdfcmargin.sty}{\from{fixme.dtx}{fxlayoutpdfcmargin}}
   \file{fxlayoutpdfcsignote.sty}{\from{fixme.dtx}{fxlayoutpdfcsignote}}
   \file{fxlayoutpdfcsigmargin.sty}{\from{fixme.dtx}{fxlayoutpdfcsigmargin}}}
@@ -71,10 +77,6 @@ FiXme consists of the files listed in the file `README'.^^J
   \file{fxtargetlayoutchangebar.sty}{\from{fixme.dtx}{fxtargetlayoutchangebar}}
   \file{fxtargetlayoutcolor.sty}{\from{fixme.dtx}{fxtargetlayoutcolor}}
   \file{fxtargetlayoutcolorcb.sty}{\from{fixme.dtx}{fxtargetlayoutcolorcb}}}
-\generate{\usedir{themes}
-  \file{fxthemesignature.sty}{\from{fixme.dtx}{fxthemesignature}}
-  \file{fxthemecolor.sty}{\from{fixme.dtx}{fxthemecolor}}
-  \file{fxthemecolorsig.sty}{\from{fixme.dtx}{fxthemecolorsig}}}
 
 \endbatchfile
 
