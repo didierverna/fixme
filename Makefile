@@ -130,7 +130,7 @@ INS_FILES := $(wildcard *.ins)
 DST_FILES += $(INS_FILES)
 
 
-# Tme to handle \generate'd files. For each foo.ins file, we generate a
+# Time to handle \generate'd files. For each foo.ins file, we generate a
 # corresponding foo.mak makefile giving information on the generated
 # targets. These mak files:
 # - contain rules of the form
