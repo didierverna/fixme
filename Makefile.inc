@@ -15,9 +15,9 @@
 
 ### Code:
 
-TEXMFDIR  = ${HOME}/.texmf
-AUCTEXDIR = ${HOME}/etc/auctex
+TEXMFDIR  := ${HOME}/.texmf
+AUCTEXDIR := ${HOME}/etc/auctex
 
-DST_EMPTY_DIRS = themes layouts layouts/env layouts/target
+DST_EMPTY_DIRS := themes layouts layouts/env layouts/target
 
 ### Makefile.inc ends here
