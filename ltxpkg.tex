@@ -61,6 +61,7 @@
   \makoutput{GEN_FILES += \@pathname}
   \makoutput{\@pathname: #1}
   \makeatletter\makoutput*{@echo "Building $@..."}\makeatother
+  \makoutput*{mkdir -p `dirname \@pathname`}
   \makoutput*{$(LATEX) \jobname.ins}
   \@old@from{#1}{#2}}
 
