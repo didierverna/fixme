@@ -1,16 +1,23 @@
 ### Makefile.inc --- LtxPkg configuration
 
-## Copyright (C) 2009 Didier Verna
+## Copyright (C) 2009, 2017 Didier Verna
 
-## Author:        Didier Verna <didier@lrde.epita.fr>
-## Maintainer:    Didier Verna <didier@lrde.epita.fr>
-## Created:       Thu Aug 20 17:45:34 2009
-## Last Revision: Thu Aug 20 17:53:25 2009
+## Author: Didier Verna <didier@didierverna.net>
+
+## This file is part of FiXme.
+
+## FiXme may be distributed and/or modified under the
+## conditions of the LaTeX Project Public License, either version 1.1
+## of this license or (at your option) any later version.
+## The latest version of this license is in
+## http://www.latex-project.org/lppl.txt
+## and version 1.1 or later is part of all distributions of LaTeX
+## version 1999/06/01 or later.
+
+## FiXme consists of the files listed in the file `README'.
 
 
 ### Commentary:
-
-## Contents management by FCM version 0.1.
 
 
 ### Code:
