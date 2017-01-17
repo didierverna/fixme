@@ -645,6 +645,16 @@
 % encountered using \fx. Although \fx might not be directly responsible
 % for them, it is still good to keep them in mind.
 %
+% \subparagraph{Annotations in captions being counted twice} You are most
+% likely using \cs{listofsomething} (figure, table, or any other kind of
+% float). Note that a caption will be used twice here: once in the float
+% itself, and once in the list of floats. Any \fx annotation in the caption
+% will consequently be generated twice as well. The solution to this problem
+% is to use the optional argument to \cs{caption}, for example:
+% \begin{verbatim}
+% \caption[caption text]{caption text\fxnote{yuck!}}
+% \end{verbatim}
+%
 % \subparagraph{Footnotes and margin paragraphs in floats} Using footnotes in
 % figures (and \emph{a fortiori} in a figure's caption) does not work in
 % general. Although there are some workarounds out there (for instance, using
