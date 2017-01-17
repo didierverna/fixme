@@ -64,7 +64,7 @@
 % \fi
 %
 % \catcode`\¡=14
-% \CheckSum{1831}
+% \CheckSum{1761}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -343,12 +343,14 @@
 % extension is \texttt{lox}. The \cs{listoffixmes} command generates the
 % annotations lists in a manner similar to that of the ``list of figures''. A
 % standard layout is automatically selected for the \texttt{article},
-% \texttt{report}, \texttt{book} classes and their \komascript replacements.
-% If another class is used, the \texttt{article} layout is selected. Also,
-% note that if there isn't any annotation left in the document, this command
-% doesn't generate an empty list, but rather stays silent. It also stays
-% silent in \texttt{final} mode, regardless of the presence of remaining
-% annotations (see section \sectionref{sec:manual:behavior}).
+% \texttt{report} and \texttt{book} classes and the AMS ones. If loaded, \fx
+% will also use the \texttt{tocbasic} package which makes it compliant with
+% the \komascript classes and any other document using it.  If another class
+% is used, the \texttt{article} layout is selected. Also, note that if there
+% isn't any annotation left in the document, this command doesn't generate an
+% empty list, but rather stays silent. It also stays silent in \texttt{final}
+% mode, regardless of the presence of remaining annotations (see
+% section \sectionref{sec:manual:behavior}).
 %
 % \subsection{Controlling the behavior of \fx\label{sec:manual:behavior}}
 % \DescribeOption{final}
@@ -1482,8 +1484,10 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
-% \item[v4.3] Separate inline notes from the text they follow, suggested
-%   by Victor Porton.\\
+% \item[v4.3] Update support for the \komascript classes by using the
+%   \texttt{tocbasic} interface when available, reported by Dirk Surmann.\\
+%   Separate inline notes from the text they follow, suggested by Victor
+%   Porton.\\
 %   Fix potential inline layouts color leakage, reported by Victor Porton.\\
 %   Fix several parsing problems when passing optional arguments
 %   containing brackets, thanks to Joseph Wright and Lars Madsen.
@@ -1776,9 +1780,11 @@
 % \end{macro}
 %
 % \subsubsection{List headers}
-% Lists are output in a document class dependant fashion. Classes currently
-% recognized are \texttt{article}, \texttt{report}, \texttt{book} and their
-% \komascript replacements.
+% \fx recognizes the standard \texttt{article}, \texttt{report} and
+% \texttt{book} classes, the AMS ones, and adapts the list header
+% accordingly. It also detects when the package \texttt{basictoc} is loaded
+% and uses it, which notably makes it compliant with the \komascript classes
+% as well. Otherwise, the standard \texttt{article} layout is used.
 %
 % \paragraph{\texttt{article} version}
 % \begin{macro}{\@lox@prtc@article}
@@ -1825,74 +1831,6 @@
   \chapter*{\@fxlistfixmename%
     \@mkboth{\MakeUppercase\@fxlistfixmename}{\MakeUppercase\@fxlistfixmename}}}
 \newcommand\@lox@psttc@book{\if@restonecol\twocolumn\fi}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-%
-% The code below (version 3.3) mimics \komascript version 2006/07/30 v2.95b.
-% Older versions (using chapter*) are no longer supported because it is
-% simpler that way, but if some people complain, I'll  have to conditionalize
-% on the \komascript version, which would be a \textsc{pita}.
-% \begin{macro}{\lox@heading}
-%   \mbox{}
-%    \begin{macrocode}
-\newcommand\lox@heading{\float@listhead{\@fxlistfixmename}}
-
-%    \end{macrocode}
-% \end{macro}
-% \paragraph{\texttt{scrartcl} version}
-% \begin{macro}{\@lox@prtc@scrartcl}
-% \begin{macro}{\@lox@psttc@scrartcl}
-%   \mbox{}
-%    \begin{macrocode}
-\newcommand\@lox@prtc@scrartcl{%
-  \begingroup%
-    \lox@heading%
-    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative}
-\let\@lox@psttc@scrartcl\endgroup
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \paragraph{\texttt{scrreprt} version}
-% \begin{macro}{\@lox@prtc@scrreprt}
-% \begin{macro}{\@lox@psttc@scrreprt}
-%   \mbox{}
-%    \begin{macrocode}
-\newcommand\@lox@prtc@scrreprt{%
-  \begingroup%
-    \if@twocolumn
-      \@restonecoltrue\onecolumn
-    \else
-      \@restonecolfalse
-    \fi
-    \lox@heading%
-    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative}
-\newcommand\@lox@psttc@scrreprt{%
-    \if@restonecol\twocolumn\fi
-  \endgroup}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
-% \paragraph{\texttt{scrbook} version}
-% \begin{macro}{\@lox@prtc@scrbook}
-% \begin{macro}{\@lox@psttc@scrbook}
-%   \mbox{}
-%    \begin{macrocode}
-\newcommand\@lox@prtc@scrbook{%
-  \begingroup%
-    \if@twocolumn
-      \@restonecoltrue\onecolumn
-    \else
-      \@restonecolfalse
-    \fi
-    \lox@heading%
-    \setparsizes{0}{0}{\z@\@plus 1fil}\par@updaterelative}
-\newcommand\@lox@psttc@scrbook{%
-    \if@restonecol\twocolumn\fi
-  \endgroup}
 
 %    \end{macrocode}
 % \end{macro}
@@ -3558,23 +3496,22 @@
     \@ifclassloaded{book}{%
       \let\@lox@prtc\@lox@prtc@book%
       \let\@lox@psttc\@lox@psttc@book}{%
-      \@ifclassloaded{scrartcl}{%
-        \let\@lox@prtc\@lox@prtc@scrartcl%
-        \let\@lox@psttc\@lox@psttc@scrartcl}{%
-        \@ifclassloaded{scrreprt}{%
-          \let\@lox@prtc\@lox@prtc@scrreprt%
-          \let\@lox@psttc\@lox@psttc@scrreprt}{%
-          \@ifclassloaded{scrbook}{%
-            \let\@lox@prtc\@lox@prtc@scrbook%
-            \let\@lox@psttc\@lox@psttc@scrbook}{%
-            \@ifclassloaded{amsbook}{%
-              \let\lox@draft\lox@draft@ams}{%
-              \@ifclassloaded{amsart}{%
-                \let\lox@draft\lox@draft@ams}{%
-                %% Use the article layout by default.
-                \let\@lox@prtc\@lox@prtc@article%
-                \let\@lox@psttc\@lox@psttc@article}}}}}}}}
+      \@ifclassloaded{amsbook}{%
+        \let\lox@draft\lox@draft@ams}{%
+        \@ifclassloaded{amsart}{%
+          \let\lox@draft\lox@draft@ams}{%
+          %% Use the article layout by default.
+          \let\@lox@prtc\@lox@prtc@article%
+          \let\@lox@psttc\@lox@psttc@article}}}}}
 
+%    \end{macrocode}
+% This overrides any previous class-based settings but makes the list of
+% corrections compliant with the \komascript classes and any document using
+% the \texttt{tocbasic} package.
+%    \begin{macrocode}
+\@ifpackageloaded{tocbasic}{%
+  \addtotoclist[fixme]{lox}%
+  \renewcommand\lox@draft{\listoftoc[\@fxlistfixmename]{lox}}}{}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
