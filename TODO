@@ -48,3 +48,5 @@ colors for authors instead of note levels.
 * Instead of multiplying the layouts, it would nicer to be able to give them
 options (either at the package level for external ones, or at the macro level
 for all of them).
+
+* What about enumerating the notes ?
