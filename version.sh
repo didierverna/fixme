@@ -141,16 +141,16 @@ else
 fi
 
 if test "x$commit" = "xyes"; then
-  test "`git status`" && commit=no
+  test "x`git status | grep 'nothing to commit'`" = "x" || commit=no
 fi
 
 # Commit the change:
 if test "x$commit" = "xyes"; then
   if test $dry_run = yes
   then
-    echo "git ci"
+    echo "git ci -a"
   else
-    git ci
+    git ci -a
   fi
 fi
 
