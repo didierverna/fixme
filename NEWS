@@ -1,7 +1,9 @@
 			     WHAT'S NEW IN FIXME
 
 
-Copyright (C) 1998-2002, 2004-2007, 2009, 2013 Didier Verna
+Copyright (C) 1998-2002, 2004-2007, 2009, 2013, 2017 Didier Verna
+
+Author: Didier Verna <didier@didierverna.net>
 
 This file is part of FiXme.
 
@@ -14,6 +16,19 @@ and version 1.1 or later is part of all distributions of LaTeX
 version 1999/06/01 or later.
 
 FiXme consists of the files listed in the file `README'.
+
+
+* Version 4.3
+** Add a paragraph about the duplication of notes in captions
+upon exchange with Kreuvf.
+** Update support for the KOMA-Script classes to the tocbasic interface
+reported by Dirk Surmann.
+** Separate inline notes from the text they follow
+suggested by Victor Porton.
+** Fix potential inline layouts color leakage
+reported by Victor Porton.
+** Fix several bracket parsing problems
+thanks to Joseph Wright and Lars Madsen.
 
 * Version 4.2
 ** Improve Danish translation
