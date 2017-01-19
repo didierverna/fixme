@@ -50,3 +50,6 @@ options (either at the package level for external ones, or at the macro level
 for all of them).
 
 * What about enumerating the notes ?
+
+* About testing for an empty lox file
+http://tex.stackexchange.com/questions/12247/checking-whether-a-file-is-empty
