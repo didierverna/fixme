@@ -1,5 +1,5 @@
-				 ABOUT FIXME
-
+ABOUT FIXME
+===========
 
 Copyright (C) 1998-2002, 2004-2007, 2009, 2013, 2017 Didier Verna
 
@@ -7,13 +7,11 @@ Author: Didier Verna <didier@didierverna.net>
 
 This file is part of FiXme.
 
-FiXme may be distributed and/or modified under the
-conditions of the LaTeX Project Public License, either version 1.1
-of this license or (at your option) any later version.
-The latest version of this license is in
-http://www.latex-project.org/lppl.txt
-and version 1.1 or later is part of all distributions of LaTeX
-version 1999/06/01 or later.
+FiXme may be distributed and/or modified under the conditions of the LaTeX
+Project Public License, either version 1.1 of this license or (at your option)
+any later version.  The latest version of this license is in
+http://www.latex-project.org/lppl.txt and version 1.1 or later is part of all
+distributions of LaTeX version 1999/06/01 or later.
 
 FiXme consists of the following files:
 
@@ -25,8 +23,8 @@ FiXme consists of the following files:
 - THANKS
 
 
-* Description
-
+Description
+-----------
 FiXme is a collaborative annotation tool for LaTeX documents. Annotating a
 document refers here to inserting meta-notes, that is, notes that do not
 belong to the document itself, but rather to its development or reviewing
@@ -41,42 +39,36 @@ annotations, by offering a set of predefined note levels and layouts, the
 possibility to register multiple note authors, to reference annotations by
 listing and indexing etc. FiXme is extensible, giving you the possibility to
 create new layouts or even complete "themes", and also comes with support for
-AUC-TeX.
+[AUC-TeX](https://www.gnu.org/software/auctex/).
 
 FiXme homepage: http://www.lrde.epita.fr/~didier/software/latex.php#fixme
 
 
-* Installation
-
+Installation
+------------
 If you are building FiXme from the tarball you need to execute the following
-steps in order to extract the necessary files. FiXme also requires the DoX
-package (version 2.0, release date 2009/09/21 or later), to build. It is not
-required to use the paclage.
+steps in order to extract the necessary files. FiXme also requires
+the [DoX](https://www.lrde.epita.fr/~didier/software/latex.php#dox) package
+(version 2.0, release date 2009/09/21 or later), to build. It is not required
+to use the paclage.
 
-[pdf]latex fixme.ins
-[pdf]latex fixme.dtx
-[pdf]latex fixme.dtx
-makeindex -s gind fixme.idx
-[pdf]latex fixme.dtx
-[pdf]latex fixme.dtx
+	[pdf]latex fixme.ins
+	[pdf]latex fixme.dtx
+	[pdf]latex fixme.dtx
+	makeindex -s gind fixme.idx
+	[pdf]latex fixme.dtx
+	[pdf]latex fixme.dtx
 
 After that, you need to install the generated documentation and style files to
-a location where LATEX can find them. For a TDS-compliant layout, the
+a location where LaTeX can find them. For a TDS-compliant layout, the
 following locations are suggested:
 
-[TEXMF]/tex/latex/fixme/fixme.sty
-[TEXMF]/tex/latex/fixme/layouts/fxlayout*.sty
-[TEXMF]/tex/latex/fixme/layouts/env/fxenvlayout*.sty
-[TEXMF]/tex/latex/fixme/layouts/target/fxtargetlayout*.sty
-[TEXMF]/tex/latex/fixme/themes/fxtheme*.sty
-[TEXMF]/doc/latex/fixme/fixme.[pdf|dvi]
+	[TEXMF]/tex/latex/fixme/fixme.sty
+	[TEXMF]/tex/latex/fixme/layouts/fxlayout*.sty
+	[TEXMF]/tex/latex/fixme/layouts/env/fxenvlayout*.sty
+	[TEXMF]/tex/latex/fixme/layouts/target/fxtargetlayout*.sty
+	[TEXMF]/tex/latex/fixme/themes/fxtheme*.sty
+	[TEXMF]/doc/latex/fixme/fixme.[pdf|dvi]
 
-If you're an AUC-TeX user, you may also install the file 'fixme.el' in a
+If you're an AUC-TeX user, you may also install the file `fixme.el` in a
 suitable AUC-TeX style directory.
-
-
-
-
-Local Variables:
-mode: outline
-End:
