@@ -36,10 +36,10 @@ document.
 
 FiXme is designed to ease and automate the process of managing collaborative
 annotations, by offering a set of predefined note levels and layouts, the
-possibility to register multiple note authors, to reference annotations by
-listing and indexing etc. FiXme is extensible, giving you the possibility to
-create new layouts or even complete "themes", and also comes with support for
-[AUC-TeX](https://www.gnu.org/software/auctex/).
+possibility to register multiple authors, to reference annotations by listing
+and indexing etc. FiXme is extensible, giving you the possibility to create
+new layouts or even complete "themes", and also comes with support
+for [AUC-TeX](https://www.gnu.org/software/auctex/).
 
 FiXme homepage: http://www.lrde.epita.fr/~didier/software/latex.php#fixme
 
