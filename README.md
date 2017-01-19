@@ -31,7 +31,7 @@ belong to the document itself, but rather to its development or reviewing
 process. Such notes may involve things of different importance levels, ranging
 from simple "fix the spelling" flags to critical "this paragraph is a lie"
 mentions. Annotations like this should be visible during the development or
-reviewing phase, but should normally disapear in the final version of the
+reviewing phase, but should normally disappear in the final version of the
 document.
 
 FiXme is designed to ease and automate the process of managing collaborative
@@ -50,7 +50,7 @@ If you are building FiXme from the tarball you need to execute the following
 steps in order to extract the necessary files. FiXme also requires
 the [DoX](https://www.lrde.epita.fr/~didier/software/latex.php#dox) package
 (version 2.0, release date 2009/09/21 or later), to build. It is not required
-to use the paclage.
+to use the package.
 
 	[pdf]latex fixme.ins
 	[pdf]latex fixme.dtx
