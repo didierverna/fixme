@@ -15,7 +15,7 @@ distributions of LaTeX version 1999/06/01 or later.
 
 FiXme consists of the following files:
 
-- README (this file)
+- README.md (this file)
 - NEWS
 - fixme.ins
 - fixme.dtx
