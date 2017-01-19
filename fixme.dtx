@@ -291,12 +291,11 @@
 % \DescribeMacro{\fxwarning*}
 % \DescribeMacro{\fxerror*}
 % \DescribeMacro{\fxfatal*}\oarg{options}\marg{note}\marg{text}\\
-% Sometimes, you might not only want to issue a \fx note, but also
-% highlight the relevant part of the text to which it applies. This is what I
-% call ``targeting'' the note. As of version 4, \fx provides starred
-% versions of its annotation commands to do that. In star form, these
-% commands expect an additional mandatory argument containing the text to be
-% highlighted.
+% Sometimes, you might not only want to issue a \fx note, but also highlight
+% the relevant part of the text to which it applies. This is what I call
+% ``targeting'' the annotation. As of version 4, \fx provides starred versions
+% of its annotation commands to do that. In star form, these commands expect
+% an additional mandatory argument containing the text to be highlighted.
 %
 % \subsubsection{Environments}
 % \begin{quotation}\itshape
@@ -314,9 +313,8 @@
 % every note level. These environments take one mandatory argument (meant to
 % be a short summary of the long note) and behave in exactly the same way as
 % their command counterpart. The layout policy is a bit different though (see
-% section
-% \sectionref{sec:manual:layout}): the environment's contents will always
-% appear inline, and the \meta{summary} will obey all active annotation
+% section \sectionref{sec:manual:layout}): the environment's contents will
+% always appear inline, and the \meta{summary} will obey all active annotation
 % layouts except for the \texttt{inline} one, just as if it had been passed to
 % one of the \fx annotation commands described in the previous section.
 % \begin{quotation}\itshape
@@ -403,7 +401,7 @@
 % environment. There are some restrictions on their usage however, as
 % discussed in the next section.
 %
-% To activate a note layout, use the option alone or give it a value of
+% To activate a layout, use the option alone or give it a value of
 % \texttt{true}. For instance, these two forms are equivalent:
 % \begin{verbatim}
 % \fxnote[inline]{note...}
@@ -708,9 +706,9 @@
 % \texttt{thepage}, which as you guessed means to use the page number.
 %
 % The name "target" bears an intentional resemblance to \fx's targeted
-% commands and environments, because we are indeed targetting the note to
-% something. The only difference is that in the case of floating annotations,
-% the target is non-textual.
+% commands and environments, because we are indeed targetting the annotation
+% to something. The only difference is that in the case of floating
+% annotations, the target is non-textual.
 %
 % Here is an example of a floating annotation that would typically appear in
 % the document's preamble:
@@ -1029,8 +1027,8 @@
 % \subsubsection{Language tracking}
 % \DescribeOption{langtrack}
 % If the document you're working on has parts written in different languages,
-% it might be the case that \fx notes should follow the current language as
-% well (especially if you're in collaborative mode; see section
+% it might be the case that the annotations should follow the current language
+% as well (especially if you're in collaborative mode; see section
 % \sectionref{sec:manual:modes}). \fx provides a boolean option named
 % \texttt{langtrack}. When specified, \fx assumes that you're using
 % \texttt{babel} and automatically switches to the current language (as
@@ -1049,10 +1047,10 @@
 % precedence over the language tracking behavior.
 %
 % \subsubsection{Indexing in different languages}
-% If your document contains \fx notes written in different languages, and
-% you have requested the \texttt{index} layout, \fx will not only classify
-% the notes by their level of importance, but also by language. For example,
-% if you have \fx warnings in both English and French, you will find two
+% If your document contains annotations written in different languages, and
+% you have requested the \texttt{index} layout, \fx will not only classify the
+% notes by their level of importance, but also by language. For example, if
+% you have \fx warnings in both English and French, you will find two
 % different subcategories for warnings in the index: one called ``Warnings''
 % and one called ``Avertissements''.
 %
@@ -1175,8 +1173,8 @@
 % locally by the annotation commands or environments.
 %
 % When collaborative mode is active, \fx adjusts the list of fixmes layout to
-% display the authors tags as well. Additionally, \fx notes are indexed as
-% before, but additional index entries, sorted by author, are generated as
+% display the authors tags as well. Additionally, the annotations are indexed
+% as before, but additional index entries, sorted by author, are generated as
 % well.
 %
 % \subsection{Themes\label{sec:manual:themes}}
@@ -1252,8 +1250,8 @@
 % \DescribeMacro[noprint]{\FXLayoutMarginClue}
 % Each annotation layout is implemented as a macro taking three mandatory
 % arguments. By convention, this macro is named \cs{FXLayout}\meta{name}, for
-% instance \cs{FXLayoutInline}.\meta{type} is the note type. It can be one of
-% \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
+% instance \cs{FXLayoutInline}.\meta{type} is the annotation type. It can be
+% one of \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
 % \meta{annotation} is the annotation itself, and \meta{author} is the
 % author's tag.
 %
@@ -1273,10 +1271,9 @@
 %   arguments. By convention, these macros are named
 %   \cs{FXEnvLayout}\meta{name}\texttt{Begin} and
 %   \cs{FXEnvLayout}\meta{name}\texttt{End}, for instance
-%   \cs{FXEnvLayoutPlainBegin} and \cs{FXEnvLayoutPlainEnd}.
-%   \meta{type} is the note type. It can be one of \texttt{note},
-%   \texttt{warning}, \texttt{error} and \texttt{fatal}. \meta{author} is the
-%   author's tag.
+%   \cs{FXEnvLayoutPlainBegin} and \cs{FXEnvLayoutPlainEnd}.  \meta{type} is
+%   the annotation type. It can be one of \texttt{note}, \texttt{warning},
+%   \texttt{error} and \texttt{fatal}. \meta{author} is the author's tag.
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
@@ -1285,9 +1282,9 @@
 % \DescribeMacro[noprint]{\FXTargetLayoutColor}
 % Each target layout is implemented as a macro taking two mandatory arguments.
 % By convention, this macro is named \cs{FXTargetLayout}\meta{name}, for
-% instance \cs{FXTargetLayoutPlain}. \meta{type} is the note type. It can be
-% one of \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
-% \meta{target} is the textual target.
+% instance \cs{FXTargetLayoutPlain}. \meta{type} is the annotation type. It
+% can be one of \texttt{note}, \texttt{warning}, \texttt{error} and
+% \texttt{fatal}.  \meta{target} is the textual target.
 %
 % \subsection{Creating new layouts}
 % Creating a new layout first requires that you write new layout macros as
@@ -1474,7 +1471,7 @@
 % \sectionref{sec:manual:i18n}. For every supported language \meta{lang}, a
 % number of macros define the language-dependent part of \fx. The commands
 % \cs{fx}\meta{lang}\texttt{notename}, \cs{fx}\meta{lang}\texttt{notesname},
-% and their equivalent for the other note levels define the singular and
+% and their equivalent for the other annotation levels define the singular and
 % plural forms of the note names.\\
 % \DescribeMacro[noindex]{\...listfixmename}
 % \DescribeMacro[noprint]{\englishlistfixmename}
@@ -1850,13 +1847,12 @@
 % \begin{macro}{\lox@final}
 % \begin{macro}{\lox@draft}
 %   In order to prevent the List of Fixme's heading from being generated when
-%   there are no \fx notes, a test on the existence of the \texttt{lox} file
+%   there is no annotation, a test on the existence of the \texttt{lox} file
 %   is performed. There's a slight bug left however: after removing the last
-%   fixme note, one ends up with an empty \texttt{lox} file, so the heading
-%   still appears. Previously, this was done by checking if some \fx notes
-%   were given, but that was buggy: the List of Fixme's could not appear
-%   before the first fixme note\ldots I should try to detect whether the file
-%   is empty.
+%   note, one ends up with an empty \texttt{lox} file, so the heading still
+%   appears. Previously, this was done by checking if some annotations were
+%   given, but that was buggy: the List of Fixme's could not appear before the
+%   first note\ldots I should try to detect whether the file is empty.
 %    \begin{macrocode}
 \let\lox@final\relax
 \newcommand\lox@draft{%
@@ -2133,7 +2129,7 @@
 % \begin{macro}{\@fxwarningkey}
 % \begin{macro}{\@fxerrorkey}
 % \begin{macro}{\@fxfatalkey}
-%   The keys used to sort indexed \fx notes by importance level:
+%   The keys used to sort indexed annotations by importance level:
 %    \begin{macrocode}
 \newcommand\@fxnotekey{***a}
 \newcommand\@fxwarningkey{***b}
@@ -2574,9 +2570,9 @@
 % \begin{macro}{\@fxlog@fatal}
 %   In order for the generic note dispatcher to be able to call the logging
 %   macros (see section \sectionref{sec:code:lowlevelcmd}), we need an easier
-%   translation mechanism from the note type to the actual macro name. The
-%   translation macros in question can't be \cs{let} to the real one, because
-%   users might want to redefine the actual log macros later.
+%   translation mechanism from the annotation type to the actual macro
+%   name. The translation macros in question can't be \cs{let} to the real
+%   one, because users might want to redefine the actual log macros later.
 %    \begin{macrocode}
 \def\@fxlog@note{\FXLogNote}
 \def\@fxlog@warning{\FXLogWarning}
@@ -2591,7 +2587,7 @@
 %
 % \subsubsection{Logging control}
 % \begin{booleanoption}{silent}
-%   Whether to log \fx notes:
+%   Whether to log the annotations:
 %    \begin{macrocode}
 \@fxdefineboolkey{log}{silent}
 
@@ -2605,8 +2601,8 @@
 % \begin{counter}{fxwarningcount}
 % \begin{counter}{fxerrorcount}
 % \begin{counter}{fxfatalcount}
-%   \texttt{fixmecount} maintains the total of all notes, regardless
-%   of their level. Each note type also gets its own counter:
+%   \texttt{fixmecount} maintains the total of all annotations, regardless of
+%   their level. Each note type also gets its own counter:
 %    \begin{macrocode}
 \newcounter{fixmecount}
 \newcounter{fxnotecount}
@@ -2621,15 +2617,15 @@
 % \end{counter}
 % \end{counter}
 % \begin{option}{author}
-%   A \fx note's ``author'' allows to distinguish notes from different persons
-%   in collaborative mode.
+%   An annotation ``author'' allows to distinguish notes from different
+%   persons in collaborative mode.
 %    \begin{macrocode}
 \@fxdefinecmdkey{note}{author}{}
 %    \end{macrocode}
 % \end{option}
 % \begin{option}{target}
-%   A \fx note's ``target'' may replace the page number in the list of
-%   fixmes or in the index (see also section
+%   An annotation ``target'' may replace the page number in the list of
+%   corrections or in the index (see also section
 %   \sectionref{sec:code:contentslinelayout}).
 %    \begin{macrocode}
 \@fxdefinecmdkey{note}{target}{}
@@ -2741,7 +2737,7 @@
 % \begin{macro}{\@fxpostconfigure}
 %   This macro is used in \cs{@@fxnote@early} below, after processing user
 %   options (even when there is none), to postconfigure some aspects of the
-%   notes. Currently, this involves two things: setting the author to
+%   annotations. Currently, this involves two things: setting the author to
 %   \cs{fixmelogo} if it still is \texttt{fixme}, and automatically tracking
 %   the current language if required (note that all other language options
 %   turn tracking off, meaning that one can override language tracking locally
@@ -2838,10 +2834,11 @@
 %   \marg{author}\\
 %   This macro is used at the beginning of every user-level entry point (here
 %   for notes, and also in the environments section), to preconfigure some
-%   aspects of the notes, before possibly processing options. Currently, this
-%   only involves presetting the note's author to the one specified in the
-%   call to \cs{FXRegisterAuthor}. This however is not done for the built-in
-%   \texttt{fixme} author, because this one should honor a global setting.
+%   aspects of the annotations, before possibly processing options. Currently,
+%   this only involves presetting the note's author to the one specified in
+%   the call to \cs{FXRegisterAuthor}. This however is not done for the
+%   built-in \texttt{fixme} author, because this one should honor a global
+%   setting.
 %    \begin{macrocode}
 \newcommand*\@fxpreconfigure[1]{%
   \ifthenelse{\equal{#1}{fixme}}{}{\@fxsetkeys{note}{author=#1}}}
@@ -3832,8 +3829,8 @@
 % \begin{color}{fxwarning}
 % \begin{color}{fxerror}
 % \begin{color}{fxfatal}
-%   Environments use the same colors as the notes themselves because
-%   their contents really is a longer note.
+%   Environments use the same colors as the notes themselves because their
+%   contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
@@ -3889,8 +3886,8 @@
 % \begin{color}{fxwarning}
 % \begin{color}{fxerror}
 % \begin{color}{fxfatal}
-%   Environments use the same colors as the notes themselves because
-%   their contents really is a longer note.
+%   Environments use the same colors as the notes themselves because their
+%   contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
@@ -3948,8 +3945,8 @@
 % \begin{color}{fxwarning}
 % \begin{color}{fxerror}
 % \begin{color}{fxfatal}
-%   Environments use the same colors as the notes themselves because
-%   their contents really is a longer note.
+%   Environments use the same colors as the notes themselves because their
+%   contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
@@ -4018,8 +4015,8 @@
 % \begin{color}{fxwarning}
 % \begin{color}{fxerror}
 % \begin{color}{fxfatal}
-%   Environments use the same colors as the notes themselves because
-%   their contents really is a longer note.
+%   Environments use the same colors as the notes themselves because their
+%   contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
@@ -4087,8 +4084,8 @@
 % \begin{color}{fxwarning}
 % \begin{color}{fxerror}
 % \begin{color}{fxfatal}
-%   Environments use the same colors as the notes themselves because
-%   their contents really is a longer note.
+%   Environments use the same colors as the notes themselves because their
+%   contents really is a longer note.
 %    \begin{macrocode}
 \definecolor{fxnote}{rgb}{0.0000,0.6000,0.0000}
 \definecolor{fxwarning}{rgb}{1.0000,0.5490,0.0000}
