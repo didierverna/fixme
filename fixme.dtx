@@ -535,7 +535,7 @@
 % you try to activate both, only the most recently activated one will be
 % enabled (and you'll get a notice in the log file and on the terminal).
 %
-% \paragraph{\texttt{marginnote}}
+% \paragraph{\texttt{marginnote}}\label{sec:manual:marginnote}
 % \DescribeBooleanOption{marginnote}
 % \DescribeLayout[noprint]{marginnote}
 % The \texttt{marginnote} layout is an alternate (external) way to display
@@ -547,6 +547,11 @@
 % documentation, and also read the next section. Also, note that it is not
 % currently possible to pass options to the \cs{marginnote} command through
 % this layout.
+%
+% For a reasonably robust marginal layout accross all annotations, including
+% those issued in floats, consider using \texttt{marginnote} in conjunction
+% with \texttt{innerlayout=noinline} (see
+% section \sectionref{sec:manual:inner}).
 %
 % \paragraph{PDF comments}
 % \DescribeBooleanOption{pdfnote}
@@ -580,7 +585,7 @@
 % annotation's importance level). They also avoid printing the annotation's
 % level since this information is already conveyed by the color.
 %
-% \subsubsection{Inner layout}
+% \subsubsection{Inner layout}\label{sec:manual:inner}
 % There might be various reasons for you to change the layout locally for one
 % particular annotation: creating a floating one is an example, see also
 % section \sectionref{sec:manual:othercommonproblems} for some others. One
@@ -598,7 +603,7 @@
 % addition to that, \fx automatically disables the \texttt{margin} and
 % \texttt{marginclue} layouts. If you really want to use marginal paragraphs
 % in inner mode, a good idea is then to set your inner layout to
-% \texttt{marginnote} (see the previous section).
+% \texttt{marginnote} (see section \ref{sec:manual:marginnote}).
 %
 % Using \texttt{innerlayout} is not as trivial as it may seem: it
 % \emph{really} is an alternative layout configuration, and as such, you can
