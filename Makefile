@@ -30,7 +30,7 @@
 # Requirements:
 # =============
 # - NEWS file with lines of the form "* Version x.x" for each version
-# - README file [optional]
+# - README[.md] file [optional]
 # - THANKS file [optional]
 # - one or several .dtx files
 # - one or several .ins files with \generate rules
@@ -122,7 +122,7 @@ maybe_file = $(shell test -e $(file) && echo $(file))
 # Initial distribution requirements:
 DST_FILES := NEWS
 
-files := README THANKS
+files := README README.md THANKS
 DST_FILES += $(foreach file,$(files),$(maybe_file))
 
 # ins files are distributed:
