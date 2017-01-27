@@ -1494,7 +1494,9 @@
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
 % \item[v4.4] Handle existing yet empty lox file properly, meaning don't
-%   actually typeset an empty list of corrections.
+%   actually typeset an empty list of corrections.\\
+%   Don't update the \texttt{lox} file in final mode, avoiding potential
+%   typesetting artifacts, reported by Lars Madsen.
 % \item[v4.3] Add a paragraph about the duplication of notes in captions, upon
 %   exchange with Kreuvf.\\
 %   Update support for the \komascript classes by using the
@@ -2181,10 +2183,12 @@
 % \end{layout}
 %
 % \paragraph{Contents line\label{sec:code:contentslinelayout}}
+% The contents of the \texttt{lox} file is handled through this
+% pseudo-layout. It follows the normal layout design, but is not registered
+% the usual way because we don't want to give the user control over it. It is
+% triggered explicitely by \cs{@@@fxnote@late@draft}.
 % \begin{macro}{\FXLayoutContentsLine}
 %   \marg{type}\marg{note}\marg{author}\\
-%   This one is not registered like the others because it is always active and
-%   used explicitely by the \texttt{lox} code.
 %    \begin{macrocode}
 \newcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
@@ -2695,16 +2699,16 @@
 %   \marg{type}\marg{note}\\
 %   Dispatch all mode-independent layouts (actually, ``layout'' is to be taken
 %   in a slightly broader sense here). This macro executes all operations that
-%   need to be performed regardless of the document status. This includes
-%   updating the \texttt{lox} file and logging the annotation. Note that even
-%   in \texttt{final} mode, the \texttt{lox} file is updated. This is to
-%   maintain a coherent state if the user goes from \texttt{final} to
-%   \texttt{draft} or the other way around. In \texttt{final} mode, the list
-%   of fixmes does not appears because \cs{listoffixmes} is \cs{let} to
-%   \cs{relax}.
+%   need to be performed regardless of the document status. This currently
+%   means logging the annotations. Previously, this code also updated the
+%   \texttt{lox} file, but this could lead to typesetting artifacts even in
+%   final mode (because of the whatsit introduced by \cs{write}), which is
+%   highly undesirable, and besides, there's no point in keeping that
+%   information up to date, since it won't be typeset. So from now on, the
+%   contents lines are only generated in \texttt{draft} mode by
+%   \cs{@@@fxnote@late@draft}.
 %    \begin{macrocode}
 \newcommand*\@fxissuecommonlayouts[2]{%
-  \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
   \iffx@log@silent\else\@nameuse{@fxlog@#1}{#2}\fi}
 
 %    \end{macrocode}
@@ -2731,12 +2735,14 @@
 \newcommand*\@@@fxnote@late@final[2]{\@fxissuecommonlayouts{#1}{#2}}
 %    \end{macrocode}
 % In \texttt{draft} mode, early work is to dispatch early layouts, while late
-% work is to dispatch both late \emph{and} common layouts.
+% work is to dispatch both late \emph{and} common layouts, and update the
+% \texttt{lox} file.
 %    \begin{macrocode}
 \newcommand*\@@@fxnote@early@draft[2]{%
   \@fxissueearlydraftlayouts{#1}{#2}}
 \newcommand*\@@@fxnote@late@draft[2]{%
   \@fxissuelatedraftlayouts{#1}{#2}%
+  \FXLayoutContentsLine{#1}{#2}{\cmdfx@note@author}%
   \@fxissuecommonlayouts{#1}{#2}}
 
 %    \end{macrocode}
