@@ -61,7 +61,7 @@
 %
 % \fi
 %
-% \CheckSum{1761}
+% \CheckSum{1794}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1493,6 +1493,8 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
+% \item[v4.4] Handle existing yet empty lox file properly, meaning don't
+%   actually typeset an empty list of corrections.
 % \item[v4.3] Add a paragraph about the duplication of notes in captions, upon
 %   exchange with Kreuvf.\\
 %   Update support for the \komascript classes by using the
@@ -1849,21 +1851,28 @@
 % \subsubsection{Status/class-dependent implementation}
 % \begin{macro}{\lox@final}
 % \begin{macro}{\lox@draft}
-%   In order to prevent the List of Fixme's heading from being generated when
-%   there is no annotation, a test on the existence of the \texttt{lox} file
-%   is performed. There's a slight bug left however: after removing the last
-%   note, one ends up with an empty \texttt{lox} file, so the heading still
-%   appears. Previously, this was done by checking if some annotations were
-%   given, but that was buggy: the List of Fixme's could not appear before the
-%   first note\ldots I should try to detect whether the file is empty.
+%   In the new implementation of the \texttt{draft} mode below, we not only
+%   check that the \texttt{lox} file exists, but also that it is not empty
+%   before actually typesetting anything.
 %    \begin{macrocode}
 \let\lox@final\relax
+
+\newread\lox@file
+\newif\iflox@typeset
+\def\lox@eol{\par}
 \newcommand\lox@draft{%
-  \IfFileExists{\jobname .lox}{%
-    \@lox@prtc%
-    \@starttoc{lox}%
-    \@lox@psttc}{%
-    \@starttoc{lox}}}
+  \lox@typesetfalse%
+  \openin\lox@file\jobname.lox\relax
+  \ifeof\lox@file\else
+    \read\lox@file to \lox@maybeeol
+    \ifeof\lox@file
+      \ifx\lox@maybeeol\lox@eol\else\lox@typesettrue\fi
+    \else
+      \lox@typesettrue
+    \fi
+  \fi
+  \closein\lox@file
+  \iflox@typeset\@lox@prtc\@starttoc{lox}\@lox@psttc\else\@starttoc{lox}\fi}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}

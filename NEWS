@@ -16,6 +16,10 @@ distributions of LaTeX version 2005/12/01 or later.
 FiXme consists of the files listed in the file `README.md'.
 
 
+* Version 4.4
+** Handle existing yet empty lox files properly
+meaning, don't actually typeset an empty list of corrections.
+
 * Version 4.3
 ** Add a paragraph about the duplication of notes in captions
 upon exchange with Kreuvf.
