@@ -61,7 +61,7 @@
 %
 % \fi
 %
-% \CheckSum{1794}
+% \CheckSum{1789}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -2024,6 +2024,15 @@
 % \end{macro}
 % \end{macro}
 %
+% \subsubsection{Common textual dispositions}
+% \begin{macro}{\@fxtextstd}
+%   \marg{type}\marg{note}\marg{author}\\
+%   The standard text disposition.
+%    \begin{macrocode}
+\newcommand*\@fxtextstd[3]{\ignorespaces#3 \fxnotename{#1}: #2}
+%    \end{macrocode}
+% \end{macro}
+%
 % \subsubsection{Built-in layouts}
 % Let's start with the early layouts, and continue with the late ones.
 % \paragraph{Margin}
@@ -2038,9 +2047,8 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMargin[3]{%
-  \marginpar[%
-  {\raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}]{%
-    \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
+  \marginpar[\raggedleft\@fxuseface{margin}\@fxtextstd{#1}{#2}{#3}]{%
+    \raggedright\@fxuseface{margin}\@fxtextstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@margin}
@@ -2079,8 +2087,7 @@
 % \begin{macro}{\FXLayoutFootnote}
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXLayoutFootnote[3]{%
-  \footnote{\ignorespaces#3 \fxnotename{#1}: #2}}
+\newcommand*\FXLayoutFootnote[3]{\footnote{\@fxtextstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@footnote}
@@ -2104,8 +2111,7 @@
 % \begin{macro}{\FXLayoutInline}
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
-\newcommand*\FXLayoutInline[3]{%
-  { \@fxuseface{inline}\ignorespaces#3 \fxnotename{#1}: #2}}
+\newcommand*\FXLayoutInline[3]{ \@fxuseface{inline}\@fxtextstd{#1}{#2}{#3}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@inline}
@@ -2193,7 +2199,7 @@
 %    \begin{macrocode}
 \newcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
-    \fxaddcontentsline{\ignorespaces#3 \fxnotename{#1}: #2}%
+    \fxaddcontentsline{\@fxtextstd{#1}{#2}{#3}}%
   \else%
     \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
@@ -3621,9 +3627,8 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutMarginNote[3]{%
-  \marginnote[%
-  {\raggedleft\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}]{%
-    \raggedright\@fxuseface{margin}\ignorespaces#3 \fxnotename{#1}: #2}}
+  \marginnote[\raggedleft\@fxuseface{margin}\@fxtextstd{#1}{#2}{#3}]{%
+    \raggedright\@fxuseface{margin}\@fxtextstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@marginnote}
@@ -3651,7 +3656,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFNote[3]{%
-  \pdfcomment[author={#3}]{\ignorespaces#3 \fxnotename{#1}: #2}}
+  \pdfcomment[author={#3}]{\@fxtextstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfnote}
@@ -3679,7 +3684,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFMargin[3]{%
-  \pdfmargincomment[author={#3}]{\ignorespaces#3 \fxnotename{#1}: #2}}
+  \pdfmargincomment[author={#3}]{\@fxtextstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfmargin}
