@@ -50,3 +50,11 @@ options (either at the package level for external ones, or at the macro level
 for all of them).
 
 * What about enumerating the notes ?
+
+* Diego Marmsoler <diego.marmsoler@tum.de> want to sort the lox by annotation
+  level. Not trivial, but here are a couple of ideas to do it:
+  - generate 4 different lox files, one for each annotation level.
+  - include the lox file 4 times, each time binding only one macro to non
+    empty. This would require modifying the contents of this file because
+    currently, \contentsline or \fxcontentsline macros are issued for all
+    notes.
