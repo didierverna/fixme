@@ -61,7 +61,7 @@
 %
 % \fi
 %
-% \CheckSum{1789}
+% \CheckSum{1741}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -2032,6 +2032,19 @@
 \newcommand*\@fxtextstd[3]{\ignorespaces#3 \fxnotename{#1}: #2}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxdosig}
+%   \marg{author}
+% \begin{macro}{\@fxsigstd}
+%   \marg{type}\marg{note}\\
+%   The standard signature disposition.
+%    \begin{macrocode}
+\newcommand*\@fxdosig[1]{%
+  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
+    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
+\newcommand*\@fxsigstd[2]{\fxnotename{#1}: #2\@fxsignature}
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
 %
 % \subsubsection{Built-in layouts}
 % Let's start with the early layouts, and continue with the late ones.
@@ -2354,17 +2367,6 @@
 \@fxnewface[\itshape]{signature}
 %    \end{macrocode}
 % \end{face}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsignature}
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\newcommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{macro}{\FXEnvLayoutSignatureBegin}
 % \begin{macro}{\FXEnvLayoutSignatureEnd}
 %   \marg{type}\marg{author}
@@ -3709,24 +3711,12 @@
 \RequirePackage{pdfcomment}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsignature}
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{macro}{\FXLayoutPDFSigNote}
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigNote[3]{%
   \@fxdosig{#3}%
-  \pdfcomment[author={#3}]{\fxnotename{#1}: #2\@fxsignature}}
+  \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsignote}
@@ -3750,24 +3740,12 @@
 \RequirePackage{pdfcomment}
 
 %    \end{macrocode}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsignature}
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{macro}{\FXLayoutPDFSigMargin}
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigMargin[3]{%
   \@fxdosig{#3}%
-  \pdfmargincomment[author={#3}]{\fxnotename{#1}: #2\@fxsignature}}
+  \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsigmargin}
@@ -3923,18 +3901,6 @@
 % \end{color}
 % \end{color}
 % \end{color}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsignature}
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{macro}{\FXLayoutPDFCSigNote}
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
@@ -3982,18 +3948,6 @@
 % \end{color}
 % \end{color}
 % \end{color}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsignature}
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{macro}{\FXLayoutPDFCSigMargin}
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
@@ -4092,18 +4046,6 @@
 \@fxnewface[\itshape]{signature}
 %    \end{macrocode}
 % \end{face}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsignature}
-%   Use a signature of the form ``-- sig'', unless author is empty.
-%    \begin{macrocode}
-\providecommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-
-%    \end{macrocode}
-% \end{macro}
-% \end{macro}
 % \begin{color}{fxnote}
 % \begin{color}{fxwarning}
 % \begin{color}{fxerror}
@@ -4251,27 +4193,22 @@
 \NeedsTeXFormat{LaTeX2e}
 \FXProvidesTheme{signature}
 
-%    \end{macrocode}
-% \cs{@fxdosig} and \cs{@fxsignature} are provided by the \texttt{signature}
-% environment layout.
-%    \begin{macrocode}
 \fxuseenvlayout{signature}
 
 \renewcommand*\FXLayoutFootnote[3]{%
   \@fxdosig{#3}%
-  \footnote{\fxnotename{#1}: #2\@fxsignature}}
+  \footnote{\@fxsigstd{#1}{#2}}}
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
-  \marginpar[%
-  {\raggedleft\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature}]{%
-    \raggedright\@fxuseface{margin}\fxnotename{#1}: #2\@fxsignature}}
+  \marginpar[{\raggedleft\@fxuseface{margin}\@fxsigstd{#1}{#2}}]{%
+    \raggedright\@fxuseface{margin}\@fxsigstd{#1}{#2}}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
   \marginpar[{\raggedleft\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}]{%
     \raggedright\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}}
 \renewcommand*\FXLayoutInline[3]{%
   \@fxdosig{#3}%
-  { \@fxuseface{inline}\fxnotename{#1}: #2\@fxsignature}}
+  { \@fxuseface{inline}\@fxsigstd{#1}{#2}}}
 \renewcommand*\FXLayoutIndex[3]{%
   \@fxdosig{#3}%
   \iffx@mode@multiuser%
@@ -4289,7 +4226,7 @@
 \renewcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
     \@fxdosig{#3}%
-    \fxaddcontentsline{\fxnotename{#1}: #2\@fxsignature}%
+    \fxaddcontentsline{\@fxsigstd{#1}{#2}}%
   \else%
     \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
@@ -4353,8 +4290,6 @@
 %
 % \subsection{The \texttt{colorsig} theme}
 % \begin{theme}{colorsig}
-%   The \texttt{colorsig} environment layout provides \cs{@fxdosig}, so there
-%   is no need to provide it here.
 %    \begin{macrocode}
 %<*fxthemecolorsig>
 \NeedsTeXFormat{LaTeX2e}
@@ -4372,8 +4307,7 @@
   \footnote{\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutMargin[3]{%
   \@fxdosig{#3}%
-  \marginpar[%
-  {\raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature}]{%
+  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature}]{%
     \raggedright\@fxuseface{margin}\color{fx#1}#2\@fxsignature}}
 \renewcommand*\FXLayoutMarginClue[3]{%
   \@fxdosig{#3}%
