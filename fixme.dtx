@@ -1646,22 +1646,54 @@
 
 %    \end{macrocode}
 % \end{macro}
-% \subsubsection{\texttt{xkeyval} related}
+% \subsubsection{Key-value management (\texttt{xkeyval})}
+% \paragraph{Shortcuts}
+% The following macros are simple shortcuts for using \texttt{xkeyval} with
+% the \texttt{fx} prefix.
 % \begin{macro}{\@fxkeyifundefined}
-%   \marg{families}\marg{key}\marg{then}\marg{else}
+% \marg{families}\marg{key}\marg{then}\marg{else}
 %    \begin{macrocode}
 \newcommand\@fxkeyifundefined{\key@ifundefined[fx]}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefinekey}
-%   \marg{family}\marg{key}\oarg{default}\marg{function}
+% \marg{family}\marg{key}\oarg{default}\marg{function}
 %    \begin{macrocode}
 \newcommand\@fxdefinekey{\define@key[fx]}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxdefinecmdkey}
+% \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\@fxdefinecmdkey{\define@cmdkey[fx]}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxdefinechoicekey}
+% \marg{family}\marg{key}\oarg{bin}\marg{alternatives}\ignorespaces
+% \oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\@fxdefinechoicekey{\define@choicekey[fx]}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxsetkeys}
+% \marg{families}\oarg{na}\marg{keys}
+%    \begin{macrocode}
+\newcommand\@fxsetkeys{\setkeys[fx]}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\@fxpresetkeys}
+% \marg{families}\marg{head keys}\marg{tail keys}
+%    \begin{macrocode}
+%%      Note: currently unused
+%%      \newcommand\@fxpresetkeys{\presetkeys[fx]}
+
+%    \end{macrocode}
+% \end{macro}
+%
+% \paragraph{Wrappers}
 % \begin{macro}{\@fxvoidkeyerror}
-%   \marg{key}\marg{value}\\
-%   Issue a \fx error about a void key misuse (see below):
+% \marg{key}\marg{value}\\
+% Issue a \fx error about a void key misuse (see below):
 %    \begin{macrocode}
 \newcommand*\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
@@ -1671,9 +1703,9 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefinevoidkey}
-%   \marg{family}\marg{name}\marg{func}\\
-%   A \fx ``void key'' is an \texttt{xkeyval} key that doesn't expect any
-%   argument.
+% \marg{family}\marg{name}\marg{func}\\
+% A \fx ``void key'' is an \texttt{xkeyval} key that doesn't expect any
+% argument.
 %    \begin{macrocode}
 \newcommand*\@fxdefinevoidkey[3]{%
   \define@key[fx]{#1}{#2}[]{%
@@ -1684,43 +1716,15 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
-%   \oarg{func}\marg{family}\marg{name}\\
-%   A \fx ``boolean key'' is like an \texttt{xkeyval} one, with the
-%   addition that for every such \texttt{key}, there is a \texttt{nokey} void
-%   key counterpart.
+% \oarg{func}\marg{family}\marg{name}\\
+% A \fx ``boolean key'' is like an \texttt{xkeyval} one, with the
+% addition that for every such \texttt{key}, there is a \texttt{nokey} void
+% key counterpart.
 %    \begin{macrocode}
 \newcommand*\@fxdefineboolkey[3][]{%
   \define@boolkey[fx]{#2}{#3}[true]{#1}
   \@fxdefinevoidkey{#2}{no#3}{\@nameuse{fx@#2@#3}{false}}}
 
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxdefinecmdkey}
-%   \marg{family}\oarg{mp}\marg{key}\oarg{default}\marg{function}
-%    \begin{macrocode}
-\newcommand\@fxdefinecmdkey{\define@cmdkey[fx]}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxdefinechoicekey}
-%   \marg{family}\marg{key}\oarg{bin}\marg{alternatives}\ignorespaces
-%   \oarg{default}\marg{function}
-%    \begin{macrocode}
-\newcommand\@fxdefinechoicekey{\define@choicekey[fx]}
-
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxsetkeys}
-%   \marg{families}\oarg{na}\marg{keys}
-%    \begin{macrocode}
-\newcommand\@fxsetkeys{\setkeys[fx]}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\@fxpresetkeys}
-%   \marg{families}\marg{head keys}\marg{tail keys}
-%    \begin{macrocode}
-%%      Note: currently unused
-%%      \newcommand\@fxpresetkeys{\presetkeys[fx]}
 %    \end{macrocode}
 % \end{macro}
 %
