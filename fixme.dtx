@@ -61,7 +61,7 @@
 %
 % \fi
 %
-% \CheckSum{1741}
+% \CheckSum{1719}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -2032,18 +2032,21 @@
 \newcommand*\@fxtextstd[3]{\ignorespaces#3 \fxnotename{#1}: #2}
 %    \end{macrocode}
 % \end{macro}
-% \begin{macro}{\@fxdosig}
-%   \marg{author}
-% \begin{macro}{\@fxsigstd}
-%   \marg{type}\marg{note}\\
-%   The standard signature disposition.
+% \begin{macro}{\@fxsignature}
+%   \marg{author}\\
+%   Typeset the signature part unless \meta{author} is empty. Note that
+%   \cs{ifthenelse} is fragile, so we need to make the signature stuff robust.
 %    \begin{macrocode}
-\newcommand*\@fxdosig[1]{%
-  \ifthenelse{\equal{#1}{}}{\def\@fxsignature{}}{%
-    \def\@fxsignature{ -- {\@fxuseface{signature}#1}}}}
-\newcommand*\@fxsigstd[2]{\fxnotename{#1}: #2\@fxsignature}
+\DeclareRobustCommand*\@fxsignature[1]{%
+  \ifthenelse{\equal{#1}{}}{}{ -- {\@fxuseface{signature}#1}}}
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}{\@fxsigstd}
+%   \marg{type}\marg{note}\marg{author}\\
+%   The standard signature disposition.
+%    \begin{macrocode}
+\newcommand*\@fxsigstd[3]{\fxnotename{#1}: #2\@fxsignature{#3}}
+%    \end{macrocode}
 % \end{macro}
 %
 % \subsubsection{Built-in layouts}
@@ -2373,7 +2376,7 @@
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutSignatureBegin[2]{%
   \@fxuseface{env}\fxnotename{#1}: \ignorespaces}
-\newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxdosig{#2}\@fxsignature}
+\newcommand*\FXEnvLayoutSignatureEnd[2]{\@fxsignature{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -3715,8 +3718,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigNote[3]{%
-  \@fxdosig{#3}%
-  \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}}}
+  \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsignote}
@@ -3744,8 +3746,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigMargin[3]{%
-  \@fxdosig{#3}%
-  \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}}}
+  \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsigmargin}
@@ -3905,8 +3906,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFCSigNote[3]{%
-  \@fxdosig{#3}%
-  \pdfcomment[author={#3},color={fx#1}]{#2\@fxsignature}}
+  \pdfcomment[author={#3},color={fx#1}]{#2\@fxsignature{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfcsignote}
@@ -3952,8 +3952,7 @@
 %   \marg{type}\marg{note}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFCSigMargin[3]{%
-  \@fxdosig{#3}%
-  \pdfmargincomment[author={#3},color={fx#1}]{#2\@fxsignature}}
+  \pdfmargincomment[author={#3},color={fx#1}]{#2\@fxsignature{#3}}}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfcsigmargin}
@@ -4070,7 +4069,7 @@
 %   \marg{type}\marg{author}
 %    \begin{macrocode}
 \newcommand*\FXEnvLayoutColorSigBegin[2]{\@fxuseface{env}\color{fx#1}}
-\newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxdosig{#2}\@fxsignature}
+\newcommand*\FXEnvLayoutColorSigEnd[2]{\@fxsignature{#2}}
 %    \end{macrocode}
 % \end{macro}
 % \end{macro}
@@ -4195,26 +4194,19 @@
 
 \fxuseenvlayout{signature}
 
-\renewcommand*\FXLayoutFootnote[3]{%
-  \@fxdosig{#3}%
-  \footnote{\@fxsigstd{#1}{#2}}}
+\renewcommand*\FXLayoutFootnote[3]{\footnote{\@fxsigstd{#1}{#2}{#3}}}
 \renewcommand*\FXLayoutMargin[3]{%
-  \@fxdosig{#3}%
-  \marginpar[{\raggedleft\@fxuseface{margin}\@fxsigstd{#1}{#2}}]{%
-    \raggedright\@fxuseface{margin}\@fxsigstd{#1}{#2}}}
+  \marginpar[{\raggedleft\@fxuseface{margin}\@fxsigstd{#1}{#2}{#3}}]{%
+    \raggedright\@fxuseface{margin}\@fxsigstd{#1}{#2}{#3}}}
 \renewcommand*\FXLayoutMarginClue[3]{%
-  \@fxdosig{#3}%
-  \marginpar[{\raggedleft\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}]{%
-    \raggedright\@fxuseface{margin}\fxnotename{#1}!\@fxsignature}}
-\renewcommand*\FXLayoutInline[3]{%
-  \@fxdosig{#3}%
-  { \@fxuseface{inline}\@fxsigstd{#1}{#2}}}
+  \marginpar[{\raggedleft\@fxuseface{margin}\fxnotename{#1}!\@fxsignature{#3}}]{%
+    \raggedright\@fxuseface{margin}\fxnotename{#1}!\@fxsignature{#3}}}
+\renewcommand*\FXLayoutInline[3]{{ \@fxuseface{inline}\@fxsigstd{#1}{#2}{#3}}}
 \renewcommand*\FXLayoutIndex[3]{%
-  \@fxdosig{#3}%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
-      !\@nameuse{thefx#1count}: #2\@fxsignature}%
+      !\@nameuse{thefx#1count}: #2\@fxsignature{#3}}%
     \index{***#3@\fixmeindexname{} (#3):%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !\@nameuse{thefx#1count}: #2}%
@@ -4225,8 +4217,7 @@
   \fi}
 \renewcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
-    \@fxdosig{#3}%
-    \fxaddcontentsline{\@fxsigstd{#1}{#2}}%
+    \fxaddcontentsline{\@fxsigstd{#1}{#2}{#3}}%
   \else%
     \fxaddcontentsline{\fxnotename{#1}: #2}%
   \fi}
@@ -4302,26 +4293,20 @@
 
 \fxsetface{inline}{}
 
-\renewcommand*\FXLayoutFootnote[3]{%
-  \@fxdosig{#3}%
-  \footnote{\color{fx#1}#2\@fxsignature}}
+\renewcommand*\FXLayoutFootnote[3]{\footnote{\color{fx#1}#2\@fxsignature{#3}}}
 \renewcommand*\FXLayoutMargin[3]{%
-  \@fxdosig{#3}%
-  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature}]{%
-    \raggedright\@fxuseface{margin}\color{fx#1}#2\@fxsignature}}
+  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}#2\@fxsignature{#3}}]{%
+    \raggedright\@fxuseface{margin}\color{fx#1}#2\@fxsignature{#3}}}
 \renewcommand*\FXLayoutMarginClue[3]{%
-  \@fxdosig{#3}%
-  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}!\@fxsignature}]{%
-    \raggedright\@fxuseface{margin}\color{fx#1}!\@fxsignature}}
+  \marginpar[{\raggedleft\@fxuseface{margin}\color{fx#1}!\@fxsignature{#3}}]{%
+    \raggedright\@fxuseface{margin}\color{fx#1}!\@fxsignature{#3}}}
 \renewcommand*\FXLayoutInline[3]{%
-  \@fxdosig{#3}%
-  { \textcolor{fx#1}{\@fxuseface{inline}#2\@fxsignature}}}
+  { \textcolor{fx#1}{\@fxuseface{inline}#2\@fxsignature{#3}}}}
 \renewcommand*\FXLayoutIndex[3]{%
-  \@fxdosig{#3}%
   \iffx@mode@multiuser%
     \index{***@\fixmeindexname:%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
-      !{\color{fx#1}\@nameuse{thefx#1count}: #2\@fxsignature}}%
+      !{\color{fx#1}\@nameuse{thefx#1count}: #2\@fxsignature{#3}}}%
     \index{***#3@\fixmeindexname{} (#3):%
       !\@nameuse{@fx#1key}@\fxnotesname{#1}:%
       !{\color{fx#1}\@nameuse{thefx#1count}: #2}}%
@@ -4332,8 +4317,7 @@
   \fi}
 \renewcommand*\FXLayoutContentsLine[3]{%
   \iffx@mode@multiuser%
-    \@fxdosig{#3}%
-    \fxaddcontentsline{\color{fx#1}#2\@fxsignature}%
+    \fxaddcontentsline{\color{fx#1}#2\@fxsignature{#3}}%
   \else%
     \fxaddcontentsline{\color{fx#1}#2}%
   \fi}
