@@ -21,7 +21,7 @@ FiXme consists of the files listed in the file `README.md'.
 meaning, don't actually typeset an empty list of corrections.
 ** Don't update the lox file in final mode
 avoiding potential typesetting artifacts, reported by Lars Madsen.
-** Various internals and documentation improvements
+** Various internals and documentation improvements.
 
 * Version 4.3
 ** Add a paragraph about the duplication of notes in captions
