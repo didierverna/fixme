@@ -81,7 +81,7 @@ DVIPS	  := dvips
 DVIPDF    := dvipdf
 GREP      := grep
 SED       := sed
-TAR	  := tar
+TAR	  := COPYFILE_DISABLE=yes tar
 GZIP	  := gzip
 BZIP2	  := bzip2
 
