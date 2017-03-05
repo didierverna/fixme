@@ -1598,7 +1598,7 @@
 %</fixme>
 %    \end{macrocode}
 % \begin{macro}{\fixmelogo}
-%   The \fx logo:
+% The \fx logo:
 %    \begin{macrocode}
 %<*header>
 \newcommand\fixmelogo{\textsf{FiXme}}
@@ -1611,8 +1611,8 @@
 % \subsubsection{Miscellaneous}
 % \begin{macro}{\@fxpkginfo}
 % \begin{macro}{\@fxpkgwarning}
-%   \marg{msg}\\
-%   Issue a \fx package info or warning:
+% \marg{msg}\\
+% Issue a \fx package info or warning:
 %    \begin{macrocode}
 %<*fixme>
 \newcommand\@fxpkginfo{\PackageInfo{FiXme}}
@@ -1621,17 +1621,17 @@
 % \end{macro}
 % \end{macro}
 % \begin{macro}{\@fxpkgerror}
-%   \marg{shortmsg}\marg{longmsg}\\
-%   Issue a \fx package error:
+% \marg{shortmsg}\marg{longmsg}\\
+% Issue a \fx package error:
 %    \begin{macrocode}
 \newcommand\@fxpkgerror{\PackageError{FiXme}}
 
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxaddtolist}
-%   \marg{list}\marg{elt}\\
-%   Add \meta{elt} at the end of \meta{list}. We should check for duplicates,
-%   but this is not currently done.
+% \marg{list}\marg{elt}\\
+% Add \meta{elt} at the end of \meta{list}. We should check for duplicates,
+% but this is not currently done.
 %    \begin{macrocode}
 \newcommand*\@fxaddtolist[2]{%
   \expandafter\ifx\csname #1\endcsname\relax%
