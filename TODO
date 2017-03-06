@@ -63,8 +63,5 @@ for all of them).
   standard dispositions: prefix (FiXme Note: ...) and postfix/signature (Note:
   ... -- FiXme). And one option to select the wanted disposition.
 
-* The multiuser option shouldn't exist. FiXme is the original, single user,
-  and as soon as FXRegisterAuthor is called, we should switch to multiuser.
-
 * Remove every \provide and replace by utilities in main style file. This
   avoids code duplication.
