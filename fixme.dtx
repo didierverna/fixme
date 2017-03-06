@@ -579,7 +579,7 @@
 % annotations as PDF inline or marginal comments.
 %
 % The \texttt{sig} versions additionally display the author's tag (see
-% \sectionref{sec:manual:modes}) as a signature instead of as a prefix.
+% \sectionref{sec:manual:authoring}) as a signature instead of as a prefix.
 %
 % The versions with a \texttt{c} in their name (as in \textbf{c}olor) use one
 % of four different colors named \texttt{fx}\meta{level} (according to the
@@ -779,8 +779,8 @@
 %   text.
 % \item \DescribeEnvLayout{signature}
 %   The \texttt{signature} environment layout prints the author's tag (see
-%   \sectionref{sec:manual:modes}) as a signature instead of as a prefix. This
-%   layout is used by the \texttt{signature} theme (see section
+%   \sectionref{sec:manual:authoring}) as a signature instead of as a
+%   prefix. This layout is used by the \texttt{signature} theme (see section
 %   \sectionref{sec:manual:themes}).
 % \item \DescribeEnvLayout{color}
 %   \DescribeColor{fxnote}
@@ -1033,7 +1033,7 @@
 % If the document you're working on has parts written in different languages,
 % it might be the case that the annotations should follow the current language
 % as well (especially if you're in collaborative mode; see section
-% \sectionref{sec:manual:modes}). \fx provides a boolean option named
+% \sectionref{sec:manual:authoring}). \fx provides a boolean option named
 % \texttt{langtrack}. When specified, \fx assumes that you're using
 % \texttt{babel} and automatically switches to the current language (as
 % specified by \texttt{babel}'s \cs{languagename} command), without requiring
@@ -1058,7 +1058,7 @@
 % different subcategories for warnings in the index: one called ``Warnings''
 % and one called ``Avertissements''.
 %
-% \subsection{Standalone or collaborative mode\label{sec:manual:modes}}
+% \subsection{Authoring\label{sec:manual:authoring}}
 % \fx supports collaborative annotations as well as ``standalone'',
 % single-author documents.
 %
@@ -1098,16 +1098,16 @@
 %
 % \subsubsection{Collaborative mode}
 % If, on the other hand, you're working in collaboration with other people,
-% every potential ``fixer'' might want to tag his or her own annotations. So
-% assuming that John Doe is another author, he would most likely do something
-% like this:
+% every potential ``fixer'' might want to tag his or her own annotations
+% differently. So assuming that John Doe is another author, he would most
+% likely do something like this:
 % \begin{verbatim}
 % \fxfatal[author=JD]{rephrase this}
 % \end{verbatim}
-% And suddenly, John's fatal comment will be prefixed with his initials. This
-% is not a very satisfactory solution however, because it would require you to
-% explicitely provide the author's tag in every single note you create.
-% Fortunately, \fx offers an easier way to achieve this.
+% And suddenly, John's fatal annotation will be prefixed with his
+% initials. This is not a very satisfactory solution however, because it would
+% require you to explicitely provide the author's tag in every single note you
+% create.  Fortunately, \fx offers an easier way to achieve this.
 %
 % \paragraph{Registering new authors}
 % \DescribeMacro{\FXRegisterAuthor}\marg{cmdprefix}\marg{envprefix}\marg{tag}\\
@@ -1126,7 +1126,8 @@
 % \texttt{ajdnote}, \texttt{ajdwarning} \etc, along with their starred
 % versions as well. If you really want to know the whole story, it turns out
 % that the main \fx interface described in section
-% \sectionref{sec:manual:insertion} is created with this single line of code:
+% \sectionref{sec:manual:insertion} is created with this single line of code
+% (modulo some logo tweaking):
 % \begin{verbatim}
 % \FXRegisterAuthor{fx}{anfx}{fixme}
 % \end{verbatim}
@@ -1139,8 +1140,8 @@
 % will get a name clash between the annotation commands and environments.
 %
 % \paragraph{Fun with the \texttt{author} option}
-% Some precisions about the author option are in order here. When a new
-% author is registered with \fx, the generated commands and environments
+% Some precisions about the \texttt{author} option are in order here. When a
+% new author is registered with \fx, the generated commands and environments
 % work by \emph{presetting} the author option to the specified \meta{tag}.
 % This means that it is still possible to override it explicitely like this:
 % \begin{verbatim}
@@ -1150,36 +1151,18 @@
 % notwithstanding.^^A $ AUC-TeX hack to prevent math-mode
 %
 % The final remark is about the default \texttt{fx*} user interface: the
-% \texttt{fixme} default user is special in that it is the only registered
-% user to honor a global \texttt{author} option (provided in the call to
+% \texttt{fixme} default author is special in that it is the only registered
+% author to honor a global \texttt{author} option (provided in the call to
 % \cs{usepackage} or \cs{fxsetup}). The intended use of this is that the
 % \emph{main} author of the document uses the \texttt{fx*} interface
 % (preferably with a personal \texttt{author} setting, different from the \fx
 % logo), and all other authors are registered via \cs{FXRegisterAuthor}.
 %
-% \paragraph{Globally switching to collaborative mode}
-% We're getting close, but we're not quite there yet. Perhaps you would like
-% to see the tags from the different authors in the list of fixmes, or even in
-% the index? Remember that \fx is in standalone mode by default, so the
-% (only) tag does not appear in those places.
-%
-% \noindent
-% \DescribeOption{singleuser}
-% \DescribeOption{multiuser}
-% \DescribeOption{mode}
-% If you want this additional information, you've got to ask \fx to
-% globally switch to collaborative mode. This can be done with either one of
-% the three options \texttt{singleuser}, \texttt{mutliuser} or \texttt{mode}.
-% \texttt{singleuser} and \texttt{multiuser} are boolean options. The
-% \texttt{mode} option takes a value of either \texttt{singleuser} or
-% \texttt{multiuser}. This is the preferred way to switch the mode. These
-% options are understood globally by \cs{usepackage} or \cs{fxsetup}, and also
-% locally by the annotation commands or environments.
-%
-% When collaborative mode is active, \fx adjusts the list of fixmes layout to
-% display the authors tags as well. Additionally, the annotations are indexed
-% as before, but additional index entries, sorted by author, are generated as
-% well.
+% \paragraph{Collaborative mode adjustments}
+% When \fx detects the presence of multiple authors, it automatically adjusts
+% the list of fixmes layout to display the authors tags as well. Also, the
+% annotations are indexed as before, but additional index entries, sorted by
+% author, are generated as well.
 %
 % \subsection{Themes\label{sec:manual:themes}}
 % Themes are orthogonal to layouts: they provide a way to modify the overall
