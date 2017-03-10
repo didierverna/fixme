@@ -186,11 +186,39 @@ of strings.  Use PROMPT as the prompt string."
 
 ;; Faces
 ;; -----
+(defun LaTeX-fixme-face-option (face)
+  "Return the face option corresponding to FACE.
+This is (\"FACEface\")."
+  `(,(concat face "face")))
+
+(defvar LaTeX-fixme-common-faces '("inline" "margin" "signature")
+  "FiXme common faces.")
+
+(defvar LaTeX-fixme-common-face-options
+  (mapcar #'LaTeX-fixme-face-option LaTeX-fixme-common-faces)
+  "FiXme common face options.")
+
+(defvar LaTeX-fixme-env-face "env"
+  "FiXme environment face.")
+
+(defvar LaTeX-fixme-env-face-option
+  (LaTeX-fixme-face-option LaTeX-fixme-env-face)
+  "FiXme env face option.")
+
+(defvar LaTeX-fixme-target-face "target"
+  "FiXme environment face.")
+
+(defvar LaTeX-fixme-target-face-option
+  (LaTeX-fixme-face-option LaTeX-fixme-target-face)
+  "FiXme target face option.")
+
 (defvar LaTeX-fixme-faces
-  '("inline" "margin" "env" "signature" "target")
+  `(,@LaTeX-fixme-common-faces ,LaTeX-fixme-env-face ,LaTeX-fixme-target-face)
   "FiXme faces.")
 
-;; #### FIXME: need to handle the <facename>face face options.
+(defvar LaTeX-fixme-face-options
+  (mapcar #'LaTeX-fixme-face-option LaTeX-fixme-faces)
+  "FiXme face options.")
 
 
 ;; Logging
@@ -249,6 +277,7 @@ of strings.  Use PROMPT as the prompt string."
 (defvar LaTeX-fixme-args-annotation
   `([ TeX-arg-key-val (,@LaTeX-fixme-status-options
 		       ,@LaTeX-fixme-layout-options
+		       ,@LaTeX-fixme-common-face-options
 		       ,LaTeX-fixme-target-option
 		       ,@LaTeX-fixme-logging-options
 		       ,@LaTeX-fixme-language-options
@@ -256,14 +285,16 @@ of strings.  Use PROMPT as the prompt string."
 		       ,@LaTeX-fixme-mode-options) ]
     t)
   "FiXme annotation arguments.
-Options (mostly all, except for envlayout, targetlayout, langtrack and theme),
-and a pair of braces.")
+Options (mostly all, except for envlayout, targetlayout, envface,
+targetface, langtrack and theme), and a pair of braces.")
 
 (defvar LaTeX-fixme-args-targeted-annotation
   `([ TeX-arg-key-val (,@LaTeX-fixme-status-options
 		       ,@LaTeX-fixme-layout-options
+		       ,@LaTeX-fixme-common-face-options
 		       ,LaTeX-fixme-targetlayout-option
 		       ,LaTeX-fixme-target-option
+		       ,LaTeX-fixme-target-face-option
 		       ,@LaTeX-fixme-logging-options
 		       ,@LaTeX-fixme-language-options
 		       ,LaTeX-fixme-author-option
@@ -275,8 +306,8 @@ and a pair of braces.")
     ;; already exists.
     nil)
   "FiXme targeted annotation arguments.
-Options (mostly all, except for envlayout, langtrack and theme), annotation
-text and a pair of braces.")
+Options (mostly all, except for envlayout, envface, langtrack and
+theme), annotation text and a pair of braces.")
 
 ;; #### FIXME: guess the NAME and MACRO arguments based on the file name.
 (defvar LaTeX-fixme-args-register-layout
@@ -284,8 +315,8 @@ text and a pair of braces.")
     "Name"
     "Macro")
   "FiXme layout registration arguments.
-An optional mutual exclusion list, a layout name and the corresponding
-macro.")
+An optional mutual exclusion list, a layout name and the
+corresponding macro.")
 
 
 ;; Environment-dependent
@@ -293,7 +324,9 @@ macro.")
 (defvar LaTeX-fixme-args-environment
   `(LaTeX-env-args [ (TeX-arg-key-val (,@LaTeX-fixme-status-options
 				       ,@LaTeX-fixme-layout-options
+				       ,@LaTeX-fixme-common-face-options
 				       ,LaTeX-fixme-envlayout-option
+				       ,LaTeX-fixme-env-face-option
 				       ,LaTeX-fixme-target-option
 				       ,@LaTeX-fixme-logging-options
 				       ,@LaTeX-fixme-language-options
@@ -303,14 +336,17 @@ macro.")
 		   ;; of inside the environment's body?
 		   t)
   "FiXme environment arguments.
-Options (mostly all, except for targetlayout, langtrack and theme), and a
-summary.")
+Options (mostly all, except for targetlayout, targetface,
+langtrack and theme), and a summary.")
 
 (defvar LaTeX-fixme-args-targeted-environment
   `(LaTeX-env-args [ (TeX-arg-key-val (,@LaTeX-fixme-status-options
 				       ,@LaTeX-fixme-layout-options
+				       ,@LaTeX-fixme-common-face-options
 				       ,LaTeX-fixme-envlayout-option
+				       ,LaTeX-fixme-env-face-option
 				       ,LaTeX-fixme-targetlayout-option
+				       ,LaTeX-fixme-target-face-option
 				       ,LaTeX-fixme-target-option
 				       ,@LaTeX-fixme-logging-options
 				       ,@LaTeX-fixme-language-options
@@ -326,8 +362,8 @@ summary.")
 		   ;; exists.
 		   nil)
   "FiXme targeted environment arguments.
-Options (mostly all, except for langtrack and theme), a summary, and a pair of
-braces.")
+Options (mostly all, except for langtrack and theme), a summary,
+and a pair of braces.")
 
 
 
@@ -341,8 +377,11 @@ braces.")
     (TeX-add-symbols
      `("fxsetup" (TeX-arg-key-val (,@LaTeX-fixme-status-options
 				   ,@LaTeX-fixme-layout-options
+				   ,@LaTeX-fixme-common-face-options
 				   ,LaTeX-fixme-envlayout-option
+				   ,LaTeX-fixme-env-face-option
 				   ,LaTeX-fixme-targetlayout-option
+				   ,LaTeX-fixme-target-face-option
 				   ,LaTeX-fixme-target-option
 				   ,@LaTeX-fixme-logging-options
 				   ,@LaTeX-fixme-language-options
