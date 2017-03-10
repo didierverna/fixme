@@ -1341,7 +1341,7 @@
 % declarations.
 %
 % \paragraph{Registering early layouts}
-% \DescribeMacro{\FXRegisterLayout*}\oarg{boolfunc}\marg{name}\marg{macro}\\
+% \DescribeMacro{\FXRegisterLayout*}\oarg{mutex}\marg{name}\marg{macro}\\
 % In order to register an early annotation layout with \fx, use the starred
 % form of \cs{FXRegisterLayout}. Everything else behaves the same.
 %
@@ -2020,7 +2020,7 @@
 % \end{macro}
 % \begin{macro}{\FXRegisterLayout}
 % \begin{macro}{\FXRegisterLayout*}
-%   \meta{\texttt{*}}\oarg{boolfunc}\marg{name}\marg{funcname}\\
+%   \meta{\texttt{*}}\oarg{mutex}\marg{name}\marg{funcname}\\
 %   And the use-level interface:
 %    \begin{macrocode}
 \newcommand\FXRegisterLayout{%
