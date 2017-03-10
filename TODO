@@ -71,3 +71,7 @@ for all of them).
 
 * I would like to put the TAG argument to \FXRegisterAuthor first instead of
   last.
+
+* In order to avoid name clashes, it would be better if options were properly
+  pre or postfixed like face options. E.g., inline should rather be
+  inlinelayout.
