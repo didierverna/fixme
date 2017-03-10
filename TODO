@@ -65,3 +65,6 @@ for all of them).
 
 * Remove every \provide and replace by utilities in main style file. This
   avoids code duplication.
+
+* I would like to put the TAG argument to \FXRegisterAuthor first instead of
+  last.
