@@ -447,9 +447,11 @@ and a pair of braces.")
 
      `("FXRegisterLayout"  ,@LaTeX-fixme-args-register-layout)
      `("FXRegisterLayout*" ,@LaTeX-fixme-args-register-layout)
-     ;; #### FIXME: guess the NAME argument based on the file, and do better
-     ;; for release information.
-     '("FXProvidesLayout"  "Name" [ "Release information" ])
+     ;; #### FIXME: do better for release information.
+     '("FXProvidesLayout"
+       (TeX-arg-eval TeX-read-string "Name: "
+		     (LaTeX-fixme-file-feature "layout"))
+       [ "Release information" ])
      `("FXRequireLayouts"  (LaTeX-fixme-arg-key ,LaTeX-fixme-external-layouts
 						"External layout(s)"))
 
