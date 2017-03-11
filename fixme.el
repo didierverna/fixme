@@ -69,6 +69,19 @@ of strings.  Use PROMPT as the prompt string."
   (let ((options (LaTeX-fixme-read-key optional key-list prompt)))
     (TeX-argument-insert options optional)))
 
+(defun LaTeX-fixme-file-feature (kind)
+  "Return the KIND of feature name provided by the current file, or nil.
+KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
+\"theme\", in order to attempt matching the file name with
+\"fxKIND<feature>.sty\"."
+  (let ((file-name (buffer-file-name)))
+    (when file-name
+      (setq file-name (file-name-nondirectory file-name))
+      (when (string-match (concat (regexp-quote (concat "fx" kind))
+				  "\\(.+\\)\\.sty")
+			  file-name)
+	(match-string 1 file-name)))))
+
 
 
 ;; ===========================================================================
@@ -309,11 +322,15 @@ targetface, langtrack and theme), and a pair of braces.")
 Options (mostly all, except for envlayout, envface, langtrack and
 theme), annotation text and a pair of braces.")
 
-;; #### FIXME: guess the NAME and MACRO arguments based on the file name.
+;; #### NOTE: an even DWIMer thing to do would be to make the MACRO argument
+;; depend on the NAME one, in case the user changed it from the initial input.
 (defvar LaTeX-fixme-args-register-layout
   `([ (LaTeX-fixme-arg-key ,LaTeX-fixme-layouts "Incompatible layout(s)") ]
-    "Name"
-    "Macro")
+    (TeX-arg-eval TeX-read-string "Name: " (LaTeX-fixme-file-feature "layout"))
+    (TeX-arg-eval TeX-read-string "Macro: "
+		  (concat TeX-esc "FXLayout"
+			  (upcase-initials
+			   (LaTeX-fixme-file-feature "layout")))))
   "FiXme layout registration arguments.
 An optional mutual exclusion list, a layout name and the
 corresponding macro.")
