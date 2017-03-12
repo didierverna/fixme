@@ -268,16 +268,11 @@ This is (\"FACEface\")."
 
 ;; Authoring
 ;; ---------
+;; #### NOTE: the mode, singleuser and multiuser options are obsolete in FiXme
+;; 5, so I don't want to support them anymore.
 (defvar LaTeX-fixme-author-option
   '("author")
   "FiXme author option.")
-
-
-(defvar LaTeX-fixme-mode-options
-  `(,(LaTeX-fixme-xkeyval-boolean-option "singleuser")
-    ,(LaTeX-fixme-xkeyval-boolean-option "multiuser")
-    ("mode" ("singleuser" "multiuser")))
-  "FiXme mode options.")
 
 
 ;; Themes
@@ -300,8 +295,7 @@ This is (\"FACEface\")."
 		       ,LaTeX-fixme-target-option
 		       ,@LaTeX-fixme-logging-options
 		       ,@LaTeX-fixme-language-options
-		       ,LaTeX-fixme-author-option
-		       ,@LaTeX-fixme-mode-options) ]
+		       ,LaTeX-fixme-author-option) ]
     t)
   "FiXme annotation arguments.
 Options (mostly all, except for envlayout, targetlayout, envface,
@@ -316,8 +310,7 @@ targetface, langtrack and theme), and a pair of braces.")
 		       ,LaTeX-fixme-target-face-option
 		       ,@LaTeX-fixme-logging-options
 		       ,@LaTeX-fixme-language-options
-		       ,LaTeX-fixme-author-option
-		       ,@LaTeX-fixme-mode-options) ]
+		       ,LaTeX-fixme-author-option) ]
     t
     ;; #### FIXME: is there a way to insert braces around the active region,
     ;; but not encompassing the macro (as -1 does)? That would be better, as a
@@ -353,8 +346,7 @@ corresponding macro.")
 				       ,LaTeX-fixme-target-option
 				       ,@LaTeX-fixme-logging-options
 				       ,@LaTeX-fixme-language-options
-				       ,LaTeX-fixme-author-option
-				       ,@LaTeX-fixme-mode-options)) ]
+				       ,LaTeX-fixme-author-option)) ]
 		   ;; #### FIXME: is there a way to get the point here instead
 		   ;; of inside the environment's body?
 		   t)
@@ -373,8 +365,7 @@ langtrack and theme), and a summary.")
 				       ,LaTeX-fixme-target-option
 				       ,@LaTeX-fixme-logging-options
 				       ,@LaTeX-fixme-language-options
-				       ,LaTeX-fixme-author-option
-				       ,@LaTeX-fixme-mode-options)) ]
+				       ,LaTeX-fixme-author-option)) ]
 		   ;; #### FIXME: is there a way to get the point here instead
 		   ;; of inside the environment's body?
 		   t
@@ -410,7 +401,6 @@ and a pair of braces.")
 				   ,@LaTeX-fixme-language-options
 				   ,LaTeX-fixme-langtrack-option
 				   ,LaTeX-fixme-author-option
-				   ,@LaTeX-fixme-mode-options
 				   ,LaTeX-fixme-theme-option)))
 
      `("fxnote"    ,@LaTeX-fixme-args-annotation)
