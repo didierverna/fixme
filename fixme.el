@@ -453,11 +453,10 @@ and a pair of braces.")
 
      `("FXRegisterLayout"  ,@LaTeX-fixme-args-register-layout)
      `("FXRegisterLayout*" ,@LaTeX-fixme-args-register-layout)
-     ;; #### FIXME: do better for release information.
      '("FXProvidesLayout"
        (TeX-arg-eval TeX-read-string "Name: "
 		     (LaTeX-fixme-file-feature "layout"))
-       [ "Release information" ])
+       [ TeX-arg-version ])
      `("FXRequireLayouts"  (LaTeX-fixme-arg-key ,LaTeX-fixme-external-layouts
 						"External layout(s)"))
 
@@ -474,11 +473,10 @@ and a pair of braces.")
 			     (upcase-initials
 			      (maybe-LaTeX-fixme-file-feature "envlayout"))
 			     "End")))
-     ;; #### FIXME: do better for release information.
      '("FXProvidesEnvLayout"
        (TeX-arg-eval TeX-read-string "Name: "
 		     (LaTeX-fixme-file-feature "envlayout"))
-       [ "Release information" ])
+       [ TeX-arg-version ])
      '("FXRequireEnvLayout"  (TeX-arg-eval completing-read
 					   "External environment layout: "
 					   LaTeX-fixme-external-env-layouts))
@@ -490,20 +488,18 @@ and a pair of braces.")
 		     (concat TeX-esc "FXTargetLayout"
 			     (maybe-upcase-initials
 			      (LaTeX-fixme-file-feature "targetlayout")))))
-     ;; #### FIXME: do better for release information.
      '("FXProvidesTargetLayout"
        (TeX-arg-eval TeX-read-string "Name: "
 		     (LaTeX-fixme-file-feature "targetlayout"))
-       [ "Release information" ])
+       [ TeX-arg-version ])
      '("Fxrequiretargetlayout"
        (TeX-arg-eval completing-read "External target layout: "
 		     LaTeX-fixme-external-target-layouts))
 
-     ;; #### FIXME: do better for release information.
      '("FXProvidesTheme"
        (TeX-arg-eval TeX-read-string "Name: "
 		     (LaTeX-fixme-file-feature "theme"))
-       [ "Release information" ]))
+       [ TeX-arg-version ]))
 
     (apply #'TeX-add-symbols
 	   (mapcan (lambda (macro)
