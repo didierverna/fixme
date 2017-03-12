@@ -17,6 +17,7 @@ FiXme consists of the files listed in the file `README.md'.
 
 
 * Version 5.0
+** Reorder the arguments to \FXRegisterAuthor.
 ** Automatic detection of multiuser mode.
 The mode, singleuser and multiuser options are now obsolete.
 

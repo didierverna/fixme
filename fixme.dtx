@@ -1113,16 +1113,20 @@
 % create.  Fortunately, \fx offers an easier way to achieve this.
 %
 % \paragraph{Registering new authors}
-% \DescribeMacro{\FXRegisterAuthor}\marg{cmdprefix}\marg{envprefix}\marg{tag}\\
+% \begin{quotation}\itshape
+%   \textbf{Warning:} as of version 5, the arguments to \cs{FXRegisterAuthor}
+%   have been reordered.
+% \end{quotation}
+% \DescribeMacro{\FXRegisterAuthor}\marg{tag}\marg{cmdprefix}\marg{envprefix}\\
 % The command \cs{FXRegisterAuthor} registers a new author with \fx. It takes
-% three arguments: the last one (\meta{tag}) is just the same as the value you
-% would pass to the \texttt{author} option: it will serve as a prefix (or
+% three arguments: the first one (\meta{tag}) is just the same as the value
+% you would pass to the \texttt{author} option: it will serve as a prefix (or
 % signature) for John's annotations. In addition to that, a complete new set
 % of user-level commands (prefixed with \meta{cmdprefix}) and environments
 % (prefixed with \meta{envprefix}) will be created. To clarify, suppose that
 % we have registered John like this:
 % \begin{verbatim}
-% \FXRegisterAuthor{jd}{ajd}{JD}
+% \FXRegisterAuthor{JD}{jd}{ajd}
 % \end{verbatim}
 % Now, John can use the commands \cs{jdnote}, \cs{jdwarning} \etc, along with
 % their starred versions, and he can also use the environments
@@ -1132,7 +1136,7 @@
 % \sectionref{sec:manual:insertion} is created with this single line of code
 % (modulo some logo tweaking):
 % \begin{verbatim}
-% \FXRegisterAuthor{fx}{anfx}{fixme}
+% \FXRegisterAuthor{fixme}{fx}{anfx}
 % \end{verbatim}
 %
 % \textbf{Warning!} \meta{cmdprefix} and \meta{envprefix} need to be
@@ -1484,7 +1488,8 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
-% \item[v5.0] Automatic detection of multiuser mode. The \texttt{mode},
+% \item[v5.0] Reorder the arguments to \cs{FXRegisterAuthor}.\\
+%   Automatic detection of multiuser mode. The \texttt{mode},
 %   \texttt{singleuser} and \texttt{multiuser} options are now obsolete.
 % \item[v4.5] Revamp of the \auctex support, with help from Arash Esbati.
 % \item[v4.4] Handle existing yet empty lox file properly, meaning don't
@@ -3011,31 +3016,31 @@
 %    \end{macrocode}
 % \end{cond}
 % \begin{macro}{\FXRegisterAuthor}
-%   \marg{cmdprefix}\marg{envprefix}\marg{name}\\
-%   This macro creates the whole user-level interface for a particular
-%   author. It also sets \fx in multiuser mode, which is obviously wrong when
-%   the original \fx author is created\ldots
+% \marg{tag}\marg{cmdprefix}\marg{envprefix}\\
+% This macro creates the whole user-level interface for a particular
+% author. It also sets \fx in multiuser mode, which is obviously wrong when
+% the original \fx author is created\ldots
 %    \begin{macrocode}
 \newcommand*\FXRegisterAuthor[3]{%
-  \@ifundefined{#1note}{}{%
-    \@fxpkgerror{command prefix '#1' already in use}{%
+  \@ifundefined{#2note}{}{%
+    \@fxpkgerror{command prefix '#2' already in use}{%
       You have called \string\FXRegisterAuthor\space with a command prefix
       already in use.\MessageBreak
       Please choose another one.}}%
-  \@ifundefined{#2note}{}{%
-    \@fxpkgerror{environment prefix '#2' already in use}{%
+  \@ifundefined{#3note}{}{%
+    \@fxpkgerror{environment prefix '#3' already in use}{%
       You have called \string\FXRegisterAuthor\space with an environment
       prefix already in use.\MessageBreak
       Please choose another one.}}%
   \fx@multiusertrue% Wrong the first time!
-  \@fxnewnotemacro{#1}{note}{#3}%
-  \@fxnewnotemacro{#1}{warning}{#3}%
-  \@fxnewnotemacro{#1}{error}{#3}%
-  \@fxnewnotemacro{#1}{fatal}{#3}%
-  \@fxnewnoteenvs{#2}{note}{#3}%
-  \@fxnewnoteenvs{#2}{warning}{#3}%
-  \@fxnewnoteenvs{#2}{error}{#3}%
-  \@fxnewnoteenvs{#2}{fatal}{#3}}
+  \@fxnewnotemacro{#2}{note}{#1}%
+  \@fxnewnotemacro{#2}{warning}{#1}%
+  \@fxnewnotemacro{#2}{error}{#1}%
+  \@fxnewnotemacro{#2}{fatal}{#1}%
+  \@fxnewnoteenvs{#3}{note}{#1}%
+  \@fxnewnoteenvs{#3}{warning}{#1}%
+  \@fxnewnoteenvs{#3}{error}{#1}%
+  \@fxnewnoteenvs{#3}{fatal}{#1}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -3060,7 +3065,7 @@
 %   We use it to create the original \fx author, and immediately switch back
 %   to single user mode.
 %    \begin{macrocode}
-\FXRegisterAuthor{fx}{anfx}{fixme}
+\FXRegisterAuthor{fixme}{fx}{anfx}
 \fx@multiuserfalse
 
 %    \end{macrocode}
