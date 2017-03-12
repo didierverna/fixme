@@ -1,4 +1,4 @@
-;;; fixme.el --- AUC-TeX style file for FiXme
+;;; fixme.el --- AUCTeX style file for FiXme
 
 ;; Copyright (C) 2000, 2002, 2004, 2006, 2009, 2017 Didier Verna
 
@@ -45,7 +45,7 @@ and (\"noitem\" (\"true\" \"false\"))."
   (mapcar #'LaTeX-fixme-xkeyval-boolean-option
 	  (LaTeX-fixme-xkeyval-boolean-values items)))
 
-;; The two functions below steal AUC-TeX's mechanism for reading key=value
+;; The two functions below steal AUCTeX's mechanism for reading key=value
 ;; lists of options, only without the =value part. This is probably suboptimal
 ;; because that part could still be entered manually (withtout, completion
 ;; that is) although it's not supposed to, but it's simpler to do it this
