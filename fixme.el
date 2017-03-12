@@ -461,8 +461,19 @@ and a pair of braces.")
      `("FXRequireLayouts"  (LaTeX-fixme-arg-key ,LaTeX-fixme-external-layouts
 						"External layout(s)"))
 
-     ;; #### FIXME: guess the arguments based on the file.
-     '("FXRegisterEnvLayout" "Name" "Opening macro" "Closing macro")
+     '("FXRegisterEnvLayout"
+       (TeX-arg-eval TeX-read-string "Name: "
+		     (LaTeX-fixme-file-feature "envlayout"))
+       (TeX-arg-eval TeX-read-string "Opening macro: "
+		     (concat TeX-esc "FXEnvLayout"
+			     (maybe-upcase-initials
+			      (LaTeX-fixme-file-feature "envlayout"))
+			     "Begin"))
+       (TeX-arg-eval TeX-read-string "Closing macro: "
+		     (concat TeX-esc "FXEnvLayout"
+			     (upcase-initials
+			      (maybe-LaTeX-fixme-file-feature "envlayout"))
+			     "End")))
      ;; #### FIXME: guess the NAME argument based on the file, and do better
      ;; for release information.
      '("FXProvidesEnvLayout" "Name" [ "Release information" ])
