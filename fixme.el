@@ -499,9 +499,11 @@ and a pair of braces.")
        (TeX-arg-eval completing-read "External target layout: "
 		     LaTeX-fixme-external-target-layouts))
 
-     ;; #### FIXME: guess the NAME argument based on the file, and do better
-     ;; for release information.
-     '("FXProvidesTheme" "Name" [ "Release information" ]))
+     ;; #### FIXME: do better for release information.
+     '("FXProvidesTheme"
+       (TeX-arg-eval TeX-read-string "Name: "
+		     (LaTeX-fixme-file-feature "theme"))
+       [ "Release information" ]))
 
     (apply #'TeX-add-symbols
 	   (mapcan (lambda (macro)
