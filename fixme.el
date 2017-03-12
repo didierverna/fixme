@@ -474,9 +474,11 @@ and a pair of braces.")
 			     (upcase-initials
 			      (maybe-LaTeX-fixme-file-feature "envlayout"))
 			     "End")))
-     ;; #### FIXME: guess the NAME argument based on the file, and do better
-     ;; for release information.
-     '("FXProvidesEnvLayout" "Name" [ "Release information" ])
+     ;; #### FIXME: do better for release information.
+     '("FXProvidesEnvLayout"
+       (TeX-arg-eval TeX-read-string "Name: "
+		     (LaTeX-fixme-file-feature "envlayout"))
+       [ "Release information" ])
      '("FXRequireEnvLayout"  (TeX-arg-eval completing-read
 					   "External environment layout: "
 					   LaTeX-fixme-external-env-layouts))
