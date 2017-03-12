@@ -34,7 +34,7 @@
 # - THANKS file [optional]
 # - one or several .dtx files
 # - one or several .ins files with \generate rules
-# - one .el (AUC-TeX) file for every generated class or style [optional]
+# - one .el (AUCTeX) file for every generated class or style [optional]
 # - Makefile.inc [optional] with additional stuff
 # - whatever else might be needed
 
@@ -58,7 +58,7 @@
 #              it exists, or from the project's directory name. For adding
 #              stuff to the tarballs, put "DST_FILES += <blabla>" in
 #              Makefile.inc.
-# install:     install classes, styles, DVI documentation and AUC-TeX files
+# install:     install classes, styles, DVI documentation and AUCTeX files
 # install-www: install tarballs, DVI and PDF documentation, NEWS and version
 #              files on the web. The version number is computed from the NEWS
 #              file (the first "* Version x.x" line).
@@ -172,7 +172,7 @@ PDF_FILES := $(DVI_FILES:%.dvi=%.pdf)
 DST_FILES += $(PDF_FILES)
 all: $(PDF_FILES)
 
-# el (AUC-TeX) files are distributed:
+# el (AUCTeX) files are distributed:
 files := $(CLS_FILES:%.cls=%.el)
 AUC_CLS_FILES := $(foreach file,$(files),$(maybe_file))
 files := $(STY_FILES:%.sty=%.el)

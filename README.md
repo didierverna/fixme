@@ -39,7 +39,7 @@ annotations, by offering a set of predefined note levels and layouts, the
 possibility to register multiple authors, to reference annotations by listing
 and indexing etc. FiXme is extensible, giving you the possibility to create
 new layouts or even complete "themes", and also comes with support
-for [AUC-TeX](https://www.gnu.org/software/auctex/).
+for [AUCTeX](https://www.gnu.org/software/auctex/).
 
 FiXme homepage: http://www.lrde.epita.fr/~didier/software/latex.php#fixme
 
@@ -70,5 +70,5 @@ following locations are suggested:
 	[TEXMF]/tex/latex/fixme/themes/fxtheme*.sty
 	[TEXMF]/doc/latex/fixme/fixme.[pdf|dvi]
 
-If you're an AUC-TeX user, you may also install the file `fixme.el` in a
-suitable AUC-TeX style directory.
+If you're an AUCTeX user, you may also install the file `fixme.el` in a
+suitable AUCTeX style directory.
