@@ -490,9 +490,11 @@ and a pair of braces.")
 		     (concat TeX-esc "FXTargetLayout"
 			     (maybe-upcase-initials
 			      (LaTeX-fixme-file-feature "targetlayout")))))
-     ;; #### FIXME: guess the NAME argument based on the file, and do better
-     ;; for release information.
-     '("FXProvidesTargetLayout" "Name" [ "Release information" ])
+     ;; #### FIXME: do better for release information.
+     '("FXProvidesTargetLayout"
+       (TeX-arg-eval TeX-read-string "Name: "
+		     (LaTeX-fixme-file-feature "targetlayout"))
+       [ "Release information" ])
      '("Fxrequiretargetlayout"
        (TeX-arg-eval completing-read "External target layout: "
 		     LaTeX-fixme-external-target-layouts))
