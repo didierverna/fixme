@@ -82,6 +82,12 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
 			  file-name)
 	(match-string 1 file-name)))))
 
+(defun maybe-upcase-initials (string-or-nil)
+  "Upcase STRING-OR-NIL initials if it is a string, or return \"\"."
+  (if string-or-nil
+      (upcase-initials string-or-nil)
+    ""))
+
 
 
 ;; ===========================================================================
@@ -329,7 +335,7 @@ theme), annotation text and a pair of braces.")
     (TeX-arg-eval TeX-read-string "Name: " (LaTeX-fixme-file-feature "layout"))
     (TeX-arg-eval TeX-read-string "Macro: "
 		  (concat TeX-esc "FXLayout"
-			  (upcase-initials
+			  (maybe-upcase-initials
 			   (LaTeX-fixme-file-feature "layout")))))
   "FiXme layout registration arguments.
 An optional mutual exclusion list, a layout name and the
