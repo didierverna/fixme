@@ -1486,6 +1486,7 @@
 % \begin{itemize}
 % \item[v5.0] Automatic detection of multiuser mode. The \texttt{mode},
 %   \texttt{singleuser} and \texttt{multiuser} options are now obsolete.
+% \item[v4.5] Revamp of the \auctex support, with help from Arash Esbati.
 % \item[v4.4] Handle existing yet empty lox file properly, meaning don't
 %   actually typeset an empty list of corrections.\\
 %   Don't update the \texttt{lox} file in final mode, avoiding potential
@@ -4343,7 +4344,7 @@
 % \Finale
 %
 % ^^A Local variables:
-% ^^A eval : (add-hook 'TeX-update-style-hook (lambda () (doxitems "option" "counter" "lang" "face" "color")) nil t)
+% ^^A eval : (add-hook 'TeX-update-style-hook (lambda () (doxitems "option" "counter" "lang" "cond" "face" "color" "theme")) nil t)
 % ^^A eval: (add-hook 'TeX-update-style-hook (lambda () (doxitem "\\(env\\|target\\)?layout")) nil t)
 % ^^A End:
 % ^^A fixme.dtx ends here.
