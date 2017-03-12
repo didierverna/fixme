@@ -483,8 +483,13 @@ and a pair of braces.")
 					   "External environment layout: "
 					   LaTeX-fixme-external-env-layouts))
 
-     ;; #### FIXME: guess the arguments based on the file.
-     '("FXRegisterTargetLayout" "Name" "Macro")
+     '("FXRegisterTargetLayout"
+       (TeX-arg-eval TeX-read-string "Name: "
+		     (LaTeX-fixme-file-feature "targetlayout"))
+       (TeX-arg-eval TeX-read-string "Macro: "
+		     (concat TeX-esc "FXTargetLayout"
+			     (maybe-upcase-initials
+			      (LaTeX-fixme-file-feature "targetlayout")))))
      ;; #### FIXME: guess the NAME argument based on the file, and do better
      ;; for release information.
      '("FXProvidesTargetLayout" "Name" [ "Release information" ])
