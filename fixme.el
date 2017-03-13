@@ -349,15 +349,13 @@ corresponding macro.")
 ;; previous one) was to prompt for the annotation summary, but I find that
 ;; less convenient to edit it in the minibuffer, rather than in the file
 ;; directly.
-;; #### FIXME: one bug left here: in the targeted case, the active region
-;; shouldn't go within the environement's body, but within the second couple
-;; of braces.
 (defun LaTeX-fixme-insert-environment (environment)
   "Insert a FiXme annotation ENVIRONMENT.
-Also prompt for arguments, and leave point within the first
-couple of braces, where the annotation summary needs to go."
-  (let* ((empty-group (concat TeX-grop TeX-grcl))
-	 (targeted (string-match "\\*" environment))
+Prompt for arguments, and leave point within the first couple of
+braces, where the annotation summary needs to go.  For targeted
+environments, use the active region as the second mandatory
+argument."
+  (let* ((targeted (string-match "\\*" environment))
 	 (options-list (append LaTeX-fixme-status-options
 			       LaTeX-fixme-layout-options
 			       LaTeX-fixme-common-face-options
@@ -371,13 +369,18 @@ couple of braces, where the annotation summary needs to go."
 			       LaTeX-fixme-language-options
 			       (list LaTeX-fixme-author-option)
 			       LaTeX-fixme-mode-options))
-	 (options (TeX-read-key-val t options-list)))
+	 (options (TeX-read-key-val t options-list))
+	 (target (when (and targeted (TeX-active-mark))
+		   (if (< (point) (mark))
+		       (exchange-point-and-mark))
+		   (prog1 (buffer-substring (point) (mark))
+		     (delete-region (point) (mark))))))
     (LaTeX-insert-environment
      environment
      (concat (when (and options (not (string= options "")))
 	       (format "[%s]" options))
-	     empty-group
-	     (when targeted empty-group)))
+	     (concat TeX-grop TeX-grcl)
+	     (when targeted (concat TeX-grop target TeX-grcl))))
     (re-search-backward TeX-grcl (save-excursion
 				   (LaTeX-find-matching-begin)
 				   (point))
