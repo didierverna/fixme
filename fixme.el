@@ -443,9 +443,18 @@ argument."
 
      '("fxsetface" (TeX-arg-eval completing-read "Face: " LaTeX-fixme-faces) t)
 
-     ;; #### FIXME: we could programmatically construct default values for the
-     ;; environment prefix and the tag, based on the command one.
-     '("FXRegisterAuthor" "Command prefix" "Environment prefix" "Tag")
+     '("FXRegisterAuthor"
+       ;; #### WARNING: this really is a dirty, dirty trick. We construct a
+       ;; single argument out of 3, and let AUCTeX enclose the whole thing
+       ;; with the missing pair of braces...
+       (TeX-arg-eval
+	let* ((tag (read-from-minibuffer "Tag: "))
+	      (cmd (read-from-minibuffer "Command prefix: " (downcase tag)))
+	      (env (read-from-minibuffer "Environment prefix: "
+					 (concat "a" (downcase cmd)))))
+	(concat          cmd TeX-grcl
+		TeX-grop env TeX-grcl
+		TeX-grop tag)))
 
      '("fxusetheme" (TeX-arg-eval completing-read "Theme: " LaTeX-fixme-themes))
 
