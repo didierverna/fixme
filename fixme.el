@@ -344,49 +344,45 @@ corresponding macro.")
 
 ;; Environment-dependent
 ;; ---------------------
-(defvar LaTeX-fixme-args-environment
-  `(LaTeX-env-args [ (TeX-arg-key-val (,@LaTeX-fixme-status-options
-				       ,@LaTeX-fixme-layout-options
-				       ,@LaTeX-fixme-common-face-options
-				       ,LaTeX-fixme-envlayout-option
-				       ,LaTeX-fixme-env-face-option
-				       ,LaTeX-fixme-target-option
-				       ,@LaTeX-fixme-logging-options
-				       ,@LaTeX-fixme-language-options
-				       ,LaTeX-fixme-author-option
-				       ,@LaTeX-fixme-mode-options)) ]
-		   ;; #### FIXME: is there a way to get the point here instead
-		   ;; of inside the environment's body?
-		   t)
-  "FiXme environment arguments.
-Options (mostly all, except for targetlayout, targetface,
-langtrack and theme), and a summary.")
-
-(defvar LaTeX-fixme-args-targeted-environment
-  `(LaTeX-env-args [ (TeX-arg-key-val (,@LaTeX-fixme-status-options
-				       ,@LaTeX-fixme-layout-options
-				       ,@LaTeX-fixme-common-face-options
-				       ,LaTeX-fixme-envlayout-option
-				       ,LaTeX-fixme-env-face-option
-				       ,LaTeX-fixme-targetlayout-option
-				       ,LaTeX-fixme-target-face-option
-				       ,LaTeX-fixme-target-option
-				       ,@LaTeX-fixme-logging-options
-				       ,@LaTeX-fixme-language-options
-				       ,LaTeX-fixme-author-option
-				       ,@LaTeX-fixme-mode-options)) ]
-		   ;; #### FIXME: is there a way to get the point here instead
-		   ;; of inside the environment's body?
-		   t
-		   ;; #### FIXME: is there a way to insert braces around the
-		   ;; active region, but not encompassing the macro (as -1
-		   ;; does)? That would be better, as a targeted annotation is
-		   ;; most of the time written when the target text already
-		   ;; exists.
-		   nil)
-  "FiXme targeted environment arguments.
-Options (mostly all, except for langtrack and theme), a summary,
-and a pair of braces.")
+;; #### NOTE: this function compensates for the fact that AUCTeX doesn't
+;; understand t arguments in environements as it does in macros (the point is
+;; always left within the argument's body). The other solution (actually, the
+;; previous one) was to prompt for the annotation summary, but I find that
+;; less convenient to edit it in the minibuffer, rather than in the file
+;; directly.
+;; #### FIXME: one bug left here: in the targeted case, the active region
+;; shouldn't go within the environement's body, but within the second couple
+;; of braces.
+(defun LaTeX-fixme-insert-environment (environment)
+  "Insert a FiXme annotation ENVIRONMENT.
+Also prompt for arguments, and leave point within the first
+couple of braces, where the annotation summary needs to go."
+  (let* ((empty-group (concat TeX-grop TeX-grcl))
+	 (targeted (string-match "\\*" environment))
+	 (options-list (append LaTeX-fixme-status-options
+			       LaTeX-fixme-layout-options
+			       LaTeX-fixme-common-face-options
+			       (list LaTeX-fixme-envlayout-option)
+			       (list LaTeX-fixme-env-face-option)
+			       (when targeted
+				 (list LaTeX-fixme-targetlayout-option
+				       LaTeX-fixme-target-face-option))
+			       (list LaTeX-fixme-target-option)
+			       LaTeX-fixme-logging-options
+			       LaTeX-fixme-language-options
+			       (list LaTeX-fixme-author-option)
+			       LaTeX-fixme-mode-options))
+	 (options (TeX-read-key-val t options-list)))
+    (LaTeX-insert-environment
+     environment
+     (concat (when (and options (not (string= options "")))
+	       (format "[%s]" options))
+	     empty-group
+	     (when targeted empty-group)))
+    (re-search-backward TeX-grcl (save-excursion
+				   (LaTeX-find-matching-begin)
+				   (point))
+			t (if targeted 2 1))))
 
 
 
@@ -521,15 +517,15 @@ and a pair of braces.")
 
 
     (LaTeX-add-environments
-     `("anfxnote"    ,@LaTeX-fixme-args-environment)
-     `("anfxwarning" ,@LaTeX-fixme-args-environment)
-     `("anfxerror"   ,@LaTeX-fixme-args-environment)
-     `("anfxfatal"   ,@LaTeX-fixme-args-environment)
+     `("anfxnote"    LaTeX-fixme-insert-environment)
+     `("anfxwarning" LaTeX-fixme-insert-environment)
+     `("anfxerror"   LaTeX-fixme-insert-environment)
+     `("anfxfatal"   LaTeX-fixme-insert-environment)
 
-     `("anfxnote*"    ,@LaTeX-fixme-args-targeted-environment)
-     `("anfxwarning*" ,@LaTeX-fixme-args-targeted-environment)
-     `("anfxerror*"   ,@LaTeX-fixme-args-targeted-environment)
-     `("anfxfatal*"   ,@LaTeX-fixme-args-targeted-environment))
+     `("anfxnote*"    LaTeX-fixme-insert-environment)
+     `("anfxwarning*" LaTeX-fixme-insert-environment)
+     `("anfxerror*"   LaTeX-fixme-insert-environment)
+     `("anfxfatal*"   LaTeX-fixme-insert-environment))
 
 
     (when (and (featurep 'font-latex)
