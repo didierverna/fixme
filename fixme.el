@@ -62,12 +62,11 @@ Use PROMPT as the prompt string."
      (mapcar #'list key-list))))
 
 (defun LaTeX-fixme-arg-key (optional key-list &optional prompt)
-  "Prompt for keys in KEY-LIST.
-Insert the given value as a TeX macro argument.  If OPTIONAL is
-non-nil, insert it as an optional argument.  KEY-LIST is a list
-of strings.  Use PROMPT as the prompt string."
-  (let ((options (LaTeX-fixme-read-key optional key-list prompt)))
-    (TeX-argument-insert options optional)))
+  "Prompt for keys in KEY-LIST and insert them as a TeX macro argument.
+If OPTIONAL is non-nil, insert as an optional argument.  KEY-LIST
+is a list of strings.  Use PROMPT as the prompt string."
+  (TeX-argument-insert (LaTeX-fixme-read-key optional key-list prompt)
+		       optional))
 
 (defun LaTeX-fixme-file-feature (kind)
   "Return the KIND of feature name provided by the current file, or nil.
