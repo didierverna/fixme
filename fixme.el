@@ -395,8 +395,6 @@ argument."
 			     #'LaTeX-fixme-option<))
 	 (options (TeX-read-key-val t options-list))
 	 (target (when (and targeted (TeX-active-mark))
-		   (if (< (point) (mark))
-		       (exchange-point-and-mark))
 		   (prog1 (buffer-substring (point) (mark))
 		     (delete-region (point) (mark))))))
     (LaTeX-insert-environment
