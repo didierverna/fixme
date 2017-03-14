@@ -27,23 +27,31 @@
 ;; ===========================================================================
 
 (defun LaTeX-fixme-xkeyval-boolean-values (items)
-  "Create a list of XKeyVal boolean values for ITEMS.
+  "Create a sorted list of XKeyVal boolean values for ITEMS.
 Every item leads to two strings: \"item\" and \"noitem\"."
-  (mapcan (lambda (item)
-	    `(,item ,(concat "no" item)))
-	  items))
+  (sort (mapcan (lambda (item)
+		  `(,item ,(concat "no" item)))
+		items)
+	#'string<))
 
 (defun LaTeX-fixme-xkeyval-boolean-option (item)
   "Create an XKeyVal boolean option for ITEM.
 This creates a list of the form (\"ITEM\" (\"true\" \"false\"))."
   `(,item ("true" "false")))
 
+(defun LaTeX-fixme-option< (option1 option2)
+  "Return t if the car of OPTION1 is STRING< to the car of OPTION2.
+This function is used as a predicate for sorting XKeyVal option
+lists."
+  (string< (car option1) (car option2)))
+
 (defun LaTeX-fixme-xkeyval-boolean-options (items)
-  "Create a list of XKeyVal boolean options for ITEMS.
+  "Create a sorted list of XKeyVal boolean options for ITEMS.
 Every item leads to two lists: (\"item\" (\"true\" \"false\"))
 and (\"noitem\" (\"true\" \"false\"))."
-  (mapcar #'LaTeX-fixme-xkeyval-boolean-option
-	  (LaTeX-fixme-xkeyval-boolean-values items)))
+  (sort (mapcar #'LaTeX-fixme-xkeyval-boolean-option
+		(LaTeX-fixme-xkeyval-boolean-values items))
+	#'LaTeX-fixme-option<))
 
 ;; The two functions below steal AUCTeX's mechanism for reading key=value
 ;; lists of options, only without the =value part. This is probably suboptimal
@@ -62,12 +70,11 @@ Use PROMPT as the prompt string."
      (mapcar #'list key-list))))
 
 (defun LaTeX-fixme-arg-key (optional key-list &optional prompt)
-  "Prompt for keys in KEY-LIST.
-Insert the given value as a TeX macro argument.  If OPTIONAL is
-non-nil, insert it as an optional argument.  KEY-LIST is a list
-of strings.  Use PROMPT as the prompt string."
-  (let ((options (LaTeX-fixme-read-key optional key-list prompt)))
-    (TeX-argument-insert options optional)))
+  "Prompt for keys in KEY-LIST and insert them as a TeX macro argument.
+If OPTIONAL is non-nil, insert as an optional argument.  KEY-LIST
+is a list of strings.  Use PROMPT as the prompt string."
+  (TeX-argument-insert (LaTeX-fixme-read-key optional key-list prompt)
+		       optional))
 
 (defun LaTeX-fixme-file-feature (kind)
   "Return the KIND of feature name provided by the current file, or nil.
@@ -97,16 +104,16 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
 ;; Status processing
 ;; -----------------
 (defvar LaTeX-fixme-status-options
-  '(("final")
-    ("draft")
-    ("status" ("final" "draft")))
+  '(("draft")
+    ("final")
+    ("status" ("draft" "final")))
   "FiXme document status options.")
 
 
 ;; Layouts
 ;; -------
 (defvar LaTeX-fixme-builtin-layouts
-  '("inline" "margin" "footnote" "index" "marginclue")
+  '("footnote" "index" "inline" "margin" "marginclue")
   "FiXme builtin layouts.")
 
 (defvar LaTeX-fixme-builtin-layout-boolean-values
@@ -119,8 +126,8 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
 
 (defvar LaTeX-fixme-external-layouts
   '("marginnote"
-    "pdfnote" "pdfmargin" "pdfsignote" "pdfsigmargin"
-    "pdfcnote" "pdfcmargin" "pdfcsignote" "pdfcsigmargin")
+    "pdfcmargin" "pdfcnote" "pdfcsigmargin" "pdfcsignote"
+    "pdfmargin" "pdfnote" "pdfsigmargin" "pdfsignote")
   "FiXme external layouts.")
 
 (defvar LaTeX-fixme-external-layout-boolean-values
@@ -132,29 +139,31 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
   "FiXme external layout boolean options.")
 
 (defvar LaTeX-fixme-layouts
-  `(,@LaTeX-fixme-builtin-layouts ,@LaTeX-fixme-external-layouts)
+  (sort (copy-sequence `(,@LaTeX-fixme-builtin-layouts
+			 ,@LaTeX-fixme-external-layouts))
+	#'string<)
   "FiXme layouts.")
 
 (defvar LaTeX-fixme-layout-boolean-values
-  `(,@LaTeX-fixme-builtin-layout-boolean-values
-    ,@LaTeX-fixme-external-layout-boolean-values)
+  (LaTeX-fixme-xkeyval-boolean-values LaTeX-fixme-layouts)
   "FiXme layout boolean values.")
 
 (defvar LaTeX-fixme-layout-boolean-options
-  `(,@LaTeX-fixme-builtin-layout-boolean-options
-    ,@LaTeX-fixme-external-layout-boolean-options)
+  (LaTeX-fixme-xkeyval-boolean-options LaTeX-fixme-layouts)
   "FiXme layout boolean options.")
 
 ;; #### FIXME: this is not totally correct. The layout, morelayout and
 ;; innerlayout options accept either a single value, or a comma-separated list
 ;; of such.
 (defvar LaTeX-fixme-layout-options
-  `(,@LaTeX-fixme-layout-boolean-options
-    ("layout" ,LaTeX-fixme-layout-boolean-values)
-    ("morelayout" ,LaTeX-fixme-layout-boolean-values)
-    ("innerlayout" (,@LaTeX-fixme-layout-boolean-values
-		    ("layout" ,LaTeX-fixme-layout-boolean-values)
-		    ("morelayout",LaTeX-fixme-layout-boolean-values))))
+  (sort (copy-sequence
+	 `(,@LaTeX-fixme-layout-boolean-options
+	   ("layout" ,LaTeX-fixme-layout-boolean-values)
+	   ("morelayout" ,LaTeX-fixme-layout-boolean-values)
+	   ("innerlayout" (,@LaTeX-fixme-layout-boolean-values
+			   ("layout" ,LaTeX-fixme-layout-boolean-values)
+			   ("morelayout",LaTeX-fixme-layout-boolean-values)))))
+	#'LaTeX-fixme-option<)
   "FiXme layout options.")
 
 
@@ -169,7 +178,9 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
   "FiXme external environment layouts.")
 
 (defvar LaTeX-fixme-env-layouts
-  `(,@LaTeX-fixme-builtin-env-layouts ,@LaTeX-fixme-external-env-layouts)
+  (sort (copy-sequence `(,@LaTeX-fixme-builtin-env-layouts
+			 ,@LaTeX-fixme-external-env-layouts))
+	#'string<)
   "FiXme environment layouts.")
 
 (defvar LaTeX-fixme-envlayout-option
@@ -180,7 +191,7 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
 ;; Target layouts
 ;; --------------
 (defvar LaTeX-fixme-builtin-target-layouts
-  '("plain" "changebar")
+  '("changebar" "plain")
   "FiXme builtin target layouts.")
 
 (defvar LaTeX-fixme-external-target-layouts
@@ -188,7 +199,9 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
   "FiXme external target layouts.")
 
 (defvar LaTeX-fixme-target-layouts
-  `(,@LaTeX-fixme-builtin-target-layouts ,@LaTeX-fixme-external-target-layouts)
+  (sort (copy-sequence `(,@LaTeX-fixme-builtin-target-layouts
+			 ,@LaTeX-fixme-external-target-layouts))
+	#'string<)
   "FiXme target layouts.")
 
 (defvar LaTeX-fixme-targetlayout-option
@@ -214,7 +227,8 @@ This is (\"FACEface\")."
   "FiXme common faces.")
 
 (defvar LaTeX-fixme-common-face-options
-  (mapcar #'LaTeX-fixme-face-option LaTeX-fixme-common-faces)
+  (sort (mapcar #'LaTeX-fixme-face-option LaTeX-fixme-common-faces)
+	#'LaTeX-fixme-option<)
   "FiXme common face options.")
 
 (defvar LaTeX-fixme-env-face "env"
@@ -232,11 +246,14 @@ This is (\"FACEface\")."
   "FiXme target face option.")
 
 (defvar LaTeX-fixme-faces
-  `(,@LaTeX-fixme-common-faces ,LaTeX-fixme-env-face ,LaTeX-fixme-target-face)
+  (sort (copy-sequence `(,@LaTeX-fixme-common-faces
+			 ,LaTeX-fixme-env-face ,LaTeX-fixme-target-face))
+	#'string<)
   "FiXme faces.")
 
 (defvar LaTeX-fixme-face-options
-  (mapcar #'LaTeX-fixme-face-option LaTeX-fixme-faces)
+  (sort (mapcar #'LaTeX-fixme-face-option LaTeX-fixme-faces)
+	#'LaTeX-fixme-option<)
   "FiXme face options.")
 
 
@@ -250,15 +267,16 @@ This is (\"FACEface\")."
 ;; Languages
 ;; ---------
 (defvar LaTeX-fixme-languages
-  '("english" "french" "francais" "spanish" "italian" "german" "ngerman"
-    "danish" "croatian")
+  '("croatian" "danish" "english" "francais" "french" "german" "italian"
+    "ngerman" "spanish")
   "FiXme Languages.")
 
 ;; #### NOTE: langtrack not included
 (defvar LaTeX-fixme-language-options
-  `(,@(mapcar #'list LaTeX-fixme-languages)
-    ("lang" ,LaTeX-fixme-languages)
-    ("defaultlang" ,LaTeX-fixme-languages))
+  (sort `(,@(mapcar #'list LaTeX-fixme-languages)
+	  ("lang" ,LaTeX-fixme-languages)
+	  ("defaultlang" ,LaTeX-fixme-languages))
+	#'LaTeX-fixme-option<)
   "FiXme options for language selection.")
 
 (defvar LaTeX-fixme-langtrack-option
@@ -278,7 +296,7 @@ This is (\"FACEface\")."
 ;; Themes
 ;; ------
 (defvar LaTeX-fixme-themes
-  '("signature" "color" "colorsig")
+  '("color" "colorsig" "signature")
   "FiXme themes.")
 
 (defvar LaTeX-fixme-theme-option
@@ -288,38 +306,23 @@ This is (\"FACEface\")."
 
 ;; Macro-dependent
 ;; ---------------
-(defvar LaTeX-fixme-args-annotation
-  `([ TeX-arg-key-val (,@LaTeX-fixme-status-options
-		       ,@LaTeX-fixme-layout-options
-		       ,@LaTeX-fixme-common-face-options
-		       ,LaTeX-fixme-target-option
-		       ,@LaTeX-fixme-logging-options
-		       ,@LaTeX-fixme-language-options
-		       ,LaTeX-fixme-author-option) ]
-    t)
-  "FiXme annotation arguments.
-Options (mostly all, except for envlayout, targetlayout, envface,
-targetface, langtrack and theme), and a pair of braces.")
-
-(defvar LaTeX-fixme-args-targeted-annotation
-  `([ TeX-arg-key-val (,@LaTeX-fixme-status-options
-		       ,@LaTeX-fixme-layout-options
-		       ,@LaTeX-fixme-common-face-options
-		       ,LaTeX-fixme-targetlayout-option
-		       ,LaTeX-fixme-target-option
-		       ,LaTeX-fixme-target-face-option
-		       ,@LaTeX-fixme-logging-options
-		       ,@LaTeX-fixme-language-options
-		       ,LaTeX-fixme-author-option) ]
-    t
-    ;; #### FIXME: is there a way to insert braces around the active region,
-    ;; but not encompassing the macro (as -1 does)? That would be better, as a
-    ;; targeted annotation is most of the time written when the target text
-    ;; already exists.
-    nil)
-  "FiXme targeted annotation arguments.
-Options (mostly all, except for envlayout, envface, langtrack and
-theme), annotation text and a pair of braces.")
+(defun LaTeX-fixme-annotation-options (&optional targeted)
+  "Return a specification for the optional argument to FiXme annotations.
+Mostly all, except for envlayout, envface, langtrack and theme.
+TARGETED is for the starred versions, where additional options
+exist (targetlayout and targetface)."
+  `[ TeX-arg-key-val
+     ,(sort (copy-sequence `(,@LaTeX-fixme-status-options
+			     ,@LaTeX-fixme-layout-options
+			     ,@LaTeX-fixme-common-face-options
+			     ,LaTeX-fixme-target-option
+			     ,@(when targeted
+				 `(,LaTeX-fixme-targetlayout-option
+				   ,LaTeX-fixme-target-face-option))
+			     ,@LaTeX-fixme-logging-options
+			     ,@LaTeX-fixme-language-options
+			     ,LaTeX-fixme-author-option))
+	    #'LaTeX-fixme-option<) ])
 
 ;; #### NOTE: an even DWIMer thing to do would be to make the MACRO argument
 ;; depend on the NAME one, in case the user changed it from the initial input.
@@ -337,47 +340,56 @@ corresponding macro.")
 
 ;; Environment-dependent
 ;; ---------------------
-(defvar LaTeX-fixme-args-environment
-  `(LaTeX-env-args [ (TeX-arg-key-val (,@LaTeX-fixme-status-options
-				       ,@LaTeX-fixme-layout-options
-				       ,@LaTeX-fixme-common-face-options
-				       ,LaTeX-fixme-envlayout-option
-				       ,LaTeX-fixme-env-face-option
-				       ,LaTeX-fixme-target-option
-				       ,@LaTeX-fixme-logging-options
-				       ,@LaTeX-fixme-language-options
-				       ,LaTeX-fixme-author-option)) ]
-		   ;; #### FIXME: is there a way to get the point here instead
-		   ;; of inside the environment's body?
-		   t)
-  "FiXme environment arguments.
-Options (mostly all, except for targetlayout, targetface,
-langtrack and theme), and a summary.")
-
-(defvar LaTeX-fixme-args-targeted-environment
-  `(LaTeX-env-args [ (TeX-arg-key-val (,@LaTeX-fixme-status-options
-				       ,@LaTeX-fixme-layout-options
-				       ,@LaTeX-fixme-common-face-options
-				       ,LaTeX-fixme-envlayout-option
-				       ,LaTeX-fixme-env-face-option
-				       ,LaTeX-fixme-targetlayout-option
-				       ,LaTeX-fixme-target-face-option
-				       ,LaTeX-fixme-target-option
-				       ,@LaTeX-fixme-logging-options
-				       ,@LaTeX-fixme-language-options
-				       ,LaTeX-fixme-author-option)) ]
-		   ;; #### FIXME: is there a way to get the point here instead
-		   ;; of inside the environment's body?
-		   t
-		   ;; #### FIXME: is there a way to insert braces around the
-		   ;; active region, but not encompassing the macro (as -1
-		   ;; does)? That would be better, as a targeted annotation is
-		   ;; most of the time written when the target text already
-		   ;; exists.
-		   nil)
-  "FiXme targeted environment arguments.
-Options (mostly all, except for langtrack and theme), a summary,
-and a pair of braces.")
+;; #### NOTE: this function compensates for the fact that AUCTeX doesn't
+;; understand t arguments in environements as it does in macros (the point is
+;; always left within the argument's body). The other solution (actually, the
+;; previous one) was to prompt for the annotation summary, but I find that
+;; less convenient to edit it in the minibuffer, rather than in the file
+;; directly.
+(defun LaTeX-fixme-insert-environment (environment)
+  "Insert a FiXme annotation ENVIRONMENT.
+Prompt for arguments, and leave point within the first couple of
+braces, where the annotation summary needs to go.  For targeted
+environments, use the active region as the second mandatory
+argument."
+  (let* ((targeted (string-match "\\*" environment))
+	 (options-list (sort (copy-sequence
+			      (append LaTeX-fixme-status-options
+				      LaTeX-fixme-layout-options
+				      LaTeX-fixme-common-face-options
+				      LaTeX-fixme-logging-options
+				      LaTeX-fixme-language-options
+				      (list LaTeX-fixme-envlayout-option
+					    LaTeX-fixme-env-face-option
+					    LaTeX-fixme-target-option
+					    LaTeX-fixme-author-option)
+				      (when targeted
+					(list LaTeX-fixme-targetlayout-option
+					      LaTeX-fixme-target-face-option))))
+			     #'LaTeX-fixme-option<))
+	 (options (TeX-read-key-val t options-list))
+	 (target (when (and targeted (TeX-active-mark))
+		   (prog1 (buffer-substring (point) (mark))
+		     (delete-region (point) (mark))))))
+    (LaTeX-insert-environment
+     environment
+     (concat (when (and options (not (string= options "")))
+	       (format "[%s]" options))
+	     (concat TeX-grop TeX-grcl)
+	     (when targeted
+	       (concat TeX-grop target TeX-grcl))))
+    (when target
+      (LaTeX-fill-environment nil)
+      (indent-according-to-mode)
+      ;; #### NOTE: for some reason, doing this after DELETE-REGION doesn't
+      ;; work (maybe something related to the insertion of the environment) so
+      ;; I'm deferring it to here.
+      (TeX-deactivate-mark))
+    (LaTeX-find-matching-begin)
+    (re-search-forward TeX-grcl)
+    (when (= (char-after) ?\[)
+      (forward-list))
+    (forward-char)))
 
 
 
@@ -389,30 +401,36 @@ and a pair of braces.")
   (lambda ()
 
     (TeX-add-symbols
-     `("fxsetup" (TeX-arg-key-val (,@LaTeX-fixme-status-options
-				   ,@LaTeX-fixme-layout-options
-				   ,@LaTeX-fixme-common-face-options
-				   ,LaTeX-fixme-envlayout-option
-				   ,LaTeX-fixme-env-face-option
-				   ,LaTeX-fixme-targetlayout-option
-				   ,LaTeX-fixme-target-face-option
-				   ,LaTeX-fixme-target-option
-				   ,@LaTeX-fixme-logging-options
-				   ,@LaTeX-fixme-language-options
-				   ,LaTeX-fixme-langtrack-option
-				   ,LaTeX-fixme-author-option
-				   ,LaTeX-fixme-theme-option)))
+     `("fxsetup" (TeX-arg-key-val ,(sort (copy-sequence
+					  `(,@LaTeX-fixme-status-options
+					    ,@LaTeX-fixme-layout-options
+					    ,@LaTeX-fixme-common-face-options
+					    ,LaTeX-fixme-envlayout-option
+					    ,LaTeX-fixme-env-face-option
+					    ,LaTeX-fixme-targetlayout-option
+					    ,LaTeX-fixme-target-face-option
+					    ,LaTeX-fixme-target-option
+					    ,@LaTeX-fixme-logging-options
+					    ,@LaTeX-fixme-language-options
+					    ,LaTeX-fixme-langtrack-option
+					    ,LaTeX-fixme-author-option
+					    ,LaTeX-fixme-theme-option))
+					 #'LaTeX-fixme-option<)))
 
-     `("fxnote"    ,@LaTeX-fixme-args-annotation)
-     `("fxwarning" ,@LaTeX-fixme-args-annotation)
-     `("fxerror"   ,@LaTeX-fixme-args-annotation)
-     `("fxfatal"   ,@LaTeX-fixme-args-annotation)
+     `("fxnote"    ,(LaTeX-fixme-annotation-options) t)
+     `("fxwarning" ,(LaTeX-fixme-annotation-options) t)
+     `("fxerror"   ,(LaTeX-fixme-annotation-options) t)
+     `("fxfatal"   ,(LaTeX-fixme-annotation-options) t)
      ;; #### NOTE: \fixme is obsolete so I don't want to support it here.
 
-     `("fxnote*"    ,@LaTeX-fixme-args-targeted-annotation)
-     `("fxwarning*" ,@LaTeX-fixme-args-targeted-annotation)
-     `("fxerror*"   ,@LaTeX-fixme-args-targeted-annotation)
-     `("fxfatal*"   ,@LaTeX-fixme-args-targeted-annotation)
+     ;; #### FIXME: is there a way to insert braces around the active region,
+     ;; but not encompassing the macro (as -1 does)? That would be better, as
+     ;; a targeted annotation is most of the time written when the target text
+     ;; already exists.
+     `("fxnote*"    ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxwarning*" ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxerror*"   ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxfatal*"   ,(LaTeX-fixme-annotation-options t) t nil)
 
      '("listoffixmes" 0)
 
@@ -435,9 +453,18 @@ and a pair of braces.")
 
      '("fxsetface" (TeX-arg-eval completing-read "Face: " LaTeX-fixme-faces) t)
 
-     ;; #### FIXME: we could programmatically construct default values for the
-     ;; environment prefix and the tag, based on the command one.
-     '("FXRegisterAuthor" "Command prefix" "Environment prefix" "Tag")
+     '("FXRegisterAuthor"
+       ;; #### WARNING: this really is a dirty, dirty trick. We construct a
+       ;; single argument out of 3, and let AUCTeX enclose the whole thing
+       ;; with the missing pair of braces...
+       (TeX-arg-eval
+	let* ((tag (read-from-minibuffer "Tag: "))
+	      (cmd (read-from-minibuffer "Command prefix: " (downcase tag)))
+	      (env (read-from-minibuffer "Environment prefix: "
+					 (concat "a" (downcase cmd)))))
+	(concat          tag TeX-grcl
+		TeX-grop cmd TeX-grcl
+		TeX-grop env)))
 
      '("fxusetheme" (TeX-arg-eval completing-read "Theme: " LaTeX-fixme-themes))
 
@@ -460,7 +487,7 @@ and a pair of braces.")
 			     "Begin"))
        (TeX-arg-eval TeX-read-string "Closing macro: "
 		     (concat TeX-esc "FXEnvLayout"
-			     (upcase-initials
+			     (maybe-upcase-initials
 			      (maybe-LaTeX-fixme-file-feature "envlayout"))
 			     "End")))
      '("FXProvidesEnvLayout"
@@ -511,15 +538,15 @@ and a pair of braces.")
 
 
     (LaTeX-add-environments
-     `("anfxnote"    ,@LaTeX-fixme-args-environment)
-     `("anfxwarning" ,@LaTeX-fixme-args-environment)
-     `("anfxerror"   ,@LaTeX-fixme-args-environment)
-     `("anfxfatal"   ,@LaTeX-fixme-args-environment)
+     `("anfxnote"    LaTeX-fixme-insert-environment)
+     `("anfxwarning" LaTeX-fixme-insert-environment)
+     `("anfxerror"   LaTeX-fixme-insert-environment)
+     `("anfxfatal"   LaTeX-fixme-insert-environment)
 
-     `("anfxnote*"    ,@LaTeX-fixme-args-targeted-environment)
-     `("anfxwarning*" ,@LaTeX-fixme-args-targeted-environment)
-     `("anfxerror*"   ,@LaTeX-fixme-args-targeted-environment)
-     `("anfxfatal*"   ,@LaTeX-fixme-args-targeted-environment))
+     `("anfxnote*"    LaTeX-fixme-insert-environment)
+     `("anfxwarning*" LaTeX-fixme-insert-environment)
+     `("anfxerror*"   LaTeX-fixme-insert-environment)
+     `("anfxfatal*"   LaTeX-fixme-insert-environment))
 
 
     (when (and (featurep 'font-latex)
