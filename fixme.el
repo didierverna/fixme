@@ -487,7 +487,7 @@ argument."
 			     "Begin"))
        (TeX-arg-eval TeX-read-string "Closing macro: "
 		     (concat TeX-esc "FXEnvLayout"
-			     (upcase-initials
+			     (maybe-upcase-initials
 			      (maybe-LaTeX-fixme-file-feature "envlayout"))
 			     "End")))
      '("FXProvidesEnvLayout"
