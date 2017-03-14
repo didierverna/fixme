@@ -312,7 +312,7 @@ This is (\"FACEface\")."
 
 ;; Macro-dependent
 ;; ---------------
-(defun  LaTeX-fixme-annotation-options (&optional targeted)
+(defun LaTeX-fixme-annotation-options (&optional targeted)
   "Return a specification for the optional argument to FiXme annotations.
 Mostly all, except for envlayout, envface, langtrack and theme.
 TARGETED is for the starred versions, where additional options
