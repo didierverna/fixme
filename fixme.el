@@ -384,11 +384,20 @@ argument."
      (concat (when (and options (not (string= options "")))
 	       (format "[%s]" options))
 	     (concat TeX-grop TeX-grcl)
-	     (when targeted (concat TeX-grop target TeX-grcl))))
-    (re-search-backward TeX-grcl (save-excursion
-				   (LaTeX-find-matching-begin)
-				   (point))
-			t (if targeted 2 1))))
+	     (when targeted
+	       (concat TeX-grop target TeX-grcl))))
+    (when target
+      (LaTeX-fill-environment nil)
+      (indent-according-to-mode)
+      ;; #### NOTE: for some reason, doing this after DELETE-REGION doesn't
+      ;; work (maybe something related to the insertion of the environment) so
+      ;; I'm deferring it to here.
+      (TeX-deactivate-mark))
+    (LaTeX-find-matching-begin)
+    (re-search-forward TeX-grcl)
+    (when (= (char-after) ?\[)
+      (forward-list))
+    (forward-char)))
 
 
 
