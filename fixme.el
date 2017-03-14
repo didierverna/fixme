@@ -312,42 +312,24 @@ This is (\"FACEface\")."
 
 ;; Macro-dependent
 ;; ---------------
-(defvar LaTeX-fixme-args-annotation
-  `([ TeX-arg-key-val ,(sort (copy-sequence `(,@LaTeX-fixme-status-options
-					      ,@LaTeX-fixme-layout-options
-					      ,@LaTeX-fixme-common-face-options
-					      ,LaTeX-fixme-target-option
-					      ,@LaTeX-fixme-logging-options
-					      ,@LaTeX-fixme-language-options
-					      ,LaTeX-fixme-author-option
-					      ,@LaTeX-fixme-mode-options))
-			     #'LaTeX-fixme-option<) ]
-    t)
-  "FiXme annotation arguments.
-Options (mostly all, except for envlayout, targetlayout, envface,
-targetface, langtrack and theme), and a pair of braces.")
-
-(defvar LaTeX-fixme-args-targeted-annotation
-  `([ TeX-arg-key-val ,(sort (copy-sequence `(,@LaTeX-fixme-status-options
-					      ,@LaTeX-fixme-layout-options
-					      ,@LaTeX-fixme-common-face-options
-					      ,LaTeX-fixme-targetlayout-option
-					      ,LaTeX-fixme-target-option
-					      ,LaTeX-fixme-target-face-option
-					      ,@LaTeX-fixme-logging-options
-					      ,@LaTeX-fixme-language-options
-					      ,LaTeX-fixme-author-option
-					      ,@LaTeX-fixme-mode-options))
-			     #'LaTeX-fixme-option<) ]
-    t
-    ;; #### FIXME: is there a way to insert braces around the active region,
-    ;; but not encompassing the macro (as -1 does)? That would be better, as a
-    ;; targeted annotation is most of the time written when the target text
-    ;; already exists.
-    nil)
-  "FiXme targeted annotation arguments.
-Options (mostly all, except for envlayout, envface, langtrack and
-theme), annotation text and a pair of braces.")
+(defun  LaTeX-fixme-annotation-options (&optional targeted)
+  "Return a specification for the optional argument to FiXme annotations.
+Mostly all, except for envlayout, envface, langtrack and theme.
+TARGETED is for the starred versions, where additional options
+exist (targetlayout and targetface)."
+  `[ TeX-arg-key-val
+     ,(sort (copy-sequence `(,@LaTeX-fixme-status-options
+			     ,@LaTeX-fixme-layout-options
+			     ,@LaTeX-fixme-common-face-options
+			     ,LaTeX-fixme-target-option
+			     ,@(when targeted
+				 `(,LaTeX-fixme-targetlayout-option
+				   ,LaTeX-fixme-target-face-option))
+			     ,@LaTeX-fixme-logging-options
+			     ,@LaTeX-fixme-language-options
+			     ,LaTeX-fixme-author-option
+			     ,@LaTeX-fixme-mode-options))
+	    #'LaTeX-fixme-option<) ])
 
 ;; #### NOTE: an even DWIMer thing to do would be to make the MACRO argument
 ;; depend on the NAME one, in case the user changed it from the initial input.
@@ -435,16 +417,20 @@ argument."
 					    ,LaTeX-fixme-theme-option))
 					 #'LaTeX-fixme-option<)))
 
-     `("fxnote"    ,@LaTeX-fixme-args-annotation)
-     `("fxwarning" ,@LaTeX-fixme-args-annotation)
-     `("fxerror"   ,@LaTeX-fixme-args-annotation)
-     `("fxfatal"   ,@LaTeX-fixme-args-annotation)
+     `("fxnote"    ,(LaTeX-fixme-annotation-options) t)
+     `("fxwarning" ,(LaTeX-fixme-annotation-options) t)
+     `("fxerror"   ,(LaTeX-fixme-annotation-options) t)
+     `("fxfatal"   ,(LaTeX-fixme-annotation-options) t)
      ;; #### NOTE: \fixme is obsolete so I don't want to support it here.
 
-     `("fxnote*"    ,@LaTeX-fixme-args-targeted-annotation)
-     `("fxwarning*" ,@LaTeX-fixme-args-targeted-annotation)
-     `("fxerror*"   ,@LaTeX-fixme-args-targeted-annotation)
-     `("fxfatal*"   ,@LaTeX-fixme-args-targeted-annotation)
+     ;; #### FIXME: is there a way to insert braces around the active region,
+     ;; but not encompassing the macro (as -1 does)? That would be better, as
+     ;; a targeted annotation is most of the time written when the target text
+     ;; already exists.
+     `("fxnote*"    ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxwarning*" ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxerror*"   ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxfatal*"   ,(LaTeX-fixme-annotation-options t) t nil)
 
      '("listoffixmes" 0)
 
