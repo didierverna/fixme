@@ -23,7 +23,7 @@ The mode, singleuser and multiuser options are now obsolete.
 
 * Version 4.5
 ** Revamp of the AUCTeX support
-with help from Arash Esbati.
+with help from Arash Esbati and Ikumi Keita.
 
 * Version 4.4
 ** Handle existing yet empty lox files properly

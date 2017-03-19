@@ -324,6 +324,18 @@ exist (targetlayout and targetface)."
 			     ,LaTeX-fixme-author-option))
 	    #'LaTeX-fixme-option<) ])
 
+;; #### WARNING: gross hack. This function makes the targeted annotations look
+;; like they're taking a single mandatory argument, whereas they actually take
+;; 2.
+(defun LaTeX-fixme-targeted-annotation-hack (optional)
+  "Hook for targeted FiXme annotations.
+This function inserts a first couple of braces and a second one,
+potentially with the active region's contents within it. The point is left
+inside the first couple of braces."
+  (TeX-argument-insert "" nil)
+  (TeX-parse-argument optional nil))
+
+
 ;; #### NOTE: an even DWIMer thing to do would be to make the MACRO argument
 ;; depend on the NAME one, in case the user changed it from the initial input.
 (defvar LaTeX-fixme-args-register-layout
@@ -423,14 +435,14 @@ argument."
      `("fxfatal"   ,(LaTeX-fixme-annotation-options) t)
      ;; #### NOTE: \fixme is obsolete so I don't want to support it here.
 
-     ;; #### FIXME: is there a way to insert braces around the active region,
-     ;; but not encompassing the macro (as -1 does)? That would be better, as
-     ;; a targeted annotation is most of the time written when the target text
-     ;; already exists.
-     `("fxnote*"    ,(LaTeX-fixme-annotation-options t) t nil)
-     `("fxwarning*" ,(LaTeX-fixme-annotation-options t) t nil)
-     `("fxerror*"   ,(LaTeX-fixme-annotation-options t) t nil)
-     `("fxfatal*"   ,(LaTeX-fixme-annotation-options t) t nil)
+     `("fxnote*"    ,(LaTeX-fixme-annotation-options t)
+       LaTeX-fixme-targeted-annotation-hack)
+     `("fxwarning*" ,(LaTeX-fixme-annotation-options t)
+       LaTeX-fixme-targeted-annotation-hack)
+     `("fxerror*"   ,(LaTeX-fixme-annotation-options t)
+       LaTeX-fixme-targeted-annotation-hack)
+     `("fxfatal*"   ,(LaTeX-fixme-annotation-options t)
+       LaTeX-fixme-targeted-annotation-hack)
 
      '("listoffixmes" 0)
 
