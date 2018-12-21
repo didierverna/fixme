@@ -17,6 +17,8 @@ FiXme consists of the files listed in the file `README.md'.
 
 
 * Version 4.5
+** Fix spurious space at the end of environments contents
+reported by Frank Mittelbach.
 ** Revamp of the AUCTeX support
 with help from Arash Esbati and Ikumi Keita.
 
