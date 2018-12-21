@@ -75,3 +75,11 @@ for all of them).
 * In order to avoid name clashes, it would be better if options were properly
   pre or postfixed like face options. E.g., inline should rather be
   inlinelayout.
+
+* Provide a user-level interface for people wanting new options when they
+  define layouts (or other things?). This comes from Lars Madsen's following
+  wish. Instead of doing this manually:
+    {\def\marginnotevadjust{8em}\fxnote[author=dlf]{test}}
+    This I'd like to add a vadj=8em key to \fxnote that will locally set
+    \marginnotevadjust to that value before \marginnote gets executed.
+  He does: \@fxdefinekey{layout}{vadj}{\def\marginnotevadjust{#1}}
