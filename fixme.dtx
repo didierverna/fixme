@@ -62,7 +62,7 @@
 %
 % \fi
 %
-% \CheckSum{1720}
+% \CheckSum{1738}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1501,7 +1501,9 @@
 %
 % \section{History\label{sec:manual:history}}
 % \begin{itemize}
-% \item[v4.5] Fix spurious space at the end of environments contents, reported
+% \item[v4.5] Fix PDF signature layouts not working, reported by Soeren
+%   Wolfers.\\
+%   Fix spurious space at the end of environments contents, reported
 %   by Frank Mittelbach.\\
 %   Revamp of the \auctex support, with help from Arash Esbati and Ikumi
 %   Keita.
@@ -3733,10 +3735,20 @@
 
 %    \end{macrocode}
 % \begin{macro}{\FXLayoutPDFSigNote}
-%   \marg{type}\marg{note}\marg{author}
+% \marg{type}\marg{note}\marg{author}\\
+% Warning: this layout cannot use \cs{@fxsignature} properly, because of the
+% presence of an \cs{ifthenelse} inside, and that, eventough it was declared
+% robust. This problem seems to affect PDF layouts only. The workaround I use
+% below is to externalize the conditional and temporarily redefine
+% \cs{@fxsignature} accordingly. This is a bit clumsy but it works\ldots
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigNote[3]{%
-  \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}}
+  \begingroup%
+    \ifthenelse{\equal{#3}{}}{%
+      \def\@fxsignature##1{}}{%
+      \def\@fxsignature##1{ -- {\@fxuseface{signature}#1}}}%
+    \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}%
+  \endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsignote}
@@ -3761,10 +3773,20 @@
 
 %    \end{macrocode}
 % \begin{macro}{\FXLayoutPDFSigMargin}
-%   \marg{type}\marg{note}\marg{author}
+%   \marg{type}\marg{note}\marg{author}\\
+% Warning: this layout cannot use \cs{@fxsignature} properly, because of the
+% presence of an \cs{ifthenelse} inside, and that, eventough it was declared
+% robust. This problem seems to affect PDF layouts only. The workaround I use
+% below is to externalize the conditional and temporarily redefine
+% \cs{@fxsignature} accordingly. This is a bit clumsy but it works\ldots
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigMargin[3]{%
-  \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}}
+  \begingroup%
+    \ifthenelse{\equal{#3}{}}{%
+      \def\@fxsignature##1{}}{%
+      \def\@fxsignature##1{ -- {\@fxuseface{signature}#1}}}%
+    \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}%
+  \endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsigmargin}
