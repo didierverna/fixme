@@ -62,7 +62,7 @@
 %
 % \fi
 %
-% \CheckSum{1753}
+% \CheckSum{1767}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1744,6 +1744,41 @@
 %    \end{macrocode}
 % \end{macro}
 %
+% \paragraph{Extension-level option creation interface}
+% \begin{macro}{\@fxdefineoptioninterface}
+% \marg{family}\marg{infix}
+% \begin{macro}[noindex]{\FXDefine...Key}
+% \begin{macro}[noindex]{\FXDefine...CmdKey}
+% \begin{macro}[noindex]{\FXDefine...ChoiceKey}
+% \begin{macro}[noindex]{\FXDefine...VoidKey}
+% \begin{macro}[noindex]{\FXDefine...BoolKey}
+% This macro defines the extension-level interface allowing users to define
+% new \texttt{xkeyval} options for a certain family. Note that the core of
+% \fx could use those interfaces once defined, but it wouldn't bring much
+% to the picture. Indeed, it basically boils down to using a family within the
+% names of the macros instead of as an argument (and avoiding the use of the
+% ``at'' character).
+%    \begin{macrocode}
+\newcommand*\@fxdefineoptioninterface[2]{%
+  \expandafter\newcommand\csname FXDefine#2Key\endcsname{%
+    \@fxdefinekey{#1}}%
+  \expandafter\newcommand\csname FXDefine#2CmdKey\endcsname{%
+    \@fxdefinecmdkey{#1}}%
+  \expandafter\newcommand\csname FXDefine#2ChoiceKey\endcsname{%
+    \@fxdefinechoicekey{#1}}%
+  \expandafter\newcommand\csname FXDefine#2VoidKey\endcsname{%
+    \@fxdefinevoidkey{#1}}%
+  \expandafter\newcommand\expandafter*\csname FXDefine#2BoolKey\endcsname[2][]{%
+    \@fxdefineboolkey[##1]{#1}{##2}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+%
 % \subsection{List macros}
 % \subsubsection{Contents lines\label{sec:code:contentsline}}
 % \begin{macro}{\l@fixme}
@@ -1957,42 +1992,6 @@
 % \end{option}
 % \end{option}
 %
-% \subsubsection{Layout options}
-% The following macros are an extension-level interface for easy creation of
-% layout options.
-% \begin{macro}{\FXDefineLayoutKey}
-% \marg{key}\oarg{default}\marg{function}
-%    \begin{macrocode}
-\newcommand\FXDefineLayoutKey{\@fxdefinekey{layout}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FXDefineLayoutCmdKey}
-% \oarg{mp}\marg{key}\oarg{default}\marg{function}
-%    \begin{macrocode}
-\newcommand\FXDefineLayoutCmdKey{\@fxdefinecmdkey{layout}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FXDefineLayoutChoiceKey}
-% \marg{key}\oarg{bin}\marg{alternatives}\ignorespaces
-% \oarg{default}\marg{function}
-%    \begin{macrocode}
-\newcommand\FXDefineLayoutChoiceKey{\@fxdefinechoicekey{layout}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FXDefineLayoutVoidKey}
-% \marg{name}\marg{func}
-%    \begin{macrocode}
-\newcommand\FXDefineLayoutVoidKey{\@fxdefinevoidkey{layout}}
-%    \end{macrocode}
-% \end{macro}
-% \begin{macro}{\FXDefineLayoutBoolKey}
-% \oarg{func}\marg{name}
-%    \begin{macrocode}
-\newcommand*\FXDefineLayoutBoolKey[2][]{\@fxdefineboolkey[#1]{layout}{#2}}
-
-%    \end{macrocode}
-% \end{macro}
-%
 % \subsubsection{Layout creation}
 % Separating between ``early'' and ``late'' layouts is needed in starred
 % context, that is, when we are using targeted commands or environments.
@@ -2077,6 +2076,24 @@
     {\@FXRegisterLayout{late}}{\@FXRegisterLayout{late}[]}}}
 
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+%
+% \begin{macro}[noindex]{\FXDefineLayout...Key}
+% \begin{macro}[noprint]{\FXDefineLayoutKey}
+% \begin{macro}[noprint]{\FXDefineLayoutCmdKey}
+% \begin{macro}[noprint]{\FXDefineLayoutChoiceKey}
+% \begin{macro}[noprint]{\FXDefineLayoutVoidKey}
+% \begin{macro}[noprint]{\FXDefineLayoutBoolKey}
+% Finally, the extension-level option creation interface:
+%    \begin{macrocode}
+\@fxdefineoptioninterface{layout}{Layout}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
