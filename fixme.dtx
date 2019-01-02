@@ -62,7 +62,7 @@
 %
 % \fi
 %
-% \CheckSum{1738}
+% \CheckSum{1753}
 % \GetFileInfo{fixme.inc}
 %% \CharacterTable
 %%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -1956,6 +1956,42 @@
 % \end{option}
 % \end{option}
 % \end{option}
+%
+% \subsubsection{Layout options}
+% The following macros are an extension-level interface for easy creation of
+% layout options.
+% \begin{macro}{\FXDefineLayoutKey}
+% \marg{key}\oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\FXDefineLayoutKey{\@fxdefinekey{layout}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXDefineLayoutCmdKey}
+% \oarg{mp}\marg{key}\oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\FXDefineLayoutCmdKey{\@fxdefinecmdkey{layout}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXDefineLayoutChoiceKey}
+% \marg{key}\oarg{bin}\marg{alternatives}\ignorespaces
+% \oarg{default}\marg{function}
+%    \begin{macrocode}
+\newcommand\FXDefineLayoutChoiceKey{\@fxdefinechoicekey{layout}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXDefineLayoutVoidKey}
+% \marg{name}\marg{func}
+%    \begin{macrocode}
+\newcommand\FXDefineLayoutVoidKey{\@fxdefinevoidkey{layout}}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\FXDefineLayoutBoolKey}
+% \oarg{func}\marg{name}
+%    \begin{macrocode}
+\newcommand*\FXDefineLayoutBoolKey[2][]{\@fxdefineboolkey[#1]{layout}{#2}}
+
+%    \end{macrocode}
+% \end{macro}
 %
 % \subsubsection{Layout creation}
 % Separating between ``early'' and ``late'' layouts is needed in starred
