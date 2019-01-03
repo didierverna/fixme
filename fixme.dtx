@@ -1420,37 +1420,38 @@
 % \DescribeMacro[noprint]{\FXDefineLayoutKey}
 % \DescribeMacro[noprint]{\FXDefineEnvLayoutKey}
 % \DescribeMacro[noprint]{\FXDefineTargetLayoutKey}
-% Define an \texttt{xkeyval} ordinary key belonging to \meta{family}.
+% Define an \texttt{xkeyval} ordinary \meta{key} belonging to \meta{family}.
 %
 % \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}CmdKey}
 % \oarg{mp}\marg{key}\oarg{default}\marg{function}\\
 % \DescribeMacro[noprint]{\FXDefineLayoutCmdKey}
 % \DescribeMacro[noprint]{\FXDefineEnvLayoutCmdKey}
 % \DescribeMacro[noprint]{\FXDefineTargetLayoutCmdKey}
-% Define an \texttt{xkeyval} command key belonging to \meta{family}.
+% Define an \texttt{xkeyval} command \meta{key} belonging to \meta{family}.
 %
 % \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}ChoiceKey}
 % \marg{key}\oarg{bin}\marg{alternatives}\oarg{default}\marg{function}\\
 % \DescribeMacro[noprint]{\FXDefineLayoutChoiceKey}
 % \DescribeMacro[noprint]{\FXDefineEnvLayoutChoiceKey}
 % \DescribeMacro[noprint]{\FXDefineTargetLayoutChoiceKey}
-% Define an \texttt{xkeyval} choice key belonging to \meta{family}.
+% Define an \texttt{xkeyval} choice \meta{key} belonging to \meta{family}.
 %
 % \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}VoidKey}
-% \marg{name}\marg{func}\\
+% \marg{key}\marg{func}\\
 % \DescribeMacro[noprint]{\FXDefineLayoutVoidKey}
 % \DescribeMacro[noprint]{\FXDefineEnvLayoutVoidKey}
 % \DescribeMacro[noprint]{\FXDefineTargetLayoutVoidKey}
-% A ``void key'' is an option that is not supposed to take any argument. This
-% property is automatically checked everytime the option is used.
+% A ``void \meta{key}'' is an option that is not supposed to get an
+% argument. This property is automatically checked everytime the option is
+% used.
 %
 % \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}BoolKey}
-% \oarg{func}\marg{name}\\
+% \oarg{func}\marg{key}\\
 % \DescribeMacro[noprint]{\FXDefineLayoutBoolKey}
 % \DescribeMacro[noprint]{\FXDefineEnvLayoutBoolKey}
 % \DescribeMacro[noprint]{\FXDefineTargetLayoutBoolKey}
-% Finally, a ``boolean key'' is like an \texttt{xkeyval} boolean \texttt{key},
-% with the automatic addition of a corresponding \texttt{nokey} void key
+% Finally, a ``boolean \meta{key}'' is like an \texttt{xkeyval} one, with the
+% addition that for every such \texttt{key}, there is a  void \texttt{nokey}
 % counterpart.
 %
 % Every new option you define is inserted into the global options management
@@ -1788,7 +1789,7 @@
 % \paragraph{Wrappers}
 % \begin{macro}{\@fxvoidkeyerror}
 % \marg{key}\marg{value}\\
-% Issue a \fx error about a void key misuse (see below):
+% Issue a \fx error about a void \meta{key} misuse (see below):
 %    \begin{macrocode}
 \newcommand*\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
@@ -1798,9 +1799,8 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefinevoidkey}
-% \marg{family}\marg{name}\marg{func}\\
-% A \fx ``void key'' is an \texttt{xkeyval} key that doesn't expect any
-% argument.
+% \marg{family}\marg{key}\marg{func}\\
+% A \fx ``void \meta{key}'' isn't supposed to get an argument.
 %    \begin{macrocode}
 \newcommand*\@fxdefinevoidkey[3]{%
   \define@key[fx]{#1}{#2}[]{%
@@ -1811,10 +1811,10 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
-% \oarg{func}\marg{family}\marg{name}\\
-% A \fx ``boolean key'' is like an \texttt{xkeyval} one, with the
-% addition that for every such \texttt{key}, there is a \texttt{nokey} void
-% key counterpart.
+% \oarg{func}\marg{family}\marg{key}\\
+% A \fx ``boolean \meta{key}'' is like an \texttt{xkeyval} one, with the
+% addition that for every such \texttt{key}, there is a void \texttt{nokey}
+% counterpart.
 %    \begin{macrocode}
 \newcommand*\@fxdefineboolkey[3][]{%
   \define@boolkey[fx]{#2}{#3}[true]{#1}
