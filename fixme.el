@@ -534,6 +534,51 @@ argument."
 		     (LaTeX-fixme-file-feature "theme"))
        [ TeX-arg-version ]))
 
+    (let ((families '("Layout" "EnvLayout" "TargetLayout")))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '((TeX-arg-eval TeX-read-string "Key: ")
+			       [ TeX-arg-eval TeX-read-string "Default: " ]
+			       t)))
+		     (mapcar (lambda (family) (concat "FXDefine" family "Key"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '([ TeX-arg-eval TeX-read-string "Macro prefix: " ]
+			       (TeX-arg-eval TeX-read-string "Key: ")
+			       [ TeX-arg-eval TeX-read-string "Default: " ]
+			       t)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "CmdKey"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '((TeX-arg-eval TeX-read-string "Key: ")
+			       [ TeX-arg-eval TeX-read-string "Bin: " ]
+			       (TeX-arg-eval TeX-read-string "Alternatives: ")
+			       [ TeX-arg-eval TeX-read-string "Default: " ]
+			       t)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "ChoiceKey"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '((TeX-arg-eval TeX-read-string "Key: ") t)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "VoidKey"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '([ t ] (TeX-arg-eval TeX-read-string "Key: "))))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "BoolKey"))
+			     families))))
+
     (apply #'TeX-add-symbols
 	   (mapcan (lambda (macro)
 		     (mapcar (lambda (language)
