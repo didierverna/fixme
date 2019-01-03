@@ -538,43 +538,31 @@ argument."
       (apply #'TeX-add-symbols
 	     (mapcar (lambda (macro)
 		       (cons macro
-			     '((TeX-arg-eval TeX-read-string "Key: ")
-			       [ TeX-arg-eval TeX-read-string "Default: " ]
-			       t)))
+			     '("Key" [ "Default" ] t)))
 		     (mapcar (lambda (family) (concat "FXDefine" family "Key"))
 			     families)))
       (apply #'TeX-add-symbols
 	     (mapcar (lambda (macro)
 		       (cons macro
-			     '([ TeX-arg-eval TeX-read-string "Macro prefix: " ]
-			       (TeX-arg-eval TeX-read-string "Key: ")
-			       [ TeX-arg-eval TeX-read-string "Default: " ]
-			       t)))
+			     '([ "Macro prefix" ] "Key" [ "Default" ] t)))
 		     (mapcar (lambda (family)
 			       (concat "FXDefine" family "CmdKey"))
 			     families)))
       (apply #'TeX-add-symbols
 	     (mapcar (lambda (macro)
 		       (cons macro
-			     '((TeX-arg-eval TeX-read-string "Key: ")
-			       [ TeX-arg-eval TeX-read-string "Bin: " ]
-			       (TeX-arg-eval TeX-read-string "Alternatives: ")
-			       [ TeX-arg-eval TeX-read-string "Default: " ]
-			       t)))
+			     '("Key" [ "Bin" ] "Alternatives" [ "Default" ] t)))
 		     (mapcar (lambda (family)
 			       (concat "FXDefine" family "ChoiceKey"))
 			     families)))
       (apply #'TeX-add-symbols
-	     (mapcar (lambda (macro)
-		       (cons macro
-			     '((TeX-arg-eval TeX-read-string "Key: ") t)))
+	     (mapcar (lambda (macro) (cons macro '("Key" t)))
 		     (mapcar (lambda (family)
 			       (concat "FXDefine" family "VoidKey"))
 			     families)))
       (apply #'TeX-add-symbols
 	     (mapcar (lambda (macro)
-		       (cons macro
-			     '([ t ] (TeX-arg-eval TeX-read-string "Key: "))))
+		       (cons macro '([ t ] "Key")))
 		     (mapcar (lambda (family)
 			       (concat "FXDefine" family "BoolKey"))
 			     families))))
