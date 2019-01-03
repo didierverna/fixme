@@ -598,6 +598,26 @@ argument."
 				 ("FXProvidesTargetLayout" "{[")
 				 ("FXRequireTargetLayout"  "{")
 
+				 ("FXDefineLayoutKey" "{[{")
+				 ("FXDefineEnvLayoutKey" "{[{")
+				 ("FXDefineTargetLayoutKey" "{[{")
+
+				 ("FXDefineLayoutCmdKey" "[{[{")
+				 ("FXDefineEnvLayoutCmdKey" "[{[{")
+				 ("FXDefineTargetLayoutCmdKey" "[{[{")
+
+				 ("FXDefineLayoutChoiceKey" "{[{[{")
+				 ("FXDefineEnvLayoutChoiceKey" "{[{[{")
+				 ("FXDefineTargetLayoutChoiceKey" "{[{[{")
+
+				 ("FXDefineLayoutVoidKey" "{{")
+				 ("FXDefineEnvLayoutVoidKey" "{{")
+				 ("FXDefineTargetLayoutVoidKey" "{{")
+
+				 ("FXDefineLayoutBoolKey" "[{")
+				 ("FXDefineEnvLayoutBoolKey" "[{")
+				 ("FXDefineTargetLayoutBoolKey" "[{")
+
 				 ("FXProvidesTheme" "{["))
 			       'function)
       ;; The starred version of the 4 macros below takes a second mandatory
