@@ -1395,6 +1395,84 @@
 % calling \cs{FXProvidesTargetLayout}. It will then be recognized by the
 % \cs{fxloadtargetlayouts} commands as \meta{name}.
 %
+% \subsection{Adding new options}
+% \begin{quotation}\itshape
+%   \textbf{Note:} \fx uses the \texttt{xkeyval} package for its underlying
+%   options management, so some knowledge of this package is required in order
+%   to understand the remainder of this section.
+% \end{quotation}
+% Yet another way to customize \fx is to plug additional behavior in, by way
+% of options. As of version 4.5, \fx provides a convenient interface for
+% creating new options, and associate them with code to execute.
+%
+% First of all, new options must belong to a ``family'', which essentially
+% defines exactly where they make sense. \fx currently provides three option
+% families: \texttt{Layout}, \texttt{EnvLayout}, and
+% \texttt{TargetLayout}. Obviously, these families allow you to define options
+% that will affect the behavior of the corresponding three kinds of layouts.
+%
+% For each family, \fx provides five commands wrapping around \texttt{xkeyval}
+% to define special kinds of options (\emph{keys} in the \texttt{xkeyval}
+% jargon). They are explained below.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}Key}
+% \marg{key}\oarg{default}\marg{function}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutKey}
+% Define an \texttt{xkeyval} ordinary key belonging to \meta{family}.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}CmdKey}
+% \oarg{mp}\marg{key}\oarg{default}\marg{function}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutCmdKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutCmdKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutCmdKey}
+% Define an \texttt{xkeyval} command key belonging to \meta{family}.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}ChoiceKey}
+% \marg{key}\oarg{bin}\marg{alternatives}\oarg{default}\marg{function}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutChoiceKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutChoiceKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutChoiceKey}
+% Define an \texttt{xkeyval} choice key belonging to \meta{family}.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}VoidKey}
+% \marg{name}\marg{func}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutVoidKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutVoidKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutVoidKey}
+% A ``void key'' is an option that is not supposed to take any argument. This
+% property is automatically checked everytime the option is used.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}BoolKey}
+% \oarg{func}\marg{name}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutBoolKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutBoolKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutBoolKey}
+% Finally, a ``boolean key'' is like an \texttt{xkeyval} boolean \texttt{key},
+% with the automatic addition of a corresponding \texttt{nokey} void key
+% counterpart.
+%
+% Every new option you define is inserted into the global options management
+% mechanism, which has some implications.
+% \begin{itemize}
+% \item First of all, new options are automatically available almost
+%   everywhere, and in particular in the \cs{fxsetup} macro, in the
+%   annotations commands and environments, \etc Note however that the
+%   \texttt{EnvLayout} and \texttt{TargetLayout} family options are only
+%   processed when it makes sense, that is, when environments or targeted
+%   commands are involved.
+% \item Because new options are treated globally, they may affect every layout
+%   (existing, loaded in the future, \etc) and of course, also the built-in
+%   ones. Suppose, for example, that you want the ability to adjust the
+%   vertical position of the marginal notes layout. One solution is to create
+%   a \texttt{vadj} option like this:
+%   |\FXDefineLayoutKey{vadj}{\def\marginnotevadjust{#1}}|, which you can then
+%   use like that: |\fxnote[vadj=.5ex]{...}|.
+% \item Finally, and again, because options are treated globally, beware of
+%   name clashes! Every option name must be unique within a family.
+% \end{itemize}
+%
 % \subsection{Creating a new theme}
 % Creating a new theme may involve anything from using (by way of
 % \cs{fxsetup}) or modifying existing layouts, to providing new ones. If your
