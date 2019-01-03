@@ -45,10 +45,6 @@ longer than the other prefixes.
 * Provide theme/layouts or explanations for people wanting to use different
 colors for authors instead of note levels.
 
-* Instead of multiplying the layouts, it would nicer to be able to give them
-options (either at the package level for external ones, or at the macro level
-for all of them).
-
 * What about enumerating the notes ?
 
 * Diego Marmsoler <diego.marmsoler@tum.de> want to sort the lox by annotation
@@ -72,14 +68,14 @@ for all of them).
 * I would like to put the TAG argument to \FXRegisterAuthor first instead of
   last.
 
-* In order to avoid name clashes, it would be better if options were properly
-  pre or postfixed like face options. E.g., inline should rather be
-  inlinelayout.
-
-* Provide a user-level interface for people wanting new options when they
-  define layouts (or other things?). This comes from Lars Madsen's following
-  wish. Instead of doing this manually:
-    {\def\marginnotevadjust{8em}\fxnote[author=dlf]{test}}
-    This I'd like to add a vadj=8em key to \fxnote that will locally set
-    \marginnotevadjust to that value before \marginnote gets executed.
-  He does: \@fxdefinekey{layout}{vadj}{\def\marginnotevadjust{#1}}
+* Options management improvements
+  - cleanup all global options to avoid potential clashes, by prefixing like
+  for face options. E.g., inline should rather be inlinelayout, etc.
+  - standardize a way to provide and handle layout-specific options, in
+  addition to creating new global ones. Every layout should have its own
+  xkeyval family, processed automatically, we  should be able to say things
+  like \fxnote[layout=[opt1=val1,opt2=val2]mylayout]{...}, etc. This would
+  also help reducing the number of layouts (parametrizing them instead of
+  multiplying them).
+  - Review the current families and see if they really make sense, or perhaps
+  rename some of them (theme?).
