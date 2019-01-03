@@ -1248,7 +1248,7 @@
 % description of their prototypes is given below.
 %
 % \subsubsection{Modifying existing annotation layouts}
-% \DescribeMacro[noindex]{\FXLayout\ldots}
+% \DescribeMacro[noindex]{\FXLayout\meta{name}}
 % \marg{type}\marg{annotation}\marg{author}\\
 % \DescribeMacro[noprint]{\FXLayoutInline}
 % \DescribeMacro[noprint]{\FXLayoutMargin}
@@ -1263,8 +1263,8 @@
 % author's tag.
 %
 % \subsubsection{Modifying existing environment layouts}
-% \DescribeMacro[noindex]{\FXEnvLayout\ldots Begin}
-% \DescribeMacro[noindex]{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
+% \DescribeMacro[noindex]{\FXEnvLayout\meta{name}Begin}
+% \DescribeMacro[noindex]{\FXEnvLayout\meta{name}End}\marg{type}\marg{author}\\
 % \DescribeMacro[noprint]{\FXEnvLayoutPlainBegin}
 % \DescribeMacro[noprint]{\FXEnvLayoutPlainEnd}
 % \DescribeMacro[noprint]{\FXEnvLayoutSignatureBegin}
@@ -1284,7 +1284,7 @@
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
-% \DescribeMacro[noindex]{\FXTargetLayout\ldots}\marg{type}\marg{target}\\
+% \DescribeMacro[noindex]{\FXTargetLayout\meta{name}}\marg{type}\marg{target}\\
 % \DescribeMacro[noprint]{\FXTargetLayoutPlain}
 % \DescribeMacro[noprint]{\FXTargetLayoutColor}
 % Each target layout is implemented as a macro taking two mandatory arguments.
@@ -1498,8 +1498,8 @@
 % option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
-% \DescribeMacro[noindex]{\fx\ldots name}
-% \DescribeMacro[noindex]{\fx\ldots sname}
+% \DescribeMacro[noindex]{\fx\meta{lang}name}
+% \DescribeMacro[noindex]{\fx\meta{lang}sname}
 % \DescribeMacro[noprint]{\fxenglishnotename}
 % \DescribeMacro[noprint]{\fxenglishnotesname}
 % \DescribeMacro[noprint]{\fxenglishwarningname}
@@ -1562,7 +1562,7 @@
 % \cs{fx}\meta{lang}\texttt{notename}, \cs{fx}\meta{lang}\texttt{notesname},
 % and their equivalent for the other annotation levels define the singular and
 % plural forms of the note names.\\
-% \DescribeMacro[noindex]{\...listfixmename}
+% \DescribeMacro[noindex]{\ \unskip\meta{lang}listfixmename}
 % \DescribeMacro[noprint]{\englishlistfixmename}
 % \DescribeMacro[noprint]{\frenchlistfixmename}
 % \DescribeMacro[noprint]{\spanishlistfixmename}
@@ -1832,11 +1832,11 @@
 % \begin{macro}[noindex]{\FXDefine...VoidKey}
 % \begin{macro}[noindex]{\FXDefine...BoolKey}
 % This macro defines the extension-level interface allowing users to define
-% new \texttt{xkeyval} options for a certain family. Note that the core of
-% \fx could use those interfaces once defined, but it wouldn't bring much
-% to the picture. Indeed, it basically boils down to using a family within the
-% names of the macros instead of as an argument (and avoiding the use of the
-% ``at'' character).
+% new \texttt{xkeyval} options for a certain \meta{family}. Note that the core
+% of \fx could use those interfaces once defined, but it wouldn't bring much
+% to the picture. Indeed, it basically boils down to using a \meta{family}
+% within the names of the macros instead of as an argument (and avoiding the
+% use of the ``at'' character).
 %    \begin{macrocode}
 \newcommand*\@fxdefineoptioninterface[2]{%
   \expandafter\newcommand\csname FXDefine#2Key\endcsname{%
