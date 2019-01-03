@@ -351,6 +351,21 @@ inside the first couple of braces."
 An optional mutual exclusion list, a layout name and the
 corresponding macro.")
 
+;; #### NOTE: OPTIONALP is ignored.
+(defun LaTeX-fixme-boolean-option-definition (optionalp)
+  "Hook for boolean option definitions.
+Prompt for, and insert a key between braces.
+When TeX-insert-macro is called with a prefix argument, first insert an empty
+pair of square brackets for a function definition, and leave point inside."
+  (cond (current-prefix-arg
+	 (insert "[")
+	 (let ((point (point)))
+	   (insert "]")
+	   (TeX-arg-string nil "Key")
+	   (goto-char point)))
+	(t
+	 (TeX-arg-string nil "Key"))))
+
 
 ;; Environment-dependent
 ;; ---------------------
@@ -562,7 +577,7 @@ argument."
 			     families)))
       (apply #'TeX-add-symbols
 	     (mapcar (lambda (macro)
-		       (cons macro '([ t ] "Key")))
+		       (cons macro '(LaTeX-fixme-boolean-option-definition)))
 		     (mapcar (lambda (family)
 			       (concat "FXDefine" family "BoolKey"))
 			     families))))
