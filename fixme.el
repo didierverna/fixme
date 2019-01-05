@@ -1,6 +1,6 @@
 ;;; fixme.el --- AUCTeX style file for FiXme
 
-;; Copyright (C) 2000, 2002, 2004, 2006, 2009, 2017 Didier Verna
+;; Copyright (C) 2000, 2002, 2004, 2006, 2009, 2017, 2019 Didier Verna
 
 ;; Author: Didier Verna <didier@didierverna.net>
 ;; Keywords: tex abbrev data
@@ -29,9 +29,7 @@
 (defun LaTeX-fixme-xkeyval-boolean-values (items)
   "Create a sorted list of XKeyVal boolean values for ITEMS.
 Every item leads to two strings: \"item\" and \"noitem\"."
-  (sort (mapcan (lambda (item)
-		  `(,item ,(concat "no" item)))
-		items)
+  (sort (mapcan (lambda (item) `(,item ,(concat "no" item))) items)
 	#'string<))
 
 (defun LaTeX-fixme-xkeyval-boolean-option (item)
@@ -56,8 +54,7 @@ and (\"noitem\" (\"true\" \"false\"))."
 ;; The two functions below steal AUCTeX's mechanism for reading key=value
 ;; lists of options, only without the =value part. This is probably suboptimal
 ;; because that part could still be entered manually (withtout, completion
-;; that is) although it's not supposed to, but it's simpler to do it this
-;; way.
+;; that is) although it's not supposed to, but it's simpler to do it this way.
 (defun LaTeX-fixme-read-key (optional key-list &optional prompt)
   "Prompt for keys in KEY-LIST and return them.
 If OPTIONAL is non-nil, indicate in the prompt that we are
@@ -91,9 +88,7 @@ KIND may be one of \"layout\", \"envlout\", \"targetlayout\" or
 
 (defun maybe-upcase-initials (string-or-nil)
   "Upcase STRING-OR-NIL initials if it is a string, or return \"\"."
-  (if string-or-nil
-      (upcase-initials string-or-nil)
-    ""))
+  (if string-or-nil (upcase-initials string-or-nil) ""))
 
 
 
@@ -349,11 +344,26 @@ inside the first couple of braces."
 An optional mutual exclusion list, a layout name and the
 corresponding macro.")
 
+;; #### NOTE: OPTIONALP is ignored.
+(defun LaTeX-fixme-boolean-option-definition (optionalp)
+  "Hook for boolean option definitions.
+Prompt for, and insert a key between braces.
+When TeX-insert-macro is called with a prefix argument, first insert an empty
+pair of square brackets for a function definition, and leave point inside."
+  (cond (current-prefix-arg
+	 (insert "[")
+	 (let ((point (point)))
+	   (insert "]")
+	   (TeX-arg-string nil "Key")
+	   (goto-char point)))
+	(t
+	 (TeX-arg-string nil "Key"))))
+
 
 ;; Environment-dependent
 ;; ---------------------
 ;; #### NOTE: this function compensates for the fact that AUCTeX doesn't
-;; understand t arguments in environements as it does in macros (the point is
+;; understand t arguments in environments as it does in macros (the point is
 ;; always left within the argument's body). The other solution (actually, the
 ;; previous one) was to prompt for the annotation summary, but I find that
 ;; less convenient to edit it in the minibuffer, rather than in the file
@@ -530,6 +540,39 @@ argument."
 		     (LaTeX-fixme-file-feature "theme"))
        [ TeX-arg-version ]))
 
+    (let ((families '("Layout" "EnvLayout" "TargetLayout")))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '("Key" [ "Default" ] t)))
+		     (mapcar (lambda (family) (concat "FXDefine" family "Key"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '([ "Macro prefix" ] "Key" [ "Default" ] t)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "CmdKey"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro
+			     '("Key" [ "Bin" ] "Alternatives" [ "Default" ] t)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "ChoiceKey"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro) (cons macro '("Key" t)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "VoidKey"))
+			     families)))
+      (apply #'TeX-add-symbols
+	     (mapcar (lambda (macro)
+		       (cons macro '(LaTeX-fixme-boolean-option-definition)))
+		     (mapcar (lambda (family)
+			       (concat "FXDefine" family "BoolKey"))
+			     families))))
+
     (apply #'TeX-add-symbols
 	   (mapcan (lambda (macro)
 		     (mapcar (lambda (language)
@@ -593,6 +636,26 @@ argument."
 				 ("FXRegisterTargetLayout" "{{")
 				 ("FXProvidesTargetLayout" "{[")
 				 ("FXRequireTargetLayout"  "{")
+
+				 ("FXDefineLayoutKey" "{[{")
+				 ("FXDefineEnvLayoutKey" "{[{")
+				 ("FXDefineTargetLayoutKey" "{[{")
+
+				 ("FXDefineLayoutCmdKey" "[{[{")
+				 ("FXDefineEnvLayoutCmdKey" "[{[{")
+				 ("FXDefineTargetLayoutCmdKey" "[{[{")
+
+				 ("FXDefineLayoutChoiceKey" "{[{[{")
+				 ("FXDefineEnvLayoutChoiceKey" "{[{[{")
+				 ("FXDefineTargetLayoutChoiceKey" "{[{[{")
+
+				 ("FXDefineLayoutVoidKey" "{{")
+				 ("FXDefineEnvLayoutVoidKey" "{{")
+				 ("FXDefineTargetLayoutVoidKey" "{{")
+
+				 ("FXDefineLayoutBoolKey" "[{")
+				 ("FXDefineEnvLayoutBoolKey" "[{")
+				 ("FXDefineTargetLayoutBoolKey" "[{")
 
 				 ("FXProvidesTheme" "{["))
 			       'function)

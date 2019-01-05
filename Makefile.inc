@@ -23,6 +23,8 @@
 TEXMFDIR  := ${HOME}/.texmf
 AUCTEXDIR := ${HOME}/etc/auctex
 
+# Directory name downcasing:
+PROJECT := fixme
 DST_EMPTY_DIRS := themes layouts layouts/env layouts/target
 
 ### Makefile.inc ends here

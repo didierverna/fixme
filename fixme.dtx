@@ -2,7 +2,7 @@
 %
 % fixme.dtx --- docTeX file for FiXme
 %
-% Copyright (C) 1998-2002, 2004-2007, 2009, 2013, 2017 Didier Verna
+% Copyright (C) 1998-2002, 2004-2007, 2009, 2013, 2017-2019 Didier Verna
 %
 % Author: Didier Verna <didier@didierverna.net>
 %
@@ -121,7 +121,7 @@
 %
 % \newcommand\fx{\fixmelogo\xspace}
 % \newcommand\packagecopyright{%
-%   Copyright \copyright{} 1998--2002, 2004--2007, 2009, 2013, 2017 Didier Verna}
+%   Copyright \copyright{} 1998--2002, 2004--2007, 2009, 2013, 2017-2019 Didier Verna}
 %
 % \pagestyle{mystyle}
 % \newcommand\fxmarkright{%
@@ -1235,7 +1235,7 @@
 % description of their prototypes is given below.
 %
 % \subsubsection{Modifying existing annotation layouts}
-% \DescribeMacro[noindex]{\FXLayout\ldots}
+% \DescribeMacro[noindex]{\FXLayout\meta{name}}
 % \marg{type}\marg{annotation}\marg{author}\\
 % \DescribeMacro[noprint]{\FXLayoutInline}
 % \DescribeMacro[noprint]{\FXLayoutMargin}
@@ -1244,14 +1244,14 @@
 % \DescribeMacro[noprint]{\FXLayoutMarginClue}
 % Each annotation layout is implemented as a macro taking three mandatory
 % arguments. By convention, this macro is named \cs{FXLayout}\meta{name}, for
-% instance \cs{FXLayoutInline}.\meta{type} is the annotation type. It can be
+% instance \cs{FXLayoutInline}. \meta{type} is the annotation type. It can be
 % one of \texttt{note}, \texttt{warning}, \texttt{error} and \texttt{fatal}.
 % \meta{annotation} is the annotation itself, and \meta{author} is the
 % author's tag.
 %
 % \subsubsection{Modifying existing environment layouts}
-% \DescribeMacro[noindex]{\FXEnvLayout\ldots Begin}
-% \DescribeMacro[noindex]{\FXEnvLayout\ldots End}\marg{type}\marg{author}\\
+% \DescribeMacro[noindex]{\FXEnvLayout\meta{name}Begin}
+% \DescribeMacro[noindex]{\FXEnvLayout\meta{name}End}\marg{type}\marg{author}\\
 % \DescribeMacro[noprint]{\FXEnvLayoutPlainBegin}
 % \DescribeMacro[noprint]{\FXEnvLayoutPlainEnd}
 % \DescribeMacro[noprint]{\FXEnvLayoutSignatureBegin}
@@ -1271,7 +1271,7 @@
 % \end{sloppypar}
 %
 % \subsubsection{Modifying existing target layouts}
-% \DescribeMacro[noindex]{\FXTargetLayout\ldots}\marg{type}\marg{target}\\
+% \DescribeMacro[noindex]{\FXTargetLayout\meta{name}}\marg{type}\marg{target}\\
 % \DescribeMacro[noprint]{\FXTargetLayoutPlain}
 % \DescribeMacro[noprint]{\FXTargetLayoutColor}
 % Each target layout is implemented as a macro taking two mandatory arguments.
@@ -1382,6 +1382,85 @@
 % calling \cs{FXProvidesTargetLayout}. It will then be recognized by the
 % \cs{fxloadtargetlayouts} commands as \meta{name}.
 %
+% \subsection{Adding new options}
+% \begin{quotation}\itshape
+%   \textbf{Note:} \fx uses the \texttt{xkeyval} package for its underlying
+%   options management, so some knowledge of this package is required in order
+%   to understand the remainder of this section.
+% \end{quotation}
+% Yet another way to customize \fx is to plug additional behavior in, by way
+% of options. As of version 4.5, \fx provides a convenient interface for
+% creating new options, and associate them with code to execute.
+%
+% First of all, new options must belong to a ``family'', which essentially
+% defines exactly where they make sense. \fx currently provides three option
+% families: \texttt{Layout}, \texttt{EnvLayout}, and
+% \texttt{TargetLayout}. Obviously, these families allow you to define options
+% that will affect the behavior of the corresponding three kinds of layouts.
+%
+% For each family, \fx provides five commands wrapping around \texttt{xkeyval}
+% to define special kinds of options (\emph{keys} in the \texttt{xkeyval}
+% jargon). They are explained below.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}Key}
+% \marg{key}\oarg{default}\marg{function}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutKey}
+% Define an \texttt{xkeyval} ordinary \meta{key} belonging to \meta{family}.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}CmdKey}
+% \oarg{mp}\marg{key}\oarg{default}\marg{function}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutCmdKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutCmdKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutCmdKey}
+% Define an \texttt{xkeyval} command \meta{key} belonging to \meta{family}.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}ChoiceKey}
+% \marg{key}\oarg{bin}\marg{alternatives}\oarg{default}\marg{function}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutChoiceKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutChoiceKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutChoiceKey}
+% Define an \texttt{xkeyval} choice \meta{key} belonging to \meta{family}.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}VoidKey}
+% \marg{key}\marg{func}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutVoidKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutVoidKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutVoidKey}
+% A ``void \meta{key}'' is an option that is not supposed to get an
+% argument. This property is automatically checked everytime the option is
+% used.
+%
+% \noindent\DescribeMacro[noindex]{\FXDefine\meta{family}BoolKey}
+% \oarg{func}\marg{key}\\
+% \DescribeMacro[noprint]{\FXDefineLayoutBoolKey}
+% \DescribeMacro[noprint]{\FXDefineEnvLayoutBoolKey}
+% \DescribeMacro[noprint]{\FXDefineTargetLayoutBoolKey}
+% Finally, a ``boolean \meta{key}'' is like an \texttt{xkeyval} one, with the
+% addition that for every such \texttt{key}, there is a  void \texttt{nokey}
+% counterpart.
+%
+% Every new option you define is inserted into the global options management
+% mechanism, which has some implications.
+% \begin{itemize}
+% \item First of all, new options are automatically available almost
+%   everywhere, and in particular in the \cs{fxsetup} macro, in the
+%   annotations commands and environments, \etc Note however that the
+%   \texttt{EnvLayout} and \texttt{TargetLayout} family options are only
+%   processed when it makes sense, that is, when environments or targeted
+%   commands are involved.
+% \item Because new options are treated globally, they may affect every layout
+%   (existing, loaded in the future, \etc) and of course, also the built-in
+%   ones. Suppose, for example, that you want the ability to adjust the
+%   vertical position of the marginal notes layout. One solution is to create
+%   a \texttt{vadj} option like this:
+%   |\FXDefineLayoutKey{vadj}{\def\marginnotevadjust{#1}}|, which you can then
+%   use like that: |\fxnote[vadj=.5ex]{...}|.
+% \item Finally, and again, because options are treated globally, beware of
+%   name clashes! Every option name must be unique within a family.
+% \end{itemize}
+%
 % \subsection{Creating a new theme}
 % Creating a new theme may involve anything from using (by way of
 % \cs{fxsetup}) or modifying existing layouts, to providing new ones. If your
@@ -1407,8 +1486,8 @@
 % option and the \cs{fxusetheme} command.
 %
 % \subsection{Internationalization}
-% \DescribeMacro[noindex]{\fx\ldots name}
-% \DescribeMacro[noindex]{\fx\ldots sname}
+% \DescribeMacro[noindex]{\fx\meta{lang}name}
+% \DescribeMacro[noindex]{\fx\meta{lang}sname}
 % \DescribeMacro[noprint]{\fxenglishnotename}
 % \DescribeMacro[noprint]{\fxenglishnotesname}
 % \DescribeMacro[noprint]{\fxenglishwarningname}
@@ -1471,7 +1550,7 @@
 % \cs{fx}\meta{lang}\texttt{notename}, \cs{fx}\meta{lang}\texttt{notesname},
 % and their equivalent for the other annotation levels define the singular and
 % plural forms of the note names.\\
-% \DescribeMacro[noindex]{\...listfixmename}
+% \DescribeMacro[noindex]{\ \unskip\meta{lang}listfixmename}
 % \DescribeMacro[noprint]{\englishlistfixmename}
 % \DescribeMacro[noprint]{\frenchlistfixmename}
 % \DescribeMacro[noprint]{\spanishlistfixmename}
@@ -1491,8 +1570,13 @@
 % \item[v5.0] Reorder the arguments to \cs{FXRegisterAuthor}.\\
 %   Automatic detection of multiuser mode. The \texttt{mode},
 %   \texttt{singleuser} and \texttt{multiuser} options are now obsolete.
-% \item[v4.5] Revamp of the \auctex support, with help from Arash Esbati and
-%   Ikumi Keita.
+% \item[v4.5] Public interface for extending \fx with new key/value options.\\
+%   Revamp the \auctex support, with help from Arash Esbati and
+%   Ikumi Keita.\\
+%   Fix PDF signature layouts not working anymore, reported by Soeren
+%   Wolfers.\\
+%   Fix spurious space at the end of environments contents, reported
+%   by Frank Mittelbach.
 % \item[v4.4] Handle existing yet empty lox file properly, meaning don't
 %   actually typeset an empty list of corrections.\\
 %   Don't update the \texttt{lox} file in final mode, avoiding potential
@@ -1586,7 +1670,7 @@
 %<fixme>
 \NeedsTeXFormat{LaTeX2e}
 %<*header>
-\ProvidesPackage{fixme}[2017/03/19 v5.0 Collaborative annotations for LaTeX2e]
+\ProvidesPackage{fixme}[2019/01/03 v5.0 Collaborative annotations for LaTeX2e]
 
 %</header>
 %    \end{macrocode}
@@ -1695,7 +1779,7 @@
 % \paragraph{Wrappers}
 % \begin{macro}{\@fxvoidkeyerror}
 % \marg{key}\marg{value}\\
-% Issue a \fx error about a void key misuse (see below):
+% Issue a \fx error about a void \meta{key} misuse (see below):
 %    \begin{macrocode}
 \newcommand*\@fxvoidkeyerror[2]{%
   \@fxpkgerror{misuse of key '#1'}{%
@@ -1705,9 +1789,8 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefinevoidkey}
-% \marg{family}\marg{name}\marg{func}\\
-% A \fx ``void key'' is an \texttt{xkeyval} key that doesn't expect any
-% argument.
+% \marg{family}\marg{key}\marg{func}\\
+% A \fx ``void \meta{key}'' isn't supposed to get an argument.
 %    \begin{macrocode}
 \newcommand*\@fxdefinevoidkey[3]{%
   \define@key[fx]{#1}{#2}[]{%
@@ -1718,16 +1801,51 @@
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxdefineboolkey}
-% \oarg{func}\marg{family}\marg{name}\\
-% A \fx ``boolean key'' is like an \texttt{xkeyval} one, with the
-% addition that for every such \texttt{key}, there is a \texttt{nokey} void
-% key counterpart.
+% \oarg{func}\marg{family}\marg{key}\\
+% A \fx ``boolean \meta{key}'' is like an \texttt{xkeyval} one, with the
+% addition that for every such \texttt{key}, there is a void \texttt{nokey}
+% counterpart.
 %    \begin{macrocode}
 \newcommand*\@fxdefineboolkey[3][]{%
   \define@boolkey[fx]{#2}{#3}[true]{#1}
   \@fxdefinevoidkey{#2}{no#3}{\@nameuse{fx@#2@#3}{false}}}
 
 %    \end{macrocode}
+% \end{macro}
+%
+% \paragraph{Extension-level option creation interface}
+% \begin{macro}{\@fxdefineoptioninterface}
+% \marg{family}\marg{infix}
+% \begin{macro}[noindex]{\FXDefine...Key}
+% \begin{macro}[noindex]{\FXDefine...CmdKey}
+% \begin{macro}[noindex]{\FXDefine...ChoiceKey}
+% \begin{macro}[noindex]{\FXDefine...VoidKey}
+% \begin{macro}[noindex]{\FXDefine...BoolKey}
+% This macro defines the extension-level interface allowing users to define
+% new \texttt{xkeyval} options for a certain \meta{family}. Note that the core
+% of \fx could use those interfaces once defined, but it wouldn't bring much
+% to the picture. Indeed, it basically boils down to using a \meta{family}
+% within the names of the macros instead of as an argument (and avoiding the
+% use of the ``at'' character).
+%    \begin{macrocode}
+\newcommand*\@fxdefineoptioninterface[2]{%
+  \expandafter\newcommand\csname FXDefine#2Key\endcsname{%
+    \@fxdefinekey{#1}}%
+  \expandafter\newcommand\csname FXDefine#2CmdKey\endcsname{%
+    \@fxdefinecmdkey{#1}}%
+  \expandafter\newcommand\csname FXDefine#2ChoiceKey\endcsname{%
+    \@fxdefinechoicekey{#1}}%
+  \expandafter\newcommand\csname FXDefine#2VoidKey\endcsname{%
+    \@fxdefinevoidkey{#1}}%
+  \expandafter\newcommand\expandafter*\csname FXDefine#2BoolKey\endcsname[2][]{%
+    \@fxdefineboolkey[##1]{#1}{##2}}}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsection{List macros}
@@ -2025,6 +2143,23 @@
     {\@FXRegisterLayout{late}}{\@FXRegisterLayout{late}[]}}}
 
 %    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \begin{macro}[noindex]{\FXDefineLayout...Key}
+% \begin{macro}[noprint]{\FXDefineLayoutKey}
+% \begin{macro}[noprint]{\FXDefineLayoutCmdKey}
+% \begin{macro}[noprint]{\FXDefineLayoutChoiceKey}
+% \begin{macro}[noprint]{\FXDefineLayoutVoidKey}
+% \begin{macro}[noprint]{\FXDefineLayoutBoolKey}
+% Finally, the extension-level option creation interface:
+%    \begin{macrocode}
+\@fxdefineoptioninterface{layout}{Layout}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 % \end{macro}
 %
@@ -2336,6 +2471,23 @@
 
 %    \end{macrocode}
 % \end{macro}
+% \begin{macro}[noindex]{\FXDefineEnvLayout...Key}
+% \begin{macro}[noprint]{\FXDefineEnvLayoutKey}
+% \begin{macro}[noprint]{\FXDefineEnvLayoutCmdKey}
+% \begin{macro}[noprint]{\FXDefineEnvLayoutChoiceKey}
+% \begin{macro}[noprint]{\FXDefineEnvLayoutVoidKey}
+% \begin{macro}[noprint]{\FXDefineEnvLayoutBoolKey}
+% The extension-level option creation interface:
+%    \begin{macrocode}
+\@fxdefineoptioninterface{envlayout}{EnvLayout}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 %
 % \subsubsection{Built-in layouts}
 % \paragraph{Plain}
@@ -2476,6 +2628,23 @@
       Otherwise, you must choose another name.}}}
 
 %    \end{macrocode}
+% \end{macro}
+% \begin{macro}[noindex]{\FXDefineTargetLayout...Key}
+% \begin{macro}[noprint]{\FXDefineTargetLayoutKey}
+% \begin{macro}[noprint]{\FXDefineTargetLayoutCmdKey}
+% \begin{macro}[noprint]{\FXDefineTargetLayoutChoiceKey}
+% \begin{macro}[noprint]{\FXDefineTargetLayoutVoidKey}
+% \begin{macro}[noprint]{\FXDefineTargetLayoutBoolKey}
+% The extension-level option creation interface:
+%    \begin{macrocode}
+\@fxdefineoptioninterface{targetlayout}{TargetLayout}
+
+%    \end{macrocode}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
+% \end{macro}
 % \end{macro}
 %
 % \subsubsection{Built-in layouts}
@@ -2910,7 +3079,7 @@
 \def\@@@@fxbeginenv@final#1{\comment}
 \def\@@@@fxbeginenv@draft#1{\@fxenvlayout@begin{#1}{\cmdfx@note@author}}
 \def\@fxendenv@final#1{\endcomment}
-\def\@fxendenv@draft#1{\@fxenvlayout@end{#1}{\cmdfx@note@author}}
+\def\@fxendenv@draft#1{\unskip\@fxenvlayout@end{#1}{\cmdfx@note@author}}
 
 %    \end{macrocode}
 % \end{macro}
@@ -3733,10 +3902,20 @@
 
 %    \end{macrocode}
 % \begin{macro}{\FXLayoutPDFSigNote}
-%   \marg{type}\marg{note}\marg{author}
+% \marg{type}\marg{note}\marg{author}\\
+% Warning: this layout cannot use \cs{@fxsignature} properly, because of the
+% presence of an \cs{ifthenelse} inside, and that, eventough it was declared
+% robust. This problem seems to affect PDF layouts only. The workaround I use
+% below is to externalize the conditional and temporarily redefine
+% \cs{@fxsignature} accordingly. This is a bit clumsy but it works\ldots
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigNote[3]{%
-  \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}}
+  \begingroup%
+    \ifthenelse{\equal{#3}{}}{%
+      \def\@fxsignature##1{}}{%
+      \def\@fxsignature##1{ -- {\@fxuseface{signature}#1}}}%
+    \pdfcomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}%
+  \endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsignote}
@@ -3761,10 +3940,20 @@
 
 %    \end{macrocode}
 % \begin{macro}{\FXLayoutPDFSigMargin}
-%   \marg{type}\marg{note}\marg{author}
+%   \marg{type}\marg{note}\marg{author}\\
+% Warning: this layout cannot use \cs{@fxsignature} properly, because of the
+% presence of an \cs{ifthenelse} inside, and that, eventough it was declared
+% robust. This problem seems to affect PDF layouts only. The workaround I use
+% below is to externalize the conditional and temporarily redefine
+% \cs{@fxsignature} accordingly. This is a bit clumsy but it works\ldots
 %    \begin{macrocode}
 \newcommand*\FXLayoutPDFSigMargin[3]{%
-  \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}}
+  \begingroup%
+    \ifthenelse{\equal{#3}{}}{%
+      \def\@fxsignature##1{}}{%
+      \def\@fxsignature##1{ -- {\@fxuseface{signature}#1}}}%
+    \pdfmargincomment[author={#3}]{\@fxsigstd{#1}{#2}{#3}}%
+  \endgroup}
 %    \end{macrocode}
 % \end{macro}
 % \begin{macro}{\@fxlayout@pdfsigmargin}
